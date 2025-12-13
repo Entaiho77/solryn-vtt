@@ -373,18 +373,31 @@ function applyRacialBonuses() {
         document.getElementById('attr' + attr).value = baseAttributes[attr];
     });
     
-   // Apply racial bonuses based on race
-// Apply racial bonuses based on race
-if (race === 'Human') {
-    const checked = document.querySelectorAll('.human-choice:checked');
-    console.log('Human - found checked boxes:', checked.length);
-    checked.forEach(cb => {
-        const attr = cb.value;
-        console.log('Applying +1 to:', attr);
-        // Convert STR -> Str, ARC -> Arc, etc. to match input IDs
-        const attrFormatted = attr.charAt(0) + attr.slice(1).toLowerCase();
-        applyBonus(attrFormatted, 1);
-    });
+    // Apply racial bonuses based on race
+    if (race === 'Human') {
+        const checked = document.querySelectorAll('.human-choice:checked');
+       checked.forEach(cb => {
+    const attr = cb.value; // This will be "STR", "ARC", etc. (uppercase)
+    console.log('Applying +1 to:', attr);
+    // Convert to proper case: STR -> Str, ARC -> Arc, etc.
+    const attrProperCase = attr.charAt(0) + attr.slice(1).toLowerCase();
+    applyBonus(attrProperCase, 1);
+});
+    } else if (race === 'Elf') {
+        applyBonus('Nim', 1);
+        const choice = document.querySelector('input[name="elfChoice"]:checked');
+        if (choice) {
+            applyBonus(choice.value === 'WIS' ? 'Wis' : 'Arc', 1);
+        }
+    } else if (race === 'Dwarf') {
+        applyBonus('Str', 1);
+        applyBonus('End', 1);
+    } else if (race === 'Gnome') {
+        applyBonus('Int', 1);
+        applyBonus('Lck', 1);
+    }
+    
+    updateHP();
 }
 
 // Helper to apply a bonus to an attribute
