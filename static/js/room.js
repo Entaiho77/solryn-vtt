@@ -340,18 +340,21 @@ window.updateRacialBonuses = function() {
 function setupHumanChoices() {
     const checkboxes = document.querySelectorAll('.human-choice');
     checkboxes.forEach(cb => {
-        cb.addEventListener('change', function() {
-            const checked = document.querySelectorAll('.human-choice:checked');
-            if (checked.length > 2) {
-                this.checked = false;
-                alert('You can only choose 2 attributes');
-            } else {
-                applyRacialBonuses();
-            }
-        });
+        // Remove old listeners first
+        cb.removeEventListener('change', handleHumanChoiceChange);
+        cb.addEventListener('change', handleHumanChoiceChange);
     });
 }
 
+function handleHumanChoiceChange() {
+    const checked = document.querySelectorAll('.human-choice:checked');
+    if (checked.length > 2) {
+        this.checked = false;
+        alert('You can only choose 2 attributes');
+    } else {
+        applyRacialBonuses();
+    }
+}
 // Setup Elf choice listener
 function setupElfChoice() {
     const radios = document.querySelectorAll('input[name="elfChoice"]');
