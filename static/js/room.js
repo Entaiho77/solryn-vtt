@@ -368,22 +368,20 @@ function applyRacialBonuses() {
     if (!race) return;
     
     // Reset all attributes to base values first
-   // Reset all attributes to base values first
-appliedRacialBonuses = {};
-
-// Reset each attribute individually
-const attrIds = ['Str', 'Nim', 'End', 'Wis', 'Int', 'Arc', 'Lck'];
-attrIds.forEach(attr => {
-    const element = document.getElementById('attr' + attr);
-    if (element) {
-        // Store current value as base if not already stored
-        if (baseAttributes[attr] === undefined) {
-            baseAttributes[attr] = parseInt(element.value) || 5;
-        }
-        // Reset to base value
-        element.value = baseAttributes[attr];
-        console.log(`Reset ${attr} to base value:`, baseAttributes[attr]);
-    }
+    appliedRacialBonuses = {};
+    Object.keys(baseAttributes).forEach(attr => {
+        document.getElementById('attr' + attr).value = baseAttributes[attr];
+    });
+    
+    // Apply racial bonuses based on race
+    if (race === 'Human') {
+        const checked = document.querySelectorAll('.human-choice:checked');
+       checked.forEach(cb => {
+    const attr = cb.value; // This will be "STR", "ARC", etc. (uppercase)
+    console.log('Applying +1 to:', attr);
+    // Convert to proper case: STR -> Str, ARC -> Arc, etc.
+    const attrProperCase = attr.charAt(0) + attr.slice(1).toLowerCase();
+    applyBonus(attrProperCase, 1);
 });
     } else if (race === 'Elf') {
         applyBonus('Nim', 1);
