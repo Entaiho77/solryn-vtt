@@ -371,11 +371,14 @@ function applyRacialBonuses() {
     if (!race) return;
     
     // Reset all attributes to base values first
-    appliedRacialBonuses = {};
-    Object.keys(baseAttributes).forEach(attr => {
-        document.getElementById('attr' + attr).value = baseAttributes[attr];
-    });
-    
+appliedRacialBonuses = {};
+Object.keys(baseAttributes).forEach(attr => {
+    const element = document.getElementById('attr' + attr);
+    if (element && baseAttributes[attr] !== undefined) {
+        element.value = baseAttributes[attr];
+        console.log(`Reset ${attr} to base value: ${baseAttributes[attr]}`);
+    }
+});
     // Apply racial bonuses based on race
     if (race === 'Human') {
         const checked = document.querySelectorAll('.human-choice:checked');
