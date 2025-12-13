@@ -374,6 +374,7 @@ function applyRacialBonuses() {
     });
     
    // Apply racial bonuses based on race
+// Apply racial bonuses based on race
 if (race === 'Human') {
     const checked = document.querySelectorAll('.human-choice:checked');
     console.log('Human - found checked boxes:', checked.length);
