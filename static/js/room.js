@@ -413,12 +413,12 @@ function applyBonus(attr, bonus) {
         return;
     }
     
-    const current = parseInt(element.value) || 0;
-    element.value = current + bonus;
+    // Use base value if available, otherwise use current value as base
+    const baseValue = baseAttributes[attr] !== undefined ? baseAttributes[attr] : parseInt(element.value);
+    element.value = baseValue + bonus;
     appliedRacialBonuses[attr] = bonus;
-    console.log(`Applied +${bonus} to ${attr}, new value: ${element.value}`);
+    console.log(`Applied +${bonus} to ${attr}, base: ${baseValue}, new value: ${element.value}`);
 }
-
 // Get racial traits text for character sheet
 function getRacialTraits(race) {
     const traits = {
