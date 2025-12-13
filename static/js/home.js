@@ -1,8 +1,8 @@
 // Home page functionality
 
 document.addEventListener('DOMContentLoaded', () => {
-    const createRoomBtn = document.getElementById('createRoomBtn');
-    const joinRoomBtn = document.getElementById('joinRoomBtn');
+    const createRoomBtn = document.getElementById('createBtn');
+    const joinRoomBtn = document.getElementById('joinBtn');
     const roomCodeInput = document.getElementById('roomCodeInput');
 
     // Create new room
