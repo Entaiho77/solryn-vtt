@@ -1,0 +1,65 @@
+/*
+  Design tokens: every color a component needs is referenced by role here.
+  Components must never hardcode raw colors — only var(--role).
+  Theme switch = swap the values below; structure/motion/layout never change.
+*/
+
+:root,
+[data-theme='dark'] {
+  --color-board-bg: #14161c;
+  --color-grid-line: rgba(255, 255, 255, 0.12);
+  --color-grid-line-strong: rgba(255, 255, 255, 0.22);
+
+  --color-surface: #1c1f27;
+  --color-surface-raised: #232733;
+
+  --color-text: #e8e9ed;
+  --color-text-muted: #9a9eac;
+
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-accent: #5b8cff;
+  --color-accent-text: #ffffff;
+  --color-danger: #ff5b6e;
+
+  --color-token-border: #f5f5f5;
+  --color-token-border-selected: #5b8cff;
+
+  /* drawers float over the map: translucent surface + blur so text stays
+     readable without ever going flat/opaque */
+  --color-drawer-bg: rgba(28, 31, 39, 0.72);
+  --drawer-blur: 14px;
+  --color-drawer-border: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='parchment'] {
+  --color-board-bg: #d9c9a3;
+  --color-grid-line: rgba(60, 45, 25, 0.18);
+  --color-grid-line-strong: rgba(60, 45, 25, 0.32);
+
+  --color-surface: #efe3c4;
+  --color-surface-raised: #f4eada;
+
+  --color-text: #2c2010;
+  --color-text-muted: #6b5b3a;
+
+  --color-border: rgba(60, 45, 25, 0.18);
+  --color-accent: #9a5b2c;
+  --color-accent-text: #fff8ec;
+  --color-danger: #a3342c;
+
+  --color-token-border: #3a2c14;
+  --color-token-border-selected: #9a5b2c;
+
+  --color-drawer-bg: rgba(244, 234, 218, 0.78);
+  --drawer-blur: 14px;
+  --color-drawer-border: rgba(60, 45, 25, 0.15);
+}
+
+:root {
+  /* shared motion language — same easing everywhere so the app feels
+     like one object, regardless of theme */
+  --motion-settle-duration: 280ms;
+  --motion-settle-ease: cubic-bezier(0.22, 1.4, 0.36, 1);
+  --motion-drawer-duration: 320ms;
+  --motion-drawer-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

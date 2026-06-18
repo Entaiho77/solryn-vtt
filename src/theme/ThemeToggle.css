@@ -1,0 +1,17 @@
+.theme-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--motion-drawer-duration) var(--motion-drawer-ease);
+}
+
+.theme-toggle:hover {
+  background: var(--color-surface-raised);
+}

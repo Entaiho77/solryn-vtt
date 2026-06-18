@@ -1,0 +1,10 @@
+.board-canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  cursor: grab;
+}
+
+.board-canvas:active {
+  cursor: grabbing;
+}
