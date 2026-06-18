@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { worldToScreen, screenToWorld, cellCenter, worldToCell } from './grid.js'
+import { CANVAS_THEME_COLORS } from '../theme/canvasColors.js'
 
 const TOKEN_RADIUS_RATIO = 0.42
 // spring stiffness for the weighted "settle on drop" feel — same constant
@@ -7,7 +8,9 @@ const TOKEN_RADIUS_RATIO = 0.42
 const SETTLE_RATE = 0.22
 const SETTLE_EPSILON = 0.4
 
-export default function Board({ gridSize, mapImage, tokens, onTokensChange }) {
+export default function Board({ gridSize, mapImage, tokens, onTokensChange, theme }) {
+  const colorsRef = useRef(CANVAS_THEME_COLORS[theme])
+  colorsRef.current = CANVAS_THEME_COLORS[theme]
   const canvasRef = useRef(null)
   const cameraRef = useRef({ x: 0, y: 0, scale: 1 })
   const dragRef = useRef(null) // { tokenId, offsetX, offsetY } in world coords
@@ -43,10 +46,7 @@ export default function Board({ gridSize, mapImage, tokens, onTokensChange }) {
       ctx.scale(dpr, dpr)
       ctx.clearRect(0, 0, w / dpr, h / dpr)
 
-      const styles = getComputedStyle(document.documentElement)
-      const boardBg = styles.getPropertyValue('--color-board-bg').trim()
-      const gridLine = styles.getPropertyValue('--color-grid-line').trim()
-      const tokenBorder = styles.getPropertyValue('--color-token-border').trim()
+      const { boardBg, gridLine, tokenBorder } = colorsRef.current
 
       ctx.fillStyle = boardBg
       ctx.fillRect(0, 0, w / dpr, h / dpr)
@@ -208,19 +208,26 @@ export default function Board({ gridSize, mapImage, tokens, onTokensChange }) {
     panRef.current = null
   }
 
-  function handleWheel(e) {
-    e.preventDefault()
-    const camera = cameraRef.current
-    const screen = getScreenPos(e)
-    const worldBefore = screenToWorld(camera, screen.x, screen.y)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    function handleWheel(e) {
+      e.preventDefault()
+      const camera = cameraRef.current
+      const screen = getScreenPos(e)
+      const worldBefore = screenToWorld(camera, screen.x, screen.y)
 
-    const zoomFactor = e.deltaY < 0 ? 1.1 : 1 / 1.1
-    camera.scale = Math.min(3, Math.max(0.25, camera.scale * zoomFactor))
+      const zoomFactor = e.deltaY < 0 ? 1.1 : 1 / 1.1
+      camera.scale = Math.min(3, Math.max(0.25, camera.scale * zoomFactor))
 
-    const worldAfter = screenToWorld(camera, screen.x, screen.y)
-    camera.x += worldBefore.x - worldAfter.x
-    camera.y += worldBefore.y - worldAfter.y
-  }
+      const worldAfter = screenToWorld(camera, screen.x, screen.y)
+      camera.x += worldBefore.x - worldAfter.x
+      camera.y += worldBefore.y - worldAfter.y
+    }
+    // React's onWheel attaches as a passive listener, which silently
+    // drops preventDefault — attach natively so zoom can stop page scroll.
+    canvas.addEventListener('wheel', handleWheel, { passive: false })
+    return () => canvas.removeEventListener('wheel', handleWheel)
+  }, [])
 
   return (
     <canvas
@@ -230,7 +237,6 @@ export default function Board({ gridSize, mapImage, tokens, onTokensChange }) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      onWheel={handleWheel}
     />
   )
 }
