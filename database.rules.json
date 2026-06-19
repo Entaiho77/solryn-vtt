@@ -33,6 +33,14 @@
 
         "turn": {
           ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
+        "sheetSchema": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
+        "fog": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
         }
       }
     }

@@ -8,15 +8,21 @@ const TOKEN_RADIUS_RATIO = 0.42
 const SETTLE_RATE = 0.22
 const SETTLE_EPSILON = 0.4
 
+const CLICK_MOVE_THRESHOLD = 4 // px — below this, a mouseup counts as a "select" click
+
 export default function Board({
   gridSize,
   mapImage,
   tokens,
   onTokensChange,
   onTokenDrop,
+  onSelectToken,
   theme,
   uid,
   isGm,
+  fog,
+  fogBrushActive,
+  onFogPaint,
 }) {
   const colorsRef = useRef(CANVAS_THEME_COLORS[theme])
   colorsRef.current = CANVAS_THEME_COLORS[theme]
@@ -24,10 +30,15 @@ export default function Board({
   const cameraRef = useRef({ x: 0, y: 0, scale: 1 })
   const dragRef = useRef(null) // { tokenId, offsetX, offsetY } in world coords
   const panRef = useRef(null) // { startScreenX, startScreenY, startCamX, startCamY }
+  const downRef = useRef(null) // { screenX, screenY, tokenId | null }
+  const fogPaintingRef = useRef(false) // is the fog brush currently held down
+  const fogPaintRef = useRef(null) // last painted "col,row" key, to avoid re-toggling mid-drag
   const tokensRef = useRef(tokens)
+  const fogRef = useRef(fog)
   const rafRef = useRef(null)
 
   tokensRef.current = tokens
+  fogRef.current = fog
 
   // resize canvas to fill container
   useEffect(() => {
@@ -133,6 +144,22 @@ export default function Board({
         ctx.stroke()
       }
 
+      // fog of war — drawn last so it covers tokens too. GM sees it
+      // semi-transparent (so they can still see what's hidden); players
+      // see it fully opaque.
+      if (fogRef.current?.enabled) {
+        const revealed = fogRef.current.revealed ?? {}
+        ctx.fillStyle = isGm ? 'rgba(0, 0, 0, 0.55)' : '#000'
+        for (let col = startCol; col <= endCol; col++) {
+          for (let row = startRow; row <= endRow; row++) {
+            if (revealed[`${col},${row}`]) continue
+            const x = (col * gridSize - camera.x) * camera.scale
+            const y = (row * gridSize - camera.y) * camera.scale
+            ctx.fillRect(x, y, gridSize * camera.scale, gridSize * camera.scale)
+          }
+        }
+      }
+
       ctx.restore()
       rafRef.current = requestAnimationFrame(draw)
     }
@@ -149,6 +176,14 @@ export default function Board({
   function handleMouseDown(e) {
     const screen = getScreenPos(e)
     const world = screenToWorld(cameraRef.current, screen.x, screen.y)
+
+    if (fogBrushActive && isGm) {
+      const { col, row } = worldToCell(gridSize, world.x, world.y)
+      fogPaintingRef.current = true
+      fogPaintRef.current = `${col},${row}`
+      onFogPaint?.(col, row)
+      return
+    }
 
     const hit = tokensRef.current.find((t) => {
       const dx = t.renderX - world.x
@@ -169,6 +204,8 @@ export default function Board({
       return
     }
 
+    downRef.current = { screenX: screen.x, screenY: screen.y, tokenId: hit?.id ?? null }
+
     if (hit) {
       dragRef.current = {
         tokenId: hit.id,
@@ -187,6 +224,18 @@ export default function Board({
 
   function handleMouseMove(e) {
     const screen = getScreenPos(e)
+
+    if (fogBrushActive && isGm) {
+      if (!fogPaintingRef.current) return // only paint while the mouse button is held
+      const world = screenToWorld(cameraRef.current, screen.x, screen.y)
+      const { col, row } = worldToCell(gridSize, world.x, world.y)
+      const key = `${col},${row}`
+      if (key !== fogPaintRef.current) {
+        fogPaintRef.current = key
+        onFogPaint?.(col, row)
+      }
+      return
+    }
 
     if (dragRef.current) {
       const world = screenToWorld(cameraRef.current, screen.x, screen.y)
@@ -213,7 +262,13 @@ export default function Board({
     }
   }
 
-  function handleMouseUp() {
+  function handleMouseUp(e) {
+    if (fogBrushActive && isGm) {
+      fogPaintingRef.current = false
+      fogPaintRef.current = null
+      return
+    }
+
     if (dragRef.current) {
       const tokenId = dragRef.current.tokenId
       let droppedCenter = null
@@ -227,9 +282,21 @@ export default function Board({
       tokensRef.current = updated
       onTokensChange(updated)
       if (droppedCenter) onTokenDrop?.(tokenId, droppedCenter.x, droppedCenter.y)
+
+      // A mouseup that barely moved from mousedown is a click, not a
+      // drag — treat it as selecting the token (e.g. to view its sheet).
+      if (e && downRef.current?.tokenId === tokenId) {
+        const screen = getScreenPos(e)
+        const dx = screen.x - downRef.current.screenX
+        const dy = screen.y - downRef.current.screenY
+        if (dx * dx + dy * dy <= CLICK_MOVE_THRESHOLD * CLICK_MOVE_THRESHOLD) {
+          onSelectToken?.(tokenId)
+        }
+      }
     }
     dragRef.current = null
     panRef.current = null
+    downRef.current = null
   }
 
   useEffect(() => {

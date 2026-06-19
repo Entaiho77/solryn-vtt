@@ -5,6 +5,8 @@ import Board from './board/Board.jsx'
 import Toolbar from './board/Toolbar.jsx'
 import DiceDrawer from './drawers/DiceDrawer.jsx'
 import TurnDrawer from './drawers/TurnDrawer.jsx'
+import SheetDrawer from './drawers/SheetDrawer.jsx'
+import FogDrawer from './drawers/FogDrawer.jsx'
 import { useRoomSync } from './sync/useRoomSync.js'
 import { getOrCreateRoomId, roomShareLink } from './sync/roomId.js'
 import { imageToDataUrl } from './utils/resizeImage.js'
@@ -15,17 +17,20 @@ const GRID_SIZE = 70
 function AppContent() {
   const { theme } = useTheme()
   const [roomId] = useState(getOrCreateRoomId)
-  const [diceOpen, setDiceOpen] = useState(false)
-  const [turnOpen, setTurnOpen] = useState(false)
+  // One drawer per side, max two open at once: left is dice|sheet, right is turn|fog.
+  const [leftDrawer, setLeftDrawer] = useState(null)
+  const [rightDrawer, setRightDrawer] = useState(null)
+  const [fogBrushActive, setFogBrushActive] = useState(false)
+  const [selectedTokenId, setSelectedTokenId] = useState(null)
   const sync = useRoomSync(roomId)
   const [tokens, setTokens] = useState([])
   const [mapImage, setMapImage] = useState(null)
   const localTokensRef = useRef(tokens)
   localTokensRef.current = tokens
 
-  // Merge remote token truth (color/targetX/targetY) into local state
-  // without clobbering renderX/renderY, which is local-only animation
-  // state Board eases toward the target every frame.
+  // Merge remote token truth into local state without clobbering
+  // renderX/renderY, which is local-only animation state Board eases
+  // toward the target every frame.
   useEffect(() => {
     const remoteIds = Object.keys(sync.remoteTokens)
     const existingById = new Map(localTokensRef.current.map((t) => [t.id, t]))
@@ -38,6 +43,7 @@ function AppContent() {
             ...existing,
             color: remote.color,
             ownerUid: remote.ownerUid,
+            sheet: remote.sheet,
             targetX: remote.targetX,
             targetY: remote.targetY,
           }
@@ -45,6 +51,7 @@ function AppContent() {
             id,
             color: remote.color,
             ownerUid: remote.ownerUid,
+            sheet: remote.sheet,
             targetX: remote.targetX,
             targetY: remote.targetY,
             renderX: remote.targetX,
@@ -93,6 +100,18 @@ function AppContent() {
     [sync],
   )
 
+  const handleSelectToken = useCallback((tokenId) => {
+    setSelectedTokenId(tokenId)
+    setLeftDrawer('sheet')
+  }, [])
+
+  const handleFogPaint = useCallback(
+    (col, row) => {
+      sync.toggleFogCell(col, row)
+    },
+    [sync],
+  )
+
   return (
     <>
       <ThemeToggle />
@@ -103,8 +122,10 @@ function AppContent() {
         presenceCount={sync.presenceCount}
         connected={sync.connected}
         isGm={sync.isGm}
-        onToggleDice={() => setDiceOpen((o) => !o)}
-        onToggleTurn={() => setTurnOpen((o) => !o)}
+        onToggleDice={() => setLeftDrawer((d) => (d === 'dice' ? null : 'dice'))}
+        onToggleSheet={() => setLeftDrawer((d) => (d === 'sheet' ? null : 'sheet'))}
+        onToggleTurn={() => setRightDrawer((d) => (d === 'turn' ? null : 'turn'))}
+        onToggleFog={() => setRightDrawer((d) => (d === 'fog' ? null : 'fog'))}
       />
       <Board
         gridSize={GRID_SIZE}
@@ -112,26 +133,54 @@ function AppContent() {
         tokens={tokens}
         onTokensChange={handleTokensChange}
         onTokenDrop={handleTokenDrop}
+        onSelectToken={handleSelectToken}
         theme={theme}
         uid={sync.uid}
         isGm={sync.isGm}
+        fog={sync.fog}
+        fogBrushActive={fogBrushActive && rightDrawer === 'fog'}
+        onFogPaint={handleFogPaint}
       />
       <DiceDrawer
-        open={diceOpen}
-        onClose={() => setDiceOpen(false)}
+        open={leftDrawer === 'dice'}
+        onClose={() => setLeftDrawer(null)}
         diceLog={sync.diceLog}
         uid={sync.uid}
         onRoll={sync.rollDice}
       />
+      <SheetDrawer
+        open={leftDrawer === 'sheet'}
+        onClose={() => setLeftDrawer(null)}
+        isGm={sync.isGm}
+        uid={sync.uid}
+        schema={sync.sheetSchema}
+        tokens={tokens}
+        selectedTokenId={selectedTokenId}
+        onSelectToken={setSelectedTokenId}
+        onSaveSchema={sync.setRoomSheetSchema}
+        onSaveTokenSheet={sync.updateTokenSheet}
+      />
       <TurnDrawer
-        open={turnOpen}
-        onClose={() => setTurnOpen(false)}
+        open={rightDrawer === 'turn'}
+        onClose={() => setRightDrawer(null)}
         isGm={sync.isGm}
         tokens={tokens}
         turn={sync.turn}
         onSetOrder={sync.setTurnOrder}
         onAdvance={sync.advanceTurn}
         onClear={sync.clearTurnOrder}
+      />
+      <FogDrawer
+        open={rightDrawer === 'fog'}
+        onClose={() => {
+          setRightDrawer(null)
+          setFogBrushActive(false)
+        }}
+        fog={sync.fog}
+        brushActive={fogBrushActive}
+        onToggleEnabled={sync.setFogEnabled}
+        onToggleBrush={setFogBrushActive}
+        onClear={sync.clearFog}
       />
     </>
   )

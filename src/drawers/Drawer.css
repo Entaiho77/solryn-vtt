@@ -64,3 +64,16 @@
   flex-direction: column;
   gap: 12px;
 }
+
+.drawer-body button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.drawer-body button:hover {
+  background: var(--color-surface-raised);
+}

@@ -1,0 +1,107 @@
+.sheet-schema-controls button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sheet-field-editor {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.sheet-field-editor input {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.sheet-field-editor select {
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.sheet-field-editor button {
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.sheet-schema-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sheet-hint {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.sheet-token-picker {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sheet-token-picker button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sheet-token-picker button.is-selected {
+  border-color: var(--color-accent);
+}
+
+.sheet-token-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.sheet-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sheet-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.sheet-field input,
+.sheet-field textarea {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+}
+
+.sheet-field textarea {
+  min-height: 70px;
+  resize: vertical;
+}

@@ -15,10 +15,12 @@ import { db, ensureSignedIn } from '../firebase.js'
 // Schema (Realtime Database):
 //   rooms/{roomId}/map                    -> data URL string | null
 //   rooms/{roomId}/gmUid                  -> uid of the room's GM (claimed once)
-//   rooms/{roomId}/tokens/{tokenId}        -> { color, ownerUid, targetX, targetY }
+//   rooms/{roomId}/tokens/{tokenId}        -> { color, ownerUid, targetX, targetY, sheet? }
 //   rooms/{roomId}/presence/{uid}          -> { joinedAt }
 //   rooms/{roomId}/diceLog/{rollId}        -> { uid, expression, rolls, modifier, total, rolledAt }
 //   rooms/{roomId}/turn                    -> { order: [tokenId, ...], currentIndex }
+//   rooms/{roomId}/sheetSchema             -> [{ id, label, type }, ...] (GM-defined fields)
+//   rooms/{roomId}/fog                     -> { enabled: bool, revealed: { "col,row": true, ... } }
 //
 // Token positions are owned fields, not concurrent text — last write per
 // field wins, which is exactly what RTDB path writes give us for free.
@@ -32,8 +34,8 @@ import { db, ensureSignedIn } from '../firebase.js'
 // Roles: the first person to load a fresh room link claims `gmUid` via a
 // transaction (only succeeds if it's still empty) and becomes GM. This is
 // enforced in `database.rules.json`, not just the UI — only the GM can
-// write `map` and `turn`, and a token can only be moved/removed by its
-// `ownerUid` or the GM.
+// write `map`, `turn`, `sheetSchema`, and `fog`, and a token (including
+// its `sheet` sub-object) can only be written by its `ownerUid` or the GM.
 
 export function useRoomSync(roomId) {
   const [remoteTokens, setRemoteTokens] = useState({})
@@ -44,6 +46,8 @@ export function useRoomSync(roomId) {
   const [gmUid, setGmUid] = useState(null)
   const [diceLog, setDiceLog] = useState({})
   const [turn, setTurn] = useState(null)
+  const [sheetSchema, setSheetSchema] = useState([])
+  const [fog, setFog] = useState(null)
 
   useEffect(() => {
     let unsubTokens = () => {}
@@ -53,6 +57,8 @@ export function useRoomSync(roomId) {
     let unsubGm = () => {}
     let unsubDiceLog = () => {}
     let unsubTurn = () => {}
+    let unsubSheetSchema = () => {}
+    let unsubFog = () => {}
 
     ensureSignedIn().then((user) => {
       setUid(user.uid)
@@ -89,6 +95,16 @@ export function useRoomSync(roomId) {
         setTurn(snapshot.val() || null)
       })
 
+      const sheetSchemaRef = ref(db, `rooms/${roomId}/sheetSchema`)
+      unsubSheetSchema = onValue(sheetSchemaRef, (snapshot) => {
+        setSheetSchema(snapshot.val() || [])
+      })
+
+      const fogRef = ref(db, `rooms/${roomId}/fog`)
+      unsubFog = onValue(fogRef, (snapshot) => {
+        setFog(snapshot.val() || null)
+      })
+
       const presenceRef = ref(db, `rooms/${roomId}/presence`)
       unsubPresence = onValue(presenceRef, (snapshot) => {
         const val = snapshot.val() || {}
@@ -120,6 +136,8 @@ export function useRoomSync(roomId) {
       unsubGm()
       unsubDiceLog()
       unsubTurn()
+      unsubSheetSchema()
+      unsubFog()
     }
   }, [roomId])
 
@@ -169,6 +187,27 @@ export function useRoomSync(roomId) {
     remove(ref(db, `rooms/${roomId}/turn`))
   }
 
+  function setRoomSheetSchema(fields) {
+    set(ref(db, `rooms/${roomId}/sheetSchema`), fields)
+  }
+
+  function updateTokenSheet(tokenId, sheet) {
+    update(ref(db, `rooms/${roomId}/tokens/${tokenId}`), { sheet })
+  }
+
+  function setFogEnabled(enabled) {
+    update(ref(db, `rooms/${roomId}/fog`), { enabled, revealed: fog?.revealed ?? {} })
+  }
+
+  function toggleFogCell(col, row) {
+    const cellRef = ref(db, `rooms/${roomId}/fog/revealed/${col},${row}`)
+    runTransaction(cellRef, (current) => (current ? null : true))
+  }
+
+  function clearFog() {
+    remove(ref(db, `rooms/${roomId}/fog/revealed`))
+  }
+
   return {
     remoteTokens,
     mapDataUrl,
@@ -179,6 +218,8 @@ export function useRoomSync(roomId) {
     isGm: !!uid && uid === gmUid,
     diceLog,
     turn,
+    sheetSchema,
+    fog,
     addToken,
     moveToken,
     removeToken,
@@ -187,5 +228,10 @@ export function useRoomSync(roomId) {
     setTurnOrder,
     advanceTurn,
     clearTurnOrder,
+    setRoomSheetSchema,
+    updateTokenSheet,
+    setFogEnabled,
+    toggleFogCell,
+    clearFog,
   }
 }

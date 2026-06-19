@@ -104,6 +104,39 @@ color changes between themes.
   lives on the left, turn order on the right — the two-drawer, one-per-side
   cap from the design brief.
 
+## Character sheets and fog of war (`src/drawers/SheetDrawer.jsx`, `FogDrawer.jsx`, Phase 4)
+
+- **Sheet schema.** The GM defines a list of fields (`{id, label, type}`,
+  type one of `text`/`number`/`longtext`) stored at
+  `rooms/{roomId}/sheetSchema`. This is system-agnostic by design — the
+  app has no idea what "HP" or "Sanity" means, it just renders whatever
+  fields the GM defines. Each token carries its own `sheet` data object
+  (`{fieldId: value}`) at `tokens/{tokenId}/sheet`; there's no separate
+  Rules path for it since it's a sub-object of the token, so it falls
+  under the existing per-token ownership rule (owner or GM can write).
+- **Selecting a token to view/edit its sheet** needed a "click" gesture
+  distinct from "drag" on the same canvas pointer handlers. `Board.jsx`
+  records the mousedown screen position and, on mouseup, only treats it
+  as a drop if the cursor moved past `CLICK_MOVE_THRESHOLD` (4px) —
+  otherwise it's a click and fires `onSelectToken`, which opens the Sheet
+  drawer for that token.
+- **Fog of war.** `rooms/{roomId}/fog = { enabled, revealed: {"col,row":
+  true} }`. Only the GM can write the `fog` node (Rules), and only the GM
+  can paint it (gated client-side too, since the brush is a GM-only
+  toolbar/drawer feature, not something a player even has UI for). Each
+  cell is toggled independently via `runTransaction` (`toggleFogCell`),
+  same atomic-flip pattern as the GM claim, so rapid brush strokes can't
+  race each other into a wrong state. The GM renders unrevealed cells at
+  partial opacity (so they can still see the board underneath); players
+  render them fully opaque — same fog data, different rendering, decided
+  entirely in `Board.jsx` from the `isGm` prop it already had.
+- **Drawer cap stays at two.** Adding two more drawer types (Sheet, Fog)
+  without breaking "max one per side, two total" meant moving from two
+  boolean toggles to two enum slots: `leftDrawer: null|'dice'|'sheet'`
+  and `rightDrawer: null|'turn'|'fog'` in `App.jsx`. Same drawer shell,
+  same physics, just a four-way state machine instead of two independent
+  booleans.
+
 ## Security notes (flag explicitly as they land)
 
 - **Phase 1:** no backend, no security surface — everything is local
@@ -125,6 +158,13 @@ color changes between themes.
   `Board.jsx` won't even start a drag on a token a player doesn't own —
   but the Rules are the actual enforcement; the UI hiding is just so
   players aren't shown controls that would fail anyway.
+- **Phase 4 (current):** `sheetSchema` and `fog` are both GM-only-write
+  in Rules (same `gmUid` check as `map`/`turn`). Per-token `sheet` data
+  has no separate rule — it's covered by the existing `tokens/$tokenId`
+  rule (owner-or-GM), which is correct since a sheet belongs to its
+  token. The Sheet drawer additionally checks `isGm || token.ownerUid ===
+  uid` client-side before letting fields be edited, mirroring the
+  Rules-level enforcement.
 
 ## Directory layout
 
@@ -135,6 +175,7 @@ src/
   styles/        design tokens (colors) + global/board CSS
   sync/          (Phase 2) Firebase RTDB read/write + presence
   drawers/       (Phase 3) drawer shell + dice roller + turn tracker
+                 (Phase 4) character sheet schema/editor + fog of war
   utils/         resizeImage.js (Phase 2), diceRoller.js (Phase 3)
 ```
 
@@ -147,4 +188,4 @@ src/
       above — Blaze-plan requirement).
 - [x] Phase 3 — dice roller with shared log, GM turn tracker, GM/player
       roles enforced in both UI and Database Rules.
-- [ ] Phase 4 — flexible character sheet schema, fog of war.
+- [x] Phase 4 — flexible GM-defined character sheet schema, fog of war.

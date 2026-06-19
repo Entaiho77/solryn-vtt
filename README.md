@@ -4,7 +4,23 @@ A generic, browser-based virtual tabletop. System-agnostic — built for
 the game I actually run, not a feature checklist. See `ARCHITECTURE.md`
 for the full design and phase plan.
 
-## Phase 3 (current): game table
+## Phase 4 (current): character sheets and fog of war
+
+- **Sheet** drawer (left, everyone can open it): the GM defines custom
+  fields (text/number/long text) for whatever game system you're running
+  — there's no built-in "HP" or "Sanity", you make the fields you need.
+  Click a token on the board (a quick click, not a drag) to open its
+  sheet; only the GM or the token's owner can edit its values.
+- **Fog of war** drawer (right, GM only): turn fog on, then use the
+  reveal/hide brush to paint cells directly on the board. The GM still
+  sees hidden cells faintly (so you know where you are); players see
+  them as solid black.
+- ⚠️ `database.rules.json` changed again for Phase 4 — re-publish it the
+  same way as before: Firebase Console → Realtime Database → Rules,
+  paste in the current contents of `database.rules.json` from this repo,
+  click Publish.
+
+## Phase 3: game table
 
 - Whoever opens a fresh room link first becomes the GM (shown as a "GM" /
   "Player" pill in the toolbar). Only the GM can load a map or run the
