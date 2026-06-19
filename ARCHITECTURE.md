@@ -11,8 +11,13 @@ truth; tools (drawers) are summoned over it, never resident.
   of discrete owned objects (`tokens/{id}/x`, `tokens/{id}/y`, ...) — a
   last-write-wins-per-field problem, not concurrent text editing — so
   Firebase's path-write/subscribe model fits directly. No CRDT library.
-- **Map storage (Phase 2+):** Firebase Storage, so every player loads the
-  same image from one URL instead of a local file.
+- **Map storage:** Firebase Storage requires the paid Blaze plan now (no
+  longer available on free Spark). To stay on Spark, the map image is
+  downscaled/re-encoded client-side (`src/utils/resizeImage.js`, capped
+  at 1600px / JPEG q=0.82) and stored as a data URL string directly at
+  `rooms/{roomId}/map` in the Realtime Database. Works for normal map
+  images; if this ever needs to handle very large/many images, revisit
+  Storage (requires Blaze) as the clean fix.
 - **Auth (Phase 2+):** Firebase Anonymous Auth — click the room link, get
   a UID, no signup. Real accounts can be added later by linking an
   anonymous UID to an email/password or OAuth credential
@@ -47,17 +52,44 @@ color changes between themes.
   spring (`SETTLE_RATE`) eases `render` toward `target` each frame —
   this is the "weighted settle on drop" feel, and the same constant will
   back drawer motion later so the whole app reads as one physical object.
-- `Toolbar.jsx` — local map file picker (Phase 1) / add-token button.
-  In Phase 2 "load map" becomes "upload to Storage", not a structural
-  change.
+- `Toolbar.jsx` — map file picker, add-token, copy-room-link, and a
+  presence/connection pill.
+
+## Sync (`src/sync/`, Phase 2)
+
+- `roomId.js` — a room is just a `?room=<id>` query param. No id means
+  "create one and put it in the URL" — that's the whole room-creation
+  flow; sharing the URL *is* the invite.
+- `useRoomSync.js` — the only place that talks to Firebase. Subscribes to
+  `rooms/{roomId}/tokens`, `/map`, and `/presence`; exposes plain
+  functions (`addToken`, `moveToken`, `setMap`) that write to those
+  paths. Presence uses `onDisconnect()` registered inside the
+  `.info/connected` listener, so it re-arms automatically after a
+  reconnect (tab close, refresh, or network drop all clean up the same
+  way).
+- **Token sync is target-only.** A token has a synced `target` (the
+  snapped cell it's heading to) and a local-only `render` position that
+  Board eases toward it every frame (`Board.jsx`'s existing spring).
+  Drags only write to Firebase on drop (`onTokenDrop`), not every
+  mousemove — cheap, and the spring makes the eventual jump still read
+  as "settling into place" rather than a teleport. If live mid-drag
+  motion across clients is wanted later, the clean fix is throttled
+  position writes during the drag; not built now since it's not needed
+  yet.
 
 ## Security notes (flag explicitly as they land)
 
-- **Phase 1 (current):** no backend, no security surface — everything is
-  local browser state.
-- **Phase 2:** Firebase Realtime Database rules will be written
-  alongside the sync code, not left at the default "test mode" open
-  rules. Anonymous Auth UID becomes the basis for "who owns this write."
+- **Phase 1:** no backend, no security surface — everything is local
+  browser state.
+- **Phase 2 (current):** `database.rules.json` requires `auth != null`
+  for any read/write under `rooms/{roomId}` — not left at the default
+  open "test mode" rules (which also expire after 30 days). This is
+  *room-scoped-by-link, not role-scoped*: anyone with the room link gets
+  an anonymous UID and can read/write everything in that room, including
+  other players' tokens. That's intentional for now — Phase 3 is exactly
+  where "can only move your own token" gets enforced, in Rules, not just
+  UI. Anyone without the link has no path to guess into a room (room ids
+  are random, rules require auth but don't allow listing rooms).
 - **Phase 3:** role enforcement (GM vs. player) must exist in *both* the
   UI (so players don't see controls they can't use) and the Database
   Rules (so a modified client can't move another player's token). UI
@@ -78,8 +110,9 @@ src/
 
 - [x] Phase 1 — static board: grid, pan/zoom, local map image, draggable
       snapping tokens, dark/parchment theme toggle, weighted drop motion.
-- [ ] Phase 2 — Firebase Realtime DB sync, room links, presence, map in
-      Storage.
+- [x] Phase 2 — Firebase Realtime DB sync, shareable room links, presence
+      + reconnect handling, map shared via RTDB (Storage skipped, see
+      above — Blaze-plan requirement).
 - [ ] Phase 3 — dice roller, turn tracker, GM/player roles enforced in
       Rules.
 - [ ] Phase 4 — flexible character sheet schema, fog of war.

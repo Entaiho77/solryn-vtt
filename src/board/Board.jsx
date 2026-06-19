@@ -8,7 +8,14 @@ const TOKEN_RADIUS_RATIO = 0.42
 const SETTLE_RATE = 0.22
 const SETTLE_EPSILON = 0.4
 
-export default function Board({ gridSize, mapImage, tokens, onTokensChange, theme }) {
+export default function Board({
+  gridSize,
+  mapImage,
+  tokens,
+  onTokensChange,
+  onTokenDrop,
+  theme,
+}) {
   const colorsRef = useRef(CANVAS_THEME_COLORS[theme])
   colorsRef.current = CANVAS_THEME_COLORS[theme]
   const canvasRef = useRef(null)
@@ -195,14 +202,17 @@ export default function Board({ gridSize, mapImage, tokens, onTokensChange, them
   function handleMouseUp() {
     if (dragRef.current) {
       const tokenId = dragRef.current.tokenId
+      let droppedCenter = null
       const updated = tokensRef.current.map((t) => {
         if (t.id !== tokenId) return t
         const { col, row } = worldToCell(gridSize, t.renderX, t.renderY)
         const center = cellCenter(gridSize, col, row)
+        droppedCenter = center
         return { ...t, targetX: center.x, targetY: center.y }
       })
       tokensRef.current = updated
       onTokensChange(updated)
+      if (droppedCenter) onTokenDrop?.(tokenId, droppedCenter.x, droppedCenter.y)
     }
     dragRef.current = null
     panRef.current = null
