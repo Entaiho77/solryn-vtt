@@ -4,7 +4,21 @@ A generic, browser-based virtual tabletop. System-agnostic — built for
 the game I actually run, not a feature checklist. See `ARCHITECTURE.md`
 for the full design and phase plan.
 
-## Phase 2 (current): multiplayer
+## Phase 3 (current): game table
+
+- Whoever opens a fresh room link first becomes the GM (shown as a "GM" /
+  "Player" pill in the toolbar). Only the GM can load a map or run the
+  turn tracker; anyone can roll dice and move their own tokens.
+- **Dice** drawer (left): type something like `2d6+3` or use the quick
+  buttons; rolls land in a shared log everyone in the room can see.
+- **Turn order** drawer (right): the GM picks tokens into an initiative
+  order and steps through turns; players see the same order, read-only.
+- ⚠️ If you already published `database.rules.json` for Phase 2, you need
+  to re-publish it — Phase 3 added rules for roles/dice/turn order. Go to
+  Firebase Console → Realtime Database → Rules, paste in the current
+  contents of `database.rules.json` from this repo, and click Publish.
+
+## Phase 2: multiplayer
 
 - Open the app, it puts a room id in the URL (`?room=abc123`). "Copy room
   link" shares it — anyone who opens that link joins the same room.

@@ -15,6 +15,8 @@ export default function Board({
   onTokensChange,
   onTokenDrop,
   theme,
+  uid,
+  isGm,
 }) {
   const colorsRef = useRef(CANVAS_THEME_COLORS[theme])
   colorsRef.current = CANVAS_THEME_COLORS[theme]
@@ -154,6 +156,18 @@ export default function Board({
       const radius = gridSize * TOKEN_RADIUS_RATIO
       return dx * dx + dy * dy <= radius * radius
     })
+
+    // Only the GM or the token's owner can drag it — mirrors the
+    // ownerUid/gmUid check enforced server-side in database.rules.json.
+    if (hit && !isGm && hit.ownerUid !== uid) {
+      panRef.current = {
+        startScreenX: screen.x,
+        startScreenY: screen.y,
+        startCamX: cameraRef.current.x,
+        startCamY: cameraRef.current.y,
+      }
+      return
+    }
 
     if (hit) {
       dragRef.current = {

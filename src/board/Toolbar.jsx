@@ -9,6 +9,9 @@ export default function Toolbar({
   roomLink,
   presenceCount,
   connected,
+  isGm,
+  onToggleDice,
+  onToggleTurn,
 }) {
   const fileInputRef = useRef(null)
   const [copied, setCopied] = useState(false)
@@ -30,7 +33,9 @@ export default function Toolbar({
 
   return (
     <div className="toolbar">
-      <button onClick={() => fileInputRef.current.click()}>Load map</button>
+      {isGm && (
+        <button onClick={() => fileInputRef.current.click()}>Load map</button>
+      )}
       <input
         ref={fileInputRef}
         type="file"
@@ -45,9 +50,12 @@ export default function Toolbar({
       >
         Add token
       </button>
+      <button onClick={onToggleDice}>Dice</button>
+      <button onClick={onToggleTurn}>Turn order</button>
       <button onClick={handleCopyLink}>
         {copied ? 'Link copied!' : 'Copy room link'}
       </button>
+      <span className="role-pill">{isGm ? 'GM' : 'Player'}</span>
       <span className={`presence-pill ${connected ? 'is-connected' : 'is-disconnected'}`}>
         {connected ? `● ${presenceCount} connected` : '○ reconnecting…'}
       </span>

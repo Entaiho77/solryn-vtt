@@ -3,7 +3,37 @@
     "rooms": {
       "$roomId": {
         ".read": "auth != null",
-        ".write": "auth != null"
+
+        "gmUid": {
+          ".write": "auth != null && (!data.exists() || data.val() === auth.uid)"
+        },
+
+        "map": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
+        "tokens": {
+          "$tokenId": {
+            ".write": "auth != null && (!data.exists() || data.child('ownerUid').val() === auth.uid || root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid)",
+            ".validate": "!newData.exists() || newData.child('ownerUid').val() === auth.uid || root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid || data.child('ownerUid').val() === newData.child('ownerUid').val()"
+          }
+        },
+
+        "presence": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid"
+          }
+        },
+
+        "diceLog": {
+          "$rollId": {
+            ".write": "auth != null && !data.exists() && newData.child('uid').val() === auth.uid"
+          }
+        },
+
+        "turn": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        }
       }
     }
   }

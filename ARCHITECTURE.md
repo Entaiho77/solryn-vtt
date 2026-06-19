@@ -77,6 +77,33 @@ color changes between themes.
   position writes during the drag; not built now since it's not needed
   yet.
 
+## Roles, dice, turn order (`src/drawers/`, `src/utils/diceRoller.js`, Phase 3)
+
+- **GM claim.** `rooms/{roomId}/gmUid` is empty in a fresh room. The first
+  client to see it empty claims it via a Realtime Database transaction
+  (`runTransaction`), which only commits if the value is still null — so
+  two tabs opening the same fresh link at once still resolve to a single
+  GM. `useRoomSync` derives `isGm = uid === gmUid` and exposes both.
+- **Token ownership.** Every token now carries `ownerUid` (set at
+  creation, in `addToken`). `Board.jsx` only starts a drag if
+  `isGm || token.ownerUid === uid`; the equivalent check is mirrored in
+  `database.rules.json` so a modified client can't bypass it.
+- **Dice roller** (`src/utils/diceRoller.js`, `DiceDrawer.jsx`) — parses
+  simple `NdM±K` notation (e.g. `2d6+3`), rolls client-side, and pushes
+  the result to `rooms/{roomId}/diceLog`. Log entries are write-once
+  (Rules reject edits to an existing entry) and tagged with the roller's
+  `uid`, so the shared log can't be tampered with after the fact.
+- **Turn tracker** (`TurnDrawer.jsx`) — the GM picks tokens into
+  `rooms/{roomId}/turn.order` and advances `currentIndex`; only the GM
+  can write `turn` (enforced in Rules, not just by hiding the controls in
+  the UI). Players see the same drawer, read-only.
+- **Drawers** (`src/drawers/Drawer.jsx`) — shared slide-in shell: fixed to
+  a side (`left`/`right`), translucent + blurred background
+  (`--color-drawer-bg`, `--drawer-blur`) so the map stays visible
+  underneath, same `--motion-drawer-*` timing as everything else. Dice
+  lives on the left, turn order on the right — the two-drawer, one-per-side
+  cap from the design brief.
+
 ## Security notes (flag explicitly as they land)
 
 - **Phase 1:** no backend, no security surface — everything is local
@@ -90,10 +117,14 @@ color changes between themes.
   where "can only move your own token" gets enforced, in Rules, not just
   UI. Anyone without the link has no path to guess into a room (room ids
   are random, rules require auth but don't allow listing rooms).
-- **Phase 3:** role enforcement (GM vs. player) must exist in *both* the
-  UI (so players don't see controls they can't use) and the Database
-  Rules (so a modified client can't move another player's token). UI
-  checks alone are not security — call this out again when it's built.
+- **Phase 3 (current):** role enforcement now exists in *both* places.
+  Rules: only the GM (`gmUid`) can write `map` and `turn`; a token can
+  only be written by its `ownerUid` or the GM; `diceLog` entries are
+  create-only and must be tagged with the writer's own `uid`. UI: the
+  "Load map" button and turn-order controls are hidden from players, and
+  `Board.jsx` won't even start a drag on a token a player doesn't own —
+  but the Rules are the actual enforcement; the UI hiding is just so
+  players aren't shown controls that would fail anyway.
 
 ## Directory layout
 
@@ -103,7 +134,8 @@ src/
   theme/         ThemeContext + toggle
   styles/        design tokens (colors) + global/board CSS
   sync/          (Phase 2) Firebase RTDB read/write + presence
-  drawers/       (Phase 3+) the drawer shell (slide-in panels over the map)
+  drawers/       (Phase 3) drawer shell + dice roller + turn tracker
+  utils/         resizeImage.js (Phase 2), diceRoller.js (Phase 3)
 ```
 
 ## Phase status
@@ -113,6 +145,6 @@ src/
 - [x] Phase 2 — Firebase Realtime DB sync, shareable room links, presence
       + reconnect handling, map shared via RTDB (Storage skipped, see
       above — Blaze-plan requirement).
-- [ ] Phase 3 — dice roller, turn tracker, GM/player roles enforced in
-      Rules.
+- [x] Phase 3 — dice roller with shared log, GM turn tracker, GM/player
+      roles enforced in both UI and Database Rules.
 - [ ] Phase 4 — flexible character sheet schema, fog of war.

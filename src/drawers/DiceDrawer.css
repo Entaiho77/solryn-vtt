@@ -1,0 +1,85 @@
+.dice-quick-rolls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dice-quick-rolls button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.dice-quick-rolls button:hover {
+  background: var(--color-surface-raised);
+}
+
+.dice-form {
+  display: flex;
+  gap: 8px;
+}
+
+.dice-form input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.dice-form button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  cursor: pointer;
+}
+
+.dice-error {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin: 0;
+}
+
+.dice-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.dice-log li {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--color-surface);
+}
+
+.dice-log li.is-mine {
+  border: 1px solid var(--color-accent);
+}
+
+.dice-log-expr {
+  font-weight: 600;
+}
+
+.dice-log-rolls,
+.dice-log-mod {
+  color: var(--color-text-muted);
+}
+
+.dice-log-total {
+  margin-left: auto;
+  font-weight: 700;
+}

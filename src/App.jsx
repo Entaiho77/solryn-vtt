@@ -3,6 +3,8 @@ import { ThemeProvider, useTheme } from './theme/ThemeContext.jsx'
 import ThemeToggle from './theme/ThemeToggle.jsx'
 import Board from './board/Board.jsx'
 import Toolbar from './board/Toolbar.jsx'
+import DiceDrawer from './drawers/DiceDrawer.jsx'
+import TurnDrawer from './drawers/TurnDrawer.jsx'
 import { useRoomSync } from './sync/useRoomSync.js'
 import { getOrCreateRoomId, roomShareLink } from './sync/roomId.js'
 import { imageToDataUrl } from './utils/resizeImage.js'
@@ -13,6 +15,8 @@ const GRID_SIZE = 70
 function AppContent() {
   const { theme } = useTheme()
   const [roomId] = useState(getOrCreateRoomId)
+  const [diceOpen, setDiceOpen] = useState(false)
+  const [turnOpen, setTurnOpen] = useState(false)
   const sync = useRoomSync(roomId)
   const [tokens, setTokens] = useState([])
   const [mapImage, setMapImage] = useState(null)
@@ -30,10 +34,17 @@ function AppContent() {
       const remote = sync.remoteTokens[id]
       const existing = existingById.get(id)
       return existing
-        ? { ...existing, color: remote.color, targetX: remote.targetX, targetY: remote.targetY }
+        ? {
+            ...existing,
+            color: remote.color,
+            ownerUid: remote.ownerUid,
+            targetX: remote.targetX,
+            targetY: remote.targetY,
+          }
         : {
             id,
             color: remote.color,
+            ownerUid: remote.ownerUid,
             targetX: remote.targetX,
             targetY: remote.targetY,
             renderX: remote.targetX,
@@ -91,6 +102,9 @@ function AppContent() {
         roomLink={roomShareLink(roomId)}
         presenceCount={sync.presenceCount}
         connected={sync.connected}
+        isGm={sync.isGm}
+        onToggleDice={() => setDiceOpen((o) => !o)}
+        onToggleTurn={() => setTurnOpen((o) => !o)}
       />
       <Board
         gridSize={GRID_SIZE}
@@ -99,6 +113,25 @@ function AppContent() {
         onTokensChange={handleTokensChange}
         onTokenDrop={handleTokenDrop}
         theme={theme}
+        uid={sync.uid}
+        isGm={sync.isGm}
+      />
+      <DiceDrawer
+        open={diceOpen}
+        onClose={() => setDiceOpen(false)}
+        diceLog={sync.diceLog}
+        uid={sync.uid}
+        onRoll={sync.rollDice}
+      />
+      <TurnDrawer
+        open={turnOpen}
+        onClose={() => setTurnOpen(false)}
+        isGm={sync.isGm}
+        tokens={tokens}
+        turn={sync.turn}
+        onSetOrder={sync.setTurnOrder}
+        onAdvance={sync.advanceTurn}
+        onClear={sync.clearTurnOrder}
       />
     </>
   )
