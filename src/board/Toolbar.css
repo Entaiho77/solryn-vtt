@@ -63,6 +63,11 @@
   box-shadow: inset 1px 1px 3px var(--shadow-bevel-dark);
 }
 
+.toolbar button.is-active {
+  background: var(--color-brass);
+  box-shadow: inset 1px 1px 3px var(--shadow-bevel-dark), 0 0 8px var(--color-brass-light);
+}
+
 .presence-pill,
 .role-pill {
   display: flex;

@@ -8,6 +8,7 @@ import TurnDrawer from './drawers/TurnDrawer.jsx'
 import SheetDrawer from './drawers/SheetDrawer.jsx'
 import FogDrawer from './drawers/FogDrawer.jsx'
 import BestiaryDrawer from './drawers/BestiaryDrawer.jsx'
+import ReferenceDropdown from './board/ReferenceDropdown.jsx'
 import EdgeButtonTabs from './board/EdgeButtonTabs.jsx'
 import EdgeButton from './board/EdgeButton.jsx'
 import { useRoomSync } from './sync/useRoomSync.js'
@@ -24,6 +25,7 @@ function AppContent() {
   // One drawer per side, max two open at once: left is sheet|bestiary, right is dice|turn|fog.
   const [leftDrawer, setLeftDrawer] = useState(null)
   const [rightDrawer, setRightDrawer] = useState(null)
+  const [referenceOpen, setReferenceOpen] = useState(false)
   const [fogBrushActive, setFogBrushActive] = useState(false)
   const [selectedTokenId, setSelectedTokenId] = useState(null)
   const sync = useRoomSync(roomId)
@@ -126,12 +128,15 @@ function AppContent() {
         connected={sync.connected}
         isGm={sync.isGm}
         onToggleFog={() => setRightDrawer((d) => (d === 'fog' ? null : 'fog'))}
+        onToggleReference={() => setReferenceOpen((o) => !o)}
+        referenceOpen={referenceOpen}
         themeToggle={<ThemeToggle />}
         mapType={sync.mapType}
         terrainDifficulty={sync.terrainDifficulty}
         onSetMapType={sync.setMapType}
         onSetTerrainDifficulty={sync.setTerrainDifficulty}
       />
+      <ReferenceDropdown open={referenceOpen} onClose={() => setReferenceOpen(false)} />
       <EdgeButtonTabs side="left">
         <EdgeButton
           icon="👤"

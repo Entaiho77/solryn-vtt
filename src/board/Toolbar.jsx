@@ -13,6 +13,8 @@ export default function Toolbar({
   connected,
   isGm,
   onToggleFog,
+  onToggleReference,
+  referenceOpen,
   themeToggle,
   mapType,
   terrainDifficulty,
@@ -67,6 +69,9 @@ export default function Toolbar({
           }
         >
           Add token
+        </button>
+        <button className={referenceOpen ? 'is-active' : ''} onClick={onToggleReference}>
+          📖 Reference
         </button>
         {isGm && <button onClick={onToggleFog}>Fog</button>}
         <button onClick={handleCopyLink}>
