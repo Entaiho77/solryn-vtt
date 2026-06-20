@@ -182,8 +182,8 @@ function AppContent() {
         {getScalePerSquare(sync.mapType, sync.terrainDifficulty)} {getMapTypeInfo(sync.mapType).unit}/sq
       </div>
       <DiceDrawer
-        open={leftDrawer === 'dice'}
-        onClose={() => setLeftDrawer(null)}
+        open={rightDrawer === 'dice'}
+        onClose={() => setRightDrawer(null)}
         diceLog={sync.diceLog}
         uid={sync.uid}
         onRoll={sync.rollDice}

@@ -24,7 +24,7 @@ export default function DiceDrawer({ open, onClose, diceLog, uid, onRoll }) {
   )
 
   return (
-    <Drawer side="left" title="Dice" open={open} onClose={onClose}>
+    <Drawer side="right" title="Dice" open={open} onClose={onClose}>
       <div className="dice-quick-rolls">
         {QUICK_ROLLS.map((q) => (
           <button key={q} onClick={() => roll(q)}>
