@@ -1,15 +1,15 @@
 .reference-dropdown {
   position: fixed;
   top: 56px;
-  left: 0;
-  right: 0;
+  left: 48px;
+  right: 48px;
   background: var(--color-leather);
   border-bottom: 2px solid var(--color-brass);
   box-shadow: 0 8px 16px var(--shadow-subtle);
   max-height: 50vh;
   display: flex;
   flex-direction: column;
-  z-index: 95;
+  z-index: 96;
   color: var(--color-text);
 }
 
