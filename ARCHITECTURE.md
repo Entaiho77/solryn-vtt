@@ -137,6 +137,30 @@ color changes between themes.
   same physics, just a four-way state machine instead of two independent
   booleans.
 
+## Grid scaling and map types (`src/utils/distanceCalculator.js`, post-Phase-4)
+
+- **Map type** (`world`/`area`/`city`/`battle`) and **terrain difficulty**
+  (`normal`/`difficult`/`favored`) together determine what one grid
+  square is worth in real distance — purely a display/measurement
+  concept for now, not enforced against token movement. The lookup table
+  (`SCALE_MAPS`) lives in one place (`distanceCalculator.js`) so the
+  scale values are easy to tune later.
+- The grid's *visual* pixel size (`GRID_SIZE`) never changes — only the
+  meaning of a square changes. This keeps camera/zoom math untouched and
+  keeps the feature display-only, matching "validate movement" being an
+  explicitly deferred future enhancement.
+- **Map type is chosen when the GM loads a map** (`MapTypeModal.jsx`),
+  defaulting to Battle since that's the most common immediate-play
+  scale. Both `mapType` and `terrainDifficulty` can also be changed
+  anytime from toolbar dropdowns — GM-write, but visible (disabled) to
+  players so everyone sees the current scale, same read-visible/GM-write
+  pattern as `fog`/`sheetSchema`. Synced at `rooms/{roomId}/mapType` and
+  `rooms/{roomId}/terrainDifficulty`, both GM-only-write in
+  `database.rules.json`.
+- A small corner label on the board (`.scale-label` in `App.jsx`) shows
+  the current map type, terrain, and resulting distance per square, so
+  the scale is visible without opening a drawer.
+
 ## Security notes (flag explicitly as they land)
 
 - **Phase 1:** no backend, no security surface — everything is local
@@ -165,6 +189,12 @@ color changes between themes.
   token. The Sheet drawer additionally checks `isGm || token.ownerUid ===
   uid` client-side before letting fields be edited, mirroring the
   Rules-level enforcement.
+- **Grid scaling (post-Phase-4):** `mapType` and `terrainDifficulty` are
+  GM-only-write in Rules, same `gmUid` check as the other GM-controlled
+  room state. They're display/measurement only right now — no movement
+  is blocked based on them — so there's no enforcement gap to flag yet;
+  that becomes relevant if movement validation against these values is
+  built later.
 
 ## Directory layout
 

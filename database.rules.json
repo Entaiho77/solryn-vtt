@@ -41,6 +41,14 @@
 
         "fog": {
           ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
+        "mapType": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
+        "terrainDifficulty": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
         }
       }
     }

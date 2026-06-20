@@ -4,7 +4,24 @@ A generic, browser-based virtual tabletop. System-agnostic — built for
 the game I actually run, not a feature checklist. See `ARCHITECTURE.md`
 for the full design and phase plan.
 
-## Phase 4 (current): character sheets and fog of war
+## Grid scaling and map types (current)
+
+- When the GM loads a map, a small popup asks what kind of map it is —
+  **World** (20 mi/square), **Area** (10 mi/square), **City** (20
+  ft/square), or **Battle** (5 ft/square, default). This sets how
+  distance on the grid should be read for that map.
+- **Map Type** and **Terrain** dropdowns in the toolbar let the GM
+  change the scale anytime (e.g. switching from a battle map back to a
+  world map, or marking terrain as Difficult/Favored to adjust travel
+  speed). Everyone sees the current scale; only the GM can change it.
+- A small label in the bottom-left corner of the board always shows the
+  current map type, terrain, and distance per square.
+- This is display/measurement only for now — it doesn't block token
+  movement yet.
+- ⚠️ `database.rules.json` changed again — re-publish it the same way as
+  before.
+
+## Phase 4: character sheets and fog of war
 
 - **Sheet** drawer (left, everyone can open it): the GM defines custom
   fields (text/number/long text) for whatever game system you're running

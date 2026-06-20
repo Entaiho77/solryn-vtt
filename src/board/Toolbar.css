@@ -89,3 +89,36 @@
 .role-pill {
   color: var(--color-brass-light);
 }
+
+.toolbar-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-cream);
+}
+
+.toolbar-select select {
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 3px;
+  border: 1px solid var(--color-brass-dark);
+  border-top-color: var(--color-brass-light);
+  border-left-color: var(--color-brass-light);
+  background: var(--color-brass-dark);
+  color: var(--color-cream);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow:
+    inset -1px -1px 2px var(--shadow-bevel-dark),
+    inset 1px 1px 1px var(--shadow-bevel-light);
+}
+
+.toolbar-select select:disabled {
+  cursor: default;
+  opacity: 0.7;
+}

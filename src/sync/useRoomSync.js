@@ -21,6 +21,8 @@ import { db, ensureSignedIn } from '../firebase.js'
 //   rooms/{roomId}/turn                    -> { order: [tokenId, ...], currentIndex }
 //   rooms/{roomId}/sheetSchema             -> [{ id, label, type }, ...] (GM-defined fields)
 //   rooms/{roomId}/fog                     -> { enabled: bool, revealed: { "col,row": true, ... } }
+//   rooms/{roomId}/mapType                 -> "world" | "area" | "city" | "battle"
+//   rooms/{roomId}/terrainDifficulty       -> "normal" | "difficult" | "favored"
 //
 // Token positions are owned fields, not concurrent text — last write per
 // field wins, which is exactly what RTDB path writes give us for free.
@@ -48,6 +50,8 @@ export function useRoomSync(roomId) {
   const [turn, setTurn] = useState(null)
   const [sheetSchema, setSheetSchema] = useState([])
   const [fog, setFog] = useState(null)
+  const [mapType, setMapTypeState] = useState('battle')
+  const [terrainDifficulty, setTerrainDifficultyState] = useState('normal')
 
   useEffect(() => {
     let unsubTokens = () => {}
@@ -59,6 +63,8 @@ export function useRoomSync(roomId) {
     let unsubTurn = () => {}
     let unsubSheetSchema = () => {}
     let unsubFog = () => {}
+    let unsubMapType = () => {}
+    let unsubTerrain = () => {}
 
     ensureSignedIn().then((user) => {
       setUid(user.uid)
@@ -105,6 +111,16 @@ export function useRoomSync(roomId) {
         setFog(snapshot.val() || null)
       })
 
+      const mapTypeRef = ref(db, `rooms/${roomId}/mapType`)
+      unsubMapType = onValue(mapTypeRef, (snapshot) => {
+        setMapTypeState(snapshot.val() || 'battle')
+      })
+
+      const terrainRef = ref(db, `rooms/${roomId}/terrainDifficulty`)
+      unsubTerrain = onValue(terrainRef, (snapshot) => {
+        setTerrainDifficultyState(snapshot.val() || 'normal')
+      })
+
       const presenceRef = ref(db, `rooms/${roomId}/presence`)
       unsubPresence = onValue(presenceRef, (snapshot) => {
         const val = snapshot.val() || {}
@@ -138,6 +154,8 @@ export function useRoomSync(roomId) {
       unsubTurn()
       unsubSheetSchema()
       unsubFog()
+      unsubMapType()
+      unsubTerrain()
     }
   }, [roomId])
 
@@ -160,6 +178,14 @@ export function useRoomSync(roomId) {
 
   function setMap(dataUrl) {
     set(ref(db, `rooms/${roomId}/map`), dataUrl)
+  }
+
+  function setMapType(type) {
+    set(ref(db, `rooms/${roomId}/mapType`), type)
+  }
+
+  function setTerrainDifficulty(difficulty) {
+    set(ref(db, `rooms/${roomId}/terrainDifficulty`), difficulty)
   }
 
   function rollDice(roll) {
@@ -220,10 +246,14 @@ export function useRoomSync(roomId) {
     turn,
     sheetSchema,
     fog,
+    mapType,
+    terrainDifficulty,
     addToken,
     moveToken,
     removeToken,
     setMap,
+    setMapType,
+    setTerrainDifficulty,
     rollDice,
     setTurnOrder,
     advanceTurn,

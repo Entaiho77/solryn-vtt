@@ -10,6 +10,7 @@ import FogDrawer from './drawers/FogDrawer.jsx'
 import { useRoomSync } from './sync/useRoomSync.js'
 import { getOrCreateRoomId, roomShareLink } from './sync/roomId.js'
 import { imageToDataUrl } from './utils/resizeImage.js'
+import { getScalePerSquare, getMapTypeInfo, MAP_NAMES, TERRAIN_NAMES } from './utils/distanceCalculator.js'
 import './styles/board.css'
 
 const GRID_SIZE = 70
@@ -126,6 +127,10 @@ function AppContent() {
         onToggleTurn={() => setRightDrawer((d) => (d === 'turn' ? null : 'turn'))}
         onToggleFog={() => setRightDrawer((d) => (d === 'fog' ? null : 'fog'))}
         themeToggle={<ThemeToggle />}
+        mapType={sync.mapType}
+        terrainDifficulty={sync.terrainDifficulty}
+        onSetMapType={sync.setMapType}
+        onSetTerrainDifficulty={sync.setTerrainDifficulty}
       />
       <Board
         gridSize={GRID_SIZE}
@@ -142,6 +147,10 @@ function AppContent() {
         fogBrushActive={fogBrushActive && rightDrawer === 'fog'}
         onFogPaint={handleFogPaint}
       />
+      <div className="scale-label">
+        {MAP_NAMES[sync.mapType]} &middot; {TERRAIN_NAMES[sync.terrainDifficulty]} terrain &middot;{' '}
+        {getScalePerSquare(sync.mapType, sync.terrainDifficulty)} {getMapTypeInfo(sync.mapType).unit}/sq
+      </div>
       <DiceDrawer
         open={leftDrawer === 'dice'}
         onClose={() => setLeftDrawer(null)}
