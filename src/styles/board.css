@@ -5,10 +5,12 @@
   width: calc(100vw - 40px);
   height: calc(100vh - 40px);
   cursor: grab;
-  border: 1px solid var(--color-brass);
+  border: 2px solid var(--color-brass);
   box-shadow:
+    0 0 0 2px var(--color-brass-dark),
     inset 0 0 0 1px var(--color-brass-light),
-    inset 0 0 28px var(--shadow-subtle);
+    inset 0 0 28px var(--shadow-subtle),
+    0 0 16px var(--shadow-subtle);
 }
 
 .board-canvas:active {
