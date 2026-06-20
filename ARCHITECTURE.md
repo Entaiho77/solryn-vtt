@@ -137,6 +137,36 @@ color changes between themes.
   same physics, just a four-way state machine instead of two independent
   booleans.
 
+## Edge button tabs (`src/board/EdgeButtonTabs.jsx`, `EdgeButton.jsx`, post-grid-scaling)
+
+- Drawer access moved off the toolbar onto two persistent 48px vertical
+  button columns fixed to the left/right edges of the viewport, below the
+  toolbar. Left holds **Character Sheet** and (GM-only) **Bestiary**;
+  right holds **Dice Roller** and **Turn Order**. **Fog** stayed a
+  toolbar button (GM-only, infrequent) rather than moving to an edge tab.
+- `leftDrawer`/`rightDrawer` in `App.jsx` are still the same two enum
+  slots as before, just fed by edge buttons instead of toolbar buttons:
+  `leftDrawer: null|'sheet'|'bestiary'`, `rightDrawer:
+  null|'dice'|'turn'|'fog'` — same one-per-side cap, same `Drawer.jsx`
+  shell and slide animation, no change to drawer internals.
+- `Drawer.css`'s `--left`/`--right` offsets moved from `0` to `48px` so
+  the open drawer no longer covers the edge tab it was opened from — the
+  tab stays clickable (and visibly "active") the whole time the drawer is
+  open, so clicking it again still closes the drawer.
+- `board.css`'s canvas/texture insets grew from a flat `20px` to `68px`
+  on the left/right (20px frame margin + 48px tab width) so the board
+  itself doesn't render underneath the tabs; top/bottom stayed `20px`
+  since the toolbar already overlays rather than pushing the board down.
+- **Bestiary** is a new GM-only feature, not just a relocated drawer: a
+  flat list of `{id, name, notes}` creature entries at
+  `rooms/{roomId}/bestiary`, edited the same way `sheetSchema` is (GM
+  free-edits the array, write goes straight to Firebase on each change —
+  no draft/save step needed since there's no schema-vs-data split here,
+  just notes). GM-only-write in `database.rules.json`, same `gmUid`
+  check as `sheetSchema`/`fog`/`mapType`. The edge button itself is
+  hidden from players, and the drawer also refuses to render its content
+  for a non-GM as a second guard.
+
 ## Grid scaling and map types (`src/utils/distanceCalculator.js`, post-Phase-4)
 
 - **Map type** (`world`/`area`/`city`/`battle`) and **terrain difficulty**
@@ -195,6 +225,13 @@ color changes between themes.
   is blocked based on them — so there's no enforcement gap to flag yet;
   that becomes relevant if movement validation against these values is
   built later.
+- **Edge button tabs / Bestiary (current):** no new security surface
+  from the edge-tab relocation itself — same drawers, same Rules. The new
+  `bestiary` node is GM-only-write in Rules (same `gmUid` check as
+  `sheetSchema`); the edge button that opens it is also hidden from
+  players client-side, so there's no UI path for a player to reach it,
+  but the Rules check is what actually prevents a modified client from
+  writing to it.
 
 ## Directory layout
 
@@ -206,6 +243,7 @@ src/
   sync/          (Phase 2) Firebase RTDB read/write + presence
   drawers/       (Phase 3) drawer shell + dice roller + turn tracker
                  (Phase 4) character sheet schema/editor + fog of war
+                 (post-grid-scaling) bestiary (GM-only creature notes)
   utils/         resizeImage.js (Phase 2), diceRoller.js (Phase 3)
 ```
 

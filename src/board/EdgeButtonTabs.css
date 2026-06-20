@@ -1,0 +1,55 @@
+.edge-button-tab {
+  position: fixed;
+  top: 56px;
+  bottom: 0;
+  width: 48px;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--color-wood);
+}
+
+.edge-button-tab--left {
+  left: 0;
+  border-right: 1px solid var(--color-brass-dark);
+}
+
+.edge-button-tab--right {
+  right: 0;
+  border-left: 1px solid var(--color-brass-dark);
+}
+
+.edge-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  border: 1px solid var(--color-brass-dark);
+  border-top-color: var(--color-brass-light);
+  border-left-color: var(--color-brass-light);
+  background: var(--color-brass-dark);
+  color: var(--color-cream);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset -1px -1px 2px var(--shadow-bevel-dark),
+    inset 1px 1px 1px var(--shadow-bevel-light);
+  transition: background 200ms ease, box-shadow 100ms ease, transform 100ms ease;
+}
+
+.edge-button:hover {
+  background: var(--color-brass);
+}
+
+.edge-button.is-active {
+  background: var(--color-brass);
+  box-shadow:
+    inset -2px -2px 4px var(--shadow-bevel-dark),
+    0 0 8px var(--color-brass-light);
+  transform: scale(0.96);
+}

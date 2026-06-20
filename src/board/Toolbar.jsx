@@ -12,9 +12,6 @@ export default function Toolbar({
   presenceCount,
   connected,
   isGm,
-  onToggleDice,
-  onToggleTurn,
-  onToggleSheet,
   onToggleFog,
   themeToggle,
   mapType,
@@ -71,9 +68,6 @@ export default function Toolbar({
         >
           Add token
         </button>
-        <button onClick={onToggleDice}>Dice</button>
-        <button onClick={onToggleSheet}>Sheet</button>
-        <button onClick={onToggleTurn}>Turn order</button>
         {isGm && <button onClick={onToggleFog}>Fog</button>}
         <button onClick={handleCopyLink}>
           {copied ? 'Link copied!' : 'Copy room link'}

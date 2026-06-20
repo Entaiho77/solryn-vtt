@@ -20,6 +20,7 @@ import { db, ensureSignedIn } from '../firebase.js'
 //   rooms/{roomId}/diceLog/{rollId}        -> { uid, expression, rolls, modifier, total, rolledAt }
 //   rooms/{roomId}/turn                    -> { order: [tokenId, ...], currentIndex }
 //   rooms/{roomId}/sheetSchema             -> [{ id, label, type }, ...] (GM-defined fields)
+//   rooms/{roomId}/bestiary                -> [{ id, name, notes }, ...] (GM-only creature notes)
 //   rooms/{roomId}/fog                     -> { enabled: bool, revealed: { "col,row": true, ... } }
 //   rooms/{roomId}/mapType                 -> "world" | "area" | "city" | "battle"
 //   rooms/{roomId}/terrainDifficulty       -> "normal" | "difficult" | "favored"
@@ -49,6 +50,7 @@ export function useRoomSync(roomId) {
   const [diceLog, setDiceLog] = useState({})
   const [turn, setTurn] = useState(null)
   const [sheetSchema, setSheetSchema] = useState([])
+  const [bestiary, setBestiaryState] = useState([])
   const [fog, setFog] = useState(null)
   const [mapType, setMapTypeState] = useState('battle')
   const [terrainDifficulty, setTerrainDifficultyState] = useState('normal')
@@ -62,6 +64,7 @@ export function useRoomSync(roomId) {
     let unsubDiceLog = () => {}
     let unsubTurn = () => {}
     let unsubSheetSchema = () => {}
+    let unsubBestiary = () => {}
     let unsubFog = () => {}
     let unsubMapType = () => {}
     let unsubTerrain = () => {}
@@ -104,6 +107,11 @@ export function useRoomSync(roomId) {
       const sheetSchemaRef = ref(db, `rooms/${roomId}/sheetSchema`)
       unsubSheetSchema = onValue(sheetSchemaRef, (snapshot) => {
         setSheetSchema(snapshot.val() || [])
+      })
+
+      const bestiaryRef = ref(db, `rooms/${roomId}/bestiary`)
+      unsubBestiary = onValue(bestiaryRef, (snapshot) => {
+        setBestiaryState(snapshot.val() || [])
       })
 
       const fogRef = ref(db, `rooms/${roomId}/fog`)
@@ -153,6 +161,7 @@ export function useRoomSync(roomId) {
       unsubDiceLog()
       unsubTurn()
       unsubSheetSchema()
+      unsubBestiary()
       unsubFog()
       unsubMapType()
       unsubTerrain()
@@ -221,6 +230,10 @@ export function useRoomSync(roomId) {
     update(ref(db, `rooms/${roomId}/tokens/${tokenId}`), { sheet })
   }
 
+  function setBestiary(creatures) {
+    set(ref(db, `rooms/${roomId}/bestiary`), creatures)
+  }
+
   function setFogEnabled(enabled) {
     update(ref(db, `rooms/${roomId}/fog`), { enabled, revealed: fog?.revealed ?? {} })
   }
@@ -245,6 +258,7 @@ export function useRoomSync(roomId) {
     diceLog,
     turn,
     sheetSchema,
+    bestiary,
     fog,
     mapType,
     terrainDifficulty,
@@ -260,6 +274,7 @@ export function useRoomSync(roomId) {
     clearTurnOrder,
     setRoomSheetSchema,
     updateTokenSheet,
+    setBestiary,
     setFogEnabled,
     toggleFogCell,
     clearFog,

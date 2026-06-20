@@ -39,6 +39,10 @@
           ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
         },
 
+        "bestiary": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
         "fog": {
           ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
         },

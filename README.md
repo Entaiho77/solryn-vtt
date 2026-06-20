@@ -4,7 +4,22 @@ A generic, browser-based virtual tabletop. System-agnostic — built for
 the game I actually run, not a feature checklist. See `ARCHITECTURE.md`
 for the full design and phase plan.
 
-## Grid scaling and map types (current)
+## UI redesign: edge button tabs (current)
+
+- Drawer access moved off the toolbar onto two vertical button columns
+  fixed to the left and right edges of the screen. Left: **Character
+  Sheet** and (GM-only) **Bestiary**. Right: **Dice Roller** and **Turn
+  Order**. Click a button to open its drawer; click it again to close.
+  Only one drawer per side can be open at once, same as before.
+- **Fog** stayed on the toolbar (still GM-only) since it's used less
+  often than the others.
+- **Bestiary** is new: a GM-only drawer for free-form creature notes
+  (name + notes per entry) — add, edit, or remove entries any time.
+  Players never see the Bestiary button.
+- ⚠️ `database.rules.json` changed again — re-publish it the same way as
+  before.
+
+## Grid scaling and map types
 
 - When the GM loads a map, a small popup asks what kind of map it is —
   **World** (20 mi/square), **Area** (10 mi/square), **City** (20

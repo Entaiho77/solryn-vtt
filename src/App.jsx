@@ -7,6 +7,9 @@ import DiceDrawer from './drawers/DiceDrawer.jsx'
 import TurnDrawer from './drawers/TurnDrawer.jsx'
 import SheetDrawer from './drawers/SheetDrawer.jsx'
 import FogDrawer from './drawers/FogDrawer.jsx'
+import BestiaryDrawer from './drawers/BestiaryDrawer.jsx'
+import EdgeButtonTabs from './board/EdgeButtonTabs.jsx'
+import EdgeButton from './board/EdgeButton.jsx'
 import { useRoomSync } from './sync/useRoomSync.js'
 import { getOrCreateRoomId, roomShareLink } from './sync/roomId.js'
 import { imageToDataUrl } from './utils/resizeImage.js'
@@ -18,7 +21,7 @@ const GRID_SIZE = 70
 function AppContent() {
   const { theme } = useTheme()
   const [roomId] = useState(getOrCreateRoomId)
-  // One drawer per side, max two open at once: left is dice|sheet, right is turn|fog.
+  // One drawer per side, max two open at once: left is sheet|bestiary, right is dice|turn|fog.
   const [leftDrawer, setLeftDrawer] = useState(null)
   const [rightDrawer, setRightDrawer] = useState(null)
   const [fogBrushActive, setFogBrushActive] = useState(false)
@@ -122,9 +125,6 @@ function AppContent() {
         presenceCount={sync.presenceCount}
         connected={sync.connected}
         isGm={sync.isGm}
-        onToggleDice={() => setLeftDrawer((d) => (d === 'dice' ? null : 'dice'))}
-        onToggleSheet={() => setLeftDrawer((d) => (d === 'sheet' ? null : 'sheet'))}
-        onToggleTurn={() => setRightDrawer((d) => (d === 'turn' ? null : 'turn'))}
         onToggleFog={() => setRightDrawer((d) => (d === 'fog' ? null : 'fog'))}
         themeToggle={<ThemeToggle />}
         mapType={sync.mapType}
@@ -132,6 +132,36 @@ function AppContent() {
         onSetMapType={sync.setMapType}
         onSetTerrainDifficulty={sync.setTerrainDifficulty}
       />
+      <EdgeButtonTabs side="left">
+        <EdgeButton
+          icon="👤"
+          label="Character Sheet"
+          active={leftDrawer === 'sheet'}
+          onClick={() => setLeftDrawer((d) => (d === 'sheet' ? null : 'sheet'))}
+        />
+        {sync.isGm && (
+          <EdgeButton
+            icon="👹"
+            label="Bestiary"
+            active={leftDrawer === 'bestiary'}
+            onClick={() => setLeftDrawer((d) => (d === 'bestiary' ? null : 'bestiary'))}
+          />
+        )}
+      </EdgeButtonTabs>
+      <EdgeButtonTabs side="right">
+        <EdgeButton
+          icon="🎲"
+          label="Dice Roller"
+          active={rightDrawer === 'dice'}
+          onClick={() => setRightDrawer((d) => (d === 'dice' ? null : 'dice'))}
+        />
+        <EdgeButton
+          icon="≡"
+          label="Turn Order"
+          active={rightDrawer === 'turn'}
+          onClick={() => setRightDrawer((d) => (d === 'turn' ? null : 'turn'))}
+        />
+      </EdgeButtonTabs>
       <Board
         gridSize={GRID_SIZE}
         mapImage={mapImage}
@@ -169,6 +199,13 @@ function AppContent() {
         onSelectToken={setSelectedTokenId}
         onSaveSchema={sync.setRoomSheetSchema}
         onSaveTokenSheet={sync.updateTokenSheet}
+      />
+      <BestiaryDrawer
+        open={leftDrawer === 'bestiary'}
+        onClose={() => setLeftDrawer(null)}
+        isGm={sync.isGm}
+        bestiary={sync.bestiary}
+        onSave={sync.setBestiary}
       />
       <TurnDrawer
         open={rightDrawer === 'turn'}
