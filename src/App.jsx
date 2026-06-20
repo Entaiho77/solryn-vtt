@@ -114,7 +114,6 @@ function AppContent() {
 
   return (
     <>
-      <ThemeToggle />
       <Toolbar
         onLoadMap={handleLoadMap}
         onAddToken={handleAddToken}
@@ -126,6 +125,7 @@ function AppContent() {
         onToggleSheet={() => setLeftDrawer((d) => (d === 'sheet' ? null : 'sheet'))}
         onToggleTurn={() => setRightDrawer((d) => (d === 'turn' ? null : 'turn'))}
         onToggleFog={() => setRightDrawer((d) => (d === 'fog' ? null : 'fog'))}
+        themeToggle={<ThemeToggle />}
       />
       <Board
         gridSize={GRID_SIZE}
@@ -134,6 +134,7 @@ function AppContent() {
         onTokensChange={handleTokensChange}
         onTokenDrop={handleTokenDrop}
         onSelectToken={handleSelectToken}
+        selectedTokenId={selectedTokenId}
         theme={theme}
         uid={sync.uid}
         isGm={sync.isGm}

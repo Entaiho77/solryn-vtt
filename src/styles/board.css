@@ -1,10 +1,62 @@
 .board-canvas {
   display: block;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  inset: 20px;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 40px);
   cursor: grab;
+  border: 1px solid var(--color-brass);
+  box-shadow:
+    inset 0 0 0 1px var(--color-brass-light),
+    inset 0 0 28px var(--shadow-subtle);
 }
 
 .board-canvas:active {
   cursor: grabbing;
+}
+
+/* the 20px gap left around the inset canvas reads as the wooden frame
+   of the table; grain is faked with banded gradients, no image assets */
+body {
+  background-color: var(--color-wood);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 14px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.04) 0px,
+      rgba(0, 0, 0, 0.04) 2px,
+      transparent 2px,
+      transparent 14px
+    );
+}
+
+/* leather texture for the board itself sits in a fixed overlay matching
+   the canvas inset, drawn in CSS rather than baked into canvas draws so
+   the render loop stays untouched */
+.board-texture {
+  position: fixed;
+  inset: 20px;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.025) 2px,
+      rgba(255, 255, 255, 0.025) 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
 }

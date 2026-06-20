@@ -14,6 +14,7 @@ export default function Toolbar({
   onToggleTurn,
   onToggleSheet,
   onToggleFog,
+  themeToggle,
 }) {
   const fileInputRef = useRef(null)
   const [copied, setCopied] = useState(false)
@@ -35,34 +36,39 @@ export default function Toolbar({
 
   return (
     <div className="toolbar">
-      {isGm && (
-        <button onClick={() => fileInputRef.current.click()}>Load map</button>
-      )}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        hidden
-      />
-      <button
-        onClick={() =>
-          onAddToken(TOKEN_COLORS[Math.floor(Math.random() * TOKEN_COLORS.length)])
-        }
-      >
-        Add token
-      </button>
-      <button onClick={onToggleDice}>Dice</button>
-      <button onClick={onToggleSheet}>Sheet</button>
-      <button onClick={onToggleTurn}>Turn order</button>
-      {isGm && <button onClick={onToggleFog}>Fog</button>}
-      <button onClick={handleCopyLink}>
-        {copied ? 'Link copied!' : 'Copy room link'}
-      </button>
-      <span className="role-pill">{isGm ? 'GM' : 'Player'}</span>
-      <span className={`presence-pill ${connected ? 'is-connected' : 'is-disconnected'}`}>
-        {connected ? `● ${presenceCount} connected` : '○ reconnecting…'}
-      </span>
+      <div className="toolbar-group">
+        {isGm && (
+          <button onClick={() => fileInputRef.current.click()}>Load map</button>
+        )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          hidden
+        />
+        <button
+          onClick={() =>
+            onAddToken(TOKEN_COLORS[Math.floor(Math.random() * TOKEN_COLORS.length)])
+          }
+        >
+          Add token
+        </button>
+        <button onClick={onToggleDice}>Dice</button>
+        <button onClick={onToggleSheet}>Sheet</button>
+        <button onClick={onToggleTurn}>Turn order</button>
+        {isGm && <button onClick={onToggleFog}>Fog</button>}
+        <button onClick={handleCopyLink}>
+          {copied ? 'Link copied!' : 'Copy room link'}
+        </button>
+      </div>
+      <div className="toolbar-group">
+        {themeToggle}
+        <span className="role-pill">{isGm ? 'GM' : 'Player'}</span>
+        <span className={`presence-pill ${connected ? 'is-connected' : 'is-disconnected'}`}>
+          {connected ? `● ${presenceCount} connected` : '○ reconnecting…'}
+        </span>
+      </div>
     </div>
   )
 }

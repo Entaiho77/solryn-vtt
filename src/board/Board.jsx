@@ -17,6 +17,7 @@ export default function Board({
   onTokensChange,
   onTokenDrop,
   onSelectToken,
+  selectedTokenId,
   theme,
   uid,
   isGm,
@@ -66,7 +67,7 @@ export default function Board({
       ctx.scale(dpr, dpr)
       ctx.clearRect(0, 0, w / dpr, h / dpr)
 
-      const { boardBg, gridLine, tokenBorder } = colorsRef.current
+      const { boardBg, gridLine, tokenBorder, tokenBorderSelected, tokenShadow } = colorsRef.current
 
       ctx.fillStyle = boardBg
       ctx.fillRect(0, 0, w / dpr, h / dpr)
@@ -135,13 +136,44 @@ export default function Board({
       for (const token of tokensRef.current) {
         const screen = worldToScreen(camera, token.renderX, token.renderY)
         const radius = gridSize * camera.scale * TOKEN_RADIUS_RATIO
+        const isSelected = token.id === selectedTokenId
+        const isOwned = isGm || token.ownerUid === uid
+
+        // table-shadow: tokens sit slightly elevated off the leather
+        ctx.save()
+        ctx.shadowColor = tokenShadow
+        ctx.shadowBlur = 6
+        ctx.shadowOffsetY = 3
         ctx.beginPath()
         ctx.arc(screen.x, screen.y, radius, 0, Math.PI * 2)
         ctx.fillStyle = token.color
         ctx.fill()
-        ctx.lineWidth = 2
-        ctx.strokeStyle = tokenBorder
+        ctx.restore()
+
+        // brass ring, brighter/glowing when selected
+        ctx.save()
+        if (isSelected) {
+          ctx.shadowColor = tokenBorderSelected
+          ctx.shadowBlur = 10
+        }
+        ctx.lineWidth = isSelected ? 3 : 2
+        ctx.strokeStyle = isSelected ? tokenBorderSelected : tokenBorder
         ctx.stroke()
+        ctx.restore()
+
+        // owned-token cap: small brass tick at the top-left of the ring
+        if (isOwned) {
+          ctx.beginPath()
+          ctx.arc(
+            screen.x - radius * 0.7,
+            screen.y - radius * 0.7,
+            Math.max(2, radius * 0.16),
+            0,
+            Math.PI * 2,
+          )
+          ctx.fillStyle = tokenBorderSelected
+          ctx.fill()
+        }
       }
 
       // fog of war — drawn last so it covers tokens too. GM sees it
@@ -321,13 +353,16 @@ export default function Board({
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="board-canvas"
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="board-canvas"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      />
+      <div className="board-texture" />
+    </>
   )
 }

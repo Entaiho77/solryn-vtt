@@ -3,13 +3,17 @@
 // Keep these in sync with the CSS values for each [data-theme] block.
 export const CANVAS_THEME_COLORS = {
   dark: {
-    boardBg: '#14161c',
-    gridLine: 'rgba(255, 255, 255, 0.12)',
-    tokenBorder: '#f5f5f5',
+    boardBg: '#2a2416',
+    gridLine: 'rgba(232, 220, 200, 0.1)',
+    tokenBorder: '#a89968',
+    tokenBorderSelected: '#d9c389',
+    tokenShadow: 'rgba(0, 0, 0, 0.5)',
   },
   parchment: {
-    boardBg: '#d9c9a3',
-    gridLine: 'rgba(60, 45, 25, 0.32)',
-    tokenBorder: '#3a2c14',
+    boardBg: '#d4c5b0',
+    gridLine: 'rgba(61, 52, 40, 0.22)',
+    tokenBorder: '#8b7b68',
+    tokenBorderSelected: '#8b5e2c',
+    tokenShadow: 'rgba(0, 0, 0, 0.25)',
   },
 }

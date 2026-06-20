@@ -4,55 +4,87 @@
   Theme switch = swap the values below; structure/motion/layout never change.
 */
 
+/*
+  Card-table aesthetic: worn leather board, wood frame, brass hardware.
+  Dark = aged patina brass on a dark leather table. Parchment = the same
+  table sun-faded, with polished brass. Only these values differ between
+  themes — layout, motion, and typography stay identical.
+*/
 :root,
 [data-theme='dark'] {
-  --color-board-bg: #14161c;
-  --color-grid-line: rgba(255, 255, 255, 0.12);
-  --color-grid-line-strong: rgba(255, 255, 255, 0.22);
+  --color-leather: #2a2416;
+  --color-leather-raised: #332b1a;
+  --color-wood: #3d3428;
+  --color-wood-light: #4a4030;
+  --color-brass: #8b7355;
+  --color-brass-light: #a89968;
+  --color-brass-dark: #5f4f38;
+  --color-cream: #e8dcc8;
 
-  --color-surface: #1c1f27;
-  --color-surface-raised: #232733;
+  --color-board-bg: var(--color-leather);
+  --color-grid-line: rgba(232, 220, 200, 0.1);
+  --color-grid-line-strong: rgba(232, 220, 200, 0.18);
 
-  --color-text: #e8e9ed;
-  --color-text-muted: #9a9eac;
+  --color-surface: var(--color-wood);
+  --color-surface-raised: var(--color-wood-light);
 
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-accent: #5b8cff;
-  --color-accent-text: #ffffff;
-  --color-danger: #ff5b6e;
+  --color-text: var(--color-cream);
+  --color-text-muted: var(--color-brass-light);
 
-  --color-token-border: #f5f5f5;
-  --color-token-border-selected: #5b8cff;
+  --color-border: #1a1410;
+  --color-accent: var(--color-brass-light);
+  --color-accent-text: #1a1410;
+  --color-danger: #c45b46;
+
+  --color-token-border: var(--color-brass-light);
+  --color-token-border-selected: #d9c389;
 
   /* drawers float over the map: translucent surface + blur so text stays
      readable without ever going flat/opaque */
-  --color-drawer-bg: rgba(28, 31, 39, 0.72);
+  --color-drawer-bg: rgba(61, 52, 40, 0.78);
   --drawer-blur: 14px;
-  --color-drawer-border: rgba(255, 255, 255, 0.08);
+  --color-drawer-border: var(--color-brass-dark);
+
+  --shadow-subtle: rgba(0, 0, 0, 0.4);
+  --shadow-bevel-light: rgba(255, 255, 255, 0.08);
+  --shadow-bevel-dark: rgba(0, 0, 0, 0.5);
 }
 
 [data-theme='parchment'] {
-  --color-board-bg: #d9c9a3;
-  --color-grid-line: rgba(60, 45, 25, 0.18);
-  --color-grid-line-strong: rgba(60, 45, 25, 0.32);
+  --color-leather: #d4c5b0;
+  --color-leather-raised: #ddd0bd;
+  --color-wood: #a68968;
+  --color-wood-light: #b89c7c;
+  --color-brass: #c9a876;
+  --color-brass-light: #e6c89d;
+  --color-brass-dark: #8b7b68;
+  --color-cream: #3d3428;
 
-  --color-surface: #efe3c4;
-  --color-surface-raised: #f4eada;
+  --color-board-bg: var(--color-leather);
+  --color-grid-line: rgba(61, 52, 40, 0.12);
+  --color-grid-line-strong: rgba(61, 52, 40, 0.22);
 
-  --color-text: #2c2010;
+  --color-surface: var(--color-wood);
+  --color-surface-raised: var(--color-wood-light);
+
+  --color-text: var(--color-cream);
   --color-text-muted: #6b5b3a;
 
-  --color-border: rgba(60, 45, 25, 0.18);
-  --color-accent: #9a5b2c;
+  --color-border: #8b7b68;
+  --color-accent: #8b5e2c;
   --color-accent-text: #fff8ec;
   --color-danger: #a3342c;
 
-  --color-token-border: #3a2c14;
-  --color-token-border-selected: #9a5b2c;
+  --color-token-border: var(--color-brass-dark);
+  --color-token-border-selected: #8b5e2c;
 
-  --color-drawer-bg: rgba(244, 234, 218, 0.78);
+  --color-drawer-bg: rgba(214, 196, 169, 0.82);
   --drawer-blur: 14px;
-  --color-drawer-border: rgba(60, 45, 25, 0.15);
+  --color-drawer-border: var(--color-brass-dark);
+
+  --shadow-subtle: rgba(0, 0, 0, 0.15);
+  --shadow-bevel-light: rgba(255, 255, 255, 0.4);
+  --shadow-bevel-dark: rgba(0, 0, 0, 0.2);
 }
 
 :root {
