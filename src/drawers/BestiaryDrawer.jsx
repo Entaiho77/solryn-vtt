@@ -18,7 +18,7 @@ function describeMonster(monster) {
   return lines.filter(Boolean).join('\n')
 }
 
-export default function BestiaryDrawer({ open, onClose, isGm, bestiary, onSave }) {
+export default function BestiaryDrawer({ open, onClose, isGm, bestiary, onSave, onAddToken }) {
   const [monsterList, setMonsterList] = useState(null)
   const [monsterQuery, setMonsterQuery] = useState('')
   const [loadingMonster, setLoadingMonster] = useState(false)
@@ -50,6 +50,7 @@ export default function BestiaryDrawer({ open, onClose, isGm, bestiary, onSave }
         ...bestiary,
         { id: `c${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, name: detail.name, notes: describeMonster(detail) },
       ])
+      onAddToken?.(detail.name)
       setMonsterQuery('')
     } finally {
       setLoadingMonster(false)

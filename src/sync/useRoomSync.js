@@ -15,7 +15,7 @@ import { db, ensureSignedIn } from '../firebase.js'
 // Schema (Realtime Database):
 //   rooms/{roomId}/map                    -> data URL string | null
 //   rooms/{roomId}/gmUid                  -> uid of the room's GM (claimed once)
-//   rooms/{roomId}/tokens/{tokenId}        -> { color, ownerUid, targetX, targetY, sheet? }
+//   rooms/{roomId}/tokens/{tokenId}        -> { color, ownerUid, targetX, targetY, sheet?, label? }
 //   rooms/{roomId}/presence/{uid}          -> { joinedAt }
 //   rooms/{roomId}/diceLog/{rollId}        -> { uid, expression, rolls, modifier, total, rolledAt }
 //   rooms/{roomId}/turn                    -> { order: [tokenId, ...], currentIndex }
@@ -168,10 +168,10 @@ export function useRoomSync(roomId) {
     }
   }, [roomId])
 
-  function addToken(color, x, y) {
+  function addToken(color, x, y, label) {
     const tokensRef = ref(db, `rooms/${roomId}/tokens`)
     const newRef = push(tokensRef)
-    set(newRef, { color, ownerUid: uid, targetX: x, targetY: y })
+    set(newRef, { color, ownerUid: uid, targetX: x, targetY: y, ...(label ? { label } : {}) })
   }
 
   function moveToken(tokenId, x, y) {

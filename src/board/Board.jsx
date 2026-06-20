@@ -174,6 +174,18 @@ export default function Board({
           ctx.fillStyle = tokenBorderSelected
           ctx.fill()
         }
+
+        // name label beneath labeled tokens (e.g. monsters added from the bestiary)
+        if (token.label) {
+          ctx.save()
+          ctx.font = `${Math.max(10, radius * 0.5)}px sans-serif`
+          ctx.textAlign = 'center'
+          ctx.fillStyle = tokenBorder
+          ctx.shadowColor = tokenShadow
+          ctx.shadowBlur = 3
+          ctx.fillText(token.label, screen.x, screen.y + radius + 14)
+          ctx.restore()
+        }
       }
 
       // fog of war — drawn last so it covers tokens too. GM sees it

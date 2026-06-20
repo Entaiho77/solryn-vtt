@@ -50,6 +50,7 @@ function AppContent() {
             color: remote.color,
             ownerUid: remote.ownerUid,
             sheet: remote.sheet,
+            label: remote.label,
             targetX: remote.targetX,
             targetY: remote.targetY,
           }
@@ -58,6 +59,7 @@ function AppContent() {
             color: remote.color,
             ownerUid: remote.ownerUid,
             sheet: remote.sheet,
+            label: remote.label,
             targetX: remote.targetX,
             targetY: remote.targetY,
             renderX: remote.targetX,
@@ -91,6 +93,15 @@ function AppContent() {
       const x = GRID_SIZE * 2 + GRID_SIZE / 2
       const y = GRID_SIZE * 2 + GRID_SIZE / 2
       sync.addToken(color, x, y)
+    },
+    [sync],
+  )
+
+  const handleAddMonsterToken = useCallback(
+    (name) => {
+      const x = GRID_SIZE * 2 + GRID_SIZE / 2
+      const y = GRID_SIZE * 2 + GRID_SIZE / 2
+      sync.addToken('#c45b5b', x, y, name)
     },
     [sync],
   )
@@ -211,6 +222,7 @@ function AppContent() {
         isGm={sync.isGm}
         bestiary={sync.bestiary}
         onSave={sync.setBestiary}
+        onAddToken={handleAddMonsterToken}
       />
       <TurnDrawer
         open={rightDrawer === 'turn'}
