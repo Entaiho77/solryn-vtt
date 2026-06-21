@@ -97,11 +97,11 @@ function AppContent() {
     [sync],
   )
 
-  const handleAddMonsterToken = useCallback(
+  const handleAddBestiaryToken = useCallback(
     (name) => {
       const x = GRID_SIZE * 6 + GRID_SIZE / 2
       const y = GRID_SIZE * 2 + GRID_SIZE / 2
-      sync.addToken('#c45b5b', x, y, name)
+      return sync.addToken('#c45b5b', x, y, name)
     },
     [sync],
   )
@@ -222,7 +222,9 @@ function AppContent() {
         isGm={sync.isGm}
         bestiary={sync.bestiary}
         onSave={sync.setBestiary}
-        onAddToken={handleAddMonsterToken}
+        onAddToken={handleAddBestiaryToken}
+        onUpdateTokenLabel={sync.updateTokenLabel}
+        onRemoveToken={sync.removeToken}
       />
       <TurnDrawer
         open={rightDrawer === 'turn'}

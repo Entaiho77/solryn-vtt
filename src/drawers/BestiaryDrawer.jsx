@@ -18,7 +18,16 @@ function describeMonster(monster) {
   return lines.filter(Boolean).join('\n')
 }
 
-export default function BestiaryDrawer({ open, onClose, isGm, bestiary, onSave, onAddToken }) {
+export default function BestiaryDrawer({
+  open,
+  onClose,
+  isGm,
+  bestiary,
+  onSave,
+  onAddToken,
+  onUpdateTokenLabel,
+  onRemoveToken,
+}) {
   const [monsterList, setMonsterList] = useState(null)
   const [monsterQuery, setMonsterQuery] = useState('')
   const [loadingMonster, setLoadingMonster] = useState(false)
@@ -39,18 +48,25 @@ export default function BestiaryDrawer({ open, onClose, isGm, bestiary, onSave, 
   }, [monsterList, monsterQuery])
 
   function addCreature() {
-    onSave([...bestiary, emptyCreature()])
+    const creature = emptyCreature()
+    creature.tokenId = onAddToken?.('')
+    onSave([...bestiary, creature])
   }
 
   async function addMonster(monster) {
     setLoadingMonster(true)
     try {
       const detail = await dnd5eApi.fetchDetail('monsters', monster.index)
+      const tokenId = onAddToken?.(detail.name)
       onSave([
         ...bestiary,
-        { id: `c${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, name: detail.name, notes: describeMonster(detail) },
+        {
+          id: `c${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          name: detail.name,
+          notes: describeMonster(detail),
+          tokenId,
+        },
       ])
-      onAddToken?.(detail.name)
       setMonsterQuery('')
     } finally {
       setLoadingMonster(false)
@@ -58,10 +74,16 @@ export default function BestiaryDrawer({ open, onClose, isGm, bestiary, onSave, 
   }
 
   function updateCreature(index, patch) {
+    const creature = bestiary[index]
+    if (patch.name !== undefined && creature.tokenId) {
+      onUpdateTokenLabel?.(creature.tokenId, patch.name)
+    }
     onSave(bestiary.map((c, i) => (i === index ? { ...c, ...patch } : c)))
   }
 
   function removeCreature(index) {
+    const creature = bestiary[index]
+    if (creature.tokenId) onRemoveToken?.(creature.tokenId)
     onSave(bestiary.filter((_, i) => i !== index))
   }
 

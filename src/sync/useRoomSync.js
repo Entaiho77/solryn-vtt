@@ -172,6 +172,11 @@ export function useRoomSync(roomId) {
     const tokensRef = ref(db, `rooms/${roomId}/tokens`)
     const newRef = push(tokensRef)
     set(newRef, { color, ownerUid: uid, targetX: x, targetY: y, ...(label ? { label } : {}) })
+    return newRef.key
+  }
+
+  function updateTokenLabel(tokenId, label) {
+    update(ref(db, `rooms/${roomId}/tokens/${tokenId}`), { label })
   }
 
   function moveToken(tokenId, x, y) {
@@ -265,6 +270,7 @@ export function useRoomSync(roomId) {
     addToken,
     moveToken,
     removeToken,
+    updateTokenLabel,
     setMap,
     setMapType,
     setTerrainDifficulty,
