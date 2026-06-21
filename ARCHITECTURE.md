@@ -175,11 +175,7 @@ color changes between themes.
   concept for now, not enforced against token movement. The lookup table
   (`SCALE_MAPS`) lives in one place (`distanceCalculator.js`) so the
   scale values are easy to tune later.
-- The grid's *visual* pixel size (`GRID_SIZE`) never changes — only the
-  meaning of a square changes. This keeps camera/zoom math untouched and
-  keeps the feature display-only, matching "validate movement" being an
-  explicitly deferred future enhancement.
-- **Map type is chosen when the GM loads a map** (`MapTypeModal.jsx`),
+- **Map type is chosen when the GM loads a map** (`MapLoadDialog.jsx`),
   defaulting to Battle since that's the most common immediate-play
   scale. Both `mapType` and `terrainDifficulty` can also be changed
   anytime from toolbar dropdowns — GM-write, but visible (disabled) to
@@ -190,6 +186,35 @@ color changes between themes.
 - A small corner label on the board (`.scale-label` in `App.jsx`) shows
   the current map type, terrain, and resulting distance per square, so
   the scale is visible without opening a drawer.
+
+## Grid presets & per-map pixel size (`src/utils/gridCalculation.js`, `MapLoadDialog.jsx`, current)
+
+- The grid's *visual* pixel size used to be a fixed constant
+  (`GRID_SIZE = 70`) regardless of the map image, so grid lines never
+  lined up with art drawn at a different scale. `MapLoadDialog.jsx`
+  (shown when the GM picks a file in "Load map") now asks how many
+  grid squares the image should be divided into — either a per-map-type
+  preset (Battle 20×15, City 25×25, Area 30×20, World 40×30) or a
+  custom width/height — and `gridCalculation.js#calculateGridSize`
+  derives `pixelsPerSquare` from the loaded image's actual pixel
+  dimensions divided by that square count (averaging the X/Y result so
+  non-square grids still get one consistent cell size).
+- That result is validated two ways before the map loads: grid
+  dimensions must be positive integers ≤99 (`validateGridDimensions`),
+  and the resulting `pixelsPerSquare` must be ≥32px so the grid isn't
+  imperceptibly fine (`validatePixelsPerSquare`); either failure shows
+  an inline error in the dialog instead of loading.
+- The chosen `{ width, height, pixelsPerSquare }` is synced as one
+  object at `rooms/{roomId}/grid` (GM-only-write, same `gmUid` pattern
+  as `mapType`/`fog`), and `App.jsx` uses `grid.pixelsPerSquare` as
+  `Board`'s `gridSize` prop (falling back to the old 70px constant
+  before any map has been loaded) — so the grid is locked in per map,
+  not globally fixed.
+- Custom grids don't define their own distance-per-square scale (the
+  spec only gives that to the four presets), so picking Custom keeps
+  Battle's ft/sq scale; the GM can still change that afterward via the
+  existing Map Type/Terrain toolbar dropdowns, independent of the
+  locked-in pixel grid.
 
 ## Security notes (flag explicitly as they land)
 

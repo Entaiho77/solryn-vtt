@@ -4,7 +4,24 @@ A generic, browser-based virtual tabletop. System-agnostic — built for
 the game I actually run, not a feature checklist. See `ARCHITECTURE.md`
 for the full design and phase plan.
 
-## UI redesign: edge button tabs (current)
+## Map load dialog: grid presets & automatic scaling (current)
+
+- "Load map" now opens a setup dialog instead of loading the image
+  straight away. Pick a map type — **Battle** (20×15 squares, default),
+  **City** (25×25), **Area** (30×20), **World** (40×30) — or **Custom
+  Grid** to type your own width/height (up to 99×99).
+- The dialog calculates pixels-per-square from your actual image
+  dimensions and the chosen grid size, so the grid lines line up with
+  the art instead of using one fixed size for every map. If the result
+  would be too fine to see clearly, or the grid dimensions are invalid,
+  it shows an error instead of loading.
+- This pixel size is locked in per map (stored with the room) — loading
+  a new map re-asks and recalculates; it's not a one-time global
+  setting.
+- ⚠️ `database.rules.json` changed again — re-publish it the same way as
+  before.
+
+## UI redesign: edge button tabs
 
 - Drawer access moved off the toolbar onto two vertical button columns
   fixed to the left and right edges of the screen. Left: **Character

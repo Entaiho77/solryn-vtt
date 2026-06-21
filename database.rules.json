@@ -53,6 +53,10 @@
 
         "terrainDifficulty": {
           ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+        },
+
+        "grid": {
+          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
         }
       }
     }

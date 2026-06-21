@@ -17,7 +17,7 @@ import { imageToDataUrl } from './utils/resizeImage.js'
 import { getScalePerSquare, getMapTypeInfo, MAP_NAMES, TERRAIN_NAMES } from './utils/distanceCalculator.js'
 import './styles/board.css'
 
-const GRID_SIZE = 70
+const DEFAULT_GRID_SIZE = 70
 
 function AppContent() {
   const { theme } = useTheme()
@@ -29,6 +29,7 @@ function AppContent() {
   const [fogBrushActive, setFogBrushActive] = useState(false)
   const [selectedTokenId, setSelectedTokenId] = useState(null)
   const sync = useRoomSync(roomId)
+  const gridSize = sync.grid?.pixelsPerSquare ?? DEFAULT_GRID_SIZE
   const [tokens, setTokens] = useState([])
   const [mapImage, setMapImage] = useState(null)
   const localTokensRef = useRef(tokens)
@@ -90,20 +91,20 @@ function AppContent() {
 
   const handleAddToken = useCallback(
     (color) => {
-      const x = GRID_SIZE * 6 + GRID_SIZE / 2
-      const y = GRID_SIZE * 2 + GRID_SIZE / 2
+      const x = gridSize * 6 + gridSize / 2
+      const y = gridSize * 2 + gridSize / 2
       sync.addToken(color, x, y)
     },
-    [sync],
+    [sync, gridSize],
   )
 
   const handleAddBestiaryToken = useCallback(
     (name) => {
-      const x = GRID_SIZE * 6 + GRID_SIZE / 2
-      const y = GRID_SIZE * 2 + GRID_SIZE / 2
+      const x = gridSize * 6 + gridSize / 2
+      const y = gridSize * 2 + gridSize / 2
       return sync.addToken('#c45b5b', x, y, name)
     },
-    [sync],
+    [sync, gridSize],
   )
 
   const handleTokensChange = useCallback((updated) => {
@@ -146,6 +147,7 @@ function AppContent() {
         terrainDifficulty={sync.terrainDifficulty}
         onSetMapType={sync.setMapType}
         onSetTerrainDifficulty={sync.setTerrainDifficulty}
+        onSetGrid={sync.setGrid}
       />
       <ReferenceDropdown open={referenceOpen} onClose={() => setReferenceOpen(false)} />
       <EdgeButtonTabs side="left">
@@ -179,7 +181,7 @@ function AppContent() {
         />
       </EdgeButtonTabs>
       <Board
-        gridSize={GRID_SIZE}
+        gridSize={gridSize}
         mapImage={mapImage}
         tokens={tokens}
         onTokensChange={handleTokensChange}

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import MapTypeModal from './MapTypeModal.jsx'
+import MapLoadDialog from './MapLoadDialog.jsx'
 import { MAP_TYPES, MAP_NAMES, TERRAIN_DIFFICULTIES, TERRAIN_NAMES, SCALE_MAPS } from '../utils/distanceCalculator.js'
 import './Toolbar.css'
 
@@ -20,6 +20,7 @@ export default function Toolbar({
   terrainDifficulty,
   onSetMapType,
   onSetTerrainDifficulty,
+  onSetGrid,
 }) {
   const fileInputRef = useRef(null)
   const [copied, setCopied] = useState(false)
@@ -34,13 +35,14 @@ export default function Toolbar({
     e.target.value = ''
   }
 
-  function handleConfirmMapType(type) {
+  function handleConfirmMapSetup({ mapType: type, gridDimensions, pixelsPerSquare }) {
     onSetMapType(type)
+    onSetGrid({ ...gridDimensions, pixelsPerSquare })
     onLoadMap(pendingImage)
     setPendingImage(null)
   }
 
-  function handleCancelMapType() {
+  function handleCancelMapSetup() {
     setPendingImage(null)
   }
 
@@ -114,7 +116,11 @@ export default function Toolbar({
         </span>
       </div>
       {pendingImage && (
-        <MapTypeModal onConfirm={handleConfirmMapType} onCancel={handleCancelMapType} />
+        <MapLoadDialog
+          image={pendingImage}
+          onConfirm={handleConfirmMapSetup}
+          onCancel={handleCancelMapSetup}
+        />
       )}
     </div>
   )

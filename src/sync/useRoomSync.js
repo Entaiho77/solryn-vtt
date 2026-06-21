@@ -24,6 +24,7 @@ import { db, ensureSignedIn } from '../firebase.js'
 //   rooms/{roomId}/fog                     -> { enabled: bool, revealed: { "col,row": true, ... } }
 //   rooms/{roomId}/mapType                 -> "world" | "area" | "city" | "battle"
 //   rooms/{roomId}/terrainDifficulty       -> "normal" | "difficult" | "favored"
+//   rooms/{roomId}/grid                    -> { width, height, pixelsPerSquare } (locked in at map load)
 //
 // Token positions are owned fields, not concurrent text — last write per
 // field wins, which is exactly what RTDB path writes give us for free.
@@ -54,6 +55,7 @@ export function useRoomSync(roomId) {
   const [fog, setFog] = useState(null)
   const [mapType, setMapTypeState] = useState('battle')
   const [terrainDifficulty, setTerrainDifficultyState] = useState('normal')
+  const [grid, setGridState] = useState(null)
 
   useEffect(() => {
     let unsubTokens = () => {}
@@ -68,6 +70,7 @@ export function useRoomSync(roomId) {
     let unsubFog = () => {}
     let unsubMapType = () => {}
     let unsubTerrain = () => {}
+    let unsubGrid = () => {}
 
     ensureSignedIn().then((user) => {
       setUid(user.uid)
@@ -129,6 +132,11 @@ export function useRoomSync(roomId) {
         setTerrainDifficultyState(snapshot.val() || 'normal')
       })
 
+      const gridRef = ref(db, `rooms/${roomId}/grid`)
+      unsubGrid = onValue(gridRef, (snapshot) => {
+        setGridState(snapshot.val() || null)
+      })
+
       const presenceRef = ref(db, `rooms/${roomId}/presence`)
       unsubPresence = onValue(presenceRef, (snapshot) => {
         const val = snapshot.val() || {}
@@ -165,6 +173,7 @@ export function useRoomSync(roomId) {
       unsubFog()
       unsubMapType()
       unsubTerrain()
+      unsubGrid()
     }
   }, [roomId])
 
@@ -200,6 +209,10 @@ export function useRoomSync(roomId) {
 
   function setTerrainDifficulty(difficulty) {
     set(ref(db, `rooms/${roomId}/terrainDifficulty`), difficulty)
+  }
+
+  function setGrid(gridInfo) {
+    set(ref(db, `rooms/${roomId}/grid`), gridInfo)
   }
 
   function rollDice(roll) {
@@ -267,6 +280,7 @@ export function useRoomSync(roomId) {
     fog,
     mapType,
     terrainDifficulty,
+    grid,
     addToken,
     moveToken,
     removeToken,
@@ -274,6 +288,7 @@ export function useRoomSync(roomId) {
     setMap,
     setMapType,
     setTerrainDifficulty,
+    setGrid,
     rollDice,
     setTurnOrder,
     advanceTurn,
