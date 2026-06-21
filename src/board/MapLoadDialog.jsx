@@ -69,7 +69,6 @@ export default function MapLoadDialog({ image, onConfirm, onCancel }) {
                 className={`map-type-option ${selectedType === type ? 'selected' : ''}`}
                 onClick={() => selectType(type)}
               >
-                <span className="map-type-circle" />
                 <span className="map-type-label">{preset.name}</span>
                 <span className="map-type-dimensions">
                   {preset.defaultGrid.width}×{preset.defaultGrid.height}
@@ -82,7 +81,6 @@ export default function MapLoadDialog({ image, onConfirm, onCancel }) {
             className={`map-type-option map-type-option-wide ${isCustom ? 'selected' : ''}`}
             onClick={() => selectType('custom')}
           >
-            <span className="map-type-circle" />
             <span className="map-type-label">Custom Grid</span>
           </button>
         </div>
