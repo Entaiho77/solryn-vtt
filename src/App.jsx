@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeProvider, useTheme } from './theme/ThemeContext.jsx'
 import ThemeToggle from './theme/ThemeToggle.jsx'
+import LandingPage from './pages/LandingPage.jsx'
 import Board from './board/Board.jsx'
 import Toolbar from './board/Toolbar.jsx'
 import DiceDrawer from './drawers/DiceDrawer.jsx'
@@ -255,9 +256,16 @@ function AppContent() {
 }
 
 export default function App() {
+  // Room links (?room=...) skip the landing page entirely — players who
+  // open a share link should drop straight into the board as before.
+  const hasRoomParam = useMemo(
+    () => new URL(window.location.href).searchParams.has('room'),
+    [],
+  )
+
   return (
     <ThemeProvider>
-      <AppContent />
+      {hasRoomParam ? <AppContent /> : <LandingPage />}
     </ThemeProvider>
   )
 }
