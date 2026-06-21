@@ -79,7 +79,7 @@ export default function MapLoadDialog({ image, onConfirm, onCancel }) {
           })}
           <button
             type="button"
-            className={`map-type-option ${isCustom ? 'selected' : ''}`}
+            className={`map-type-option map-type-option-wide ${isCustom ? 'selected' : ''}`}
             onClick={() => selectType('custom')}
           >
             <span className="map-type-circle" />
