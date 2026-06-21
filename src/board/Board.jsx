@@ -95,8 +95,13 @@ export default function Board({
       const startRow = Math.floor(topLeftWorld.y / gridSize)
       const endRow = Math.ceil(bottomRightWorld.y / gridSize)
 
+      ctx.save()
       ctx.strokeStyle = gridLine
       ctx.lineWidth = 1
+      if (mapImage) {
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'
+        ctx.shadowBlur = 1
+      }
       ctx.beginPath()
       for (let col = startCol; col <= endCol; col++) {
         const x = (col * gridSize - camera.x) * camera.scale
@@ -109,6 +114,7 @@ export default function Board({
         ctx.lineTo(viewW, y)
       }
       ctx.stroke()
+      ctx.restore()
 
       // tokens — animate render position toward target with a spring so
       // drops settle with weight instead of snapping instantly
