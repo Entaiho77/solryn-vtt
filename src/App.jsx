@@ -15,7 +15,7 @@ import EdgeButtonTabs from './board/EdgeButtonTabs.jsx'
 import EdgeButton from './board/EdgeButton.jsx'
 import { useRoomSync } from './sync/useRoomSync.js'
 import { getOrCreateRoomId, roomShareLink } from './sync/roomId.js'
-import { imageToDataUrl } from './utils/resizeImage.js'
+import { uploadImage } from './services/imageStorageService.js'
 import { getScalePerSquare, getMapTypeInfo, MAP_NAMES, TERRAIN_NAMES } from './utils/distanceCalculator.js'
 import './styles/board.css'
 
@@ -91,7 +91,7 @@ function AppContent() {
 
   const handleLoadMap = useCallback(
     (img) => {
-      sync.setMap(imageToDataUrl(img))
+      uploadImage(img).then(sync.setMap)
     },
     [sync],
   )

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { STATUS_EFFECT_PRESETS } from '../utils/statusEffects.js'
-import { imageToDataUrl } from '../utils/resizeImage.js'
+import { uploadImage } from '../services/imageStorageService.js'
 import './TokenQuickView.css'
 
 const PORTRAIT_MAX_DIMENSION = 160
@@ -61,7 +61,7 @@ export default function TokenQuickView({
     if (!file) return
     const img = new Image()
     img.onload = () => {
-      onUploadPortrait(imageToDataUrl(img, PORTRAIT_MAX_DIMENSION, 0.85))
+      uploadImage(img, PORTRAIT_MAX_DIMENSION, 0.85).then(onUploadPortrait)
     }
     img.src = URL.createObjectURL(file)
     e.target.value = ''
