@@ -90,7 +90,7 @@ function AppContent() {
 
   const handleAddToken = useCallback(
     (color) => {
-      const x = GRID_SIZE * 2 + GRID_SIZE / 2
+      const x = GRID_SIZE * 6 + GRID_SIZE / 2
       const y = GRID_SIZE * 2 + GRID_SIZE / 2
       sync.addToken(color, x, y)
     },
@@ -99,7 +99,7 @@ function AppContent() {
 
   const handleAddMonsterToken = useCallback(
     (name) => {
-      const x = GRID_SIZE * 2 + GRID_SIZE / 2
+      const x = GRID_SIZE * 6 + GRID_SIZE / 2
       const y = GRID_SIZE * 2 + GRID_SIZE / 2
       sync.addToken('#c45b5b', x, y, name)
     },
