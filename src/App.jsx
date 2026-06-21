@@ -267,6 +267,7 @@ function AppContent() {
         onAddToken={handleAddBestiaryToken}
         onUpdateTokenLabel={sync.updateTokenLabel}
         onRemoveToken={sync.removeToken}
+        onSetTokenPortrait={sync.setTokenPortrait}
       />
       <TurnDrawer
         open={rightDrawer === 'turn'}

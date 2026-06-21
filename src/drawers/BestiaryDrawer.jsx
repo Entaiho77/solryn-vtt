@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import Drawer from './Drawer.jsx'
 import { dnd5eApi } from '../services/dnd5eAPI.js'
+import { uploadImage } from '../services/imageStorageService.js'
 import './BestiaryDrawer.css'
+
+const SRD_BASE_URL = 'https://www.dnd5eapi.co'
+const TOKEN_PORTRAIT_MAX_DIMENSION = 160
 
 function emptyCreature() {
   return { id: `c${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, name: '', notes: '' }
@@ -27,6 +31,7 @@ export default function BestiaryDrawer({
   onAddToken,
   onUpdateTokenLabel,
   onRemoveToken,
+  onSetTokenPortrait,
 }) {
   const [monsterList, setMonsterList] = useState(null)
   const [monsterQuery, setMonsterQuery] = useState('')
@@ -68,9 +73,25 @@ export default function BestiaryDrawer({
         },
       ])
       setMonsterQuery('')
+      if (detail.image && tokenId) applySrdPortrait(tokenId, detail.image)
     } finally {
       setLoadingMonster(false)
     }
+  }
+
+  // The SRD API only has token art for a subset of monsters, and it's
+  // served cross-origin — if either the field is missing or the image
+  // can't be read back into a canvas (CORS), just leave the token's
+  // colored-circle fallback rather than failing the whole "add" action.
+  function applySrdPortrait(tokenId, imagePath) {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      uploadImage(img, TOKEN_PORTRAIT_MAX_DIMENSION, 0.85)
+        .then((dataUrl) => onSetTokenPortrait?.(tokenId, dataUrl))
+        .catch(() => {})
+    }
+    img.src = `${SRD_BASE_URL}${imagePath}`
   }
 
   function updateCreature(index, patch) {
