@@ -96,11 +96,17 @@ export default function Board({
       const endRow = Math.ceil(bottomRightWorld.y / gridSize)
 
       ctx.save()
-      ctx.strokeStyle = gridLine
       ctx.lineWidth = 1
       if (mapImage) {
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.6)'
-        ctx.shadowBlur = 1
+        // "difference" blend inverts whatever is underneath, so the line
+        // reads as light-on-dark or dark-on-light regardless of how light
+        // or dark the map art is at that point — a same-tone map (e.g. a
+        // cream parchment map under a cream grid color) can't make the
+        // line disappear the way a flat semi-transparent stroke can.
+        ctx.globalCompositeOperation = 'difference'
+        ctx.strokeStyle = '#888888'
+      } else {
+        ctx.strokeStyle = gridLine
       }
       ctx.beginPath()
       for (let col = startCol; col <= endCol; col++) {
