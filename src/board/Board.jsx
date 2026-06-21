@@ -217,14 +217,18 @@ export default function Board({
           ctx.fill()
         }
 
-        // name label beneath labeled tokens (e.g. monsters added from the bestiary)
+        // name label beneath labeled tokens (e.g. monsters added from the bestiary).
+        // A dark outline behind a light fill keeps the text readable on any
+        // map art, the same problem the grid lines had — a flat color label
+        // can match the map underneath it and disappear.
         if (token.label) {
           ctx.save()
-          ctx.font = `${Math.max(10, radius * 0.5)}px sans-serif`
+          ctx.font = `bold ${Math.max(11, radius * 0.55)}px sans-serif`
           ctx.textAlign = 'center'
-          ctx.fillStyle = tokenBorder
-          ctx.shadowColor = tokenShadow
-          ctx.shadowBlur = 3
+          ctx.lineWidth = 3
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.85)'
+          ctx.strokeText(token.label, screen.x, screen.y + radius + 14)
+          ctx.fillStyle = '#f5ead4'
           ctx.fillText(token.label, screen.x, screen.y + radius + 14)
           ctx.restore()
         }
