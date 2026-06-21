@@ -24,6 +24,7 @@ export default function Board({
   fog,
   fogBrushActive,
   onFogPaint,
+  onTokenContextMenu,
 }) {
   const colorsRef = useRef(CANVAS_THEME_COLORS[theme])
   colorsRef.current = CANVAS_THEME_COLORS[theme]
@@ -37,6 +38,20 @@ export default function Board({
   const tokensRef = useRef(tokens)
   const fogRef = useRef(fog)
   const rafRef = useRef(null)
+  const portraitImagesRef = useRef(new Map()) // tokenId -> { src, img }
+
+  // Portraits are small data URLs synced through RTDB (no Firebase Storage
+  // in this project) — cache the decoded Image per token so we're not
+  // re-decoding the same data URL every animation frame.
+  function getPortraitImage(token) {
+    if (!token.portrait) return null
+    const cached = portraitImagesRef.current.get(token.id)
+    if (cached?.src === token.portrait) return cached.img
+    const img = new Image()
+    img.src = token.portrait
+    portraitImagesRef.current.set(token.id, { src: token.portrait, img })
+    return img
+  }
 
   tokensRef.current = tokens
   fogRef.current = fog
@@ -162,14 +177,29 @@ export default function Board({
         ctx.fill()
         ctx.restore()
 
-        // brass ring, brighter/glowing when selected
+        // portrait image, clipped to the same circle, on top of the
+        // fallback color fill (so a slow-loading/missing image just
+        // leaves the color circle showing through)
+        const portraitImg = getPortraitImage(token)
+        if (portraitImg?.complete && portraitImg.naturalWidth > 0) {
+          ctx.save()
+          ctx.beginPath()
+          ctx.arc(screen.x, screen.y, radius, 0, Math.PI * 2)
+          ctx.clip()
+          ctx.drawImage(portraitImg, screen.x - radius, screen.y - radius, radius * 2, radius * 2)
+          ctx.restore()
+        }
+
+        // ring — color-coded to the first active status effect, falling
+        // back to the usual brass ring when the token has none
+        const ringColor = token.statusEffects?.[0]?.color
         ctx.save()
         if (isSelected) {
           ctx.shadowColor = tokenBorderSelected
           ctx.shadowBlur = 10
         }
-        ctx.lineWidth = isSelected ? 3 : 2
-        ctx.strokeStyle = isSelected ? tokenBorderSelected : tokenBorder
+        ctx.lineWidth = ringColor ? 4 : isSelected ? 3 : 2
+        ctx.strokeStyle = ringColor || (isSelected ? tokenBorderSelected : tokenBorder)
         ctx.stroke()
         ctx.restore()
 
@@ -355,6 +385,20 @@ export default function Board({
     downRef.current = null
   }
 
+  function handleContextMenu(e) {
+    e.preventDefault()
+    if (!onTokenContextMenu) return
+    const screen = getScreenPos(e)
+    const world = screenToWorld(cameraRef.current, screen.x, screen.y)
+    const hit = tokensRef.current.find((t) => {
+      const dx = t.renderX - world.x
+      const dy = t.renderY - world.y
+      const radius = gridSize * TOKEN_RADIUS_RATIO
+      return dx * dx + dy * dy <= radius * radius
+    })
+    if (hit) onTokenContextMenu(hit.id, screen.x, screen.y)
+  }
+
   useEffect(() => {
     const canvas = canvasRef.current
     function handleWheel(e) {
@@ -385,6 +429,7 @@ export default function Board({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onContextMenu={handleContextMenu}
       />
       <div className="board-texture" />
     </>

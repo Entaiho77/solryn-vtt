@@ -15,7 +15,8 @@ import { db, ensureSignedIn } from '../firebase.js'
 // Schema (Realtime Database):
 //   rooms/{roomId}/map                    -> data URL string | null
 //   rooms/{roomId}/gmUid                  -> uid of the room's GM (claimed once)
-//   rooms/{roomId}/tokens/{tokenId}        -> { color, ownerUid, targetX, targetY, sheet?, label? }
+//   rooms/{roomId}/tokens/{tokenId}        -> { color, ownerUid, targetX, targetY, sheet?, label?,
+//                                                portrait?: data URL, statusEffects?: [{ id, name, color }] }
 //   rooms/{roomId}/presence/{uid}          -> { joinedAt }
 //   rooms/{roomId}/diceLog/{rollId}        -> { uid, expression, rolls, modifier, total, rolledAt }
 //   rooms/{roomId}/turn                    -> { order: [tokenId, ...], currentIndex }
@@ -248,6 +249,14 @@ export function useRoomSync(roomId) {
     update(ref(db, `rooms/${roomId}/tokens/${tokenId}`), { sheet })
   }
 
+  function setTokenPortrait(tokenId, dataUrl) {
+    update(ref(db, `rooms/${roomId}/tokens/${tokenId}`), { portrait: dataUrl })
+  }
+
+  function setTokenStatusEffects(tokenId, statusEffects) {
+    update(ref(db, `rooms/${roomId}/tokens/${tokenId}`), { statusEffects })
+  }
+
   function setBestiary(creatures) {
     set(ref(db, `rooms/${roomId}/bestiary`), creatures)
   }
@@ -295,6 +304,8 @@ export function useRoomSync(roomId) {
     clearTurnOrder,
     setRoomSheetSchema,
     updateTokenSheet,
+    setTokenPortrait,
+    setTokenStatusEffects,
     setBestiary,
     setFogEnabled,
     toggleFogCell,

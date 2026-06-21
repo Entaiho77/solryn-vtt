@@ -4,6 +4,7 @@ import ThemeToggle from './theme/ThemeToggle.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import Board from './board/Board.jsx'
 import Toolbar from './board/Toolbar.jsx'
+import TokenQuickView from './board/TokenQuickView.jsx'
 import DiceDrawer from './drawers/DiceDrawer.jsx'
 import TurnDrawer from './drawers/TurnDrawer.jsx'
 import SheetDrawer from './drawers/SheetDrawer.jsx'
@@ -29,6 +30,7 @@ function AppContent() {
   const [referenceOpen, setReferenceOpen] = useState(false)
   const [fogBrushActive, setFogBrushActive] = useState(false)
   const [selectedTokenId, setSelectedTokenId] = useState(null)
+  const [quickViewToken, setQuickViewToken] = useState(null) // { tokenId, x, y }
   const sync = useRoomSync(roomId)
   const gridSize = sync.grid?.pixelsPerSquare ?? DEFAULT_GRID_SIZE
   const [tokens, setTokens] = useState([])
@@ -53,6 +55,8 @@ function AppContent() {
             ownerUid: remote.ownerUid,
             sheet: remote.sheet,
             label: remote.label,
+            portrait: remote.portrait,
+            statusEffects: remote.statusEffects,
             targetX: remote.targetX,
             targetY: remote.targetY,
           }
@@ -62,6 +66,8 @@ function AppContent() {
             ownerUid: remote.ownerUid,
             sheet: remote.sheet,
             label: remote.label,
+            portrait: remote.portrait,
+            statusEffects: remote.statusEffects,
             targetX: remote.targetX,
             targetY: remote.targetY,
             renderX: remote.targetX,
@@ -131,6 +137,15 @@ function AppContent() {
     [sync],
   )
 
+  const handleTokenContextMenu = useCallback((tokenId, x, y) => {
+    setQuickViewToken({ tokenId, x, y })
+  }, [])
+
+  const quickViewTokenData = quickViewToken
+    ? tokens.find((t) => t.id === quickViewToken.tokenId)
+    : null
+  const closeQuickView = useCallback(() => setQuickViewToken(null), [])
+
   return (
     <>
       <Toolbar
@@ -195,7 +210,31 @@ function AppContent() {
         fog={sync.fog}
         fogBrushActive={fogBrushActive && rightDrawer === 'fog'}
         onFogPaint={handleFogPaint}
+        onTokenContextMenu={handleTokenContextMenu}
       />
+      {quickViewTokenData && (
+        <TokenQuickView
+          token={quickViewTokenData}
+          schema={sync.sheetSchema}
+          isOwnerOrGM={sync.isGm || quickViewTokenData.ownerUid === sync.uid}
+          position={{ x: quickViewToken.x, y: quickViewToken.y }}
+          onClose={closeQuickView}
+          onAddStatusEffect={(effect) =>
+            sync.setTokenStatusEffects(quickViewTokenData.id, [
+              ...(quickViewTokenData.statusEffects ?? []),
+              effect,
+            ])
+          }
+          onRemoveStatusEffect={(effectId) =>
+            sync.setTokenStatusEffects(
+              quickViewTokenData.id,
+              (quickViewTokenData.statusEffects ?? []).filter((e) => e.id !== effectId),
+            )
+          }
+          onUploadPortrait={(dataUrl) => sync.setTokenPortrait(quickViewTokenData.id, dataUrl)}
+          onRemovePortrait={() => sync.setTokenPortrait(quickViewTokenData.id, null)}
+        />
+      )}
       <div className="scale-label">
         {MAP_NAMES[sync.mapType]} &middot; {TERRAIN_NAMES[sync.terrainDifficulty]} terrain &middot;{' '}
         {getScalePerSquare(sync.mapType, sync.terrainDifficulty)} {getMapTypeInfo(sync.mapType).unit}/sq
