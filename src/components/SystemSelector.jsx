@@ -1,4 +1,4 @@
-const SYSTEMS = ['D&D 5e', 'Pathfinder 2e', 'Call of Cthulhu', 'Generic / Custom']
+const SYSTEMS = ['D&D 5e', 'Pathfinder 2e', 'Call of Cthulhu', 'Solryn', 'Generic / Custom']
 
 export default function SystemSelector({ value, onChange }) {
   return (
