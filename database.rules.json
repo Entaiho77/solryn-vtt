@@ -36,7 +36,7 @@
         },
 
         "sheetSchema": {
-          ".write": "auth != null && root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid"
+          ".write": "auth != null && (root.child('rooms/' + $roomId + '/gmUid').val() === auth.uid || (!root.child('rooms/' + $roomId + '/gmUid').exists() && root.child('rooms/' + $roomId + '/meta/ownerId').val() === auth.uid))"
         },
 
         "bestiary": {
