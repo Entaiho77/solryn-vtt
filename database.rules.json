@@ -61,6 +61,13 @@
 
         "meta": {
           ".write": "auth != null && (!data.exists() || data.child('ownerId').val() === auth.uid)"
+        },
+
+        "characters": {
+          "$characterId": {
+            ".read": "auth != null",
+            ".write": "auth != null && (!data.exists() || data.child('playerId').val() === auth.uid)"
+          }
         }
       }
     },

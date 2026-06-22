@@ -10,6 +10,7 @@ import TurnDrawer from './drawers/TurnDrawer.jsx'
 import SheetDrawer from './drawers/SheetDrawer.jsx'
 import FogDrawer from './drawers/FogDrawer.jsx'
 import BestiaryDrawer from './drawers/BestiaryDrawer.jsx'
+import SolrynCharacterBuilder from './components/charactercreation/SolrynCharacterBuilder.jsx'
 import ReferenceDropdown from './board/ReferenceDropdown.jsx'
 import EdgeButtonTabs from './board/EdgeButtonTabs.jsx'
 import EdgeButton from './board/EdgeButton.jsx'
@@ -31,6 +32,7 @@ function AppContent() {
   const [fogBrushActive, setFogBrushActive] = useState(false)
   const [selectedTokenId, setSelectedTokenId] = useState(null)
   const [quickViewToken, setQuickViewToken] = useState(null) // { tokenId, x, y }
+  const [characterBuilderOpen, setCharacterBuilderOpen] = useState(false)
   const sync = useRoomSync(roomId)
   const gridSize = sync.grid?.pixelsPerSquare ?? DEFAULT_GRID_SIZE
   const [tokens, setTokens] = useState([])
@@ -164,7 +166,16 @@ function AppContent() {
         onSetMapType={sync.setMapType}
         onSetTerrainDifficulty={sync.setTerrainDifficulty}
         onSetGrid={sync.setGrid}
+        canCreateCharacter={!sync.isGm && sync.system === 'Solryn'}
+        onCreateCharacter={() => setCharacterBuilderOpen(true)}
       />
+      {characterBuilderOpen && (
+        <SolrynCharacterBuilder
+          roomId={roomId}
+          uid={sync.uid}
+          onClose={() => setCharacterBuilderOpen(false)}
+        />
+      )}
       <ReferenceDropdown
         open={referenceOpen}
         onClose={() => setReferenceOpen(false)}

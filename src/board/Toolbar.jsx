@@ -21,6 +21,8 @@ export default function Toolbar({
   onSetMapType,
   onSetTerrainDifficulty,
   onSetGrid,
+  canCreateCharacter,
+  onCreateCharacter,
 }) {
   const fileInputRef = useRef(null)
   const [copied, setCopied] = useState(false)
@@ -76,6 +78,7 @@ export default function Toolbar({
           📖 Reference
         </button>
         {isGm && <button onClick={onToggleFog}>Fog</button>}
+        {canCreateCharacter && <button onClick={onCreateCharacter}>Create Character</button>}
         <button onClick={handleCopyLink}>
           {copied ? 'Link copied!' : 'Copy room link'}
         </button>
