@@ -1,13 +1,6 @@
 const BASE_URL = import.meta.env.VITE_SOLRYN_API_URL || 'http://localhost:3000'
 const GM_TOKEN = import.meta.env.VITE_SOLRYN_GM_TOKEN || ''
 
-export const CATEGORIES = [
-  { key: 'spells', label: 'Spells' },
-  { key: 'races', label: 'Races' },
-  { key: 'skills', label: 'Skills' },
-  { key: 'equipment', label: 'Items' },
-]
-
 function flattenSkills(data) {
   return [
     ...data.baseSkills,

@@ -165,7 +165,11 @@ function AppContent() {
         onSetTerrainDifficulty={sync.setTerrainDifficulty}
         onSetGrid={sync.setGrid}
       />
-      <ReferenceDropdown open={referenceOpen} onClose={() => setReferenceOpen(false)} />
+      <ReferenceDropdown
+        open={referenceOpen}
+        onClose={() => setReferenceOpen(false)}
+        system={sync.system}
+      />
       <EdgeButtonTabs side="left">
         <EdgeButton
           icon="👤"
@@ -262,6 +266,7 @@ function AppContent() {
         open={leftDrawer === 'bestiary'}
         onClose={() => setLeftDrawer(null)}
         isGm={sync.isGm}
+        system={sync.system}
         bestiary={sync.bestiary}
         onSave={sync.setBestiary}
         onAddToken={handleAddBestiaryToken}

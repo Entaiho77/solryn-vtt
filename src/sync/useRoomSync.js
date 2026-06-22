@@ -26,6 +26,7 @@ import { db, ensureSignedIn } from '../firebase.js'
 //   rooms/{roomId}/mapType                 -> "world" | "area" | "city" | "battle"
 //   rooms/{roomId}/terrainDifficulty       -> "normal" | "difficult" | "favored"
 //   rooms/{roomId}/grid                    -> { width, height, pixelsPerSquare } (locked in at map load)
+//   rooms/{roomId}/meta/system              -> system label chosen at creation (e.g. "Solryn"); read-only here
 //
 // Token positions are owned fields, not concurrent text — last write per
 // field wins, which is exactly what RTDB path writes give us for free.
@@ -57,6 +58,7 @@ export function useRoomSync(roomId) {
   const [mapType, setMapTypeState] = useState('battle')
   const [terrainDifficulty, setTerrainDifficultyState] = useState('normal')
   const [grid, setGridState] = useState(null)
+  const [system, setSystem] = useState(null)
 
   useEffect(() => {
     let unsubTokens = () => {}
@@ -72,6 +74,7 @@ export function useRoomSync(roomId) {
     let unsubMapType = () => {}
     let unsubTerrain = () => {}
     let unsubGrid = () => {}
+    let unsubSystem = () => {}
 
     ensureSignedIn().then((user) => {
       setUid(user.uid)
@@ -138,6 +141,11 @@ export function useRoomSync(roomId) {
         setGridState(snapshot.val() || null)
       })
 
+      const systemRef = ref(db, `rooms/${roomId}/meta/system`)
+      unsubSystem = onValue(systemRef, (snapshot) => {
+        setSystem(snapshot.val() || null)
+      })
+
       const presenceRef = ref(db, `rooms/${roomId}/presence`)
       unsubPresence = onValue(presenceRef, (snapshot) => {
         const val = snapshot.val() || {}
@@ -175,6 +183,7 @@ export function useRoomSync(roomId) {
       unsubMapType()
       unsubTerrain()
       unsubGrid()
+      unsubSystem()
     }
   }, [roomId])
 
@@ -290,6 +299,7 @@ export function useRoomSync(roomId) {
     mapType,
     terrainDifficulty,
     grid,
+    system,
     addToken,
     moveToken,
     removeToken,

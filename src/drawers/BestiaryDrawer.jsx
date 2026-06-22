@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import Drawer from './Drawer.jsx'
-import { solrynApi } from '../services/solrynAPI.js'
+import { getSystemApi } from '../services/systemDataService.js'
 import './BestiaryDrawer.css'
 
 function emptyCreature() {
@@ -20,6 +20,7 @@ export default function BestiaryDrawer({
   open,
   onClose,
   isGm,
+  system,
   bestiary,
   onSave,
   onAddToken,
@@ -30,13 +31,15 @@ export default function BestiaryDrawer({
   const [monsterQuery, setMonsterQuery] = useState('')
   const [loadingMonster, setLoadingMonster] = useState(false)
 
+  const api = getSystemApi(system)
+
   useEffect(() => {
-    if (!open || monsterList || !isGm) return
-    solrynApi
+    if (!open || monsterList || !isGm || !api) return
+    api
       .fetchList('creatures')
       .then(setMonsterList)
       .catch(() => setMonsterList([]))
-  }, [open, monsterList, isGm])
+  }, [open, monsterList, isGm, api])
 
   const monsterResults = useMemo(() => {
     if (!monsterList) return []
@@ -52,9 +55,10 @@ export default function BestiaryDrawer({
   }
 
   async function addMonster(monster) {
+    if (!api) return
     setLoadingMonster(true)
     try {
-      const detail = await solrynApi.fetchDetail('creatures', monster.id)
+      const detail = await api.fetchDetail('creatures', monster.id)
       const tokenId = onAddToken?.(detail.name)
       onSave([
         ...bestiary,
@@ -90,25 +94,29 @@ export default function BestiaryDrawer({
       {!isGm && <p className="bestiary-hint">Only the GM can view the bestiary.</p>}
       {isGm && (
         <>
-          <div className="bestiary-srd-search">
-            <input
-              placeholder="Search Solryn creatures to add..."
-              value={monsterQuery}
-              onChange={(e) => setMonsterQuery(e.target.value)}
-            />
-            {monsterQuery && (
-              <ul className="bestiary-srd-results">
-                {monsterResults.length === 0 && <li className="bestiary-hint">No matches.</li>}
-                {monsterResults.map((m) => (
-                  <li key={m.id}>
-                    <button disabled={loadingMonster} onClick={() => addMonster(m)}>
-                      {m.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          {api ? (
+            <div className="bestiary-srd-search">
+              <input
+                placeholder="Search Solryn creatures to add..."
+                value={monsterQuery}
+                onChange={(e) => setMonsterQuery(e.target.value)}
+              />
+              {monsterQuery && (
+                <ul className="bestiary-srd-results">
+                  {monsterResults.length === 0 && <li className="bestiary-hint">No matches.</li>}
+                  {monsterResults.map((m) => (
+                    <li key={m.id}>
+                      <button disabled={loadingMonster} onClick={() => addMonster(m)}>
+                        {m.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ) : (
+            <p className="bestiary-hint">No creature data available for this system.</p>
+          )}
           {bestiary.length === 0 && <p className="bestiary-hint">No creatures added yet.</p>}
           <ul className="bestiary-list">
             {bestiary.map((creature, i) => (

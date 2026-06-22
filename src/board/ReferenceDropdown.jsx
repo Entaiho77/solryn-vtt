@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CATEGORIES } from '../services/solrynAPI.js'
-import { useReferenceData } from '../hooks/useReferenceData.js'
+import { useReferenceData, CATEGORIES } from '../hooks/useReferenceData.js'
 import './ReferenceDropdown.css'
 
 const TABS = [{ key: 'all', label: 'All' }, ...CATEGORIES]
@@ -34,8 +33,8 @@ function describeDetail(category, detail) {
   return lines
 }
 
-export default function ReferenceDropdown({ open, onClose }) {
-  const { lists, loading, error, loadLists, getDetail } = useReferenceData()
+export default function ReferenceDropdown({ open, onClose, system }) {
+  const { lists, loading, error, loadLists, getDetail, hasData } = useReferenceData(system)
   const [activeTab, setActiveTab] = useState('all')
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
@@ -103,9 +102,10 @@ export default function ReferenceDropdown({ open, onClose }) {
       </div>
       <div className="reference-body">
         <div className="reference-results">
-          {loading && <p className="reference-hint">Loading Solryn reference data...</p>}
-          {error && <p className="reference-hint">Failed to load reference data: {error}</p>}
-          {!loading && !error && results.length === 0 && (
+          {!hasData && <p className="reference-hint">No reference data available for this system.</p>}
+          {hasData && loading && <p className="reference-hint">Loading reference data...</p>}
+          {hasData && error && <p className="reference-hint">Failed to load reference data: {error}</p>}
+          {hasData && !loading && !error && results.length === 0 && (
             <p className="reference-hint">No matching results. Try a different search.</p>
           )}
           <ul>

@@ -1,6 +1,7 @@
 import { ref, get, set, update, remove } from 'firebase/database'
 import { db } from '../firebase.js'
 import { generateRoomCode } from '../utils/roomCodeGenerator.js'
+import { getPresetSchema } from '../constants/systemPresets.js'
 
 export function getLastSystem(uid) {
   return get(ref(db, `users/${uid}/lastSystem`)).then((snap) => snap.val())
@@ -13,6 +14,7 @@ export function setLastSystem(uid, system) {
 export async function createGame(uid, { gameName, system }) {
   const roomCode = generateRoomCode()
   const now = Date.now()
+  const sheetSchema = getPresetSchema(system)
 
   await set(ref(db, `rooms/${roomCode}/meta`), {
     ownerId: uid,
@@ -20,6 +22,10 @@ export async function createGame(uid, { gameName, system }) {
     system,
     created: now,
   })
+
+  if (sheetSchema.length) {
+    await set(ref(db, `rooms/${roomCode}/sheetSchema`), sheetSchema)
+  }
 
   await set(ref(db, `users/${uid}/games/${roomCode}`), {
     gameName,
