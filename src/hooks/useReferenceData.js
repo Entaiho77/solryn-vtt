@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { dnd5eApi, CATEGORIES } from '../services/dnd5eAPI.js'
+import { solrynApi, CATEGORIES } from '../services/solrynAPI.js'
 
 export function useReferenceData() {
   const [lists, setLists] = useState(null)
@@ -11,7 +11,7 @@ export function useReferenceData() {
     if (lists || loading) return
     setLoading(true)
     setError(null)
-    Promise.all(CATEGORIES.map((c) => dnd5eApi.fetchList(c.key)))
+    Promise.all(CATEGORIES.map((c) => solrynApi.fetchList(c.key)))
       .then((results) => {
         const next = {}
         CATEGORIES.forEach((c, i) => {
@@ -23,10 +23,10 @@ export function useReferenceData() {
       .finally(() => setLoading(false))
   }
 
-  async function getDetail(category, index) {
-    const key = `${category}/${index}`
+  async function getDetail(category, id) {
+    const key = `${category}/${id}`
     if (detailCache[key]) return detailCache[key]
-    const detail = await dnd5eApi.fetchDetail(category, index)
+    const detail = await solrynApi.fetchDetail(category, id)
     setDetailCache((c) => ({ ...c, [key]: detail }))
     return detail
   }

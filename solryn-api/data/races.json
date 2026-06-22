@@ -1,0 +1,129 @@
+{
+  "races": [
+    {
+      "id": "human",
+      "name": "Human",
+      "bonuses": [
+        { "stat": "any", "value": 1, "note": "choose two stats" }
+      ],
+      "advantages": [
+        "Learn trades faster (downtime reduced by 1 week)"
+      ],
+      "weakness": "Vulnerable to disease",
+      "description": "Versatile and adaptable, humans can grow strong in any direction they choose."
+    },
+    {
+      "id": "dwarf",
+      "name": "Dwarf",
+      "bonuses": [
+        { "stat": "strength", "value": 2 },
+        { "stat": "any", "value": 1 }
+      ],
+      "advantages": [
+        "Stone Sight (see minerals/stone composition)",
+        "Magic Resistance (advantage on saves vs magic)",
+        "Crafting Bonus (-2 to crafting DCs)"
+      ],
+      "weakness": "Cannot be healed magically (magic inert)",
+      "description": "Hardy folk of stone and steel, resistant to magic but unable to benefit from it."
+    },
+    {
+      "id": "elf",
+      "name": "Elf",
+      "bonuses": [
+        { "stat": "nimbleness", "value": 1 },
+        { "stat": "wisdom-or-arcana", "value": 1, "note": "choose Wisdom or Arcana" }
+      ],
+      "advantages": [
+        "3 bonus non-damaging spells at start",
+        "Nature-Smithing (grow items from plants, -2 crafting DC)"
+      ],
+      "weakness": "Vulnerable to poison",
+      "description": "Long-lived and attuned to nature and magic alike."
+    },
+    {
+      "id": "gnome",
+      "name": "Gnome",
+      "bonuses": [
+        { "stat": "nimbleness", "value": 1 },
+        { "stat": "wisdom", "value": 1 }
+      ],
+      "advantages": [
+        "Master of Toolcraft",
+        "Immunity to spatial disorientation"
+      ],
+      "weakness": "Can only carry 25% of body weight",
+      "description": "Small, clever inventors with a knack for tools and devices."
+    },
+    {
+      "id": "drakari",
+      "name": "Drakari",
+      "bonuses": [
+        { "stat": "arcana", "value": 2 },
+        { "stat": "strength", "value": 1 }
+      ],
+      "advantages": [
+        "Breath weapon (1/day, choose damage type)",
+        "Resistance to chosen damage type"
+      ],
+      "weakness": "Disadvantage on divine Charisma checks",
+      "description": "Draconic-blooded people with innate elemental power."
+    },
+    {
+      "id": "umbrin",
+      "name": "Umbrin",
+      "bonuses": [
+        { "stat": "nimbleness", "value": 2 },
+        { "stat": "wisdom", "value": 1 }
+      ],
+      "advantages": [
+        "Shadow movement",
+        "Darksight"
+      ],
+      "weakness": "Disadvantage on checks in bright light",
+      "description": "Shadow-dwelling people gifted with stealth and night vision."
+    },
+    {
+      "id": "marai",
+      "name": "Marai",
+      "bonuses": [
+        { "stat": "endurance", "value": 2 },
+        { "stat": "intelligence", "value": 1 }
+      ],
+      "advantages": [
+        "Breathe and swim underwater",
+        "Echo pulse (detect hidden creatures within 60 ft)"
+      ],
+      "weakness": "Must submerge every 48 hours or suffer fatigue",
+      "description": "Aquatic people equally at home on land and underwater."
+    },
+    {
+      "id": "ashborn",
+      "name": "Ashborn",
+      "bonuses": [
+        { "stat": "strength", "value": 2 },
+        { "stat": "arcana", "value": 1 }
+      ],
+      "advantages": [
+        "Auto-stabilize at 0 HP once per day",
+        "Deal +1 fire damage with melee attacks"
+      ],
+      "weakness": "Vulnerable to cold",
+      "description": "Born of flame and ash, resilient even at the brink of death."
+    },
+    {
+      "id": "etherial",
+      "name": "Etherial",
+      "bonuses": [
+        { "stat": "arcana", "value": 2 },
+        { "stat": "intelligence", "value": 1 }
+      ],
+      "advantages": [
+        "Teleport 10 ft as reaction once per rest",
+        "Advantage on saves vs mental effects"
+      ],
+      "weakness": "Vulnerable to radiant",
+      "description": "Otherworldly beings of pure arcane essence."
+    }
+  ]
+}

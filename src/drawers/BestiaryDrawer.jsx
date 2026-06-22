@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Drawer from './Drawer.jsx'
-import { dnd5eApi } from '../services/dnd5eAPI.js'
-import { uploadImage } from '../services/imageStorageService.js'
+import { solrynApi } from '../services/solrynAPI.js'
 import './BestiaryDrawer.css'
-
-const SRD_BASE_URL = 'https://www.dnd5eapi.co'
-const TOKEN_PORTRAIT_MAX_DIMENSION = 160
 
 function emptyCreature() {
   return { id: `c${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, name: '', notes: '' }
@@ -13,11 +9,9 @@ function emptyCreature() {
 
 function describeMonster(monster) {
   const lines = [
-    `${monster.size ?? ''} ${monster.type ?? ''}`.trim(),
-    `AC ${monster.armor_class?.[0]?.value ?? '?'} · HP ${monster.hit_points ?? '?'} · Speed ${
-      monster.speed?.walk ?? '?'
-    }`,
-    `CR ${monster.challenge_rating ?? '?'}`,
+    `${monster.type ?? ''} · ${monster.threatLevel ?? ''}`.trim(),
+    `HP ${monster.hp ?? '?'} · DR ${monster.dr ?? '?'} · Speed ${monster.speed ?? '?'}`,
+    monster.damage ? `Damage: ${monster.damage}` : null,
   ]
   return lines.filter(Boolean).join('\n')
 }
@@ -31,7 +25,6 @@ export default function BestiaryDrawer({
   onAddToken,
   onUpdateTokenLabel,
   onRemoveToken,
-  onSetTokenPortrait,
 }) {
   const [monsterList, setMonsterList] = useState(null)
   const [monsterQuery, setMonsterQuery] = useState('')
@@ -39,8 +32,8 @@ export default function BestiaryDrawer({
 
   useEffect(() => {
     if (!open || monsterList || !isGm) return
-    dnd5eApi
-      .fetchList('monsters')
+    solrynApi
+      .fetchList('creatures')
       .then(setMonsterList)
       .catch(() => setMonsterList([]))
   }, [open, monsterList, isGm])
@@ -61,7 +54,7 @@ export default function BestiaryDrawer({
   async function addMonster(monster) {
     setLoadingMonster(true)
     try {
-      const detail = await dnd5eApi.fetchDetail('monsters', monster.index)
+      const detail = await solrynApi.fetchDetail('creatures', monster.id)
       const tokenId = onAddToken?.(detail.name)
       onSave([
         ...bestiary,
@@ -73,25 +66,9 @@ export default function BestiaryDrawer({
         },
       ])
       setMonsterQuery('')
-      if (detail.image && tokenId) applySrdPortrait(tokenId, detail.image)
     } finally {
       setLoadingMonster(false)
     }
-  }
-
-  // The SRD API only has token art for a subset of monsters, and it's
-  // served cross-origin — if either the field is missing or the image
-  // can't be read back into a canvas (CORS), just leave the token's
-  // colored-circle fallback rather than failing the whole "add" action.
-  function applySrdPortrait(tokenId, imagePath) {
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.onload = () => {
-      uploadImage(img, TOKEN_PORTRAIT_MAX_DIMENSION, 0.85)
-        .then((dataUrl) => onSetTokenPortrait?.(tokenId, dataUrl))
-        .catch(() => {})
-    }
-    img.src = `${SRD_BASE_URL}${imagePath}`
   }
 
   function updateCreature(index, patch) {
@@ -115,7 +92,7 @@ export default function BestiaryDrawer({
         <>
           <div className="bestiary-srd-search">
             <input
-              placeholder="Search SRD monsters to add..."
+              placeholder="Search Solryn creatures to add..."
               value={monsterQuery}
               onChange={(e) => setMonsterQuery(e.target.value)}
             />
@@ -123,7 +100,7 @@ export default function BestiaryDrawer({
               <ul className="bestiary-srd-results">
                 {monsterResults.length === 0 && <li className="bestiary-hint">No matches.</li>}
                 {monsterResults.map((m) => (
-                  <li key={m.index}>
+                  <li key={m.id}>
                     <button disabled={loadingMonster} onClick={() => addMonster(m)}>
                       {m.name}
                     </button>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CATEGORIES } from '../services/dnd5eAPI.js'
+import { CATEGORIES } from '../services/solrynAPI.js'
 import { useReferenceData } from '../hooks/useReferenceData.js'
 import './ReferenceDropdown.css'
 
@@ -8,19 +8,28 @@ const TABS = [{ key: 'all', label: 'All' }, ...CATEGORIES]
 function describeDetail(category, detail) {
   const lines = []
   if (category === 'spells') {
-    lines.push(`${detail.level === 0 ? 'Cantrip' : `${detail.level} level`} ${detail.school?.name ?? ''}`.trim())
-    if (detail.casting_time) lines.push(`Casting Time: ${detail.casting_time}`)
+    lines.push(`${detail.type ?? ''} · ${detail.damageType ?? ''}`.trim())
+    if (detail.damage) lines.push(`Damage: ${detail.damage}`)
     if (detail.range) lines.push(`Range: ${detail.range}`)
-    if (detail.duration) lines.push(`Duration: ${detail.duration}`)
-  } else if (category === 'classes') {
-    if (detail.hit_die) lines.push(`Hit Die: d${detail.hit_die}`)
+    if (detail.arcanaPointCost !== undefined) lines.push(`Arcana Point Cost: ${detail.arcanaPointCost}`)
   } else if (category === 'races') {
-    if (detail.speed) lines.push(`Speed: ${detail.speed} ft`)
-    if (detail.size) lines.push(`Size: ${detail.size}`)
+    if (detail.bonuses?.length) {
+      lines.push(`Bonuses: ${detail.bonuses.map((b) => `${b.stat} +${b.value}${b.note ? ` (${b.note})` : ''}`).join(', ')}`)
+    }
+    if (detail.advantages?.length) lines.push(`Advantages: ${detail.advantages.join(', ')}`)
+    if (detail.weakness) lines.push(`Weakness: ${detail.weakness}`)
+  } else if (category === 'skills') {
+    if (detail.category) lines.push(`Category: ${detail.category}`)
+    if (detail.cost) lines.push(`Cost: ${detail.cost}`)
+    if (detail.minLevel) lines.push(`Min Level: ${detail.minLevel}`)
   } else if (category === 'equipment') {
-    if (detail.equipment_category?.name) lines.push(detail.equipment_category.name)
-    if (detail.cost) lines.push(`Cost: ${detail.cost.quantity} ${detail.cost.unit}`)
-    if (detail.weight) lines.push(`Weight: ${detail.weight} lb`)
+    if (detail.category) lines.push(detail.category)
+    if (detail.cost) lines.push(`Cost: ${detail.cost}`)
+    if (detail.dr !== undefined) lines.push(`DR: ${detail.dr}`)
+    if (detail.drBonus !== undefined) lines.push(`DR Bonus: ${detail.drBonus}`)
+    if (detail.damage) lines.push(`Damage: ${detail.damage} ${detail.damageType ?? ''}`.trim())
+    if (detail.properties) lines.push(detail.properties)
+    if (detail.range) lines.push(`Range: ${detail.range}`)
   }
   return lines
 }
@@ -30,7 +39,7 @@ export default function ReferenceDropdown({ open, onClose }) {
   const [activeTab, setActiveTab] = useState('all')
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
-  const [selected, setSelected] = useState(null) // { category, index, detail, loading, error }
+  const [selected, setSelected] = useState(null) // { category, id, detail, loading, error }
   const searchInputRef = useRef(null)
 
   useEffect(() => {
@@ -57,11 +66,11 @@ export default function ReferenceDropdown({ open, onClose }) {
     )
   }, [lists, debouncedQuery, categoriesToSearch])
 
-  function handleSelectItem(category, index) {
-    setSelected({ category, index, detail: null, loading: true, error: null })
-    getDetail(category, index)
-      .then((detail) => setSelected({ category, index, detail, loading: false, error: null }))
-      .catch((e) => setSelected({ category, index, detail: null, loading: false, error: e.message }))
+  function handleSelectItem(category, id) {
+    setSelected({ category, id, detail: null, loading: true, error: null })
+    getDetail(category, id)
+      .then((detail) => setSelected({ category, id, detail, loading: false, error: null }))
+      .catch((e) => setSelected({ category, id, detail: null, loading: false, error: e.message }))
   }
 
   if (!open) return null
@@ -73,7 +82,7 @@ export default function ReferenceDropdown({ open, onClose }) {
           ref={searchInputRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search spells, classes, races, items..."
+          placeholder="Search spells, races, skills, items..."
         />
         {query && (
           <button onClick={() => setQuery('')} aria-label="Clear search">
@@ -94,21 +103,19 @@ export default function ReferenceDropdown({ open, onClose }) {
       </div>
       <div className="reference-body">
         <div className="reference-results">
-          {loading && <p className="reference-hint">Loading 5e SRD data...</p>}
+          {loading && <p className="reference-hint">Loading Solryn reference data...</p>}
           {error && <p className="reference-hint">Failed to load reference data: {error}</p>}
           {!loading && !error && results.length === 0 && (
             <p className="reference-hint">No matching results. Try a different search.</p>
           )}
           <ul>
             {results.map((entry) => (
-              <li key={`${entry.category}/${entry.index}`}>
+              <li key={`${entry.category}/${entry.id}`}>
                 <button
                   className={
-                    selected?.category === entry.category && selected?.index === entry.index
-                      ? 'is-selected'
-                      : ''
+                    selected?.category === entry.category && selected?.id === entry.id ? 'is-selected' : ''
                   }
-                  onClick={() => handleSelectItem(entry.category, entry.index)}
+                  onClick={() => handleSelectItem(entry.category, entry.id)}
                 >
                   {entry.name}
                 </button>
@@ -119,7 +126,7 @@ export default function ReferenceDropdown({ open, onClose }) {
         {selected && (
           <div className="reference-detail">
             <div className="reference-detail-header">
-              <h3>{selected.detail?.name ?? selected.index}</h3>
+              <h3>{selected.detail?.name ?? selected.id}</h3>
               <button onClick={() => setSelected(null)} aria-label="Close detail">
                 ✕
               </button>
@@ -133,8 +140,10 @@ export default function ReferenceDropdown({ open, onClose }) {
                     {line}
                   </p>
                 ))}
-                {Array.isArray(selected.detail.desc) &&
-                  selected.detail.desc.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+                {selected.detail.description && <p>{selected.detail.description}</p>}
+                {Array.isArray(selected.detail.special) && (
+                  <p>Special: {selected.detail.special.join(', ')}</p>
+                )}
               </div>
             )}
           </div>

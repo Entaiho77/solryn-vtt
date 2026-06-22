@@ -1,0 +1,86 @@
+{
+  "armor": {
+    "light": [
+      { "id": "padded-cloth", "name": "Padded Cloth", "dr": 2, "cost": "5 gp", "speedPenalty": 0 },
+      { "id": "leather", "name": "Leather", "dr": 2, "cost": "10 gp", "speedPenalty": 0 },
+      { "id": "studded-leather", "name": "Studded Leather", "dr": 3, "cost": "25 gp", "speedPenalty": 0 },
+      { "id": "hide", "name": "Hide", "dr": 3, "cost": "15 gp", "speedPenalty": 0 }
+    ],
+    "medium": [
+      { "id": "chain-shirt", "name": "Chain Shirt", "dr": 4, "cost": "50 gp", "speedPenalty": 5 },
+      { "id": "scale-mail", "name": "Scale Mail", "dr": 4, "cost": "50 gp", "speedPenalty": 5 },
+      { "id": "breastplate", "name": "Breastplate", "dr": 5, "cost": "400 gp", "speedPenalty": 5 },
+      { "id": "half-plate", "name": "Half Plate", "dr": 5, "cost": "750 gp", "speedPenalty": 5 }
+    ],
+    "heavy": [
+      { "id": "ring-mail", "name": "Ring Mail", "dr": 6, "cost": "30 gp", "speedPenalty": 10 },
+      { "id": "chain-mail", "name": "Chain Mail", "dr": 6, "cost": "75 gp", "speedPenalty": 10 },
+      { "id": "splint-mail", "name": "Splint Mail", "dr": 7, "cost": "200 gp", "speedPenalty": 10 },
+      { "id": "plate-mail", "name": "Plate Mail", "dr": 8, "cost": "1,500 gp", "speedPenalty": 10 }
+    ]
+  },
+  "shields": [
+    { "id": "buckler", "name": "Buckler", "drBonus": 1, "cost": "5 gp" },
+    { "id": "shield", "name": "Shield", "drBonus": 2, "cost": "10 gp" },
+    { "id": "tower-shield", "name": "Tower Shield", "drBonus": 3, "cost": "25 gp", "note": "Disadvantage on attacks" }
+  ],
+  "weapons": {
+    "swords": [
+      { "id": "shortsword", "name": "Shortsword", "damage": "1d6", "damageType": "Piercing", "properties": "One-Handed, Light" },
+      { "id": "rapier", "name": "Rapier", "damage": "1d8", "damageType": "Piercing", "properties": "One-Handed, Light" },
+      { "id": "broadsword", "name": "Broadsword", "damage": "1d10", "damageType": "Slashing", "properties": "One-Handed, Heavy" },
+      { "id": "greatsword", "name": "Greatsword", "damage": "2d6", "damageType": "Slashing", "properties": "Two-Handed, Heavy" },
+      { "id": "scimitar", "name": "Scimitar", "damage": "1d6", "damageType": "Slashing", "properties": "One-Handed, Light" },
+      { "id": "sabre", "name": "Sabre", "damage": "1d8", "damageType": "Slashing", "properties": "One-Handed, Light" }
+    ],
+    "axes": [
+      { "id": "handaxe", "name": "Handaxe", "damage": "1d6", "damageType": "Slashing", "properties": "One-Handed, Light" },
+      { "id": "hatchet", "name": "Hatchet", "damage": "1d4", "damageType": "Slashing", "properties": "One-Handed, Light" },
+      { "id": "battleaxe", "name": "Battleaxe", "damage": "1d8", "damageType": "Slashing", "properties": "One-Handed, Versatile" },
+      { "id": "war-axe", "name": "War Axe", "damage": "1d10", "damageType": "Slashing", "properties": "One-Handed, Heavy" },
+      { "id": "greataxe", "name": "Greataxe", "damage": "1d12", "damageType": "Slashing", "properties": "Two-Handed, Heavy" }
+    ],
+    "maces": [
+      { "id": "mace", "name": "Mace", "damage": "1d6", "damageType": "Bludgeoning", "properties": "One-Handed, Light" },
+      { "id": "club", "name": "Club", "damage": "1d4", "damageType": "Bludgeoning", "properties": "One-Handed, Light" },
+      { "id": "warhammer", "name": "Warhammer", "damage": "1d8", "damageType": "Bludgeoning", "properties": "One-Handed, Heavy" },
+      { "id": "morningstar", "name": "Morningstar", "damage": "1d8", "damageType": "Piercing", "properties": "One-Handed, Heavy" },
+      { "id": "maul", "name": "Maul", "damage": "2d6", "damageType": "Bludgeoning", "properties": "Two-Handed, Heavy" },
+      { "id": "sledgehammer", "name": "Sledgehammer", "damage": "1d12", "damageType": "Bludgeoning", "properties": "Two-Handed, Heavy" }
+    ],
+    "polearms": [
+      { "id": "spear", "name": "Spear", "damage": "1d6", "damageType": "Piercing", "properties": "One-Handed, Versatile" },
+      { "id": "javelin", "name": "Javelin", "damage": "1d6", "damageType": "Piercing", "properties": "One-Handed, Light" },
+      { "id": "halberd", "name": "Halberd", "damage": "1d10", "damageType": "Slashing", "properties": "Two-Handed, Heavy" },
+      { "id": "glaive", "name": "Glaive", "damage": "1d10", "damageType": "Slashing", "properties": "Two-Handed, Heavy" },
+      { "id": "pike", "name": "Pike", "damage": "1d10", "damageType": "Piercing", "properties": "Two-Handed, Heavy" },
+      { "id": "lance", "name": "Lance", "damage": "1d12", "damageType": "Piercing", "properties": "One-Handed, Heavy" }
+    ],
+    "ranged": [
+      { "id": "shortbow", "name": "Shortbow", "damage": "1d6", "damageType": "Piercing", "range": "80/320" },
+      { "id": "longbow", "name": "Longbow", "damage": "1d8", "damageType": "Piercing", "range": "150/600" },
+      { "id": "light-crossbow", "name": "Light Crossbow", "damage": "1d8", "damageType": "Piercing", "range": "80/320" },
+      { "id": "heavy-crossbow", "name": "Heavy Crossbow", "damage": "1d10", "damageType": "Piercing", "range": "100/400" }
+    ]
+  },
+  "healingPotions": [
+    { "id": "minor-potion", "name": "Minor Healing Potion", "healing": "1d4+1", "cost": "50 gp" },
+    { "id": "standard-potion", "name": "Standard Healing Potion", "healing": "2d4+2", "cost": "100 gp" },
+    { "id": "greater-potion", "name": "Greater Healing Potion", "healing": "2d4+4", "cost": "150 gp" },
+    { "id": "superior-potion", "name": "Superior Healing Potion", "healing": "3d4+6", "cost": "500 gp" }
+  ],
+  "soulCores": [
+    { "id": "infernal-core", "name": "Infernal Core", "rarity": "common", "cost": "100 gp", "source": "Fire creatures", "effect": "Fire resistance, flame-infused attacks" },
+    { "id": "glacial-core", "name": "Glacial Core", "rarity": "common", "cost": "100 gp", "source": "Ice creatures", "effect": "Cold resistance, slowing effects" },
+    { "id": "storm-core", "name": "Storm Core", "rarity": "uncommon", "cost": "500 gp", "source": "Lightning creatures", "effect": "Increased speed, electrical strikes" },
+    { "id": "earthen-core", "name": "Earthen Core", "rarity": "common", "cost": "100 gp", "source": "Earth/stone creatures", "effect": "Boosts armor, increases durability" },
+    { "id": "shadow-core", "name": "Shadow Core", "rarity": "uncommon", "cost": "500 gp", "source": "Necrotic/dark creatures", "effect": "Enhances stealth, life-draining" },
+    { "id": "celestial-core", "name": "Celestial Core", "rarity": "rare", "cost": "2,500 gp", "source": "Radiant/light creatures", "effect": "Holy protections, radiant damage" },
+    { "id": "venomous-core", "name": "Venomous Core", "rarity": "common", "cost": "100 gp", "source": "Poison creatures", "effect": "Toxic coatings, poison immunity" },
+    { "id": "astral-core", "name": "Astral Core", "rarity": "uncommon", "cost": "500 gp", "source": "Psychic creatures", "effect": "Mental defenses, telepathy" },
+    { "id": "echo-core", "name": "Echo Core", "rarity": "common", "cost": "100 gp", "source": "Thunder creatures", "effect": "Sonic enhancements, soundwave attacks" },
+    { "id": "void-core", "name": "Void Core", "rarity": "rare", "cost": "2,500 gp", "source": "Eldritch/abyssal beings", "effect": "Anti-magic, reality-warping" },
+    { "id": "ethereal-core", "name": "Ethereal Core", "rarity": "uncommon", "cost": "500 gp", "source": "Spirit creatures", "effect": "Phase shifting, incorporeal" },
+    { "id": "naturebound-core", "name": "Naturebound Core", "rarity": "common", "cost": "100 gp", "source": "Nature/fey creatures", "effect": "Growth magic, plant control" }
+  ]
+}

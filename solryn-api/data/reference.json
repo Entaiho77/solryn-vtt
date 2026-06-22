@@ -1,0 +1,67 @@
+{
+  "modifierTable": [
+    { "scoreRange": "1-3", "modifier": 0 },
+    { "scoreRange": "4-6", "modifier": 1 },
+    { "scoreRange": "7-9", "modifier": 2 },
+    { "scoreRange": "10-12", "modifier": 3 },
+    { "scoreRange": "13-15", "modifier": 4 },
+    { "scoreRange": "16-18", "modifier": 5 },
+    { "scoreRange": "19-21", "modifier": 6 }
+  ],
+  "skillProgressionTable": [
+    { "rank": "Novice", "points": "1-3", "bonus": 1 },
+    { "rank": "Journeyman", "points": "4-6", "bonus": 2 },
+    { "rank": "Master", "points": "7-9", "bonus": 3 }
+  ],
+  "criticalHitTable": [
+    { "luckModifier": 1, "successOn": "19-20" },
+    { "luckModifier": 2, "successOn": "18-20" },
+    { "luckModifier": 3, "successOn": "17-20" },
+    { "luckModifier": 4, "successOn": "16-20" },
+    { "luckModifier": 5, "successOn": "15-20" },
+    { "luckModifier": 6, "successOn": "14-20" }
+  ],
+  "commonDCs": [
+    { "difficulty": "Very Easy", "dc": 5 },
+    { "difficulty": "Easy", "dc": "8-10" },
+    { "difficulty": "Moderate", "dc": "12-14" },
+    { "difficulty": "Hard", "dc": "15-17" },
+    { "difficulty": "Very Hard", "dc": "18-20" },
+    { "difficulty": "Nearly Impossible", "dc": "22-25" }
+  ],
+  "damageByLevel": [
+    { "level": 1, "weaponDamage": "1d4-1d6", "spellDamage": "1d4 base" },
+    { "level": "2-3", "weaponDamage": "1d6-1d8", "spellDamage": "2d4-3d4" },
+    { "level": "4-5", "weaponDamage": "1d8-1d10", "spellDamage": "3d4-4d4" },
+    { "level": "6+", "weaponDamage": "1d10-2d6+", "spellDamage": "4d4+" }
+  ],
+  "restAndRecovery": [
+    { "restType": "Short Rest", "duration": "1 hour", "recovery": "Half Arcana Points (rounded down)" },
+    { "restType": "Long Rest (field)", "duration": "8 hours", "recovery": "Half HP, all Arcana, all Luck" },
+    { "restType": "Long Rest (town)", "duration": "8 hours", "recovery": "Full HP, all Arcana, all Luck" }
+  ],
+  "statGrowthByLevel": [
+    { "levelRange": "2-5, 7-9, 11-13, 15-17, 19", "diePerStat": "1d4" },
+    { "levelRange": "6, 10, 14, 18 (Milestones)", "diePerStat": "2d6" },
+    { "levelRange": "20+ (Epic)", "diePerStat": "1d8" }
+  ],
+  "xpRequirements": [
+    { "level": 2, "totalXp": 100 },
+    { "level": 3, "totalXp": 250 },
+    { "level": 4, "totalXp": 400 },
+    { "level": 5, "totalXp": 600 },
+    { "level": 6, "totalXp": 900 },
+    { "level": 7, "totalXp": 1200 },
+    { "level": 8, "totalXp": 1600 },
+    { "level": 9, "totalXp": 2000 },
+    { "level": 10, "totalXp": 2500 },
+    { "level": 11, "totalXp": 3200 }
+  ],
+  "creatureTierRating": [
+    { "tr": 1, "dr": "1-2", "statBudget": 28, "maxStat": 6, "damagePerRound": "4-6", "baseXp": 10 },
+    { "tr": 2, "dr": "2-3", "statBudget": 35, "maxStat": 7, "damagePerRound": "7-10", "baseXp": 40 },
+    { "tr": 3, "dr": "3-4", "statBudget": 42, "maxStat": 8, "damagePerRound": "11-15", "baseXp": 90 },
+    { "tr": 4, "dr": "4-5", "statBudget": 49, "maxStat": 9, "damagePerRound": "16-22", "baseXp": 160 },
+    { "tr": 5, "dr": "5-6", "statBudget": 56, "maxStat": 10, "damagePerRound": "23-30", "baseXp": 250 }
+  ]
+}
