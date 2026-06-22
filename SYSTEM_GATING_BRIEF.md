@@ -76,6 +76,35 @@ UI components:
   a third RAW system later is "write a preset + point at a data source,"
   not "build a new component tree."
 
+## Addendum: house rules layered on top of a system preset
+
+A follow-on requirement from the user: a GM should be able to customize
+their table's rules — house rules, homebrew fields, tweaked stats — while
+still being "Solryn" (or whatever RAW system they picked), not dropping
+into Generic/Custom to do it. And critically: those edits should be
+**tracked as a changelog of deltas from the preset**, not just merged
+indistinguishably into the schema, so the GM can review what they've
+changed and revert individual changes without wiping their other
+customizations or resetting the whole sheet back to RAW defaults.
+
+Concretely, this means:
+
+- When a system preset is applied, keep a record of which `sheetSchema`
+  fields came from the preset and their original values (e.g.,
+  `rooms/{roomId}/sheetSchemaOverrides` — a list of
+  `{fieldId, action: 'added'|'edited'|'removed', originalValue?}` entries —
+  rather than just overwriting `sheetSchema` in place with no history).
+- A dropdown/panel (GM-only, likely living next to the existing sheet
+  schema editor) lists these overrides in plain language — e.g. "Renamed
+  'Luck Points' → 'Fate Points'," "Added field 'Corruption'" — each with
+  its own **revert** action that restores just that one field to its
+  preset value/definition, leaving every other customization intact.
+- This is additive to the preset model above, not a competing design: the
+  preset still seeds `sheetSchema` on creation; the override log just
+  tracks what's drifted from it since, so "Solryn, house-ruled" stays
+  legibly different from "Solryn, vanilla" without needing a separate
+  system identity for every table's variant.
+
 ## Open question for the designer
 
 Does the spec's per-system `SYSTEM_CONFIG` (ability score counts, combat
