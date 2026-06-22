@@ -61,7 +61,7 @@ export default function ReferenceDropdown({ open, onClose, system }) {
     return categoriesToSearch.flatMap((categoryKey) =>
       (lists[categoryKey] ?? [])
         .filter((entry) => !q || entry.name.toLowerCase().includes(q))
-        .map((entry) => ({ ...entry, category: categoryKey })),
+        .map((entry, idx) => ({ ...entry, category: categoryKey, listKey: `${categoryKey}-${entry.id}-${idx}` })),
     )
   }, [lists, debouncedQuery, categoriesToSearch])
 
@@ -110,7 +110,7 @@ export default function ReferenceDropdown({ open, onClose, system }) {
           )}
           <ul>
             {results.map((entry) => (
-              <li key={`${entry.category}/${entry.id}`}>
+              <li key={entry.listKey}>
                 <button
                   className={
                     selected?.category === entry.category && selected?.id === entry.id ? 'is-selected' : ''
