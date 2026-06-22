@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 import json
 import secrets
 import os
+import requests
 from datetime import datetime
 
 app = Flask(__name__)
@@ -13,20 +14,76 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 rooms = {}
 characters = {}
 
-def generate_room_code():
-    """Generate a unique 6-character room code"""
-    while True:
-        code = secrets.token_hex(3).upper()
-        if code not in rooms:
-            return code
+# Solryn API (solryn-api/) - same idea as fetching an external SRD API,
+# but pointed at our own local Express service for game data.
+SOLRYN_API_URL = os.environ.get('SOLRYN_API_URL', 'http://localhost:3000')
+SOLRYN_GM_TOKEN = os.environ.get('GM_TOKEN', 'your-secret-gm-token-here')
+
+def fetch_from_solryn_api(path, headers=None):
+    """GET a path from the Solryn API. Returns None on any failure."""
+    try:
+        response = requests.get(f'{SOLRYN_API_URL}{path}', headers=headers, timeout=3)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException:
+        return None
 
 def load_solryn_rules():
-    """Load Solryn rules from JSON file"""
+    """Load Solryn rules from the local JSON file (fallback / static sections)"""
     rules_path = os.path.join('data', 'solryn_rules.json')
     if os.path.exists(rules_path):
         with open(rules_path, 'r') as f:
             return json.load(f)
     return {}
+
+def build_rules(is_dm=False):
+    """
+    Build the rules dict served to the VTT. Attributes, conditions, and
+    combat rules aren't exposed by the Solryn API, so those sections still
+    come from the local file. Skills and Monsters are sourced live from
+    the Solryn API (solryn-api/), falling back to the local file if the
+    API isn't running.
+    """
+    rules = load_solryn_rules()
+
+    skills_data = fetch_from_solryn_api('/api/skills')
+    if skills_data:
+        merged_skills = []
+        for category, label in (
+            ('baseSkills', 'Base'),
+            ('weaponSkills', 'Weapon'),
+            ('craftingSkills', 'Crafting'),
+        ):
+            for skill in skills_data.get(category, []):
+                merged_skills.append({
+                    'name': skill['name'],
+                    'attribute': label,
+                    'description': f'{label} skill'
+                })
+        rules['skills'] = merged_skills
+
+    if is_dm:
+        creatures = fetch_from_solryn_api(
+            '/api/creatures', headers={'x-gm-token': SOLRYN_GM_TOKEN}
+        )
+        if creatures is not None:
+            rules['monsters'] = [
+                {
+                    'name': c['name'],
+                    'type': c['type'],
+                    'challenge': c['threatLevel'],
+                    'hp': c['hp'],
+                    'armor': c['dr'],
+                    'attributes': {},
+                    'attacks': [{'name': 'Attack', 'damage': c['damage']}] if c.get('damage') else [],
+                    'abilities': c.get('special', [])
+                }
+                for c in creatures
+            ]
+    else:
+        rules.pop('monsters', None)
+
+    return rules
 
 @app.route('/')
 def index():
@@ -82,28 +139,34 @@ def character_api(character_id):
 
 @app.route('/api/rules')
 def get_rules():
-    """Get Solryn rules"""
-    rules = load_solryn_rules()
+    """Get Solryn rules (skills & monsters proxied live from the Solryn API)"""
+    # Monsters are always fetched here, same as the prior static-file
+    # behavior; visibility to players is still enforced client-side
+    # (Monsters tab) and server-side in /api/rules/search below.
+    rules = build_rules(is_dm=True)
     return jsonify(rules)
 
 @app.route('/api/rules/search')
 def search_rules():
     """Search rules by keyword"""
     query = request.args.get('q', '').lower()
-    rules = load_solryn_rules()
-    
+    is_dm = request.args.get('is_dm', '').lower() in ('1', 'true')
+    rules = build_rules(is_dm=is_dm)
+
     results = []
     for category, items in rules.items():
-        if category == 'monsters' and not request.args.get('is_dm'):
+        if not isinstance(items, list):
+            continue  # Skip non-list sections (e.g. character_creation)
+        if category == 'monsters' and not is_dm:
             continue  # Hide monsters from players
-            
+
         for item in items:
             if query in item.get('name', '').lower() or query in item.get('description', '').lower():
                 results.append({
                     'category': category,
                     'item': item
                 })
-    
+
     return jsonify(results)
 
 # WebSocket events for real-time functionality
