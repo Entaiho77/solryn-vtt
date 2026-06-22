@@ -10,11 +10,15 @@ function bonusChoices(bonus) {
 
 export default function RaceSelectionStep({ abilityScores, onBack, onComplete }) {
   const [races, setRaces] = useState(null)
+  const [error, setError] = useState(null)
   const [selectedRace, setSelectedRace] = useState(null)
   const [choices, setChoices] = useState({}) // bonus index -> chosen stat
 
   useEffect(() => {
-    solrynApi.fetchList('races').then((data) => setRaces(data.races ?? data))
+    solrynApi
+      .fetchList('races')
+      .then((data) => setRaces(data.races ?? data))
+      .catch((e) => setError(e.message))
   }, [])
 
   function selectRace(race) {
@@ -41,7 +45,8 @@ export default function RaceSelectionStep({ abilityScores, onBack, onComplete })
   return (
     <div className="character-builder-step">
       <h3>Step 2: Race Selection</h3>
-      {!races && <p className="cb-hint">Loading races…</p>}
+      {!races && !error && <p className="cb-hint">Loading races…</p>}
+      {error && <p className="cb-hint">Failed to load races: {error}</p>}
       <div className="cb-grid">
         {races?.map((race) => (
           <button

@@ -4,10 +4,14 @@ import { calculateSpellsKnown, getModifier } from '../../utils/solrynCharacterRu
 
 export default function SpellSelectionStep({ abilityScores, race, onBack, onComplete }) {
   const [spells, setSpells] = useState(null)
+  const [error, setError] = useState(null)
   const [selectedSpells, setSelectedSpells] = useState([])
 
   useEffect(() => {
-    solrynApi.fetchList('spells').then((data) => setSpells(data.spells ?? data))
+    solrynApi
+      .fetchList('spells')
+      .then((data) => setSpells(data.spells ?? data))
+      .catch((e) => setError(e.message))
   }, [])
 
   const arcanaMod = getModifier(abilityScores.arcana)
@@ -36,7 +40,8 @@ export default function SpellSelectionStep({ abilityScores, race, onBack, onComp
       )}
       <p className="cb-hint">Selected: {selectedSpells.length}/{spellsKnown}</p>
 
-      {!spells && <p className="cb-hint">Loading spells…</p>}
+      {!spells && !error && <p className="cb-hint">Loading spells…</p>}
+      {error && <p className="cb-hint">Failed to load spells: {error}</p>}
       {spells && (
         <div className="cb-checkbox-list" style={{ maxHeight: 280 }}>
           {spells.map((spell) => (

@@ -17,11 +17,12 @@ const BACKPACK_ITEMS = [
 
 export default function StartingGearStep({ abilityScores, drBase, baseSpeed, skillIds, skills, onBack, onComplete }) {
   const [equipment, setEquipment] = useState(null)
+  const [error, setError] = useState(null)
   const [selectedArmor, setSelectedArmor] = useState(null)
   const [selectedWeapon, setSelectedWeapon] = useState(null)
 
   useEffect(() => {
-    solrynApi.fetchList('equipment').then(setEquipment)
+    solrynApi.fetchList('equipment').then(setEquipment).catch((e) => setError(e.message))
   }, [])
 
   const armorOptions = equipment ? equipment.filter((e) => e.category === 'Armor' && e.speedPenalty <= 5) : []
@@ -36,7 +37,8 @@ export default function StartingGearStep({ abilityScores, drBase, baseSpeed, ski
   return (
     <div className="character-builder-step">
       <h3>Step 7: Starting Gear</h3>
-      {!equipment && <p className="cb-hint">Loading equipment…</p>}
+      {!equipment && !error && <p className="cb-hint">Loading equipment…</p>}
+      {error && <p className="cb-hint">Failed to load equipment: {error}</p>}
 
       {equipment && (
         <>
