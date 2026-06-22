@@ -1,0 +1,63 @@
+{
+  "spells": [
+    { "id": "ember-strike", "name": "Ember Strike", "type": "elemental", "damage": "1d4", "damageType": "fire", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "ignition-bolt", "name": "Ignition Bolt", "type": "elemental", "damage": "1d4", "damageType": "fire", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "frostbite-surge", "name": "Frostbite Surge", "type": "elemental", "damage": "1d4", "damageType": "cold", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "glacial-spear", "name": "Glacial Spear", "type": "elemental", "damage": "1d4", "damageType": "cold", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "thunder-palm", "name": "Thunder Palm", "type": "elemental", "damage": "1d4", "damageType": "lightning", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "arc-spark", "name": "Arc Spark", "type": "elemental", "damage": "1d4", "damageType": "lightning", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "earthen-crush", "name": "Earthen Crush", "type": "elemental", "damage": "1d4", "damageType": "bludgeoning", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "stone-shard", "name": "Stone Shard", "type": "elemental", "damage": "1d4", "damageType": "piercing", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "gust-slash", "name": "Gust Slash", "type": "elemental", "damage": "1d4", "damageType": "slashing wind", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "cyclone-dart", "name": "Cyclone Dart", "type": "elemental", "damage": "1d4", "damageType": "force", "range": "ranged", "arcanaPointCost": 0 },
+
+    { "id": "arcane-jolt", "name": "Arcane Jolt", "type": "arcane-energy", "damage": "1d4", "damageType": "force", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "void-lance", "name": "Void Lance", "type": "arcane-energy", "damage": "1d4", "damageType": "necrotic", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "astral-spike", "name": "Astral Spike", "type": "arcane-energy", "damage": "1d4", "damageType": "psychic", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "soul-rend", "name": "Soul Rend", "type": "arcane-energy", "damage": "1d4", "damageType": "psychic", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "echo-strike", "name": "Echo Strike", "type": "arcane-energy", "damage": "1d4", "damageType": "thunder", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "resonance-beam", "name": "Resonance Beam", "type": "arcane-energy", "damage": "1d4", "damageType": "thunder", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "mystic-shock", "name": "Mystic Shock", "type": "arcane-energy", "damage": "1d4", "damageType": "radiant", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "starfire-ray", "name": "Starfire Ray", "type": "arcane-energy", "damage": "1d4", "damageType": "radiant", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "eldritch-claw", "name": "Eldritch Claw", "type": "arcane-energy", "damage": "1d4", "damageType": "necrotic", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "shadow-dart", "name": "Shadow Dart", "type": "arcane-energy", "damage": "1d4", "damageType": "necrotic", "range": "ranged", "arcanaPointCost": 0 },
+
+    { "id": "venom-strike", "name": "Venom Strike", "type": "poison-corrupting", "damage": "1d4", "damageType": "poison", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "toxic-dart", "name": "Toxic Dart", "type": "poison-corrupting", "damage": "1d4", "damageType": "poison", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "rotting-grip", "name": "Rotting Grip", "type": "poison-corrupting", "damage": "1d4", "damageType": "necrotic", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "decay-arrow", "name": "Decay Arrow", "type": "poison-corrupting", "damage": "1d4", "damageType": "necrotic", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "withering-touch", "name": "Withering Touch", "type": "poison-corrupting", "damage": "1d4", "damageType": "necrotic", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "blight-surge", "name": "Blight Surge", "type": "poison-corrupting", "damage": "1d4", "damageType": "necrotic", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "acidic-claw", "name": "Acidic Claw", "type": "poison-corrupting", "damage": "1d4", "damageType": "acid", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "corrosive-orb", "name": "Corrosive Orb", "type": "poison-corrupting", "damage": "1d4", "damageType": "acid", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "ashen-grasp", "name": "Ashen Grasp", "type": "poison-corrupting", "damage": "1d4", "damageType": "necrotic", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "hallowed-rupture", "name": "Hallowed Rupture", "type": "poison-corrupting", "damage": "1d4", "damageType": "radiant", "range": "ranged", "arcanaPointCost": 0 },
+
+    { "id": "mirror-strike", "name": "Mirror Strike", "type": "adaptive-combat", "damage": "1d4", "damageType": "mimics target's last damage type", "range": "touch", "arcanaPointCost": 0 },
+    { "id": "prismatic-sting", "name": "Prismatic Sting", "type": "adaptive-combat", "damage": "1d4", "damageType": "random elemental", "range": "ranged", "arcanaPointCost": 0 },
+    { "id": "aether-burst", "name": "Aether Burst", "type": "adaptive-combat", "damage": "1d4", "damageType": "force", "range": "touch", "arcanaPointCost": 0, "description": "Ignores resistance" },
+    { "id": "lethal-echo", "name": "Lethal Echo", "type": "adaptive-combat", "damage": "1d4", "damageType": "psychic", "range": "ranged", "arcanaPointCost": 0, "description": "Amplifies pain" },
+    { "id": "burning-rune", "name": "Burning Rune", "type": "adaptive-combat", "damage": "1d4", "damageType": "fire", "range": "touch", "arcanaPointCost": 0, "description": "Lingers" },
+    { "id": "glacial-lash", "name": "Glacial Lash", "type": "adaptive-combat", "damage": "1d4", "damageType": "cold", "range": "ranged", "arcanaPointCost": 0, "description": "Slows target" },
+    { "id": "thundering-claw", "name": "Thundering Claw", "type": "adaptive-combat", "damage": "1d4", "damageType": "shockwave", "range": "touch", "arcanaPointCost": 0, "description": "Hits nearby enemies" },
+    { "id": "explosive-arc", "name": "Explosive Arc", "type": "adaptive-combat", "damage": "1d4", "damageType": "force", "range": "ranged", "arcanaPointCost": 0, "description": "Jumps to adjacent enemies" },
+    { "id": "void-pulse", "name": "Void Pulse", "type": "adaptive-combat", "damage": "1d4", "damageType": "necrotic", "range": "touch", "arcanaPointCost": 0, "description": "Disrupts magic" },
+    { "id": "radiant-wave", "name": "Radiant Wave", "type": "adaptive-combat", "damage": "1d4", "damageType": "radiant", "range": "touch", "arcanaPointCost": 0, "description": "Area burst" },
+
+    { "id": "light", "name": "Light", "type": "utility", "damage": null, "damageType": null, "range": "20 ft radius", "arcanaPointCost": 0, "description": "Illumination sphere (20 ft radius, 1 hour)" },
+    { "id": "mage-hand", "name": "Mage Hand", "type": "utility", "damage": null, "damageType": null, "range": "30 ft", "arcanaPointCost": 0, "description": "Spectral hand manipulates objects (30 ft, 1 minute)" },
+    { "id": "prestidigitation", "name": "Prestidigitation", "type": "utility", "damage": null, "damageType": null, "range": "touch", "arcanaPointCost": 0, "description": "Minor magical effects" },
+    { "id": "message", "name": "Message", "type": "utility", "damage": null, "damageType": null, "range": "120 ft", "arcanaPointCost": 0, "description": "Whispered message (range 120 ft)" },
+    { "id": "create-water", "name": "Create Water", "type": "utility", "damage": null, "damageType": null, "range": "touch", "arcanaPointCost": 0, "description": "Up to 10 gallons clean water" },
+    { "id": "blade-ward", "name": "Blade Ward", "type": "utility", "damage": null, "damageType": null, "range": "self", "arcanaPointCost": 0, "description": "Resistance to weapon damage (1 round)" },
+    { "id": "true-strike", "name": "True Strike", "type": "utility", "damage": null, "damageType": null, "range": "ranged", "arcanaPointCost": 0, "description": "Insight into target's defenses (1 round)" }
+  ],
+  "modifications": [
+    { "id": "amplify-power", "name": "Amplify Power", "arcanaPointCost": 1, "effect": "+1d4 damage" },
+    { "id": "multi-target-cast", "name": "Multi-Target Cast", "arcanaPointCost": 1, "effect": "Affect 1 additional target", "note": "1 AP per target" },
+    { "id": "extended-range", "name": "Extended Range", "arcanaPointCost": 1, "effect": "+5 feet range" },
+    { "id": "lingering-effect", "name": "Lingering Effect", "arcanaPointCost": 1, "effect": "Add 1-turn duration effect" },
+    { "id": "spell-disruption", "name": "Spell Disruption", "arcanaPointCost": 1, "effect": "Nullify magical effect for 1 round" },
+    { "id": "arcane-shielding", "name": "Arcane Shielding", "arcanaPointCost": 1, "effect": "Magic resistance for 1 round" }
+  ]
+}
