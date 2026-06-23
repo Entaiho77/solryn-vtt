@@ -272,6 +272,9 @@ function AppContent() {
         onSelectToken={setSelectedTokenId}
         onSaveSchema={sync.setRoomSheetSchema}
         onSaveTokenSheet={sync.updateTokenSheet}
+        roomId={roomId}
+        onRollDice={sync.rollDice}
+        onRemoveStatusEffect={sync.setTokenStatusEffects}
       />
       <BestiaryDrawer
         open={leftDrawer === 'bestiary'}

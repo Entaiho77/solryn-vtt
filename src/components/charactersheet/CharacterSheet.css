@@ -1,0 +1,302 @@
+.character-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cs-hint {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.cs-section-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin: 0 0 0.5rem;
+}
+
+/* Header */
+.cs-header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.cs-portrait {
+  flex-shrink: 0;
+  width: 100px;
+  height: 120px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cs-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-portrait-placeholder {
+  color: var(--color-text-muted);
+  font-size: 24px;
+}
+
+.cs-character-name {
+  margin: 0 0 0.25rem;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.cs-character-subline {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* Ability scores */
+.cs-ability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 12px;
+}
+
+.cs-ability-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-ability-label {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+}
+
+.cs-ability-score {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.cs-ability-modifier {
+  font-size: 12px;
+  color: var(--color-accent);
+}
+
+/* Combat stats / resources */
+.cs-combat-grid,
+.cs-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
+}
+
+.cs-stat-field,
+.cs-resource-field {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.cs-stat-value-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cs-stat-field input,
+.cs-resource-field input {
+  width: 64px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text);
+  padding: 2px 6px;
+  font-size: 14px;
+}
+
+.cs-stat-max {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.cs-stat-readonly {
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+/* Attacks */
+.cs-attacks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-weapon-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.cs-weapon-card:hover {
+  border-color: var(--color-accent);
+}
+
+.cs-weapon-card-empty {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.cs-weapon-card-empty:hover {
+  border-color: var(--color-border);
+}
+
+.cs-weapon-name {
+  font-weight: 600;
+}
+
+.cs-weapon-damage,
+.cs-weapon-skill {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.cs-roll-result {
+  margin-top: 0.5rem;
+  font-size: 13px;
+  color: var(--color-accent);
+}
+
+/* Expandable sections */
+.cs-expandable {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cs-expandable-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cs-chevron {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.cs-chevron.is-expanded {
+  transform: rotate(90deg);
+}
+
+.cs-expandable-content {
+  padding: 0.75rem;
+  background: var(--color-surface-raised);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Skills / spells / equipment */
+.cs-skills-group h5,
+.cs-equipment-group h5 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+}
+
+.cs-skills-group p,
+.cs-equipment-group p,
+.cs-spells p {
+  margin: 0.15rem 0;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.cs-spells-count {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 0 0 0.5rem;
+}
+
+.cs-backpack-list {
+  color: var(--color-text-muted) !important;
+}
+
+/* Status effects */
+.cs-status-effect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.25rem 0;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.cs-status-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cs-status-effect button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
+/* Notes */
+.cs-notes {
+  width: 100%;
+  min-height: 100px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  padding: 0.5rem;
+  font-size: 13px;
+  resize: vertical;
+}
+
+@media print {
+  .character-sheet {
+    color: black;
+    background: white;
+  }
+}

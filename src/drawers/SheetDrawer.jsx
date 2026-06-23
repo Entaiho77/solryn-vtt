@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Drawer from './Drawer.jsx'
+import SolrynCharacterSheet from '../components/charactersheet/SolrynCharacterSheet.jsx'
 import './SheetDrawer.css'
 
 const FIELD_TYPES = ['text', 'number', 'longtext']
@@ -19,6 +20,9 @@ export default function SheetDrawer({
   onSelectToken,
   onSaveSchema,
   onSaveTokenSheet,
+  roomId,
+  onRollDice,
+  onRemoveStatusEffect,
 }) {
   const [editingSchema, setEditingSchema] = useState(false)
   const [draftFields, setDraftFields] = useState(schema)
@@ -111,7 +115,22 @@ export default function SheetDrawer({
         ))}
       </ul>
 
-      {selectedToken && (
+      {selectedToken && selectedToken.characterId && (
+        <SolrynCharacterSheet
+          roomId={roomId}
+          token={selectedToken}
+          isEditable={canEditSelected}
+          onRollDice={onRollDice}
+          onRemoveStatusEffect={(effectId) =>
+            onRemoveStatusEffect(
+              selectedToken.id,
+              (selectedToken.statusEffects ?? []).filter((e) => e.id !== effectId),
+            )
+          }
+        />
+      )}
+
+      {selectedToken && !selectedToken.characterId && (
         <div className="sheet-fields">
           {schema.length === 0 && <p className="sheet-hint">No sheet fields defined yet.</p>}
           {schema.map((field) => (
