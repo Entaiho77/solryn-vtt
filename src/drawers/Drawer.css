@@ -36,6 +36,10 @@
   transform: translateX(100%);
 }
 
+.drawer--wide {
+  width: 420px;
+}
+
 .drawer--open {
   transform: translateX(0);
 }

@@ -59,7 +59,13 @@ export default function SheetDrawer({
   const canEditSelected = selectedToken && (isGm || selectedToken.ownerUid === uid)
 
   return (
-    <Drawer side="left" title="Character sheet" open={open} onClose={onClose}>
+    <Drawer
+      side="left"
+      title="Character sheet"
+      open={open}
+      onClose={onClose}
+      wide={Boolean(selectedToken?.characterId)}
+    >
       {isGm && (
         <div className="sheet-schema-controls">
           {editingSchema ? (
