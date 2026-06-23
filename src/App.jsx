@@ -46,6 +46,7 @@ function AppContent() {
   useEffect(() => {
     const remoteIds = Object.keys(sync.remoteTokens)
     const existingById = new Map(localTokensRef.current.map((t) => [t.id, t]))
+    console.log('DEBUG remoteTokens', sync.remoteTokens)
 
     const merged = remoteIds.map((id) => {
       const remote = sync.remoteTokens[id]
