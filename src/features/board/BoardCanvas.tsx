@@ -46,6 +46,8 @@ interface BoardCanvasProps {
   tool: BoardTool;
   measureScale?: { value: number; unit: string };
   selectedTokenId?: string;
+  /** Current-turn combatant's token, drawn with a glow. */
+  highlightTokenId?: string;
   onMoveToken: (tokenId: string, col: number, row: number) => void;
   onToggleFog: (col: number, row: number, fogged: boolean) => void;
   onSelectToken: (token: Token | null) => void;
@@ -62,6 +64,7 @@ export function BoardCanvas({
   tool,
   measureScale,
   selectedTokenId,
+  highlightTokenId,
   onMoveToken,
   onToggleFog,
   onSelectToken,
@@ -160,6 +163,14 @@ export function BoardCanvas({
         ctx.fillText((token.name[0] ?? '?').toUpperCase(), x, y + 1);
       }
 
+      if (token.id === highlightTokenId) {
+        ctx.strokeStyle = COLORS.teal;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(x, y, radius + 5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
       const selected = token.id === selectedTokenId;
       const sprung = token.kind === 'trap' && token.trapState === 'sprung';
       ctx.lineWidth = selected ? 4 : 2;
@@ -216,7 +227,17 @@ export function BoardCanvas({
     }
   }
 
-  useEffect(draw, [map, tokens, role, uid, selectedTokenId, ghost, measure, version]);
+  useEffect(draw, [
+    map,
+    tokens,
+    role,
+    uid,
+    selectedTokenId,
+    highlightTokenId,
+    ghost,
+    measure,
+    version,
+  ]);
 
   function eventCell(e: MouseEvent<HTMLCanvasElement>) {
     const cell = pixelToCell(e.nativeEvent.offsetX, e.nativeEvent.offsetY, map.gridSize);

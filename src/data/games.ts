@@ -85,6 +85,11 @@ export function updateGameName(gameId: string, name: string): Promise<void> {
   return writeValue(`games/${gameId}/name`, name.trim());
 }
 
+/** GM grants a party-wide level-up: raise the allowed party level by one (§4.9). */
+export function grantLevelUp(gameId: string, currentGrant: number): Promise<void> {
+  return writeValue(`games/${gameId}/levelGrant`, currentGrant + 1);
+}
+
 /** Regenerate the invite code, invalidating the old one (for leaks / to stop joins). */
 export async function regenerateInviteCode(
   gameId: string,

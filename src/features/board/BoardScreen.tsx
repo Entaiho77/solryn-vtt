@@ -10,6 +10,8 @@ import {
 import { BoardShell, type BarItem } from './BoardShell';
 import { BoardCanvas, type BoardTool } from './BoardCanvas';
 import { TokenCard } from './TokenCard';
+import { InitiativeTracker } from './InitiativeTracker';
+import { InitiativeDrawer } from './drawers/InitiativeDrawer';
 import { MapsDrawer } from './drawers/MapsDrawer';
 import { FogDrawer } from './drawers/FogDrawer';
 import { AddCreatureDrawer } from './drawers/AddCreatureDrawer';
@@ -32,6 +34,10 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   const gameId = game.id;
   const tokens: Token[] = Object.values(game.tokens ?? {});
   const activeMap = game.activeMapId ? game.maps?.[game.activeMapId] : undefined;
+  const initState = game.initiative;
+  const highlightTokenId = initState?.active
+    ? initState.order[initState.turnIndex]?.tokenId
+    : undefined;
 
   const [openLeft, setOpenLeft] = useState<string | null>(null);
   const [openRight, setOpenRight] = useState<string | null>(
@@ -97,9 +103,17 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   };
   const rules: BarItem = { kind: 'drawer', id: 'rules', label: 'Rules', glyph: 'ℹ', content: <RulesDrawer system={system} /> };
 
+  const initiative: BarItem = {
+    kind: 'drawer',
+    id: 'initiative',
+    label: 'Initiative',
+    glyph: '⚔',
+    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} />,
+  };
+
   const left: BarItem[] =
     role === 'gm'
-      ? [dice, chat, rules]
+      ? [initiative, dice, chat, rules]
       : [
           dice,
           chat,
@@ -160,7 +174,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         id: 'character',
         label: 'Character',
         glyph: '◈',
-        content: <CharacterQuickView system={system} character={character} />,
+        content: (
+          <CharacterQuickView
+            system={system}
+            character={character}
+            canLevelUp={character.play.level < (game.levelGrant ?? 1)}
+          />
+        ),
       },
     ];
   }
@@ -183,6 +203,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             tool={tool}
             measureScale={measureScale}
             selectedTokenId={selected?.id}
+            highlightTokenId={highlightTokenId}
             onMoveToken={(id, col, row) => void moveToken(gameId, id, col, row)}
             onToggleFog={(col, row, f) =>
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
@@ -206,6 +227,19 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             gameId={gameId}
             viewerCharacter={character}
             onClose={() => setSelectedId(null)}
+          />
+        )}
+
+        {initState?.active && (
+          <InitiativeTracker
+            state={initState}
+            system={system}
+            role={role}
+            uid={uid}
+            character={character}
+            gameId={gameId}
+            tokens={game.tokens ?? {}}
+            activeMapId={activeMap?.id}
           />
         )}
       </div>

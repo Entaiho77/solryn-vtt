@@ -9,6 +9,7 @@ import { ResourceTracker, type ResourceColor } from '../../sheet/ResourceTracker
 import { AttacksSection } from '../../sheet/AttacksSection';
 import { SpellBookOverlay } from '../../sheet/SpellBookOverlay';
 import { PlaySheet } from '../../sheet/PlaySheet';
+import { LevelUpCeremony } from '../../sheet/LevelUpCeremony';
 import s from './drawers.module.css';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
@@ -19,12 +20,15 @@ const trackerColor = (c?: SemanticColor): ResourceColor =>
 export function CharacterQuickView({
   system,
   character,
+  canLevelUp = false,
 }: {
   system: SystemDefinition;
   character: Character;
+  canLevelUp?: boolean;
 }) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
+  const [levelOpen, setLevelOpen] = useState(false);
 
   const scores = character.definition.coreScores;
   const armor = system.equipment.armor.find(
@@ -40,6 +44,16 @@ export function CharacterQuickView({
 
   return (
     <div className={s.section}>
+      {canLevelUp && (
+        <Button
+          full
+          onClick={() => setLevelOpen(true)}
+          style={{ background: 'var(--accent-amber)', color: 'var(--on-accent)' }}
+        >
+          ⬆ Level up available
+        </Button>
+      )}
+
       {pools.map((p) => {
         const max = p.value;
         const current = character.play.pools?.[p.id]?.current ?? max;
@@ -97,6 +111,13 @@ export function CharacterQuickView({
       >
         <PlaySheet system={system} character={character} />
       </Modal>
+
+      <LevelUpCeremony
+        system={system}
+        character={character}
+        open={levelOpen}
+        onClose={() => setLevelOpen(false)}
+      />
     </div>
   );
 }

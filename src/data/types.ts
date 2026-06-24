@@ -46,8 +46,30 @@ export interface Game {
   tokens?: Record<string, Token>;
 
   // --- Combat & social (Phase E) ---
-  initiative?: Record<string, unknown>;
+  initiative?: InitiativeState;
   chat?: Record<string, unknown>;
+  /** Party level the GM has granted up to; a character can level while below it. */
+  levelGrant?: number;
+}
+
+/** One entry in the initiative order. */
+export interface Combatant {
+  id: string;
+  name: string;
+  kind: 'character' | 'creature';
+  initiative: number;
+  /** Tiebreaker within equal initiative (characters already beat creatures). */
+  tieBreak: number;
+  tokenId?: string;
+  ownerUserId?: string;
+  characterId?: string;
+}
+
+export interface InitiativeState {
+  active: boolean;
+  round: number;
+  turnIndex: number;
+  order: Combatant[];
 }
 
 /** A board map. The image is placed at the top-left and never stretched; a fixed grid

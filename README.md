@@ -91,7 +91,9 @@ npm run typecheck    # tsc, no emit
 
 **Phase D — the board:** HTML5 Canvas board (map placed at top-left, fixed grid + toggle, no stretch), real-time map/token/fog state, the role-configured edge-bar/drawer shell, GM map tools (map upload with type/scale, fog of war with cover/clear/click-paint, add-creature from the bestiary / a saved "my creatures" library / a quick build), tokens with snap-to-grid drag and the permission matrix (control follows ownership; players see monsters as name+image only; hidden tokens), the **measure/distance** tool, the **trap 3-state lifecycle** (hidden → revealed → sprung), the floating token card (GM HP/damage/hide/defeat/trap controls), and the player board view (character quick-view drawer + full-sheet overlay, Dice and Rules-reference drawers). Map images upload to **Firebase Storage** when configured, falling back to inline data URLs.
 
-**Next phase:** E — initiative tracker, the universal harvest/loot mechanic, chat + private whispers, player notes, and the level-up ceremony. See [`docs/Solryn_VTT_Build_Brief.md`](./docs/Solryn_VTT_Build_Brief.md).
+**Phase E — combat & systems:** the initiative tracker (GM selects creatures → roll, players roll themselves in, bottom turn-strip with the current combatant centered + their map token highlighted, round counter, GM-next / player-end-turn, defeated monsters gray out), the universal harvest/loot mechanic (skill-gated d100 + assist → quality tier, from a defeated creature), chat with **private whispers** (the GM can't see player↔player), per-player private notes, and the level-up ceremony (GM grants party-wide → player rolls increases in order → recalculate → +2 skill points, pending until trained).
+
+**All design-doc phases (A–E) are implemented.** Remaining work is polish and hardening: server-side permission filtering for truly-secret data, bundle code-splitting, drag-select + right-click on the board, and expanding the provisional Solryn content to the canonical v1.2 ruleset.
 
 ### Note on seed content
 

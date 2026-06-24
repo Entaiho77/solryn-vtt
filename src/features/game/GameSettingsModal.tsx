@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Game, Role } from '../../data/types';
 import {
   deleteGame,
+  grantLevelUp,
   leaveGame,
   regenerateInviteCode,
   removeMember,
@@ -154,6 +155,34 @@ export function GameSettingsModal({
             <p className={styles.hint}>
               Regenerating invalidates the old code — useful if it leaks or to stop
               new players from joining.
+            </p>
+          </section>
+        )}
+
+        {/* Party level-up (GM) */}
+        {isGM && (
+          <section className={styles.section}>
+            <span className={styles.label}>Party</span>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 'var(--space-3)',
+              }}
+            >
+              <span>Levels granted: up to {game.levelGrant ?? 1}</span>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => void grantLevelUp(game.id, game.levelGrant ?? 1)}
+              >
+                Grant level-up
+              </Button>
+            </div>
+            <p className={styles.hint}>
+              In Solryn the party levels together. Each player then takes their level-up
+              ceremony (roll, recalculate, place skill points) from their character view.
             </p>
           </section>
         )}

@@ -67,6 +67,24 @@ export function setLoadedSpell(
   return writeValue(`characters/${characterId}/play/loadedSpellId`, spellId);
 }
 
+/** Apply a completed level-up: new core scores, level, refreshed pools, +skill points. */
+export function applyLevelUp(
+  characterId: string,
+  data: {
+    coreScores: Record<string, number>;
+    level: number;
+    pools: Record<string, { current: number }>;
+    unspentSkillPoints: number;
+  },
+): Promise<void> {
+  return multiUpdate({
+    [`/characters/${characterId}/definition/coreScores`]: data.coreScores,
+    [`/characters/${characterId}/play/level`]: data.level,
+    [`/characters/${characterId}/play/pools`]: data.pools,
+    [`/characters/${characterId}/play/unspentSkillPoints`]: data.unspentSkillPoints,
+  });
+}
+
 /** Live "my character" for a game (or null if none yet). */
 export function useGameCharacter(
   gameId: string | null,
