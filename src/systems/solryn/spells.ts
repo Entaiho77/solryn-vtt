@@ -1,0 +1,98 @@
+import type { Spell } from '../../engine/schema';
+
+/**
+ * Solryn spells. Offensive spells (red tag) feed the sheet's selectable attack row;
+ * utility spells (teal tag) live only in the spell book. All spells auto-hit and start
+ * at a 1d4 base die (combat mode parameter). Representative content, flagged provisional
+ * pending the canonical spell list (Design Doc §5.7).
+ */
+export const spells: Spell[] = [
+  {
+    id: 'stone-spike',
+    name: 'Stone Spike',
+    type: 'offensive',
+    synopsis: 'A spike of stone erupts beneath a target, impaling it from below.',
+    damageDice: '1d4',
+    cost: 1,
+    range: '30 ft',
+    duration: 'Instant',
+    provisional: true,
+  },
+  {
+    id: 'flame-dart',
+    name: 'Flame Dart',
+    type: 'offensive',
+    synopsis: 'A darting mote of fire streaks to a target and bursts on contact.',
+    damageDice: '1d4',
+    cost: 1,
+    range: '40 ft',
+    duration: 'Instant',
+    provisional: true,
+  },
+  {
+    id: 'frost-lance',
+    name: 'Frost Lance',
+    type: 'offensive',
+    synopsis: 'A lance of ice skewers a target and saps its warmth, slowing it briefly.',
+    damageDice: '1d6',
+    cost: 2,
+    range: '30 ft',
+    duration: 'Instant',
+    provisional: true,
+  },
+  {
+    id: 'arc-lightning',
+    name: 'Arc Lightning',
+    type: 'offensive',
+    synopsis: 'A jagged arc leaps to a target and may chain to a nearby foe.',
+    damageDice: '1d8',
+    cost: 3,
+    range: '25 ft',
+    duration: 'Instant',
+    provisional: true,
+  },
+  {
+    id: 'stoneskin',
+    name: 'Stoneskin',
+    type: 'utility',
+    synopsis: 'Your skin hardens to rock, granting temporary damage reduction.',
+    damageDice: null,
+    cost: 2,
+    range: 'Self',
+    duration: '1 minute',
+    provisional: true,
+  },
+  {
+    id: 'mend-wounds',
+    name: 'Mend Wounds',
+    type: 'utility',
+    synopsis: 'A soft light knits flesh, restoring hit points to a touched ally.',
+    damageDice: null,
+    cost: 2,
+    range: 'Touch',
+    duration: 'Instant',
+    provisional: true,
+  },
+  {
+    id: 'light',
+    name: 'Light',
+    type: 'utility',
+    synopsis: 'An object sheds bright light until dismissed.',
+    damageDice: null,
+    cost: 0,
+    range: 'Touch',
+    duration: 'Until dismissed',
+    provisional: true,
+  },
+  {
+    id: 'gust',
+    name: 'Gust',
+    type: 'utility',
+    synopsis: 'A sharp gust of wind shoves small objects or clears smoke and gas.',
+    damageDice: null,
+    cost: 1,
+    range: '20 ft',
+    duration: 'Instant',
+    provisional: true,
+  },
+];

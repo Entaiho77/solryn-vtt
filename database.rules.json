@@ -1,0 +1,37 @@
+{
+  "//": "Baseline Realtime Database rules. Per the design (Build Brief §4), permission FILTERING is client-side for now: full game state is sent to every authenticated member and each screen renders only its permitted slice. These rules therefore gate on authentication/membership but do not yet enforce field-level secrecy (hidden tokens, monster stats, whispers). Harden with server-side filtering before any high-stakes/public game. ",
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "inviteCodes": {
+      ".read": "auth != null",
+      "$code": {
+        ".write": "auth != null"
+      }
+    },
+    "userGames": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null"
+      }
+    },
+    "games": {
+      ".read": "auth != null",
+      "$gameId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+        ".indexOn": ["inviteCode"]
+      }
+    },
+    "characters": {
+      ".read": "auth != null",
+      "$characterId": {
+        ".write": "auth != null"
+      }
+    }
+  }
+}
