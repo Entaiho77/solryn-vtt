@@ -74,6 +74,12 @@
   padding: var(--space-6);
   text-align: center;
 }
+
+/* For the builder / sheet, which own their own internal layout. */
+.bodyFlow {
+  flex: 1;
+  overflow-y: auto;
+}
 .placeholder {
   max-width: 480px;
   display: flex;

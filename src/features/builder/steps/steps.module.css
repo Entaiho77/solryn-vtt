@@ -1,0 +1,310 @@
+/* Shared content styles across builder steps. */
+
+.bigNumber {
+  font-size: 3.25rem;
+  font-weight: 800;
+  color: var(--accent-teal);
+  line-height: 1;
+}
+.bigNumber.purple {
+  color: var(--accent-purple);
+}
+.bigNumber.amber {
+  color: var(--accent-amber);
+}
+.unit {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  margin-left: var(--space-2);
+}
+
+.breakdown {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  line-height: 1.6;
+}
+
+.pendingNote,
+.note {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.pendingNote {
+  color: var(--accent-amber);
+}
+
+.formula {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent-teal);
+}
+
+.teachText {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.teachText strong {
+  color: var(--text-primary);
+}
+
+/* Stat list (roll + race preview) */
+.statList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--surface-bar);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+.statRow.active {
+  border-color: var(--accent-teal);
+}
+.statRow.pending {
+  opacity: 0.5;
+}
+.statName {
+  flex: 1;
+  font-weight: 600;
+}
+.statValue {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  min-width: 2ch;
+  text-align: right;
+}
+.statMod {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  min-width: 5ch;
+  text-align: right;
+}
+.delta {
+  color: var(--accent-teal);
+  font-size: var(--text-sm);
+  min-width: 4ch;
+  text-align: right;
+}
+
+/* Even chip grid (skills / spells) */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.counter {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.counter.done {
+  color: var(--accent-teal);
+}
+.search {
+  flex: 1;
+  max-width: 240px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  padding: 8px 10px;
+  font-size: var(--text-sm);
+}
+.chipGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-2);
+  max-height: 46vh;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  justify-content: center;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.chip:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+.chip.selected {
+  border-color: var(--accent-teal);
+  background: var(--teal-tint);
+}
+.chip:disabled {
+  opacity: 0.4;
+}
+.chipName {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.chipTag {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.chipTag.offensive {
+  color: var(--accent-red);
+}
+.chipTag.utility {
+  color: var(--accent-teal);
+}
+
+/* Selectable cards (race / gear) */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 52vh;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+.optionCard {
+  text-align: left;
+  width: 100%;
+  background: var(--surface-bar);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  transition: border-color 0.12s ease;
+}
+.optionCard:hover {
+  border-color: var(--border-strong);
+}
+.optionCard.selected {
+  border-color: var(--accent-teal);
+  background: var(--teal-tint);
+}
+.optionHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.optionName {
+  font-weight: 700;
+}
+.optionSummary {
+  color: var(--accent-teal);
+  font-size: var(--text-sm);
+}
+.optionMeta {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  margin-top: 2px;
+}
+.provisional {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-amber);
+  border: 1px solid var(--accent-amber);
+  border-radius: 999px;
+  padding: 0 6px;
+}
+
+/* Inline flexible-bonus assignment */
+.assign {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--border-hairline);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.assignRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.statToggle {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: var(--text-sm);
+}
+.statToggle.on {
+  border-color: var(--accent-teal);
+  background: var(--teal-tint);
+  color: var(--accent-teal);
+}
+.statToggle:disabled {
+  opacity: 0.4;
+}
+
+/* Misc */
+.centerBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+.finalizedPanel {
+  background: var(--surface-bar);
+  border: 1px solid var(--accent-teal);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  gap: var(--space-5);
+}
+.finalizedItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.finalizedLabel {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.finalizedValue {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--accent-teal);
+}
+.kit {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.kit li {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: var(--surface-raised);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+}
+.fieldLabel {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: var(--space-2);
+}

@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthProvider';
 import { useValue } from '../../data/realtime';
+import { createCharacter, useGameCharacter } from '../../data/characters';
 import type { Game } from '../../data/types';
 import { roleOf } from '../../permissions';
 import { getSystem } from '../../systems/registry';
 import { Button } from '../../components/ui/Button';
 import { RoleBadge } from '../../components/ui/Badge';
 import { GameSettingsModal } from './GameSettingsModal';
+import { CharacterBuilder } from '../builder/CharacterBuilder';
+import { CharacterReady } from '../sheet/CharacterReady';
 import styles from './GamePage.module.css';
 
 export function GamePage() {
@@ -16,6 +19,10 @@ export function GamePage() {
   const { user } = useAuth();
   const { value: game, loading } = useValue<Game>(
     gameId ? `games/${gameId}` : null,
+  );
+  const { character, loading: charLoading } = useGameCharacter(
+    gameId ?? null,
+    user?.uid ?? null,
   );
   const [showSettings, setShowSettings] = useState(false);
 
@@ -47,6 +54,31 @@ export function GamePage() {
 
   const system = getSystem(game.systemId);
 
+  function renderPlayer() {
+    if (!system) {
+      return <p className={styles.muted}>Unknown system “{game!.systemId}”.</p>;
+    }
+    if (charLoading) {
+      return <p className={styles.muted}>Loading your character…</p>;
+    }
+    if (!character || !character.buildComplete) {
+      return (
+        <CharacterBuilder
+          system={system}
+          gameId={game!.id}
+          ownerUserId={user!.uid}
+          onFinish={async (c) => {
+            await createCharacter(c);
+          }}
+        />
+      );
+    }
+    return <CharacterReady system={system} character={character} />;
+  }
+
+  const isBuilding = role === 'player' && !charLoading && !character;
+  const flow = role === 'player'; // player content manages its own layout
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -54,11 +86,7 @@ export function GamePage() {
           ‹ Lobby
         </button>
         <div className={styles.titleBlock}>
-          <span
-            className={styles.glyph}
-            style={{ color: game.systemColor }}
-            aria-hidden="true"
-          >
+          <span className={styles.glyph} style={{ color: game.systemColor }} aria-hidden="true">
             {game.systemGlyph}
           </span>
           <span className={styles.gameName}>{game.name}</span>
@@ -66,21 +94,22 @@ export function GamePage() {
         </div>
         <div className={styles.headerRight}>
           <RoleBadge role={role} />
-          <Button variant="secondary" size="sm" onClick={() => setShowSettings(true)}>
-            Settings
-          </Button>
+          {!isBuilding && (
+            <Button variant="secondary" size="sm" onClick={() => setShowSettings(true)}>
+              Settings
+            </Button>
+          )}
         </div>
       </header>
 
-      <main className={styles.body}>
-        {/* Role branch (§1): GM → GM screen; player → builder/sheet. Both are later phases. */}
+      <main className={flow ? styles.bodyFlow : styles.body}>
         {role === 'gm' ? (
           <div className={styles.placeholder}>
             <h2>GM screen</h2>
             <p className={styles.muted}>
-              The shared board, initiative tracker, dice log, chat, and map tools
-              arrive in the board &amp; combat phases. The game shell, membership,
-              and settings are live now.
+              The shared board, initiative tracker, dice log, chat, and map tools arrive
+              in the board &amp; combat phases. The game shell, membership, and settings
+              are live now.
             </p>
             <div className={styles.inviteBox}>
               Share this invite code with players:
@@ -88,21 +117,7 @@ export function GamePage() {
             </div>
           </div>
         ) : (
-          <div className={styles.placeholder}>
-            <h2>Your character</h2>
-            <p className={styles.muted}>
-              The 13-step guided builder and the play-mode character sheet arrive
-              in the character phase. You’ve joined the game — your character will
-              live here.
-            </p>
-          </div>
-        )}
-
-        {system && (
-          <p className={styles.engineNote}>
-            Running on the <strong>{system.name}</strong> system
-            {system.tagline ? ` — ${system.tagline}` : ''}
-          </p>
+          renderPlayer()
         )}
       </main>
 
