@@ -40,13 +40,59 @@ export interface Game {
   createdAt: number;
   members: Record<string, GameMember>;
 
-  // --- Board state (later phases) ---
+  // --- Board state (Phase D) ---
   activeMapId?: string;
-  maps?: Record<string, unknown>;
-  tokens?: Record<string, unknown>;
-  fog?: Record<string, unknown>;
+  maps?: Record<string, MapDef>;
+  tokens?: Record<string, Token>;
+
+  // --- Combat & social (Phase E) ---
   initiative?: Record<string, unknown>;
   chat?: Record<string, unknown>;
+}
+
+/** A board map. The image is placed at the top-left and never stretched; a fixed grid
+ * overlays at `gridSize` px. Real-world scale (from the map type) is metadata for a
+ * future distance readout. */
+export interface MapDef {
+  id: string;
+  name: string;
+  /** Map-type id from system data (sets the real-world scale). */
+  typeId: string;
+  /** Image as a data URL (MVP; Firebase Storage is the production path). */
+  imageUrl: string;
+  width: number;
+  height: number;
+  /** Pixels per grid square. */
+  gridSize: number;
+  gridVisible: boolean;
+  /** For the "custom" map type: GM-defined square scale. */
+  customSquare?: { value: number; unit: string };
+  /** Fogged squares, keyed "col,row". */
+  fog?: Record<string, true>;
+}
+
+export type TokenKind = 'character' | 'creature' | 'trap';
+
+export interface Token {
+  id: string;
+  mapId: string;
+  kind: TokenKind;
+  name: string;
+  col: number;
+  row: number;
+  color?: string;
+  imageUrl?: string;
+  /** false = hidden token (GM sees it dimmed; players don't render it). */
+  visible?: boolean;
+  /** Character tokens: the controlling player + linked character. */
+  ownerUserId?: string;
+  characterId?: string;
+  /** Creature/trap backing stat block (HP/DR/damage, or trap fields). */
+  stats?: Record<string, number | string>;
+  /** Creature current/max HP (GM-tracked). */
+  hp?: { current: number; max: number };
+  /** Creature defeated (grayed in place during combat). */
+  defeated?: boolean;
 }
 
 /**

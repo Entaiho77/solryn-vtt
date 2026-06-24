@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthProvider';
 import { useValue } from '../../data/realtime';
@@ -10,7 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { RoleBadge } from '../../components/ui/Badge';
 import { GameSettingsModal } from './GameSettingsModal';
 import { CharacterBuilder } from '../builder/CharacterBuilder';
-import { PlaySheet } from '../sheet/PlaySheet';
+import { BoardScreen } from '../board/BoardScreen';
 import styles from './GamePage.module.css';
 
 export function GamePage() {
@@ -26,9 +26,7 @@ export function GamePage() {
   );
   const [showSettings, setShowSettings] = useState(false);
 
-  if (loading) {
-    return <div className={styles.center}>Loading game…</div>;
-  }
+  if (loading) return <div className={styles.center}>Loading game…</div>;
   if (!game || !user) {
     return (
       <div className={styles.center}>
@@ -54,30 +52,42 @@ export function GamePage() {
 
   const system = getSystem(game.systemId);
 
-  function renderPlayer() {
-    if (!system) {
-      return <p className={styles.muted}>Unknown system “{game!.systemId}”.</p>;
-    }
-    if (charLoading) {
-      return <p className={styles.muted}>Loading your character…</p>;
-    }
-    if (!character || !character.buildComplete) {
-      return (
-        <CharacterBuilder
-          system={system}
-          gameId={game!.id}
-          ownerUserId={user!.uid}
-          onFinish={async (c) => {
-            await createCharacter(c);
-          }}
-        />
-      );
-    }
-    return <PlaySheet system={system} character={character} />;
-  }
+  // Player without a completed character → the builder. Otherwise → the board.
+  const building =
+    role === 'player' && !charLoading && (!character || !character.buildComplete);
 
-  const isBuilding = role === 'player' && !charLoading && !character;
-  const flow = role === 'player'; // player content manages its own layout
+  let content: ReactNode;
+  let isBoard = false;
+  if (!system) {
+    content = <p className={styles.muted}>Unknown system “{game.systemId}”.</p>;
+  } else if (role === 'gm') {
+    content = <BoardScreen system={system} game={game} role={role} uid={user.uid} />;
+    isBoard = true;
+  } else if (charLoading) {
+    content = <p className={styles.muted}>Loading your character…</p>;
+  } else if (building) {
+    content = (
+      <CharacterBuilder
+        system={system}
+        gameId={game.id}
+        ownerUserId={user.uid}
+        onFinish={async (c) => {
+          await createCharacter(c);
+        }}
+      />
+    );
+  } else {
+    content = (
+      <BoardScreen
+        system={system}
+        game={game}
+        role={role}
+        uid={user.uid}
+        character={character ?? undefined}
+      />
+    );
+    isBoard = true;
+  }
 
   return (
     <div className={styles.page}>
@@ -94,7 +104,7 @@ export function GamePage() {
         </div>
         <div className={styles.headerRight}>
           <RoleBadge role={role} />
-          {!isBuilding && (
+          {!building && (
             <Button variant="secondary" size="sm" onClick={() => setShowSettings(true)}>
               Settings
             </Button>
@@ -102,24 +112,7 @@ export function GamePage() {
         </div>
       </header>
 
-      <main className={flow ? styles.bodyFlow : styles.body}>
-        {role === 'gm' ? (
-          <div className={styles.placeholder}>
-            <h2>GM screen</h2>
-            <p className={styles.muted}>
-              The shared board, initiative tracker, dice log, chat, and map tools arrive
-              in the board &amp; combat phases. The game shell, membership, and settings
-              are live now.
-            </p>
-            <div className={styles.inviteBox}>
-              Share this invite code with players:
-              <code className={styles.inviteCode}>{game.inviteCode}</code>
-            </div>
-          </div>
-        ) : (
-          renderPlayer()
-        )}
-      </main>
+      <main className={isBoard ? styles.bodyBoard : styles.bodyFlow}>{content}</main>
 
       <GameSettingsModal
         open={showSettings}

@@ -1,0 +1,17 @@
+.scroll {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  background: var(--surface-board);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.canvas {
+  display: block;
+  cursor: default;
+}
+.fogCursor {
+  cursor: cell;
+}

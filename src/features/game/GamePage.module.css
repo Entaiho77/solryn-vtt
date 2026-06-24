@@ -80,6 +80,14 @@
   flex: 1;
   overflow-y: auto;
 }
+
+/* For the board, which fills the area and manages its own scrolling. */
+.bodyBoard {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
 .placeholder {
   max-width: 480px;
   display: flex;
