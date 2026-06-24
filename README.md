@@ -77,14 +77,19 @@ npm run typecheck    # tsc, no emit
 
 ## Status
 
-**Implemented (foundation + Phase A — entry & game shell):**
+**Foundation:**
 
 - ✅ System-definition schema + the complete Solryn seed data (stats, races, skills, spells, equipment, maps, quality tiers, bestiary, rules reference, selected modes).
-- ✅ Rules engine (modifiers, derived-stat formulas, skill progression, level-up dice, harvest quality, dice) with 100+ passing tests, including Solryn integration + data-integrity checks.
+- ✅ Rules engine (modifiers, derived-stat formulas, skill progression, level-up dice, harvest quality, dice) with full test coverage, including Solryn integration + data-integrity checks.
 - ✅ Firebase data model, real-time sync layer, permission/ownership model, auth.
-- ✅ Landing/auth (email + Google), lobby (your games, create, join by code), create-game modal, game-settings modal, and the game shell with the GM/player role branch.
 
-**Next phases:** B — character builder (13-step wizard) · C — play-mode sheet · D — board (Canvas) + GM tools · E — combat, harvest, chat, level-up. See [`docs/Solryn_VTT_Build_Brief.md`](./docs/Solryn_VTT_Build_Brief.md).
+**Phase A — entry & game shell:** landing/auth (email + Google), lobby (your games, create, join by code), create-game modal, game-settings modal, game shell with the GM/player role branch.
+
+**Phase B — character builder:** the data-driven 13-step wizard (the step plan is generated from the system definition, not hardcoded). Roll stats (anti-fishing) → race (flexible bonuses) → derived "show, don't ask" pages → skills (3 sub-pages) → conditional spells → reputation → gear (finalizes DR/Speed). "Finish" flips `buildComplete` permanently.
+
+**Phase C — play-mode sheet:** the full interactive §4.6 sheet — core stats, the reusable HP/Arcana/Luck resource tracker (×3), combat/movement strip, the three-across skills section (tiers, bubbles, training-gate pending state), unified attacks & damage (weapons + selectable spell with auto-deducting Cast), gear, and the §4.7 spell-book overlay. Edits write live to Firebase.
+
+**Next phases:** D — board (Canvas) + GM tools (maps, fog, tokens, bestiary) · E — combat/initiative, harvest, chat, level-up. See [`docs/Solryn_VTT_Build_Brief.md`](./docs/Solryn_VTT_Build_Brief.md).
 
 ### Note on seed content
 

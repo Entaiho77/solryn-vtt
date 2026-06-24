@@ -76,6 +76,8 @@ export interface CharacterPlayState {
   reputation: string;
   /** Resource pools by derived-stat id (e.g. hp, arcanaPoints, luckPoints). */
   pools: Record<string, { current: number }>;
+  /** Skill points granted (by level-up) but not yet placed. */
+  unspentSkillPoints?: number;
   equippedArmorId?: string;
   equippedWeaponIds: string[];
   loadedSpellId?: string;

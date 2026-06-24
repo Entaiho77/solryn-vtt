@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
-import type { Character, CharacterPlayState } from './types';
-import { multiUpdate, newKey, subscribe, updateValue } from './realtime';
+import type { Character, CharacterPlayState, CharacterSkillState } from './types';
+import {
+  multiUpdate,
+  newKey,
+  subscribe,
+  updateValue,
+  writeValue,
+} from './realtime';
 import { firebaseConfigured } from '../firebase/app';
 
 /**
@@ -27,6 +33,38 @@ export function updateCharacterPlay(
   patch: Partial<CharacterPlayState>,
 ): Promise<void> {
   return updateValue(`characters/${characterId}/play`, patch as Record<string, unknown>);
+}
+
+// --- Fine-grained play-state writes (the live subscription reflects them back) ---
+
+export function setPoolCurrent(
+  characterId: string,
+  poolId: string,
+  current: number,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/pools/${poolId}/current`, current);
+}
+
+export function setSkillState(
+  characterId: string,
+  skillId: string,
+  state: CharacterSkillState,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/skills/${skillId}`, state);
+}
+
+export function setUnspentSkillPoints(
+  characterId: string,
+  n: number,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/unspentSkillPoints`, n);
+}
+
+export function setLoadedSpell(
+  characterId: string,
+  spellId: string,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/loadedSpellId`, spellId);
 }
 
 /** Live "my character" for a game (or null if none yet). */

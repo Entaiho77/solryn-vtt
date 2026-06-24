@@ -396,6 +396,7 @@ export function finalizeCharacter(
       reputation: system.creation.startingReputation,
       pools,
       skills,
+      unspentSkillPoints: 0,
       equippedWeaponIds: draft.equippedWeaponId ? [draft.equippedWeaponId] : [],
       ...(draft.equippedArmorId ? { equippedArmorId: draft.equippedArmorId } : {}),
       ...(loadedSpellId ? { loadedSpellId } : {}),

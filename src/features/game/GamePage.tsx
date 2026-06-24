@@ -10,7 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { RoleBadge } from '../../components/ui/Badge';
 import { GameSettingsModal } from './GameSettingsModal';
 import { CharacterBuilder } from '../builder/CharacterBuilder';
-import { CharacterReady } from '../sheet/CharacterReady';
+import { PlaySheet } from '../sheet/PlaySheet';
 import styles from './GamePage.module.css';
 
 export function GamePage() {
@@ -73,7 +73,7 @@ export function GamePage() {
         />
       );
     }
-    return <CharacterReady system={system} character={character} />;
+    return <PlaySheet system={system} character={character} />;
   }
 
   const isBuilding = role === 'player' && !charLoading && !character;
