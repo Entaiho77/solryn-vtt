@@ -15,6 +15,8 @@ import { FogDrawer } from './drawers/FogDrawer';
 import { AddCreatureDrawer } from './drawers/AddCreatureDrawer';
 import { DiceDrawer } from './drawers/DiceDrawer';
 import { RulesDrawer } from './drawers/RulesDrawer';
+import { ChatDrawer } from './drawers/ChatDrawer';
+import { NotesDrawer } from './drawers/NotesDrawer';
 import { CharacterQuickView } from './drawers/CharacterQuickView';
 import styles from './BoardScreen.module.css';
 
@@ -84,10 +86,26 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
   const selected = selectedId ? (tokens.find((t) => t.id === selectedId) ?? null) : null;
 
-  const left: BarItem[] = [
-    { kind: 'drawer', id: 'dice', label: 'Dice', glyph: '⚄', content: <DiceDrawer /> },
-    { kind: 'drawer', id: 'rules', label: 'Rules', glyph: 'ℹ', content: <RulesDrawer system={system} /> },
-  ];
+  const myName = game.members[uid]?.displayName ?? 'Someone';
+  const dice: BarItem = { kind: 'drawer', id: 'dice', label: 'Dice', glyph: '⚄', content: <DiceDrawer /> };
+  const chat: BarItem = {
+    kind: 'drawer',
+    id: 'chat',
+    label: 'Chat',
+    glyph: '✉',
+    content: <ChatDrawer gameId={gameId} uid={uid} displayName={myName} members={game.members} />,
+  };
+  const rules: BarItem = { kind: 'drawer', id: 'rules', label: 'Rules', glyph: 'ℹ', content: <RulesDrawer system={system} /> };
+
+  const left: BarItem[] =
+    role === 'gm'
+      ? [dice, chat, rules]
+      : [
+          dice,
+          chat,
+          { kind: 'drawer', id: 'notes', label: 'Notes', glyph: '✎', content: <NotesDrawer uid={uid} gameId={gameId} /> },
+          rules,
+        ];
 
   let right: BarItem[] = [];
   if (role === 'gm') {

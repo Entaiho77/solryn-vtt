@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, Role, Token } from '../../data/types';
 import { removeToken, updateToken } from '../../data/board';
 import { canSeeMonsterStats, tokenVisibility } from '../../permissions';
 import { ResourceTracker } from '../sheet/ResourceTracker';
 import { Button } from '../../components/ui/Button';
+import { HarvestModal } from './HarvestModal';
 import styles from './TokenCard.module.css';
 
 const TRAP_STATES = ['hidden', 'revealed', 'sprung'] as const;
@@ -11,6 +13,7 @@ const TRAP_STATES = ['hidden', 'revealed', 'sprung'] as const;
 /** Floating card for a tapped token (§4.4), honoring the visibility matrix. */
 export function TokenCard({
   token,
+  system,
   role,
   uid,
   gameId,
@@ -26,6 +29,9 @@ export function TokenCard({
   onClose: () => void;
 }) {
   const view = tokenVisibility(token, uid, role);
+  const [harvestOpen, setHarvestOpen] = useState(false);
+  const canLoot =
+    token.kind !== 'character' && Boolean(token.defeated) && Boolean(viewerCharacter);
 
   function body() {
     // Character tokens
@@ -144,6 +150,22 @@ export function TokenCard({
         </button>
       </div>
       {body()}
+      {canLoot && (
+        <div className={styles.loot}>
+          <Button full size="sm" onClick={() => setHarvestOpen(true)}>
+            Loot
+          </Button>
+        </div>
+      )}
+      {canLoot && viewerCharacter && (
+        <HarvestModal
+          system={system}
+          character={viewerCharacter}
+          sourceName={token.name}
+          open={harvestOpen}
+          onClose={() => setHarvestOpen(false)}
+        />
+      )}
     </div>
   );
 }
