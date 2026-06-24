@@ -2,6 +2,11 @@ import { useState } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
 import type { MapDef, Token } from '../../../data/types';
 import { addToken } from '../../../data/board';
+import {
+  deleteCreature,
+  saveCreature,
+  useMyCreatures,
+} from '../../../data/creatures';
 import { gridDimensions } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
 import s from './drawers.module.css';
@@ -9,20 +14,32 @@ import s from './drawers.module.css';
 const CREATURE_COLOR = '#b05a5a';
 const TRAP_COLOR = '#8a7d52';
 
+type Category = 'creature' | 'trap';
+
 export function AddCreatureDrawer({
   system,
   gameId,
+  uid,
   activeMap,
 }: {
   system: SystemDefinition;
   gameId: string;
+  uid: string;
   activeMap?: MapDef;
 }) {
-  const [tab, setTab] = useState<'bestiary' | 'build'>('bestiary');
+  const [tab, setTab] = useState<'bestiary' | 'mine' | 'build'>('bestiary');
+  const [category, setCategory] = useState<Category>('creature');
   const [name, setName] = useState('');
   const [hp, setHp] = useState('5');
   const [dr, setDr] = useState('0');
   const [damage, setDamage] = useState('1d6');
+  const [detectionDC, setDetectionDC] = useState('13');
+  const [trigger, setTrigger] = useState('Entering the space');
+  const [effect, setEffect] = useState('1d6');
+  const [disarmDC, setDisarmDC] = useState('13');
+  const [save, setSave] = useState(true);
+
+  const myCreatures = useMyCreatures(uid);
 
   if (!activeMap) return <p className={s.hint}>Add a map first, then place creatures.</p>;
 
@@ -30,62 +47,60 @@ export function AddCreatureDrawer({
   const center = { col: Math.floor(cols / 2), row: Math.floor(rows / 2) };
 
   function place(token: Omit<Token, 'id' | 'mapId' | 'col' | 'row'>) {
-    void addToken(gameId, {
-      ...token,
-      mapId: activeMap!.id,
-      col: center.col,
-      row: center.row,
-    });
+    void addToken(gameId, { ...token, mapId: activeMap!.id, col: center.col, row: center.row });
   }
 
-  function placeBestiary(entryId: string) {
-    const entry = system.bestiary.find((b) => b.id === entryId);
-    if (!entry) return;
-    const isTrap = entry.category === 'trap';
-    const hpVal = Number(entry.stats.hp);
+  function placeStatBlock(
+    blockName: string,
+    cat: Category,
+    stats: Record<string, number | string>,
+  ) {
+    const isTrap = cat === 'trap';
+    const hpVal = Number(stats.hp);
     place({
       kind: isTrap ? 'trap' : 'creature',
-      name: entry.name,
+      name: blockName,
       color: isTrap ? TRAP_COLOR : CREATURE_COLOR,
-      visible: true,
-      stats: entry.stats,
-      ...(Number.isFinite(hpVal) && hpVal > 0
+      visible: !isTrap, // traps start hidden until the GM reveals/springs them
+      stats,
+      ...(isTrap ? { trapState: 'hidden' as const } : {}),
+      ...(!isTrap && Number.isFinite(hpVal) && hpVal > 0
         ? { hp: { current: hpVal, max: hpVal } }
         : {}),
     });
   }
 
-  function quickBuild() {
-    const hpVal = Number(hp) || 0;
-    place({
-      kind: 'creature',
-      name: name.trim() || 'Creature',
-      color: CREATURE_COLOR,
-      visible: true,
-      stats: { hp: hpVal, dr: Number(dr) || 0, damage },
-      hp: { current: hpVal, max: hpVal },
-    });
+  function build() {
+    const stats: Record<string, number | string> =
+      category === 'creature'
+        ? { hp: Number(hp) || 0, dr: Number(dr) || 0, damage }
+        : {
+            detectionDC: Number(detectionDC) || 0,
+            trigger,
+            effect,
+            disarmDC: Number(disarmDC) || 0,
+          };
+    const blockName = name.trim() || (category === 'trap' ? 'Trap' : 'Creature');
+    placeStatBlock(blockName, category, stats);
+    if (save) void saveCreature(uid, { name: blockName, category, stats });
     setName('');
   }
 
   return (
     <div>
       <div className={s.tabs}>
-        <button
-          className={`${s.tab} ${tab === 'bestiary' ? s.tabActive : ''}`}
-          onClick={() => setTab('bestiary')}
-        >
-          Bestiary
-        </button>
-        <button
-          className={`${s.tab} ${tab === 'build' ? s.tabActive : ''}`}
-          onClick={() => setTab('build')}
-        >
-          Quick build
-        </button>
+        {(['bestiary', 'mine', 'build'] as const).map((t) => (
+          <button
+            key={t}
+            className={`${s.tab} ${tab === t ? s.tabActive : ''}`}
+            onClick={() => setTab(t)}
+          >
+            {t === 'bestiary' ? 'Bestiary' : t === 'mine' ? 'Mine' : 'Build'}
+          </button>
+        ))}
       </div>
 
-      {tab === 'bestiary' ? (
+      {tab === 'bestiary' && (
         <div className={s.list}>
           {system.bestiary.map((b) => (
             <div key={b.id} className={s.item}>
@@ -97,38 +112,107 @@ export function AddCreatureDrawer({
                     : `HP ${b.stats.hp ?? '—'} · DR ${b.stats.dr ?? '—'}`}
                 </span>
               </span>
-              <button className={s.place} onClick={() => placeBestiary(b.id)}>
+              <button
+                className={s.place}
+                onClick={() => placeStatBlock(b.name, b.category as Category, b.stats)}
+              >
                 + Place
               </button>
             </div>
           ))}
         </div>
-      ) : (
+      )}
+
+      {tab === 'mine' && (
+        <div className={s.list}>
+          {myCreatures.length === 0 && (
+            <p className={s.hint}>Nothing saved yet. Build one and tick “Save”.</p>
+          )}
+          {myCreatures.map((c) => (
+            <div key={c.id} className={s.item}>
+              <span className={s.itemMain}>
+                <span className={s.itemName}>{c.name}</span>
+                <span className={s.itemMeta}>{c.category}</span>
+              </span>
+              <button className={s.place} onClick={() => placeStatBlock(c.name, c.category, c.stats)}>
+                + Place
+              </button>
+              <button
+                className={s.place}
+                style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
+                onClick={() => void deleteCreature(uid, c.id)}
+                aria-label={`Delete ${c.name}`}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === 'build' && (
         <div className={s.section}>
+          <div className={s.tabs}>
+            {(['creature', 'trap'] as const).map((c) => (
+              <button
+                key={c}
+                className={`${s.tab} ${category === c ? s.tabActive : ''}`}
+                onClick={() => setCategory(c)}
+              >
+                {c === 'creature' ? 'Creature' : 'Trap'}
+              </button>
+            ))}
+          </div>
+
           <input
             className={s.input}
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <div className={s.row}>
-            <label className={s.itemMeta}>
-              HP
-              <input className={s.input} type="number" value={hp} onChange={(e) => setHp(e.target.value)} />
-            </label>
-            <label className={s.itemMeta}>
-              DR
-              <input className={s.input} type="number" value={dr} onChange={(e) => setDr(e.target.value)} />
-            </label>
-            <label className={s.itemMeta}>
-              Damage
-              <input className={s.input} value={damage} onChange={(e) => setDamage(e.target.value)} />
-            </label>
-          </div>
-          <Button onClick={quickBuild} full>
+
+          {category === 'creature' ? (
+            <div className={s.row}>
+              <label className={s.itemMeta}>
+                HP
+                <input className={s.input} type="number" value={hp} onChange={(e) => setHp(e.target.value)} />
+              </label>
+              <label className={s.itemMeta}>
+                DR
+                <input className={s.input} type="number" value={dr} onChange={(e) => setDr(e.target.value)} />
+              </label>
+              <label className={s.itemMeta}>
+                Damage
+                <input className={s.input} value={damage} onChange={(e) => setDamage(e.target.value)} />
+              </label>
+            </div>
+          ) : (
+            <>
+              <div className={s.row}>
+                <label className={s.itemMeta}>
+                  Spot DC
+                  <input className={s.input} type="number" value={detectionDC} onChange={(e) => setDetectionDC(e.target.value)} />
+                </label>
+                <label className={s.itemMeta}>
+                  Disarm DC
+                  <input className={s.input} type="number" value={disarmDC} onChange={(e) => setDisarmDC(e.target.value)} />
+                </label>
+              </div>
+              <input className={s.input} placeholder="Trigger" value={trigger} onChange={(e) => setTrigger(e.target.value)} />
+              <input className={s.input} placeholder="Effect / damage" value={effect} onChange={(e) => setEffect(e.target.value)} />
+            </>
+          )}
+
+          <label className={s.toggleRow}>
+            <span>Save to my creatures</span>
+            <input type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} />
+          </label>
+          <Button onClick={build} full>
             Place on board
           </Button>
-          <p className={s.hint}>Saving customs to a reusable “my creatures” library comes later.</p>
+          {category === 'trap' && (
+            <p className={s.hint}>Traps are placed hidden — reveal or spring them from the token card.</p>
+          )}
         </div>
       )}
     </div>

@@ -93,6 +93,8 @@ export interface Token {
   hp?: { current: number; max: number };
   /** Creature defeated (grayed in place during combat). */
   defeated?: boolean;
+  /** Trap lifecycle: hidden → revealed → sprung (GM-arbitrated). */
+  trapState?: 'hidden' | 'revealed' | 'sprung';
 }
 
 /**

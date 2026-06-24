@@ -5,6 +5,7 @@ import {
   cellToPixel,
   clampCell,
   gridDimensions,
+  gridDistanceSquares,
   pixelToCell,
   tokenAtCell,
 } from '../boardGeometry';
@@ -45,6 +46,17 @@ describe('tokenAtCell', () => {
     expect(tokenAtCell(tokens, 1, 1)?.id).toBe('b');
     expect(tokenAtCell(tokens, 2, 0)?.id).toBe('c');
     expect(tokenAtCell(tokens, 5, 5)).toBeUndefined();
+  });
+});
+
+describe('gridDistanceSquares (Chebyshev — for the measure tool)', () => {
+  it.each([
+    [0, 0, 3, 2, 3],
+    [1, 1, 1, 5, 4],
+    [0, 0, 0, 0, 0],
+    [2, 2, 5, 8, 6],
+  ])('(%i,%i)→(%i,%i) = %i squares', (sc, sr, ec, er, expected) => {
+    expect(gridDistanceSquares(sc, sr, ec, er)).toBe(expected);
   });
 });
 

@@ -54,6 +54,19 @@ export function tokenAtCell(
   return undefined;
 }
 
+/**
+ * Distance between two cells in squares (Chebyshev — diagonal counts as one step, the
+ * usual grid-movement count). Multiply by a map type's per-square scale for feet/miles.
+ */
+export function gridDistanceSquares(
+  sc: number,
+  sr: number,
+  ec: number,
+  er: number,
+): number {
+  return Math.max(Math.abs(ec - sc), Math.abs(er - sr));
+}
+
 /** Clamp a cell to the board bounds. */
 export function clampCell(
   col: number,

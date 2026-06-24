@@ -2,10 +2,9 @@ import { useState, type ChangeEvent } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
 import type { Game } from '../../../data/types';
 import { addMap, setActiveMap, setGridSize, setGridVisible } from '../../../data/board';
+import { prepareMapImage } from '../../../data/images';
 import { Button } from '../../../components/ui/Button';
 import s from './drawers.module.css';
-
-const MAX_BYTES = 1.5 * 1024 * 1024;
 
 interface Pending {
   name: string;
@@ -27,34 +26,31 @@ export function MapsDrawer({
 }) {
   const [pending, setPending] = useState<Pending | null>(null);
   const [error, setError] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const maps = Object.values(game.maps ?? {});
   const active = game.activeMapId ? game.maps?.[game.activeMapId] : undefined;
 
-  function onFile(e: ChangeEvent<HTMLInputElement>) {
+  async function onFile(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > MAX_BYTES) {
-      setError('Image too large (max ~1.5 MB in the inline-storage MVP). Resize and retry.');
-      return;
-    }
     setError('');
-    const reader = new FileReader();
-    reader.onload = () => {
-      const url = reader.result as string;
-      const img = new Image();
-      img.onload = () =>
-        setPending({
-          name: file.name.replace(/\.[^.]+$/, ''),
-          imageUrl: url,
-          width: img.naturalWidth,
-          height: img.naturalHeight,
-          typeId: system.mapTypes[0]?.id ?? 'battle',
-          gridSize: 70,
-        });
-      img.src = url;
-    };
-    reader.readAsDataURL(file);
+    setUploading(true);
+    try {
+      const prepared = await prepareMapImage(gameId, file);
+      setPending({
+        name: file.name.replace(/\.[^.]+$/, ''),
+        imageUrl: prepared.imageUrl,
+        width: prepared.width,
+        height: prepared.height,
+        typeId: system.mapTypes[0]?.id ?? 'battle',
+        gridSize: 70,
+      });
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setUploading(false);
+    }
   }
 
   async function add() {
@@ -76,6 +72,7 @@ export function MapsDrawer({
       <div className={s.section}>
         <span className={s.label}>Add a map</span>
         <input type="file" accept="image/*" onChange={onFile} className={s.input} />
+        {uploading && <p className={s.hint}>Uploading…</p>}
         {error && <p className={s.error}>{error}</p>}
 
         {pending && (

@@ -6,17 +6,24 @@ import {
   type Database,
 } from 'firebase/database';
 import {
+  getStorage,
+  connectStorageEmulator,
+  type FirebaseStorage,
+} from 'firebase/storage';
+import {
   firebaseConfig,
   firebaseConfigured,
   useEmulator,
   EMULATOR_PROJECT_ID,
   EMULATOR_DATABASE_URL,
+  EMULATOR_STORAGE_BUCKET,
   EMULATOR_HOSTS,
 } from './config';
 
 let app: FirebaseApp | undefined;
 let authInstance: Auth | undefined;
 let dbInstance: Database | undefined;
+let storageInstance: FirebaseStorage | undefined;
 
 if (firebaseConfigured) {
   app = initializeApp(
@@ -26,11 +33,13 @@ if (firebaseConfigured) {
           apiKey: firebaseConfig.apiKey || 'demo-key',
           projectId: EMULATOR_PROJECT_ID,
           databaseURL: EMULATOR_DATABASE_URL,
+          storageBucket: EMULATOR_STORAGE_BUCKET,
         }
       : firebaseConfig,
   );
   authInstance = getAuth(app);
   dbInstance = getDatabase(app);
+  storageInstance = getStorage(app);
 
   if (useEmulator) {
     connectAuthEmulator(authInstance, EMULATOR_HOSTS.auth, {
@@ -40,6 +49,11 @@ if (firebaseConfigured) {
       dbInstance,
       EMULATOR_HOSTS.database.host,
       EMULATOR_HOSTS.database.port,
+    );
+    connectStorageEmulator(
+      storageInstance,
+      EMULATOR_HOSTS.storage.host,
+      EMULATOR_HOSTS.storage.port,
     );
   }
 }
@@ -57,4 +71,9 @@ export function getAuthInstance(): Auth {
 export function getDb(): Database {
   if (!dbInstance) throw new Error(NOT_CONFIGURED);
   return dbInstance;
+}
+
+export function getStorageInstance(): FirebaseStorage {
+  if (!storageInstance) throw new Error(NOT_CONFIGURED);
+  return storageInstance;
 }

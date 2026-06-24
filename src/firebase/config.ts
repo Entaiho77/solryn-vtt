@@ -26,8 +26,15 @@ export const firebaseConfigured = Boolean(firebaseConfig.apiKey) || useEmulator;
 export const EMULATOR_PROJECT_ID = firebaseConfig.projectId || 'demo-solryn';
 export const EMULATOR_DATABASE_URL =
   firebaseConfig.databaseURL || `http://127.0.0.1:9000?ns=${EMULATOR_PROJECT_ID}`;
+export const EMULATOR_STORAGE_BUCKET =
+  firebaseConfig.storageBucket || `${EMULATOR_PROJECT_ID}.appspot.com`;
+
+/** Map images upload to Storage when a bucket is configured; otherwise inline data URL. */
+export const storageAvailable =
+  firebaseConfigured && (useEmulator || Boolean(firebaseConfig.storageBucket));
 
 export const EMULATOR_HOSTS = {
   auth: 'http://127.0.0.1:9099',
   database: { host: '127.0.0.1', port: 9000 },
+  storage: { host: '127.0.0.1', port: 9199 },
 };

@@ -36,8 +36,20 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     role === 'player' ? 'character' : null,
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [measuring, setMeasuring] = useState(false);
 
-  const tool: BoardTool = role === 'gm' && openRight === 'fog' ? 'fog' : 'select';
+  const tool: BoardTool = measuring
+    ? 'measure'
+    : role === 'gm' && openRight === 'fog'
+      ? 'fog'
+      : 'select';
+
+  const activeType = activeMap
+    ? system.mapTypes.find((t) => t.id === activeMap.typeId)
+    : undefined;
+  const measureScale = activeMap
+    ? (activeMap.customSquare ?? activeType?.perSquare ?? { value: 1, unit: 'sq' })
+    : undefined;
 
   // Auto-create the player's character token on the active map (once per map).
   const attempted = useRef<Set<string>>(new Set());
@@ -65,6 +77,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   }, [role, character, activeMap, tokens, gameId, uid]);
 
   function toggle(side: 'left' | 'right', id: string) {
+    setMeasuring(false); // opening a drawer exits measure mode
     if (side === 'left') setOpenLeft((o) => (o === id ? null : id));
     else setOpenRight((o) => (o === id ? null : id));
   }
@@ -80,20 +93,12 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   if (role === 'gm') {
     right = [
       {
-        kind: 'drawer',
-        id: 'maps',
-        label: 'Maps',
-        glyph: '▦',
-        content: <MapsDrawer system={system} gameId={gameId} game={game} />,
-      },
-      {
         kind: 'action',
-        id: 'grid',
-        label: 'Toggle grid',
-        glyph: '#',
-        active: activeMap?.gridVisible,
-        onClick: () =>
-          activeMap && void setGridVisible(gameId, activeMap.id, !activeMap.gridVisible),
+        id: 'measure',
+        label: 'Measure distance',
+        glyph: '↔',
+        active: measuring,
+        onClick: () => setMeasuring((m) => !m),
       },
       { kind: 'divider', id: 'd1' },
       {
@@ -108,7 +113,26 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         id: 'creatures',
         label: 'Add creature',
         glyph: '✚',
-        content: <AddCreatureDrawer system={system} gameId={gameId} activeMap={activeMap} />,
+        content: (
+          <AddCreatureDrawer system={system} gameId={gameId} uid={uid} activeMap={activeMap} />
+        ),
+      },
+      { kind: 'divider', id: 'd2' },
+      {
+        kind: 'action',
+        id: 'grid',
+        label: 'Toggle grid',
+        glyph: '#',
+        active: activeMap?.gridVisible,
+        onClick: () =>
+          activeMap && void setGridVisible(gameId, activeMap.id, !activeMap.gridVisible),
+      },
+      {
+        kind: 'drawer',
+        id: 'maps',
+        label: 'Maps',
+        glyph: '▦',
+        content: <MapsDrawer system={system} gameId={gameId} game={game} />,
       },
     ];
   } else if (character) {
@@ -139,6 +163,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             role={role}
             uid={uid}
             tool={tool}
+            measureScale={measureScale}
             selectedTokenId={selected?.id}
             onMoveToken={(id, col, row) => void moveToken(gameId, id, col, row)}
             onToggleFog={(col, row, f) =>
