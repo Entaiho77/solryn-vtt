@@ -8,5 +8,6 @@ export * from './expr-eval';
 export * from './derived';
 export * from './skills';
 export * from './progression';
+export * from './casting';
 export * from './harvest';
 export * from './dice';

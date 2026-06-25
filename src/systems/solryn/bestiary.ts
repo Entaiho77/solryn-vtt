@@ -1,9 +1,10 @@
 import type { BestiaryEntry, StatBlockShape } from '../../engine/schema';
 
 /**
- * Stat-block shapes let the add-creature panel adapt its fields by category: creatures
- * carry HP/DR/damage; traps carry detection/disarm DCs, trigger, and effect. Both are
- * just "things with a stat block" placed as tokens.
+ * Stat-block shapes drive the add-creature form's fields by category. Solryn creatures
+ * carry HP/DR/Speed/Damage + an optional initiative modifier (decision #2: default 0 is
+ * book-accurate; the field lets a GM give fast creatures an edge). Traps carry
+ * detection/disarm DCs, trigger, and effect.
  */
 export const statBlockShapes: StatBlockShape[] = [
   {
@@ -12,8 +13,9 @@ export const statBlockShapes: StatBlockShape[] = [
     fields: [
       { id: 'hp', label: 'HP', type: 'number' },
       { id: 'dr', label: 'DR', type: 'number' },
+      { id: 'speed', label: 'Speed', type: 'text' },
       { id: 'damage', label: 'Damage', type: 'dice' },
-      { id: 'tier', label: 'Tier', type: 'number' },
+      { id: 'initiativeMod', label: 'Init mod', type: 'number', hint: 'default 0' },
     ],
   },
   {
@@ -23,47 +25,85 @@ export const statBlockShapes: StatBlockShape[] = [
       { id: 'detectionDC', label: 'Detection DC', type: 'number', hint: 'DC to spot' },
       { id: 'trigger', label: 'Trigger', type: 'text' },
       { id: 'effect', label: 'Effect / Damage', type: 'text' },
-      { id: 'disarmDC', label: 'Disarm DC', type: 'number', hint: 'ties to Trapmaking / Sleight of Hand' },
+      { id: 'disarmDC', label: 'Disarm DC', type: 'number', hint: 'ties to Trap Making / Sleight of Hand' },
     ],
   },
 ];
 
 /**
- * The Solryn bestiary (system data). The board's "My creatures" tab holds GM customs
- * alongside these. Representative content, flagged provisional.
+ * The Solryn starter bestiary — 10 canonical v1.2 creatures. (Loot/harvest pool contents
+ * per creature are flagged for Matthew — the ruleset names soul cores but not full loot
+ * tables.)
  */
 export const bestiary: BestiaryEntry[] = [
   {
-    id: 'goblin-warrior',
-    name: 'Goblin Warrior',
+    id: 'mossback-hare',
+    name: 'Mossback Hare',
     category: 'creature',
-    stats: { hp: 5, dr: 5, damage: '1d6+1', tier: 1 },
-    abilities: ['Nimble Escape: can disengage or hide as a bonus action.'],
-    lootPoolId: 'goblin-loot',
-    provisional: true,
+    stats: { hp: 8, dr: 0, speed: '35', damage: '—', initiativeMod: 0, threatLevel: 'Non-combatant', type: 'Beast', soulCore: 'none', native: 'Highland meadows' },
+    abilities: ['Burrow Dodge', 'Lichen Blend', 'Harvestable: Sleeproot moss (healing ingredient)'],
   },
   {
-    id: 'stone-golem',
-    name: 'Stone Golem',
+    id: 'duskwatcher-owlcat',
+    name: 'Duskwatcher Owlcat',
     category: 'creature',
-    stats: { hp: 16, dr: 8, damage: '2d10+2', tier: 5 },
-    abilities: [
-      'Immutable Form: immune to any spell that would alter its form.',
-      'Magic Resistance: advantage on saves against spells.',
-    ],
-    lootPoolId: 'golem-core',
-    provisional: true,
+    stats: { hp: 22, dr: 1, speed: '30 / glide 40', damage: '1d6+3 slashing (pounce +1d4)', initiativeMod: 0, threatLevel: 'Easy', type: 'Predator', soulCore: 'none', native: 'Highland woods' },
+    abilities: ['Silent Descent', 'Twilight Tracker', 'Hiss-Screech'],
   },
   {
-    id: 'spiked-pit',
-    name: 'Spiked Pit',
-    category: 'trap',
-    stats: {
-      detectionDC: 13,
-      trigger: 'Entering the covered square',
-      effect: '2d6 piercing, fall prone',
-      disarmDC: 15,
-    },
-    provisional: true,
+    id: 'bramble-boar',
+    name: 'Bramble Boar',
+    category: 'creature',
+    stats: { hp: 28, dr: 2, speed: '30', damage: '1d6+4 piercing (charge +1d4)', initiativeMod: 0, threatLevel: 'Easy', type: 'Beast', soulCore: 'none', native: 'Highland thickets' },
+    abilities: ['Thornshake (AoE)', 'Brushbreaker', 'Pain-Fueled Rage'],
+  },
+  {
+    id: 'crag-hound',
+    name: 'Crag Hound',
+    category: 'creature',
+    stats: { hp: 24, dr: 2, speed: '35', damage: '1d6+3 piercing', initiativeMod: 0, threatLevel: 'Easy', type: 'Shadow Beast', soulCore: 'Shadowbound (DC14)', native: 'Mountain passes' },
+    abilities: ['Mountain Ghost', 'Death-Stalker', 'Shadowmeld'],
+  },
+  {
+    id: 'knockerkin',
+    name: 'Knockerkin',
+    category: 'creature',
+    stats: { hp: 18, dr: 1, speed: '25 / climb 20', damage: '1d4+2 piercing', initiativeMod: 0, threatLevel: 'Easy', type: 'Fey', soulCore: 'none (capturable)', native: 'Abandoned mines, caves' },
+    abilities: ['False Echo', 'Tunnel Slinker', 'Greed Sense'],
+  },
+  {
+    id: 'lantern-wraith',
+    name: 'Lantern Wraith',
+    category: 'creature',
+    stats: { hp: 18, dr: 1, speed: '20 float', damage: '1d6 arcane', initiativeMod: 0, threatLevel: 'Easy', type: 'Spirit', soulCore: 'Arcane/Spirit (DC14)', native: 'Misty forests' },
+    abilities: ['Lurelight Pulse', 'Misty Allure', 'Ethereal Drift'],
+  },
+  {
+    id: 'hollow-man',
+    name: 'Hollow Man',
+    category: 'creature',
+    stats: { hp: 22, dr: 2, speed: '25', damage: '1d6+1 slashing', initiativeMod: 0, threatLevel: 'Easy', type: 'Construct', soulCore: 'none', native: 'Deep woods, abandoned farmland' },
+    abilities: ['Effigy Stillness', 'Silent Lurch', 'Restraining thorns'],
+  },
+  {
+    id: 'whippoorwail',
+    name: 'Whippoorwail',
+    category: 'creature',
+    stats: { hp: 16, dr: 1, speed: '30 fly', damage: '1d4+2 piercing + 1 arcane', initiativeMod: 0, threatLevel: 'Easy', type: 'Spirit Beast', soulCore: 'Fading (DC13, destroyed by Radiant)', native: 'Forest edges, burial grounds' },
+    abilities: ['Death-Linked', 'Cry of the Dying', 'Blocks Luck recovery'],
+  },
+  {
+    id: 'hollowkin',
+    name: 'Hollowkin',
+    category: 'creature',
+    stats: { hp: 28, dr: 2, speed: '30 / hover 20', damage: '1d8 psychic + 1d4 arcane', initiativeMod: 0, threatLevel: 'Easy', type: 'Spirit', soulCore: 'Ethereal (DC14)', native: 'Highland ridges, misty ruins' },
+    abilities: ['Misty Veil', 'Fade Step', 'Test of the Soul', 'Mirror Echo'],
+  },
+  {
+    id: 'trellin-shaman',
+    name: "T'rellin Shaman",
+    category: 'creature',
+    stats: { hp: 22, dr: 1, speed: '30 / climb 30', damage: '1d6 bludgeoning (staff)', initiativeMod: 0, threatLevel: 'Easy', type: 'Insectoid Caster', soulCore: 'Naturebound (DC14)', native: 'Canopy sanctuaries' },
+    abilities: ['Spellcaster: Entangle, Sporeblind, Chitin Shield (1/rest each)', 'Nature magic'],
   },
 ];

@@ -1,8 +1,10 @@
 # Solryn VTT — State of Build (handoff to designer)
 
-**Date:** 2026-06-25 · **Branch / PR:** `claude/affectionate-bell-7g25c0` → PR #1 · **Status:** All design-doc phases (A–E) implemented. Build green, 141 tests passing, CI on every push.
+**Date:** 2026-06-25 · **Branch / PR:** `claude/affectionate-bell-7g25c0` → PR #1 · **Status:** All design-doc phases (A–E) implemented, now on canonical Solryn v1.2 content. Build green, 144 tests passing, CI on every push.
 
-This is a status brief for the designer. It covers what's built, the decisions I had to make where the docs were silent or self-contradictory (these need your confirmation), what content is placeholder, and what it takes to actually play it.
+> **UPDATE — canonical content landed.** The designer's v1.2 content pack and answers to the 8 flagged decisions have been applied: the spell-access rule is now `(Arcana mod × 2) + level`, caster if Arcana mod ≥ 1 or Elf (#1); creature stat blocks carry an optional `initiativeMod`, default 0 (#2); decisions #3–#8 accepted as built. The provisional races/skills/spells/equipment/bestiary (§3 below) are **replaced with canonical v1.2 data**. What remains is the smaller authoring list Matthew flagged — see §3, now retitled. Sections 1, 4, 5, 6 still stand.
+
+This brief covers what's built, the decisions (now resolved), the remaining authoring items, and what it takes to play it.
 
 ---
 
@@ -43,17 +45,16 @@ These are points where the doc was silent, ambiguous, or self-contradictory. I m
 
 ---
 
-## 3. Content that's placeholder (needs the canonical v1.2 ruleset)
+## 3. Remaining authoring (canonical content is in; these items the v1.2 ruleset doesn't enumerate)
 
-The *structure* is complete and runs through the engine; the *content* below is representative and flagged `provisional` in the data. Swapping in the real numbers is pure data entry — no code changes.
+The mechanical data is now canonical. The items below are descriptive or structural things the ruleset lists only by name — intentionally left blank rather than invented. The UI degrades gracefully (e.g. hover shows the skill/spell name) until they're provided.
 
-- **Races:** Human / Dwarf / Elf / Gnome are from the doc. **Drakari, Umbrin, Marai, Ashborn, Etherials** have invented bonuses/traits — need their real stat bonuses, advantages, weaknesses.
-- **Skills:** a representative subset (~16 base / 12 weapon / 14 crafting) vs. the doc's **32 / 22 / 45+**. Need the full lists with each skill's `description` + `exampleUse` (the hover text), and which crafting skills gate which harvest tasks.
-- **Spells:** ~8 representative (including your Stone Spike / Stoneskin / Mend Wounds examples) — need the full list with synopsis, die, Arcana cost, range, duration, type.
-- **Equipment:** representative armor (light/medium/heavy DR + speed penalty) and weapons (damage dice, weapon-skill links) — values are sensible but not canonical.
-- **Bestiary:** Goblin Warrior, Stone Golem, a Spiked Pit trap — adapted from the old prototype; need real stat blocks and loot/harvest pools.
+- **Skill blurbs + ability mapping:** each of the 32/22/43 skills needs its `description` + `exampleUse` hover text and its governing ability (STR/NIM/…). Ruleset gives names only.
+- **Spell synopses:** the fuller in-context blurb for each spell (mechanical tags — die, damage type, range, cost — are canonical).
+- **Creature loot pools:** what materials each bestiary creature yields on harvest (soul-core type + DC are captured; full loot tables are not in the ruleset).
+- **Weapon → weapon-skill mapping:** confirm the inferred links (crossbows filed under "Specialty Bows", Lance under "Polearms", an added basic Dagger for the "Daggers" skill).
 
-(Map-type scales and the d100 quality bands are taken straight from the doc and are not placeholder.)
+Two small **follow-up features** (not content): a shield equip-slot so shield DR feeds the formula (shield data exists), and a spell-modification (AP-spend: amplify / multi-target / extend) UI.
 
 ---
 

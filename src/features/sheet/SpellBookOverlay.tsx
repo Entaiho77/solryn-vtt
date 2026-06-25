@@ -32,7 +32,7 @@ export function SpellBookOverlay({
     (s) =>
       !query ||
       s.name.toLowerCase().includes(query) ||
-      s.synopsis.toLowerCase().includes(query),
+      (s.synopsis ?? '').toLowerCase().includes(query),
   );
 
   return (
@@ -57,11 +57,13 @@ export function SpellBookOverlay({
               >
                 {s.type}
               </span>
-              <span className={styles.die}>{s.damageDice ?? '—'}</span>
+              <span className={styles.die}>
+                {s.damageDice ? `${s.damageDice}${s.damageType ? ` ${s.damageType}` : ''}` : '—'}
+              </span>
             </div>
-            <p className={styles.syn}>{s.synopsis}</p>
+            {s.synopsis && <p className={styles.syn}>{s.synopsis}</p>}
             <p className={styles.facts}>
-              range {s.range} · {s.cost} Arcana · {s.duration}
+              range {s.range} · {s.cost} AP · {s.duration}
             </p>
           </div>
         ))}

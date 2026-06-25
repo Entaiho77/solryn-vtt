@@ -50,8 +50,21 @@ export const rulesReference: RulesCard[] = [
     id: 'arcana',
     category: 'Magic',
     name: 'Arcana Points & Spellcasting',
-    description: 'Arcana Points = Arcana modifier × 2. Spend up to your level per turn. Spells auto-hit and start at a 1d4 base die.',
-    details: 'A non-caster who rolls Arcana up over levels grows a pool from 0 organically. Elves learn 3 bonus non-damaging spells.',
+    description: 'You are a caster if your Arcana modifier is +1 or higher, or you are an Elf. Known spells = (Arcana mod × 2) + your level, plus 3 for Elves.',
+    details: 'Arcana Points = Arcana mod × 2; spend up to your level per turn. Short rest restores half, long rest all. Base spells are 1d4, auto-hit vs DR, cost 0 AP — modifications cost AP. A non-caster who rolls Arcana up over levels becomes a caster organically.',
+  },
+  {
+    id: 'spell-save-dc',
+    category: 'Magic',
+    name: 'Spell Save DC',
+    description: 'Spell Save DC = 10 + Arcana modifier + relevant skill training bonus.',
+  },
+  {
+    id: 'spell-mods',
+    category: 'Magic',
+    name: 'Spell Modifications',
+    description: 'Spend Arcana Points to modify a base spell as you cast it.',
+    details: 'Amplify Power: 1 AP for +1d4 damage. Multi-Target: 1 AP per extra target. Extended Range: 1 AP for +5 ft.',
   },
   {
     id: 'luck',
@@ -79,6 +92,33 @@ export const rulesReference: RulesCard[] = [
     name: 'Leveling Up',
     description: 'The GM grants level-ups (party-wide). You roll each stat’s increase in order, then recalculate derived values and place 2 skill points.',
     details: 'Increase die by level: 1d4 standard, 2d6 at milestones (6/10/14/18), 1d8 epic (20+). HP fully recalculates from the new Endurance.',
+  },
+  {
+    id: 'training',
+    category: 'Progression',
+    name: 'Skill Training',
+    description: 'Placed skill points stay pending until you train in town — about 1 month of downtime per point (some races train faster).',
+  },
+  {
+    id: 'crafting-rarity',
+    category: 'Crafting',
+    name: 'Crafting Rarity',
+    description: 'Harvest quality maps onto the crafting rarity scale, each with a crafting DC and time.',
+    details: 'Common (1 check, DC10, 1–2 wk) · Uncommon (2, DC15, 2–4 wk) · Rare (3, DC20, 1 mo) · Very Rare (4, DC25, 1–2 mo) · Legendary (5, DC30, 3 mo+).',
+  },
+  {
+    id: 'soul-cores',
+    category: 'Crafting',
+    name: 'Soul Cores',
+    description: 'Magical creatures yield a typed soul core when harvested, keyed to their damage type (Infernal, Glacial, Storm, Earthen, Shadow, Celestial, Venomous, Astral, Echo, Void, Ethereal, Naturebound).',
+    details: 'Pricing by rarity: Common 100 gp · Uncommon 500 gp · Rare 2,500 gp. Each creature lists its core type and harvest DC.',
+  },
+  {
+    id: 'threat-tiers',
+    category: 'GM',
+    name: 'Creature Threat Tiers',
+    description: 'Guidance for building creatures: DR / stat-budget / max-stat / damage / XP by tier.',
+    details: 'TR1: DR1–2, budget 28, dmg 4–6, 10 XP · TR2: DR2–3, 35, 7–10, 40 XP · TR3: DR3–4, 42, 11–15, 90 XP · TR4: DR4–5, 49, 16–22, 160 XP · TR5: DR5–6, 56, 23–30, 250 XP.',
   },
 ];
 

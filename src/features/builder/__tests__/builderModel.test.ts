@@ -58,17 +58,18 @@ describe('effectiveScores applies ancestry bonuses', () => {
 });
 
 describe('spellAccess', () => {
-  it('non-caster has no access; caster knows Arcana mod × 2', () => {
-    expect(spellAccess(solrynSystem, rolledDraft(2)).accessible).toBe(false);
-    expect(spellAccess(solrynSystem, rolledDraft(6)).totalKnown).toBe(4);
+  it('non-caster has no access; caster knows (Arcana mod × 2) + level', () => {
+    expect(spellAccess(solrynSystem, rolledDraft(2)).isCaster).toBe(false);
+    // ARC 6 → mod 2 → (2×2) + level 1 = 5
+    expect(spellAccess(solrynSystem, rolledDraft(6)).knownCount).toBe(5);
   });
 
-  it('Elf gains access via the ancestry bonus even at Arcana mod 0', () => {
+  it('Elf gains access even at Arcana mod 0', () => {
     let draft = rolledDraft(2);
     draft = reducer(draft, { type: 'chooseAncestry', ancestryId: 'elf' });
     const access = spellAccess(solrynSystem, draft);
     expect(access.ancestryBonus).toBe(3);
-    expect(access.accessible).toBe(true);
+    expect(access.isCaster).toBe(true);
   });
 });
 
@@ -97,11 +98,11 @@ describe('reducer', () => {
   });
 
   it('caps known spells at the access limit', () => {
-    let draft = rolledDraft(6); // 4 known
-    for (const id of ['stone-spike', 'flame-dart', 'frost-lance', 'arc-lightning', 'light']) {
+    let draft = rolledDraft(6); // knownCount = 5
+    for (const id of ['s1', 's2', 's3', 's4', 's5', 's6']) {
       draft = reducer(draft, { type: 'toggleSpell', spellId: id });
     }
-    expect(draft.knownSpellIds).toHaveLength(4);
+    expect(draft.knownSpellIds).toHaveLength(5);
   });
 });
 
@@ -126,11 +127,11 @@ describe('canAdvanceStep gating', () => {
 
   it('gear step needs name, armor, and weapon', () => {
     let draft = rolledDraft(6);
-    draft = reducer(draft, { type: 'toggleSkill', skillId: 'swords' });
+    draft = reducer(draft, { type: 'toggleSkill', skillId: 'light-swords' });
     draft = reducer(draft, { type: 'setName', name: 'Kael' });
     draft = reducer(draft, { type: 'setArmor', armorId: 'leather' });
     expect(canAdvanceStep(solrynSystem, draft, step('gear'), 0)).toBe(false);
-    draft = reducer(draft, { type: 'setWeapon', weaponId: 'longsword' });
+    draft = reducer(draft, { type: 'setWeapon', weaponId: 'shortsword' });
     expect(canAdvanceStep(solrynSystem, draft, step('gear'), 0)).toBe(true);
   });
 
@@ -148,10 +149,10 @@ describe('finalizeCharacter', () => {
     let draft = rolledDraft(6);
     draft = reducer(draft, { type: 'chooseAncestry', ancestryId: 'gnome' });
     draft = reducer(draft, { type: 'toggleSkill', skillId: 'athletics' });
-    draft = reducer(draft, { type: 'toggleSkill', skillId: 'swords' });
+    draft = reducer(draft, { type: 'toggleSkill', skillId: 'light-swords' });
     draft = reducer(draft, { type: 'setName', name: 'Kael' });
     draft = reducer(draft, { type: 'setArmor', armorId: 'leather' });
-    draft = reducer(draft, { type: 'setWeapon', weaponId: 'longsword' });
+    draft = reducer(draft, { type: 'setWeapon', weaponId: 'shortsword' });
 
     const char = finalizeCharacter(solrynSystem, draft, {
       gameId: 'g1',
@@ -160,14 +161,14 @@ describe('finalizeCharacter', () => {
 
     expect(char.buildComplete).toBe(true);
     expect(char.name).toBe('Kael');
-    // Gnome: +1 INT, +1 LCK on top of rolled
-    expect(char.definition.coreScores.LCK).toBe(4);
+    // Gnome: +1 Nimbleness, +1 Wisdom on top of rolled (WIS 3 + 1 = 4)
+    expect(char.definition.coreScores.WIS).toBe(4);
     // HP pool present and full (END 6 + mod 2 = 8)
     expect(char.play.pools.hp.current).toBe(8);
     // Chosen skills start trained at Novice
     expect(char.play.skills.athletics).toEqual({ investedPoints: 1, realizedPoints: 1 });
     expect(char.play.equippedArmorId).toBe('leather');
-    expect(char.play.equippedWeaponIds).toEqual(['longsword']);
+    expect(char.play.equippedWeaponIds).toEqual(['shortsword']);
   });
 
   it('omits undefined optional fields (RTDB-safe)', () => {

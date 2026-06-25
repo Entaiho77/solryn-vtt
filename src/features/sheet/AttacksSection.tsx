@@ -102,7 +102,9 @@ export function AttacksSection({
                 ))}
               </select>
               <span className={styles.feed}>
-                {loaded.damageDice ?? '—'} · costs {loaded.cost} Arcana · auto-hit vs DR
+                {loaded.damageDice ?? '—'}
+                {loaded.damageType ? ` ${loaded.damageType}` : ''} ·{' '}
+                {loaded.cost > 0 ? `costs ${loaded.cost} AP` : 'base 0 AP'} · auto-hit vs DR
               </span>
               <button
                 type="button"

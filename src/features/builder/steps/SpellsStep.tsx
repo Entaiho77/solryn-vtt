@@ -8,28 +8,28 @@ export function SpellsStep({ system, draft, dispatch, nav }: StepProps) {
   const [query, setQuery] = useState('');
   const access = spellAccess(system, draft);
   const chosenCount = draft.knownSpellIds.length;
-  const full = chosenCount >= access.totalKnown;
+  const full = chosenCount >= access.knownCount;
 
   const q = query.trim().toLowerCase();
   const list = system.spells.filter(
     (sp) =>
       !q ||
       sp.name.toLowerCase().includes(q) ||
-      sp.synopsis.toLowerCase().includes(q),
+      (sp.synopsis ?? '').toLowerCase().includes(q),
   );
 
   const teaching = (
     <>
       <p className={s.teachText}>
-        Your known-spell count comes straight from your own stats: Arcana mod × 2 ={' '}
-        <strong>{access.base}</strong>
+        Your known-spell count comes from your own stats: (Arcana mod × 2){' '}
+        <strong>{access.modPart}</strong> + level <strong>{access.levelPart}</strong>
         {access.ancestryBonus > 0 && (
           <>
             {' '}
-            + <strong>{access.ancestryBonus}</strong> (race bonus, non-damaging)
+            + <strong>{access.ancestryBonus}</strong> (Elf, non-damaging)
           </>
         )}{' '}
-        = <strong>{access.totalKnown}</strong>.
+        = <strong>{access.knownCount}</strong>.
       </p>
       <p className={s.teachText}>
         Spells <strong>auto-hit</strong> — offensive spells start at a{' '}
@@ -43,7 +43,7 @@ export function SpellsStep({ system, draft, dispatch, nav }: StepProps) {
     <StepFrame {...nav} teaching={teaching}>
       <div className={s.toolbar}>
         <span className={`${s.counter} ${full ? s.done : ''}`}>
-          Known: {chosenCount}/{access.totalKnown}
+          Known: {chosenCount}/{access.knownCount}
         </span>
         <input
           className={s.search}
@@ -62,7 +62,7 @@ export function SpellsStep({ system, draft, dispatch, nav }: StepProps) {
               type="button"
               className={`${s.chip} ${on ? s.selected : ''}`}
               disabled={full && !on}
-              title={`${sp.synopsis}\n\n${sp.damageDice ? `${sp.damageDice} · ` : ''}${sp.cost} Arcana · ${sp.range}`}
+              title={`${sp.synopsis ? `${sp.synopsis}\n\n` : ''}${sp.damageDice ? `${sp.damageDice} ${sp.damageType ?? ''} · ` : ''}${sp.cost} AP · ${sp.range}`}
               onClick={() => dispatch({ type: 'toggleSpell', spellId: sp.id })}
             >
               <span className={s.chipName}>{sp.name}</span>

@@ -1,98 +1,88 @@
 import type { Spell } from '../../engine/schema';
 
 /**
- * Solryn spells. Offensive spells (red tag) feed the sheet's selectable attack row;
- * utility spells (teal tag) live only in the spell book. All spells auto-hit and start
- * at a 1d4 base die (combat mode parameter). Representative content, flagged provisional
- * pending the canonical spell list (Design Doc §5.7).
+ * Solryn spells — canonical v1.2. All damage spells: base 1d4, auto-hit vs DR, base
+ * range Touch or 20 ft, base cost 0 AP (modifications cost AP). Offensive spells feed
+ * the attack row; utility spells live only in the spell book.
+ *
+ * AUTHORING NOTE (flagged for Matthew): the ruleset gives short mechanical tags only.
+ * The fuller `synopsis` text is intentionally left blank rather than invented; the UI
+ * hides the synopsis line until it's provided. Damage type / range / cost are canonical.
  */
+const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+const off = (name: string, range: 'touch' | 'ranged', damageType: string): Spell => ({
+  id: slug(name),
+  name,
+  type: 'offensive',
+  damageDice: '1d4',
+  damageType,
+  cost: 0,
+  range: range === 'touch' ? 'Touch' : '20 ft',
+  duration: 'Instant',
+});
+
+const util = (name: string, range: string, duration: string): Spell => ({
+  id: slug(name),
+  name,
+  type: 'utility',
+  damageDice: null,
+  cost: 0,
+  range,
+  duration,
+});
+
 export const spells: Spell[] = [
-  {
-    id: 'stone-spike',
-    name: 'Stone Spike',
-    type: 'offensive',
-    synopsis: 'A spike of stone erupts beneath a target, impaling it from below.',
-    damageDice: '1d4',
-    cost: 1,
-    range: '30 ft',
-    duration: 'Instant',
-    provisional: true,
-  },
-  {
-    id: 'flame-dart',
-    name: 'Flame Dart',
-    type: 'offensive',
-    synopsis: 'A darting mote of fire streaks to a target and bursts on contact.',
-    damageDice: '1d4',
-    cost: 1,
-    range: '40 ft',
-    duration: 'Instant',
-    provisional: true,
-  },
-  {
-    id: 'frost-lance',
-    name: 'Frost Lance',
-    type: 'offensive',
-    synopsis: 'A lance of ice skewers a target and saps its warmth, slowing it briefly.',
-    damageDice: '1d6',
-    cost: 2,
-    range: '30 ft',
-    duration: 'Instant',
-    provisional: true,
-  },
-  {
-    id: 'arc-lightning',
-    name: 'Arc Lightning',
-    type: 'offensive',
-    synopsis: 'A jagged arc leaps to a target and may chain to a nearby foe.',
-    damageDice: '1d8',
-    cost: 3,
-    range: '25 ft',
-    duration: 'Instant',
-    provisional: true,
-  },
-  {
-    id: 'stoneskin',
-    name: 'Stoneskin',
-    type: 'utility',
-    synopsis: 'Your skin hardens to rock, granting temporary damage reduction.',
-    damageDice: null,
-    cost: 2,
-    range: 'Self',
-    duration: '1 minute',
-    provisional: true,
-  },
-  {
-    id: 'mend-wounds',
-    name: 'Mend Wounds',
-    type: 'utility',
-    synopsis: 'A soft light knits flesh, restoring hit points to a touched ally.',
-    damageDice: null,
-    cost: 2,
-    range: 'Touch',
-    duration: 'Instant',
-    provisional: true,
-  },
-  {
-    id: 'light',
-    name: 'Light',
-    type: 'utility',
-    synopsis: 'An object sheds bright light until dismissed.',
-    damageDice: null,
-    cost: 0,
-    range: 'Touch',
-    duration: 'Until dismissed',
-    provisional: true,
-  },
-  {
-    id: 'gust',
-    name: 'Gust',
-    type: 'utility',
-    synopsis: 'A sharp gust of wind shoves small objects or clears smoke and gas.',
-    damageDice: null,
-    cost: 1,
-    range: '20 ft',
-    duration: 'Instant',
-    provisional: true,
-  },
+  // Elemental
+  off('Ember Strike', 'touch', 'fire'),
+  off('Ignition Bolt', 'ranged', 'fire'),
+  off('Frostbite Surge', 'touch', 'cold'),
+  off('Glacial Spear', 'ranged', 'cold'),
+  off('Thunder Palm', 'touch', 'lightning'),
+  off('Arc Spark', 'ranged', 'lightning'),
+  off('Earthen Crush', 'touch', 'bludgeoning'),
+  off('Stone Shard', 'ranged', 'piercing'),
+  off('Gust Slash', 'touch', 'slashing'),
+  off('Cyclone Dart', 'ranged', 'force'),
+  // Arcane Energy
+  off('Arcane Jolt', 'touch', 'force'),
+  off('Void Lance', 'ranged', 'necrotic'),
+  off('Astral Spike', 'touch', 'psychic'),
+  off('Soul Rend', 'ranged', 'psychic'),
+  off('Echo Strike', 'touch', 'thunder'),
+  off('Resonance Beam', 'ranged', 'thunder'),
+  off('Mystic Shock', 'touch', 'radiant'),
+  off('Starfire Ray', 'ranged', 'radiant'),
+  off('Eldritch Claw', 'touch', 'necrotic'),
+  off('Shadow Dart', 'ranged', 'necrotic'),
+  // Poison & Corrupting
+  off('Venom Strike', 'touch', 'poison'),
+  off('Toxic Dart', 'ranged', 'poison'),
+  off('Rotting Grip', 'touch', 'necrotic'),
+  off('Decay Arrow', 'ranged', 'necrotic'),
+  off('Withering Touch', 'touch', 'necrotic'),
+  off('Blight Surge', 'ranged', 'necrotic'),
+  off('Acidic Claw', 'touch', 'acid'),
+  off('Corrosive Orb', 'ranged', 'acid'),
+  off('Ashen Grasp', 'touch', 'necrotic'),
+  off('Hallowed Rupture', 'ranged', 'radiant'),
+  // Adaptive Combat
+  off('Mirror Strike', 'touch', "mimics target's last type"),
+  off('Prismatic Sting', 'ranged', 'random elemental'),
+  off('Aether Burst', 'touch', 'force (ignores resistance)'),
+  off('Lethal Echo', 'ranged', 'psychic'),
+  off('Burning Rune', 'touch', 'fire (lingers)'),
+  off('Glacial Lash', 'ranged', 'cold (slows)'),
+  off('Thundering Claw', 'touch', 'thunder (shockwave)'),
+  off('Explosive Arc', 'ranged', 'force (jumps)'),
+  off('Void Pulse', 'touch', 'necrotic (disrupts magic)'),
+  off('Radiant Wave', 'touch', 'radiant (area)'),
+  // Utility (non-damaging)
+  util('Light', 'Object · 20 ft', '1 hour'),
+  util('Mage Hand', '30 ft', '1 minute'),
+  util('Prestidigitation', '10 ft', 'Instant'),
+  util('Message', '120 ft', 'Instant'),
+  util('Create Water', '30 ft', 'Instant'),
+  util('Blade Ward', 'Self', '1 round'),
+  util('True Strike', '30 ft', '1 round'),
 ];

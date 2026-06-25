@@ -1,12 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { solrynSystem } from '../index';
 import {
+  castingAccess,
   computeDerived,
   computeModifiers,
   computeSkillState,
   dieForLevel,
-  evaluate,
-  makeEvalContext,
   resolveQuality,
 } from '../../../engine/rules';
 
@@ -70,9 +69,11 @@ describe('Solryn — derived values run through the generic engine', () => {
 });
 
 describe('Solryn — mode-driven rules', () => {
-  it('known-spell count = Arcana modifier × 2 (casting access expr)', () => {
-    const ctx = makeEvalContext(solrynSystem, scores);
-    expect(evaluate(solrynSystem.creation.spellAccess.knownCountExpr, ctx)).toBe(4);
+  it('caster known = (Arcana mod × 2) + level; non-caster has none; Elf granted', () => {
+    const rule = solrynSystem.creation.spellAccess;
+    expect(castingAccess(rule, { mod: 2, level: 1, granted: false }).knownCount).toBe(5);
+    expect(castingAccess(rule, { mod: 0, level: 1, granted: false }).isCaster).toBe(false);
+    expect(castingAccess(rule, { mod: 0, level: 1, granted: true }).knownCount).toBe(4);
   });
 
   it('skill tiers follow 3-to-fill, 1-to-cross with the training gate', () => {

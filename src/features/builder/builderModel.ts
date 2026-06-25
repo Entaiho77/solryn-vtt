@@ -4,9 +4,10 @@ import type {
   WeaponItem,
 } from '../../engine/schema';
 import {
+  castingAccess,
   computeDerived,
-  evaluate,
-  makeEvalContext,
+  computeModifiers,
+  type CastingAccess,
 } from '../../engine/rules';
 import type { Character, CharacterSkillState } from '../../data/types';
 
@@ -95,31 +96,23 @@ export function equipmentContext(
   return { armor: { dr: armor.dr, speedPenalty: armor.speedPenalty } };
 }
 
-export interface SpellAccess {
-  base: number;
-  ancestryBonus: number;
-  totalKnown: number;
-  accessible: boolean;
-}
-
 /**
- * Whether the conditional spell step appears, and how many spells are known.
- * Known = knownCountExpr (Solryn: Arcana mod × 2) + ancestry bonus (Elf +3).
- * (The design doc's "+ level" wording would make the gate always true at level 1,
- * contradicting "non-casters skip"; we gate on known ≥ 1, the consistent intent.)
+ * Whether the conditional spell step appears, and how many spells are known
+ * (Solryn v1.2 §5.5): caster if Arcana mod ≥ 1 or Elf; known = (mod × 2) + level (+3 Elf).
  */
 export function spellAccess(
   system: SystemDefinition,
   draft: BuilderDraft,
-): SpellAccess {
-  const ctx = makeEvalContext(system, effectiveScores(system, draft));
-  const base = Math.max(0, evaluate(system.creation.spellAccess.knownCountExpr, ctx));
+): CastingAccess {
+  const rule = system.creation.spellAccess;
+  const mods = computeModifiers(system, effectiveScores(system, draft));
   const granted =
-    draft.ancestryId != null &&
-    system.creation.spellAccess.grantedByAncestry.includes(draft.ancestryId);
-  const ancestryBonus = granted ? system.creation.spellAccess.ancestryBonus : 0;
-  const totalKnown = base + ancestryBonus;
-  return { base, ancestryBonus, totalKnown, accessible: totalKnown >= 1 };
+    draft.ancestryId != null && rule.grantedByAncestry.includes(draft.ancestryId);
+  return castingAccess(rule, {
+    mod: mods[rule.modStatId] ?? 0,
+    level: draft.level,
+    granted,
+  });
 }
 
 export function chosenInCategory(
@@ -216,7 +209,7 @@ export function buildStepPlan(
     });
   }
 
-  if (spellAccess(system, draft).accessible) {
+  if (spellAccess(system, draft).isCaster) {
     steps.push({
       kind: 'spells',
       title: 'Spells',
@@ -262,7 +255,7 @@ export function canAdvanceStep(
       );
     }
     case 'spells':
-      return draft.knownSpellIds.length === spellAccess(system, draft).totalKnown;
+      return draft.knownSpellIds.length === spellAccess(system, draft).knownCount;
     case 'gear':
       return (
         Boolean(draft.name.trim()) &&
@@ -327,7 +320,7 @@ export function createReducer(system: SystemDefinition) {
             knownSpellIds: draft.knownSpellIds.filter((id) => id !== action.spellId),
           };
         }
-        if (draft.knownSpellIds.length >= spellAccess(system, draft).totalKnown) {
+        if (draft.knownSpellIds.length >= spellAccess(system, draft).knownCount) {
           return draft;
         }
         return { ...draft, knownSpellIds: [...draft.knownSpellIds, action.spellId] };

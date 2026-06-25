@@ -37,7 +37,7 @@ export function InitiativeDrawer({
         name: t.name,
         kind: 'creature' as const,
         tokenId: t.id,
-        ...rollInitiative(Number(t.stats?.init) || 0),
+        ...rollInitiative(Number(t.stats?.initiativeMod) || 0),
       }));
     void startCombat(gameId, monsters);
     setSelected(new Set());

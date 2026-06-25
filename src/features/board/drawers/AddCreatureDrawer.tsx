@@ -33,6 +33,7 @@ export function AddCreatureDrawer({
   const [hp, setHp] = useState('5');
   const [dr, setDr] = useState('0');
   const [damage, setDamage] = useState('1d6');
+  const [init, setInit] = useState('0');
   const [detectionDC, setDetectionDC] = useState('13');
   const [trigger, setTrigger] = useState('Entering the space');
   const [effect, setEffect] = useState('1d6');
@@ -73,7 +74,7 @@ export function AddCreatureDrawer({
   function build() {
     const stats: Record<string, number | string> =
       category === 'creature'
-        ? { hp: Number(hp) || 0, dr: Number(dr) || 0, damage }
+        ? { hp: Number(hp) || 0, dr: Number(dr) || 0, damage, initiativeMod: Number(init) || 0 }
         : {
             detectionDC: Number(detectionDC) || 0,
             trigger,
@@ -184,6 +185,10 @@ export function AddCreatureDrawer({
               <label className={s.itemMeta}>
                 Damage
                 <input className={s.input} value={damage} onChange={(e) => setDamage(e.target.value)} />
+              </label>
+              <label className={s.itemMeta}>
+                Init
+                <input className={s.input} type="number" value={init} onChange={(e) => setInit(e.target.value)} />
               </label>
             </div>
           ) : (

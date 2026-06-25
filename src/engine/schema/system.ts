@@ -115,12 +115,14 @@ export interface Skill {
   id: string;
   name: string;
   categoryId: string;
-  /** Hover tooltip text (build-time teaching). */
-  description: string;
-  /** Concrete in-play example (hover). */
-  exampleUse: string;
+  /** Hover tooltip text (build-time teaching). Optional — canonical blurbs pending. */
+  description?: string;
+  /** Concrete in-play example (hover). Optional — canonical blurbs pending. */
+  exampleUse?: string;
   /** Optional governing core-stat id. */
   attribute?: string;
+  /** Not chosen at creation (e.g. Action Economy skills, level 2+). */
+  creationExcluded?: boolean;
   /**
    * Tasks this skill gates (harvest/crafting). Solryn rule: no skill = no roll.
    * e.g. "skinning", "foraging". Used by the universal harvest mechanic.
@@ -136,11 +138,13 @@ export interface Spell {
   id: string;
   name: string;
   type: SpellType;
-  /** Short blurb shown in context (attack row + spell book). */
-  synopsis: string;
+  /** Short blurb shown in context. Optional — canonical spell text pending. */
+  synopsis?: string;
   /** Damage dice, or null for non-damage/utility spells. */
   damageDice: string | null;
-  /** Resource cost in the casting pool (Solryn: Arcana points). */
+  /** Damage type for offensive spells (fire, cold, necrotic, …). */
+  damageType?: string;
+  /** Resource cost in the casting pool (Solryn: Arcana points; base 0). */
   cost: number;
   range: string;
   duration: string;
@@ -159,7 +163,18 @@ export interface ArmorItem {
   dr: number;
   /** Speed reduction in feet (feeds the Speed formula; medium −5, heavy −10). */
   speedPenalty: number;
+  /** Price in gp. */
+  cost?: number;
   provisional?: boolean;
+}
+
+export interface ShieldItem {
+  id: string;
+  name: string;
+  /** Bonus DR when equipped. (Shield equip slot is a follow-up; data captured now.) */
+  dr: number;
+  cost?: number;
+  note?: string;
 }
 
 export interface WeaponItem {
@@ -168,8 +183,11 @@ export interface WeaponItem {
   /** Weapon-skill category id this weapon belongs to (filters the gear step). */
   weaponSkillId: string;
   damageDice: string;
+  /** Physical damage type: P (piercing) / S (slashing) / B (bludgeoning). */
+  damageType?: string;
   range?: string;
   twoHanded?: boolean;
+  cost?: number;
   provisional?: boolean;
 }
 
@@ -181,6 +199,7 @@ export interface StartingKitItem {
 export interface EquipmentDefinition {
   armor: ArmorItem[];
   weapons: WeaponItem[];
+  shields?: ShieldItem[];
   /** Auto-granted at creation (backpack, rope, rations, 3 healing potions…). */
   startingKit: StartingKitItem[];
 }
@@ -273,6 +292,21 @@ export interface ConditionEntry {
 
 // --- Character-creation config ---------------------------------------------
 
+/**
+ * Casting access (Solryn v1.2 §5.5): a character is a caster if their casting-stat
+ * modifier ≥ `casterThreshold` OR their ancestry grants it (Elf). Known spells =
+ * (mod × knownPerMod) + (addLevel ? level : 0) + (granted ? ancestryBonus : 0).
+ * A non-granted character below the threshold is NOT a caster (known = 0).
+ */
+export interface SpellAccessRule {
+  modStatId: string;
+  casterThreshold: number;
+  knownPerMod: number;
+  addLevel: boolean;
+  grantedByAncestry: string[];
+  ancestryBonus: number;
+}
+
 export interface CreationConfig {
   /** Stats rolled individually, in this order, locked on roll (anti-fishing). */
   statOrder: string[];
@@ -280,18 +314,7 @@ export interface CreationConfig {
   allowRearrange: false;
   /** Starting reputation label (Solryn: "Neutral", no alignment system). */
   startingReputation: string;
-  /**
-   * Spells step appears only when this predicate passes. Kept as data:
-   * known-count formula + an ancestry that grants free spells.
-   */
-  spellAccess: {
-    /** Known-spell count = this expr (Solryn: Arcana mod × 2). */
-    knownCountExpr: Expr;
-    /** Ancestry ids that grant spell access regardless (Elf). */
-    grantedByAncestry: string[];
-    /** Bonus known spells for those ancestries. */
-    ancestryBonus: number;
-  };
+  spellAccess: SpellAccessRule;
 }
 
 // --- The system definition --------------------------------------------------

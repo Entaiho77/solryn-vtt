@@ -23,7 +23,7 @@ export function SkillsStep({
       sk.categoryId === category.id &&
       (!q ||
         sk.name.toLowerCase().includes(q) ||
-        sk.description.toLowerCase().includes(q)),
+        (sk.description ?? '').toLowerCase().includes(q)),
   );
 
   const teaching = (
@@ -62,7 +62,11 @@ export function SkillsStep({
               type="button"
               className={`${s.chip} ${on ? s.selected : ''}`}
               disabled={full && !on}
-              title={`${sk.description}\n\nExample: ${sk.exampleUse}`}
+              title={
+                sk.description
+                  ? `${sk.description}${sk.exampleUse ? `\n\nExample: ${sk.exampleUse}` : ''}`
+                  : sk.name
+              }
               onClick={() => dispatch({ type: 'toggleSkill', skillId: sk.id })}
             >
               <span className={s.chipName}>{sk.name}</span>
