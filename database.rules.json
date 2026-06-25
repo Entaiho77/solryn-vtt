@@ -1,5 +1,4 @@
 {
-  "//": "Solryn VTT — Realtime Database security rules. Ownership-enforcing per Design Doc §4.12 + the Firebase handoff. Reads are gated to authenticated game members (client-side secrecy filtering is accepted for now); WRITES enforce ownership so no one can write another player's data. RTDB write rules cascade, so writes are granted narrowly at specific paths, never broadly at a game's root.",
   "rules": {
     "users": {
       "$uid": {
@@ -47,7 +46,6 @@
           }
         },
 
-        "//initiative": "Any member may write — players roll themselves in and end their own turn; the client UI gates who may advance.",
         "initiative": {
           ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists()"
         },
