@@ -1,5 +1,5 @@
 {
-  "//": "Baseline Realtime Database rules. Per the design (Build Brief §4), permission FILTERING is client-side for now: full game state is sent to every authenticated member and each screen renders only its permitted slice. These rules therefore gate on authentication/membership but do not yet enforce field-level secrecy (hidden tokens, monster stats, whispers). Harden with server-side filtering before any high-stakes/public game. ",
+  "//": "Solryn VTT — Realtime Database security rules. Ownership-enforcing per Design Doc §4.12 + the Firebase handoff. Reads are gated to authenticated game members (client-side secrecy filtering is accepted for now); WRITES enforce ownership so no one can write another player's data. RTDB write rules cascade, so writes are granted narrowly at specific paths, never broadly at a game's root.",
   "rules": {
     "users": {
       "$uid": {
@@ -7,31 +7,78 @@
         ".write": "auth != null && auth.uid === $uid"
       }
     },
+
     "inviteCodes": {
       ".read": "auth != null",
       "$code": {
         ".write": "auth != null"
       }
     },
+
     "userGames": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
-        ".write": "auth != null"
+        "$gameId": {
+          ".write": "auth != null && (auth.uid === $uid || root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm')"
+        }
       }
     },
+
     "games": {
-      ".read": "auth != null",
       "$gameId": {
-        ".read": "auth != null",
-        ".write": "auth != null",
-        ".indexOn": ["inviteCode"]
+        ".read": "auth != null && data.child('members').child(auth.uid).exists()",
+        ".write": "auth != null && ((!data.exists() && newData.child('createdBy').val() === auth.uid && newData.child('members').child(auth.uid).child('role').val() === 'gm') || (data.child('members').child(auth.uid).child('role').val() === 'gm' && !newData.exists()))",
+
+        "name":        { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "levelGrant":  { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "inviteCode":  { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "activeMapId": { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "maps":        { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+
+        "members": {
+          "$memberId": {
+            ".write": "auth != null && ((auth.uid === $memberId && (!newData.exists() || newData.child('role').val() === 'player')) || root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm')"
+          }
+        },
+
+        "tokens": {
+          "$tokenId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && (root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm' || (newData.child('kind').val() === 'character' && newData.child('ownerUserId').val() === auth.uid) || (data.child('kind').val() === 'character' && data.child('ownerUserId').val() === auth.uid))"
+          }
+        },
+
+        "//initiative": "Any member may write — players roll themselves in and end their own turn; the client UI gates who may advance.",
+        "initiative": {
+          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists()"
+        },
+
+        "chat": {
+          "$msgId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && !data.exists() && newData.child('senderId').val() === auth.uid"
+          }
+        }
       }
     },
+
     "characters": {
       ".read": "auth != null",
       "$characterId": {
-        ".write": "auth != null"
+        ".write": "auth != null && ((!data.exists() && newData.child('ownerUserId').val() === auth.uid) || data.child('ownerUserId').val() === auth.uid)"
       }
+    },
+
+    "gameCharacters": {
+      ".read": "auth != null",
+      "$gameId": {
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      }
+    },
+
+    "systems": {
+      ".read": "auth != null",
+      ".write": false
     }
   }
 }

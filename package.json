@@ -11,7 +11,9 @@
     "typecheck": "tsc -b --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "seed:export": "vite-node scripts/exportSeed.ts",
+    "seed:push": "firebase database:set /systems ./seed/systems.json"
   },
   "dependencies": {
     "firebase": "^12.15.0",
@@ -31,6 +33,7 @@
     "jsdom": "^29.1.1",
     "typescript": "^6.0.3",
     "vite": "^8.1.0",
+    "vite-node": "^6.0.0",
     "vitest": "^4.1.9"
   }
 }

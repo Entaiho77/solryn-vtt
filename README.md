@@ -49,11 +49,16 @@ npm install
 
 ### Configure Firebase
 
-Copy the example env file and fill in your Firebase web config:
+**Full step-by-step (new project, console click-paths, rules, seeding, verification):
+[`docs/FIREBASE_SETUP.md`](./docs/FIREBASE_SETUP.md).**
+
+Short version — copy the example env file and fill in your Firebase web config:
 
 ```bash
 cp .env.example .env.local
 # edit .env.local with values from Firebase console → Project settings → Your apps
+firebase deploy --only database   # push database.rules.json (ownership rules)
+npm run seed:export && npm run seed:push   # seed /systems/solryn (optional; the app also bundles it)
 ```
 
 Or run against the local emulators (no real project needed):

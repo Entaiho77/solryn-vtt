@@ -31,9 +31,9 @@ export function LobbyPage() {
     setJoining(true);
     setJoinError('');
     try {
-      const game = await joinGameByCode(code, { uid: user.uid, displayName });
+      const gameId = await joinGameByCode(code, { uid: user.uid, displayName });
       setCode('');
-      navigate(`/game/${game.id}`);
+      navigate(`/game/${gameId}`);
     } catch (err) {
       setJoinError((err as Error).message);
     } finally {

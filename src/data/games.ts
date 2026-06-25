@@ -60,14 +60,23 @@ export async function createGame(params: {
   return game;
 }
 
-export async function joinGameByCode(rawCode: string, user: Actor): Promise<Game> {
+export async function joinGameByCode(
+  rawCode: string,
+  user: Actor,
+): Promise<string> {
   const code = normalizeInviteCode(rawCode);
   const gameId = await readValue<string>(`inviteCodes/${code}`);
   if (!gameId) throw new Error('No game found for that invite code.');
 
-  const game = await readValue<Game>(`games/${gameId}`);
-  if (!game) throw new Error('That game no longer exists.');
-  if (game.members?.[user.uid]) return game; // already a member
+  // If already a member the game read succeeds — leave membership (and any GM role)
+  // untouched. For a non-member the read is denied by the rules, so we fall through and
+  // add ourselves as a player.
+  try {
+    const existing = await readValue<Game>(`games/${gameId}`);
+    if (existing?.members?.[user.uid]) return gameId;
+  } catch {
+    /* not a member yet — read denied — proceed to join */
+  }
 
   const member: GameMember = {
     role: 'player',
@@ -78,7 +87,7 @@ export async function joinGameByCode(rawCode: string, user: Actor): Promise<Game
     [`/games/${gameId}/members/${user.uid}`]: member,
     [`/userGames/${user.uid}/${gameId}`]: true,
   });
-  return { ...game, members: { ...game.members, [user.uid]: member } };
+  return gameId;
 }
 
 export function updateGameName(gameId: string, name: string): Promise<void> {
