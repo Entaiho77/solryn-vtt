@@ -1,6 +1,6 @@
 .card {
   position: absolute;
-  left: var(--space-4);
+  right: var(--space-4);
   top: var(--space-4);
   width: 240px;
   background: var(--surface-bar);

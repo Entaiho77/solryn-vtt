@@ -16,6 +16,7 @@
 .row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-3);
   background: var(--surface-bar);
   border: 1px solid var(--border-hairline);
@@ -32,6 +33,7 @@
 }
 .feed {
   flex: 1;
+  min-width: 0;
   font-size: var(--text-sm);
   color: var(--text-muted);
 }
@@ -48,6 +50,7 @@
 }
 
 .cast {
+  flex-shrink: 0;
   background: var(--accent-purple);
   color: var(--on-accent);
   border: none;

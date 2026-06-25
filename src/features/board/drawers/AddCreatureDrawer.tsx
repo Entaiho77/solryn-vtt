@@ -96,7 +96,7 @@ export function AddCreatureDrawer({
             className={`${s.tab} ${tab === t ? s.tabActive : ''}`}
             onClick={() => setTab(t)}
           >
-            {t === 'bestiary' ? 'Bestiary' : t === 'mine' ? 'Mine' : 'Build'}
+            {t === 'bestiary' ? 'Bestiary' : t === 'mine' ? 'Saved' : 'Build'}
           </button>
         ))}
       </div>

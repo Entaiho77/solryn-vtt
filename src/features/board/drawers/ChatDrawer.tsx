@@ -44,35 +44,6 @@ export function ChatDrawer({
 
   return (
     <div className={c.wrap}>
-      <div className={c.messages}>
-        {messages.length === 0 && <p className={s.hint}>No messages yet.</p>}
-        {messages.map((m) => {
-          const whisper = m.audience !== 'public';
-          const mine = m.senderId === uid;
-          return (
-            <div
-              key={m.id}
-              className={`${c.msg} ${whisper ? c.whisper : ''} ${mine ? c.mine : ''}`}
-            >
-              <span className={c.meta}>
-                {whisper ? (
-                  <>
-                    <span className={c.eye} aria-hidden="true">
-                      ⌀
-                    </span>{' '}
-                    {mine ? `Whisper to ${m.recipientName}` : `Whisper from ${m.senderName}`}
-                  </>
-                ) : (
-                  m.senderName
-                )}
-              </span>
-              <span className={c.text}>{m.text}</span>
-            </div>
-          );
-        })}
-        <div ref={endRef} />
-      </div>
-
       <div className={c.composer}>
         <select
           className={s.select}
@@ -100,6 +71,35 @@ export function ChatDrawer({
             Send
           </Button>
         </div>
+      </div>
+
+      <div className={c.messages}>
+        {messages.length === 0 && <p className={s.hint}>No messages yet.</p>}
+        {messages.map((m) => {
+          const whisper = m.audience !== 'public';
+          const mine = m.senderId === uid;
+          return (
+            <div
+              key={m.id}
+              className={`${c.msg} ${whisper ? c.whisper : ''} ${mine ? c.mine : ''}`}
+            >
+              <span className={c.meta}>
+                {whisper ? (
+                  <>
+                    <span className={c.eye} aria-hidden="true">
+                      ⌀
+                    </span>{' '}
+                    {mine ? `Whisper to ${m.recipientName}` : `Whisper from ${m.senderName}`}
+                  </>
+                ) : (
+                  m.senderName
+                )}
+              </span>
+              <span className={c.text}>{m.text}</span>
+            </div>
+          );
+        })}
+        <div ref={endRef} />
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ export type ResourceColor = 'teal' | 'purple' | 'amber';
 
 interface ResourceTrackerProps {
   label: string;
+  /** Full name shown as a hover tooltip on the (often abbreviated) label. */
+  title?: string;
   color?: ResourceColor;
   current: number;
   max: number;
@@ -18,6 +20,7 @@ interface ResourceTrackerProps {
  */
 export function ResourceTracker({
   label,
+  title,
   color = 'teal',
   current,
   max,
@@ -31,7 +34,7 @@ export function ResourceTracker({
   return (
     <div className={`${styles.tracker} ${styles[color]}`}>
       <div className={styles.head}>
-        <span className={styles.label}>{label}</span>
+        <span className={styles.label} title={title}>{label}</span>
         <span className={styles.value}>
           {current}
           <span className={styles.max}>/{max}</span>

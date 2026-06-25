@@ -56,6 +56,26 @@ interface BoardCanvasProps {
 const fmt = (n: number) =>
   Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.?0+$/, '');
 
+/** Average perceptual luminance (0–1) of an image, sampled at 16×16. null if unreadable. */
+function imageLuminance(img: HTMLImageElement): number | null {
+  try {
+    const c = document.createElement('canvas');
+    c.width = 16;
+    c.height = 16;
+    const cx = c.getContext('2d');
+    if (!cx) return null;
+    cx.drawImage(img, 0, 0, 16, 16);
+    const { data } = cx.getImageData(0, 0, 16, 16);
+    let sum = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      sum += (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
+    }
+    return sum / (data.length / 4);
+  } catch {
+    return null; // cross-origin/tainted canvas — caller falls back to defaults
+  }
+}
+
 export function BoardCanvas({
   map,
   tokens,
@@ -71,6 +91,7 @@ export function BoardCanvas({
 }: BoardCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgCache = useRef<Map<string, HTMLImageElement>>(new Map());
+  const luminance = useRef<Map<string, number>>(new Map());
   const [version, bump] = useReducer((v) => v + 1, 0);
 
   const tokenDrag = useRef<{ id: string } | null>(null);
@@ -90,13 +111,29 @@ export function BoardCanvas({
     if (tool !== 'measure') setMeasure(null);
   }, [tool]);
 
+  // Escape clears an active measuring line (#9).
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        measuringRef.current = false;
+        setMeasure(null);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   function getImage(src?: string): HTMLImageElement | null {
     if (!src) return null;
     const cache = imgCache.current;
     const existing = cache.get(src);
     if (existing) return existing.complete && existing.naturalWidth > 0 ? existing : null;
     const img = new Image();
-    img.onload = () => bump();
+    img.onload = () => {
+      const lum = imageLuminance(img);
+      if (lum != null) luminance.current.set(src, lum);
+      bump();
+    };
     img.src = src;
     cache.set(src, img);
     return null;
@@ -116,8 +153,14 @@ export function BoardCanvas({
     const bg = getImage(map.imageUrl);
     if (bg) ctx.drawImage(bg, 0, 0, map.width, map.height);
 
+    // Grid + measure colors adapt to map brightness so they read on light maps too (#3/#5).
+    const mapLum = luminance.current.get(map.imageUrl);
+    const lightMap = mapLum != null && mapLum > 0.55;
+    const gridColor = lightMap ? 'rgba(24, 26, 34, 0.5)' : 'rgba(255, 255, 255, 0.18)';
+    const measureColor = lightMap ? '#b3261e' : COLORS.amber;
+
     if (map.gridVisible) {
-      ctx.strokeStyle = COLORS.grid;
+      ctx.strokeStyle = gridColor;
       ctx.lineWidth = 1;
       ctx.beginPath();
       for (let c = 0; c <= cols; c++) {
@@ -205,7 +248,7 @@ export function BoardCanvas({
     if (measure && measureScale) {
       const a = cellCenter(measure.sc, measure.sr, g);
       const b = cellCenter(measure.ec, measure.er, g);
-      ctx.strokeStyle = COLORS.amber;
+      ctx.strokeStyle = measureColor;
       ctx.lineWidth = 2;
       ctx.setLineDash([6, 4]);
       ctx.beginPath();
@@ -301,6 +344,15 @@ export function BoardCanvas({
     setGhost(null);
   }
 
+  // Right-click clears an active measuring line instead of starting a new one (#9).
+  function handleContextMenu(e: MouseEvent<HTMLCanvasElement>) {
+    if (tool === 'measure') {
+      e.preventDefault();
+      measuringRef.current = false;
+      setMeasure(null);
+    }
+  }
+
   return (
     <div className={styles.scroll}>
       <canvas
@@ -312,6 +364,7 @@ export function BoardCanvas({
         onMouseMove={handleMove}
         onMouseUp={handleUp}
         onMouseLeave={handleUp}
+        onContextMenu={handleContextMenu}
       />
     </div>
   );

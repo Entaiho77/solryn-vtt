@@ -61,6 +61,7 @@ export function CharacterQuickView({
           <ResourceTracker
             key={p.id}
             label={p.abbreviation ?? p.name}
+            title={p.name}
             color={trackerColor(p.color)}
             current={current}
             max={max}
@@ -71,7 +72,7 @@ export function CharacterQuickView({
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
         {refs.map((d) => (
-          <span key={d.id} className={s.preview}>
+          <span key={d.id} className={s.preview} title={d.name}>
             {d.abbreviation ?? d.name}:{' '}
             <strong>
               {d.isRoll ? sign(d.value) : d.value}
