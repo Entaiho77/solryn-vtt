@@ -1,8 +1,12 @@
 .page {
-  /* Exactly the viewport height (chains off html/body/#root height:100%), NOT min-height —
-   * a definite height is what lets the flex chain below cap the board/drawer to the viewport
-   * so they scroll internally instead of growing the whole page. */
-  height: 100%;
+  /* Anchor the game view to the viewport DIRECTLY (dvh, vh fallback) rather than height:100%.
+   * height:100% only works if EVERY ancestor (html/body/#root) resolves a definite height —
+   * one weak link and the tall board canvas grows the page, scrolling <html> itself. dvh
+   * references the viewport with no chain dependency; overflow:hidden is the hard backstop
+   * that guarantees nothing escapes to scroll the window. Panes below scroll internally. */
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
