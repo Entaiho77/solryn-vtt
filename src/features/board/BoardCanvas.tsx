@@ -3,11 +3,13 @@ import type { MapDef, Role, Token } from '../../data/types';
 import { squareKey } from '../../data/board';
 import { canControlToken, fogStyle, tokenVisibility } from '../../permissions';
 import {
+  canLandOn,
   cellCenter,
   clampCell,
   cycleSelection,
   gridDimensions,
   gridDistanceSquares,
+  occupiedCells,
   pixelToCell,
   tokensAtCell,
 } from './boardGeometry';
@@ -187,6 +189,15 @@ export function BoardCanvas({
     const gridColor = dark ? 'rgba(0, 0, 0, 0.45)' : 'rgba(255, 255, 255, 0.45)';
     const measureColor = dark ? '#000000' : '#ffffff';
 
+    // While a token is being dragged, the cells a blocking token already occupies — used to
+    // paint the drag ghost red when it's hovering a cell it isn't allowed to land on.
+    const blocked = ghost
+      ? occupiedCells(
+          tokens.filter((t) => t.mapId === map.id),
+          ghost.id,
+        )
+      : null;
+
     if (map.gridVisible) {
       ctx.strokeStyle = gridColor;
       ctx.lineWidth = 1 / cam.zoom; // keep grid lines ~1px on screen at any zoom
@@ -244,14 +255,18 @@ export function BoardCanvas({
 
       const selected = token.id === selectedTokenId;
       const sprung = token.kind === 'trap' && token.trapState === 'sprung';
+      // Red ring while the drag ghost is over a cell it can't legally land on.
+      const cantLand = dragging && blocked ? !canLandOn(token, col, row, blocked) : false;
       ctx.lineWidth = (selected ? 4 : 2) / cam.zoom;
-      ctx.strokeStyle = selected
-        ? COLORS.teal
-        : sprung
-          ? COLORS.red
-          : token.defeated
-            ? COLORS.gray
-            : COLORS.border;
+      ctx.strokeStyle = cantLand
+        ? COLORS.red
+        : selected
+          ? COLORS.teal
+          : sprung
+            ? COLORS.red
+            : token.defeated
+              ? COLORS.gray
+              : COLORS.border;
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.stroke();
@@ -387,7 +402,19 @@ export function BoardCanvas({
 
   function handleUp() {
     if (tokenDrag.current && ghost) {
-      onMoveToken(tokenDrag.current.id, ghost.col, ghost.row);
+      const mover = tokens.find((t) => t.id === tokenDrag.current!.id);
+      const moved = mover && (mover.col !== ghost.col || mover.row !== ghost.row);
+      if (mover && moved) {
+        // Soft-block: a token can pass through occupied cells while dragging but can't END
+        // its move on one. A blocked drop is cancelled — the token snaps back to where it was.
+        const occupied = occupiedCells(
+          tokens.filter((t) => t.mapId === map.id),
+          mover.id,
+        );
+        if (canLandOn(mover, ghost.col, ghost.row, occupied)) {
+          onMoveToken(mover.id, ghost.col, ghost.row);
+        }
+      }
     }
     tokenDrag.current = null;
     fogPaint.current = null;

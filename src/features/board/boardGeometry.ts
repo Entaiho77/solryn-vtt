@@ -1,4 +1,4 @@
-import type { Token } from '../../data/types';
+import type { Token, TokenKind } from '../../data/types';
 
 /** Pure board geometry: grid-cell ↔ pixel math, snapping, and hit-testing. No I/O. */
 
@@ -117,6 +117,52 @@ export function gridDistanceSquares(
   er: number,
 ): number {
   return Math.max(Math.abs(ec - sc), Math.abs(er - sr));
+}
+
+/** Cells a token of `size` squares-per-side (default 1) covers, anchored at its top-left. */
+export function footprintAt(col: number, row: number, size = 1): Cell[] {
+  const cells: Cell[] = [];
+  for (let dc = 0; dc < size; dc++) {
+    for (let dr = 0; dr < size; dr++) cells.push({ col: col + dc, row: row + dr });
+  }
+  return cells;
+}
+
+/**
+ * Which kinds physically occupy their square and so block another token from landing.
+ * Creatures and characters block; traps and scenery don't (you walk onto a trap to trip it).
+ */
+export function blocksMovement(kind: TokenKind): boolean {
+  return kind === 'character' || kind === 'creature';
+}
+
+/**
+ * Cells ("col,row") occupied by blocking tokens, excluding the one being moved. Multi-square
+ * tokens fill their whole footprint. Use with `canLandOn` to soft-block a drop.
+ */
+export function occupiedCells(tokens: Token[], exceptId: string): Set<string> {
+  const out = new Set<string>();
+  for (const t of tokens) {
+    if (t.id === exceptId || !blocksMovement(t.kind)) continue;
+    for (const c of footprintAt(t.col, t.row, t.size ?? 1)) out.add(`${c.col},${c.row}`);
+  }
+  return out;
+}
+
+/**
+ * Can `mover` finish a move with its top-left on (col,row)? Only the landing footprint is
+ * checked — passing through occupied cells mid-drag is always allowed; just the end cell(s)
+ * must be clear. `occupied` comes from `occupiedCells` (already excludes the mover).
+ */
+export function canLandOn(
+  mover: Token,
+  col: number,
+  row: number,
+  occupied: Set<string>,
+): boolean {
+  return footprintAt(col, row, mover.size ?? 1).every(
+    (c) => !occupied.has(`${c.col},${c.row}`),
+  );
 }
 
 /** Clamp a cell to the board bounds. */

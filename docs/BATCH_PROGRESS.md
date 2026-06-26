@@ -51,5 +51,19 @@ namespaced (`card:`/`cond:`) so a card and condition sharing an id can't toggle 
 Files: `RulesDrawer.tsx` (rewrite), `drawers.module.css` (+`.ruleRow`/`.ruleHead`/`.caret`).
 Build clean, 164 tests.
 
-## 6. Token grid-square collision — soft block (pass through, can't land) — ⏳ NEXT
-## 7. Shared party token on world-scale maps — ⏳
+## 6. Token grid-square collision — soft block (pass through, can't land) — ✅ DONE
+A token can be dragged *through* occupied cells but can't END its move on one. Implemented as
+pure, footprint-based geometry so it's already multi-square-correct:
+- `blocksMovement(kind)` — only `creature`/`character` block; `trap` (and any future scenery)
+  never blocks, so you can still step onto a trap to trip it.
+- `footprintAt(col,row,size)` + optional `Token.size` (default 1) — a sized token fills its
+  whole N×N footprint. (Rendering sized tokens is still a follow-up; the *collision rule* asked
+  for in this item honours size now.)
+- `occupiedCells(tokens, exceptId)` + `canLandOn(mover, col, row, occupied)` — the drop in
+  `BoardCanvas.handleUp` is gated on `canLandOn`; a blocked drop is cancelled (snap back). The
+  drag ghost's ring turns **red** while hovering a cell it can't land on, so the soft-block is
+  legible instead of a mystery snap-back.
+Files: `boardGeometry.ts` (+4 helpers), `types.ts` (`Token.size?`), `BoardCanvas.tsx`,
+`boardGeometry.test.ts` (+5). Build clean, 169 tests.
+
+## 7. Shared party token on world-scale maps — ⏳ NEXT

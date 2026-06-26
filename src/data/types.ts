@@ -104,6 +104,11 @@ export interface Token {
   row: number;
   color?: string;
   imageUrl?: string;
+  /**
+   * Footprint size in squares per side (default 1). Movement collision already honours a
+   * larger footprint; rendering sized tokens is a follow-up.
+   */
+  size?: number;
   /** false = hidden token (GM sees it dimmed; players don't render it). */
   visible?: boolean;
   /** Character tokens: the controlling player + linked character. */

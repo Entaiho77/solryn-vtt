@@ -1,13 +1,17 @@
 import { describe, it, expect } from 'vitest';
 import type { Token } from '../../../data/types';
 import {
+  blocksMovement,
+  canLandOn,
   cellCenter,
   cellToPixel,
   clampCell,
   cycleSelection,
   firstFreeCell,
+  footprintAt,
   gridDimensions,
   gridDistanceSquares,
+  occupiedCells,
   pixelToCell,
   tokenAtCell,
   tokensAtCell,
@@ -114,6 +118,55 @@ describe('firstFreeCell (creature placement)', () => {
     const occupied = new Set<string>();
     for (let c = 0; c < 3; c++) for (let r = 0; r < 3; r++) occupied.add(`${c},${r}`);
     expect(firstFreeCell(occupied, 1, 1, 3, 3)).toEqual({ col: 1, row: 1 });
+  });
+});
+
+describe('movement collision (soft block — pass through, can\'t land)', () => {
+  const tokens = [
+    { id: 'hero', kind: 'character', col: 1, row: 1 },
+    { id: 'orc', kind: 'creature', col: 3, row: 3 },
+    { id: 'trap', kind: 'trap', col: 5, row: 5 },
+    { id: 'giant', kind: 'creature', col: 7, row: 7, size: 2 }, // covers 7,7 7,8 8,7 8,8
+  ] as Token[];
+
+  it('footprintAt covers a token\'s squares (default 1, larger when sized)', () => {
+    expect(footprintAt(2, 2)).toEqual([{ col: 2, row: 2 }]);
+    expect(footprintAt(7, 7, 2)).toEqual([
+      { col: 7, row: 7 },
+      { col: 7, row: 8 },
+      { col: 8, row: 7 },
+      { col: 8, row: 8 },
+    ]);
+  });
+
+  it('only creatures and characters block; traps and scenery do not', () => {
+    expect(blocksMovement('character')).toBe(true);
+    expect(blocksMovement('creature')).toBe(true);
+    expect(blocksMovement('trap')).toBe(false);
+  });
+
+  it('occupiedCells gathers blockers, skips the mover and non-blockers', () => {
+    const occ = occupiedCells(tokens, 'hero');
+    expect(occ.has('3,3')).toBe(true); // the orc blocks
+    expect(occ.has('1,1')).toBe(false); // mover excludes itself
+    expect(occ.has('5,5')).toBe(false); // trap never blocks
+    // giant fills its whole 2×2 footprint
+    expect(occ.has('7,7') && occ.has('8,8') && occ.has('7,8') && occ.has('8,7')).toBe(true);
+  });
+
+  it('blocks landing on an occupied cell but allows a free one', () => {
+    const occ = occupiedCells(tokens, 'hero');
+    const hero = tokens[0];
+    expect(canLandOn(hero, 3, 3, occ)).toBe(false); // onto the orc — blocked
+    expect(canLandOn(hero, 2, 2, occ)).toBe(true); // empty — fine
+    expect(canLandOn(hero, 5, 5, occ)).toBe(true); // onto a trap — allowed (walk onto it)
+  });
+
+  it('a multi-square mover is blocked if any of its footprint overlaps a blocker', () => {
+    const occ = occupiedCells(tokens, 'big'); // 'big' isn't in the list → nothing excluded
+    const big = { id: 'big', kind: 'creature', size: 2 } as Token;
+    expect(canLandOn(big, 2, 2, occ)).toBe(false); // its 2,2..3,3 footprint hits the orc at 3,3
+    expect(canLandOn(big, 4, 0, occ)).toBe(true); // 4,0..5,1 is a clear 2×2 region
   });
 });
 
