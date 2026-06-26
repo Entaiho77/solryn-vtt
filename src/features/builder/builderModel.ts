@@ -157,6 +157,7 @@ export function ancestryChoicesComplete(
 export type StepKind =
   | 'roll'
   | 'ancestry'
+  | 'name'
   | 'info'
   | 'skills'
   | 'spells'
@@ -195,6 +196,13 @@ export function buildStepPlan(
       instruction: 'Pick a race. Its bonuses apply to your rolled stats right away.',
     });
   }
+
+  // Naming is its own step — an identity choice, kept apart from the mechanical picks.
+  steps.push({
+    kind: 'name',
+    title: 'Name your character',
+    instruction: 'Give your character a name — the one identity choice in the build.',
+  });
 
   // Consolidate the read-only stats — every derived stat plus reputation — into "info"
   // pages of four cards each. This is generic, not Solryn-specific: it just chunks the
@@ -268,12 +276,10 @@ export function canAdvanceStep(
     }
     case 'spells':
       return draft.knownSpellIds.length === spellAccess(system, draft).knownCount;
+    case 'name':
+      return Boolean(draft.name.trim());
     case 'gear':
-      return (
-        Boolean(draft.name.trim()) &&
-        Boolean(draft.equippedArmorId) &&
-        Boolean(draft.equippedWeaponId)
-      );
+      return Boolean(draft.equippedArmorId) && Boolean(draft.equippedWeaponId);
     case 'info':
       return true;
   }

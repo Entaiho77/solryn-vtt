@@ -19,6 +19,13 @@ Full-width bottom bar: **round (left) · centered turn carousel (center) · Next
 - Known minor (left as-is): wrapping from the last combatant back to #1 animates a long slide
   across the row — reads as a "new round" rewind; easy to dampen later if disliked.
 
-## 2. Move character naming to its own step — ⏳ IN PROGRESS
+## 2. Move character naming to its own step — ✅ DONE
+A new `'name'` step kind sits right after **Choose Race** (before the info pages), rendered by a
+new `NameStep` (just the character-name field + teaching copy). `GearStep` lost its name field;
+gating moved accordingly — the name step requires a non-empty name, and gear now needs only
+armor + weapon. The builder is one step longer (Solryn: 7 steps non-caster / 8 caster).
+- Files: `builderModel.ts` (step kind + plan insert after ancestry + gating), `NameStep.tsx`
+  (new), `GearStep.tsx` (name field removed), `CharacterBuilder.tsx` (render), `builderModel.test.ts`
+  (step counts + new name-gating test). Build clean, 151 tests pass.
 
-## 3. Map pan/zoom — ⏳ PENDING
+## 3. Map pan/zoom — ⏳ IN PROGRESS

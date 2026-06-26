@@ -11,6 +11,7 @@ import {
 import type { StepFrameNav } from './StepFrame';
 import { RollStatsStep } from './steps/RollStatsStep';
 import { ChooseRaceStep } from './steps/ChooseRaceStep';
+import { NameStep } from './steps/NameStep';
 import { DerivedGroupStep } from './steps/DerivedGroupStep';
 import { SkillsStep } from './steps/SkillsStep';
 import { SpellsStep } from './steps/SpellsStep';
@@ -137,6 +138,7 @@ export function CharacterBuilder({
     <>
       {step.kind === 'roll' && <RollStatsStep {...common} />}
       {step.kind === 'ancestry' && <ChooseRaceStep {...common} />}
+      {step.kind === 'name' && <NameStep {...common} />}
       {step.kind === 'info' && (
         <DerivedGroupStep {...common} cards={step.cards!} />
       )}

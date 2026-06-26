@@ -1,7 +1,6 @@
 import type { KeyboardEvent } from 'react';
 import { StepFrame } from '../StepFrame';
 import type { StepProps } from '../stepTypes';
-import { TextField } from '../../../components/ui/TextField';
 import { computeDerived } from '../../../engine/rules';
 import { allowedWeapons, effectiveScores, equipmentContext } from '../builderModel';
 import s from './steps.module.css';
@@ -45,13 +44,6 @@ export function GearStep({ system, draft, dispatch, nav }: StepProps) {
   return (
     <StepFrame {...nav} teaching={teaching}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-        <TextField
-          label="Character name"
-          value={draft.name}
-          onChange={(e) => dispatch({ type: 'setName', name: e.target.value })}
-          placeholder="Name your hero"
-        />
-
         <div>
           <span className={s.fieldLabel}>Armor</span>
           <div className={s.cardList} style={{ maxHeight: 'none' }}>

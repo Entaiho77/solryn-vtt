@@ -27,14 +27,14 @@ describe('buildStepPlan (data-driven step count)', () => {
   it('non-caster gets no spell step', () => {
     const plan = buildStepPlan(solrynSystem, rolledDraft(2)); // ARC mod 0
     expect(plan.some((s) => s.kind === 'spells')).toBe(false);
-    // roll + race + 2 info pages + skills + gear = 6
-    expect(plan).toHaveLength(6);
+    // roll + race + name + 2 info pages + skills + gear = 7
+    expect(plan).toHaveLength(7);
   });
 
-  it('caster gets the spell step (7 total)', () => {
+  it('caster gets the spell step (8 total)', () => {
     const plan = buildStepPlan(solrynSystem, rolledDraft(6)); // ARC mod 2 → 4 known
     expect(plan.some((s) => s.kind === 'spells')).toBe(true);
-    expect(plan).toHaveLength(7);
+    expect(plan).toHaveLength(8);
   });
 
   it('chunks derived stats + reputation into info pages of four, derived in order', () => {
@@ -143,11 +143,20 @@ describe('canAdvanceStep gating', () => {
     expect(canAdvanceStep(solrynSystem, draft, step('skills'), 0)).toBe(true);
   });
 
-  it('gear step needs name, armor, and weapon', () => {
+  it('name step needs a non-empty name', () => {
+    let draft = rolledDraft(6);
+    expect(canAdvanceStep(solrynSystem, draft, step('name'), 0)).toBe(false);
+    draft = reducer(draft, { type: 'setName', name: '   ' }); // whitespace only
+    expect(canAdvanceStep(solrynSystem, draft, step('name'), 0)).toBe(false);
+    draft = reducer(draft, { type: 'setName', name: 'Kael' });
+    expect(canAdvanceStep(solrynSystem, draft, step('name'), 0)).toBe(true);
+  });
+
+  it('gear step needs armor and weapon (naming moved to its own step)', () => {
     let draft = rolledDraft(6);
     draft = reducer(draft, { type: 'toggleSkill', skillId: 'light-swords' });
-    draft = reducer(draft, { type: 'setName', name: 'Kael' });
     draft = reducer(draft, { type: 'setArmor', armorId: 'leather' });
+    // No name set — gear no longer requires it.
     expect(canAdvanceStep(solrynSystem, draft, step('gear'), 0)).toBe(false);
     draft = reducer(draft, { type: 'setWeapon', weaponId: 'shortsword' });
     expect(canAdvanceStep(solrynSystem, draft, step('gear'), 0)).toBe(true);
