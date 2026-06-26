@@ -40,6 +40,16 @@ Item 6's movement-collision rule will stop stacking happening during play too. F
 `boardGeometry.ts` (+3 helpers), `BoardCanvas.tsx`, `AddCreatureDrawer.tsx`, `BoardScreen.tsx`,
 `boardGeometry.test.ts` (+8). Build clean, 164 tests.
 
-## 5. Rules panel: collapse to names, expand on click (keep search) — ⏳ NEXT
-## 6. Token grid-square collision — soft block (pass through, can't land) — ⏳
+## 5. Rules panel: collapse to names, expand on click (keep search) — ✅ DONE
+`RulesDrawer` now renders each reference card / condition as a collapsible `RuleItem` — a
+name-only header (with a ▸/▾ caret) that reveals the description on click. The search box and
+its filter are byte-for-byte unchanged (cards still match name+description, conditions match
+name). One addition that *serves* the collapse rather than changing the search: while a query
+is active every shown match is auto-expanded, so a description-only match isn't hidden behind
+its name; clearing the search returns to name-only browse with manual toggles. Expand state is
+namespaced (`card:`/`cond:`) so a card and condition sharing an id can't toggle together.
+Files: `RulesDrawer.tsx` (rewrite), `drawers.module.css` (+`.ruleRow`/`.ruleHead`/`.caret`).
+Build clean, 164 tests.
+
+## 6. Token grid-square collision — soft block (pass through, can't land) — ⏳ NEXT
 ## 7. Shared party token on world-scale maps — ⏳
