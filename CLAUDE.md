@@ -66,25 +66,16 @@ not from here. Don't route around egress-policy (403) denials — report them.
   `100dvh`+`overflow:hidden`), token-card position, grid/measure brightness-adaptive
   contrast, map-name truncation, "Saved" creatures tab, stat-abbreviation tooltips, Cast
   button overflow, measure-line cancel (right-click/Esc), centered initiative tracker.
+- **Choose Race step redesigned**: compact 3-column grid; replace-on-select side-panel
+  detail with a pinned orientation line; flexible-bonus picker under the grid; optional
+  `Ancestry.flavor` added (empty for the 9 races, renders only when filled in).
 
-## NEXT UP — Choose Race step redesign (planned, NOT yet built)
+## NEXT UP — candidates (await the user's go-ahead)
 
-Files: `src/features/builder/steps/ChooseRaceStep.tsx`, `steps.module.css` (+ maybe
-`Ancestry` in `engine/schema/system.ts`). Replace the vertical card list with a compact
-**3-column grid** (9 races → 3×3, no scroll).
-
-- Each card: **race name + `bonusSummary` only** (brief). Selected card clearly highlighted.
-- Clicking selects via the **unchanged `chooseAncestry` dispatch** (applies bonuses to rolled
-  stats) AND shows that race's **full detail in the right "Why this matters" panel**.
-- Keep the live stat-preview strip. Selection logic/reducer unchanged → tests stay green.
-
-**THREE OPEN DECISIONS (awaiting the user; my recommendations):**
-1. **Side-panel swap** — REC: replace-on-select but keep one pinned orientation line. Alts:
-   (a) full replace, (b) fully alongside.
-2. **Flavor text** — DATA GAP: `Ancestry` has no flavor field. REC: add optional `flavor?`,
-   rendered only when present (empty for now). Alts: user supplies text, or skip.
-3. **Flexible-bonus assignment** (Human/Dwarf/Elf "assign +N to stats") — REC: left column
-   under the grid. Alt: inside the side panel.
+The user is steering character-builder design, so the held builder items are the natural
+next pieces — confirm scope/approach before building either:
+- A welcome/orientation screen before step 1 (lands a new player on "Roll stats" cold today).
+- A "Roll all stats" button on the roll step (note the anti-fishing design intent).
 
 ## Backlog / known follow-ups
 
@@ -95,4 +86,5 @@ Files: `src/features/builder/steps/ChooseRaceStep.tsx`, `steps.module.css` (+ ma
 - Server-side permission filtering; bundle code-splitting (build warns >500 kB); shield
   equip-slot (data exists, DR formula doesn't read it); spell-modification (AP) UI.
 - Outstanding content authoring (designer): skill description/exampleUse + governing ability,
-  spell synopses, race flavor, creature loot pools, weapon→weapon-skill mapping confirmation.
+  spell synopses, race flavor (now goes in optional `Ancestry.flavor`), creature loot pools,
+  weapon→weapon-skill mapping confirmation.
