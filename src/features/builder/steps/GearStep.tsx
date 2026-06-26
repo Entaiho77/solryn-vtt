@@ -16,6 +16,11 @@ function activate(handler: () => void) {
 
 export function GearStep({ system, draft, dispatch, nav }: StepProps) {
   const weapons = allowedWeapons(system, draft);
+  // Starting armor is limited to the creation-allowed weights (Solryn: Light/Medium only).
+  const armorWeights = system.creation.startingArmorWeights;
+  const armorOptions = armorWeights
+    ? system.equipment.armor.filter((a) => armorWeights.includes(a.weight))
+    : system.equipment.armor;
   const derived = computeDerived(
     system,
     effectiveScores(system, draft),
@@ -47,7 +52,7 @@ export function GearStep({ system, draft, dispatch, nav }: StepProps) {
         <div>
           <span className={s.fieldLabel}>Armor</span>
           <div className={s.cardList} style={{ maxHeight: 'none' }}>
-            {system.equipment.armor.map((a) => {
+            {armorOptions.map((a) => {
               const on = draft.equippedArmorId === a.id;
               const select = () => dispatch({ type: 'setArmor', armorId: a.id });
               return (

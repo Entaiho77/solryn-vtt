@@ -319,6 +319,9 @@ export interface CreationConfig {
   /** Starting reputation label (Solryn: "Neutral", no alignment system). */
   startingReputation: string;
   spellAccess: SpellAccessRule;
+  /** Armor weights a character may CHOOSE at creation; heavier armor stays play/loot only.
+   * Unset = every weight is allowed at creation. */
+  startingArmorWeights?: ArmorWeight[];
 }
 
 // --- The system definition --------------------------------------------------

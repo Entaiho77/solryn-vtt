@@ -131,4 +131,14 @@ describe('Solryn — seed data integrity', () => {
     const derivedIds = new Set(solrynSystem.derivedStats.map((d) => d.id));
     expect(derivedIds).toContain(solrynSystem.modes.casting.poolStatId);
   });
+
+  it('offers only Light/Medium armor at creation; Heavy stays in the catalog', () => {
+    const weights = solrynSystem.creation.startingArmorWeights;
+    expect(weights).toEqual(['light', 'medium']);
+    const offered = solrynSystem.equipment.armor.filter((a) => weights!.includes(a.weight));
+    expect(offered.length).toBeGreaterThan(0);
+    expect(offered.some((a) => a.weight === 'heavy')).toBe(false);
+    // Heavy armor still exists in the catalog (play/loot), just isn't a starting option.
+    expect(solrynSystem.equipment.armor.some((a) => a.weight === 'heavy')).toBe(true);
+  });
 });

@@ -56,4 +56,6 @@ export const creation: CreationConfig = {
     grantedByAncestry: ['elf'],
     ancestryBonus: 3,
   },
+  // Solryn: only Light or Medium armor may be chosen at creation (Heavy is play/loot only).
+  startingArmorWeights: ['light', 'medium'],
 };
