@@ -1,10 +1,18 @@
-import { useEffect, useRef } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, InitiativeState, Role, Token } from '../../data/types';
 import { computeDerived } from '../../engine/rules';
-import { addCombatant, endCombat, nextTurn, rollInitiative } from '../../data/combat';
+import {
+  addCombatant,
+  endCombat,
+  nextTurn,
+  rollInitiative,
+  setTurn,
+} from '../../data/combat';
 import { Button } from '../../components/ui/Button';
 import t from './InitiativeTracker.module.css';
+
+/** Width (px) of one combatant slot in the carousel — must match `.slot` in the CSS. */
+const SLOT = 100;
 
 function initiativeModifier(system: SystemDefinition, character: Character): number {
   const armor = system.equipment.armor.find(
@@ -36,17 +44,13 @@ export function InitiativeTracker({
   tokens: Record<string, Token>;
   activeMapId?: string;
 }) {
-  const currentRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    currentRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
-  }, [state.turnIndex, state.order.length]);
-
   const current = state.order[state.turnIndex];
   const isMyTurn = current?.ownerUserId === uid;
   const inOrder = character
     ? state.order.some((o) => o.characterId === character.id)
     : true;
   const canRollIn = role === 'player' && character && activeMapId && !inOrder;
+  const canJump = role === 'gm'; // GM can jump the turn by clicking a combatant
 
   function rollMeIn() {
     if (!character || !activeMapId) return;
@@ -65,6 +69,10 @@ export function InitiativeTracker({
   }
 
   const advance = () => void nextTurn(gameId, state, tokens);
+  const jumpTo = (i: number) => void setTurn(gameId, state, i);
+
+  // Slide the track so the active combatant's center sits at the carousel's center.
+  const trackX = -(state.turnIndex * SLOT + SLOT / 2);
 
   return (
     <div className={t.bar}>
@@ -73,28 +81,58 @@ export function InitiativeTracker({
         <span className={t.roundNum}>{state.round}</span>
       </div>
 
-      <div className={t.strip}>
-        {state.order.map((com, i) => {
-          const isCurrent = i === state.turnIndex;
-          const tok = com.tokenId ? tokens[com.tokenId] : undefined;
-          const defeated = com.kind === 'creature' && tok?.defeated;
-          return (
-            <div
-              key={com.id}
-              ref={isCurrent ? currentRef : undefined}
-              className={`${t.combatant} ${isCurrent ? t.current : ''} ${defeated ? t.defeated : ''}`}
-            >
-              <span
-                className={t.disk}
-                style={{ background: com.kind === 'character' ? '#5dcaa5' : '#b05a5a' }}
-              >
-                {com.name[0]?.toUpperCase() ?? '?'}
-              </span>
-              <span className={t.cname}>{com.name}</span>
-              <span className={t.init}>{com.initiative}</span>
-            </div>
-          );
-        })}
+      <div className={t.carousel}>
+        <div className={t.track} style={{ transform: `translateX(${trackX}px)` }}>
+          {state.order.map((com, i) => {
+            const isCurrent = i === state.turnIndex;
+            const dist = Math.abs(i - state.turnIndex);
+            // Shrink + fade with distance from center; the active one is full-size.
+            const scale = isCurrent ? 1 : Math.max(0.6, 1 - 0.17 * dist);
+            const opacity = isCurrent ? 1 : Math.max(0.25, 1 - 0.3 * dist);
+            const tok = com.tokenId ? tokens[com.tokenId] : undefined;
+            const defeated = com.kind === 'creature' && tok?.defeated;
+            const clickable = canJump && !isCurrent;
+            return (
+              <div key={com.id} className={t.slot}>
+                <div
+                  className={[
+                    t.combatant,
+                    isCurrent ? t.current : '',
+                    defeated ? t.defeated : '',
+                    clickable ? t.clickable : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  style={{ transform: `scale(${scale})`, opacity }}
+                  onClick={clickable ? () => jumpTo(i) : undefined}
+                  role={clickable ? 'button' : undefined}
+                  tabIndex={clickable ? 0 : undefined}
+                  onKeyDown={
+                    clickable
+                      ? (e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            jumpTo(i);
+                          }
+                        }
+                      : undefined
+                  }
+                  title={clickable ? `Jump to ${com.name}’s turn` : undefined}
+                >
+                  {isCurrent && <span className={t.turnLabel}>current turn</span>}
+                  <span
+                    className={t.disk}
+                    style={{ background: com.kind === 'character' ? '#5dcaa5' : '#b05a5a' }}
+                  >
+                    {com.name[0]?.toUpperCase() ?? '?'}
+                  </span>
+                  <span className={t.cname}>{com.name}</span>
+                  <span className={t.init}>{com.initiative}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       <div className={t.controls}>

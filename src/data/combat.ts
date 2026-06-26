@@ -67,6 +67,18 @@ export function nextTurn(
   return writeValue(`games/${gameId}/initiative`, { ...state, turnIndex: idx, round });
 }
 
+/** Jump the active turn directly to a combatant (GM override; keeps the current round). */
+export function setTurn(
+  gameId: string,
+  state: InitiativeState,
+  index: number,
+): Promise<void> {
+  if (index < 0 || index >= state.order.length || index === state.turnIndex) {
+    return Promise.resolve();
+  }
+  return writeValue(`games/${gameId}/initiative`, { ...state, turnIndex: index });
+}
+
 export function endCombat(gameId: string): Promise<void> {
   return writeValue(`games/${gameId}/initiative`, null);
 }
