@@ -98,6 +98,10 @@ export interface Ancestry {
   /** Recorded at creation, mechanized in play (not at creation). */
   advantages: string[];
   weaknesses: string[];
+  /** Narrative flavor for the race-detail panel. Optional and rendered only when present —
+   * the canonical v1.2 ruleset doesn't enumerate it yet; fill it in later and the side
+   * panel lights up automatically (no code change needed). */
+  flavor?: string;
   /** Author flag: representative content pending the canonical ruleset. */
   provisional?: boolean;
 }
