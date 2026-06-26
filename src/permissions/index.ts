@@ -7,7 +7,7 @@ import type { Game, Role } from '../data/types';
  * basis for client-side render-time filtering ("GM sees all, players see what's revealed").
  */
 
-export type TokenKind = 'character' | 'creature' | 'trap';
+export type TokenKind = 'character' | 'creature' | 'trap' | 'party';
 
 export interface TokenLike {
   kind: TokenKind;
@@ -55,6 +55,7 @@ export function canControlToken(
   uid: string,
   role: Role | undefined,
 ): boolean {
+  if (token.kind === 'party') return true; // shared travel token — any member may move it
   if (token.kind === 'character') return token.ownerUserId === uid;
   return role === 'gm'; // creature / trap
 }
@@ -71,6 +72,7 @@ export function tokenVisibility(
   role: Role | undefined,
 ): TokenView {
   if (role === 'gm') return 'full'; // GM sees all (hidden tokens drawn dimmed)
+  if (token.kind === 'party') return 'full'; // the shared party marker is visible to everyone
 
   const hidden = token.visible === false;
   if (token.kind === 'character') {

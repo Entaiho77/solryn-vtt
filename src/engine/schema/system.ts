@@ -217,6 +217,12 @@ export interface MapType {
   perSquare: { value: number; unit: string };
   /** GM defines the scale at upload (the "Custom" type). */
   custom?: boolean;
+  /**
+   * Party-scale (travel) map: the party moves as a group on one shared "party token" that
+   * any player can drag, and individual character tokens are hidden. Tactical maps (battle)
+   * leave this unset and place per-character tokens as usual.
+   */
+  partyScale?: boolean;
   note?: string;
 }
 

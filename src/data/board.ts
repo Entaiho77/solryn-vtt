@@ -114,3 +114,23 @@ export function updateToken(
 export function removeToken(gameId: string, tokenId: string): Promise<void> {
   return writeValue(`games/${gameId}/tokens/${tokenId}`, null);
 }
+
+/**
+ * Party-token soft-lock. Grabbing stamps the holder's uid + the current time so other
+ * clients can't drag it meanwhile; releasing clears both. A crashed drag self-heals once
+ * the timestamp goes stale (see `partyLockHeldByOther`).
+ */
+export function grabPartyToken(
+  gameId: string,
+  tokenId: string,
+  uid: string,
+): Promise<void> {
+  return updateToken(gameId, tokenId, { draggedBy: uid, draggedAt: Date.now() });
+}
+
+export function releasePartyToken(gameId: string, tokenId: string): Promise<void> {
+  return updateValue(`games/${gameId}/tokens/${tokenId}`, {
+    draggedBy: null,
+    draggedAt: null,
+  });
+}

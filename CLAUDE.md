@@ -88,13 +88,30 @@ not from here. Don't route around egress-policy (403) denials — report them.
   holds the name field; (3) **board is a pan/zoom camera** (`BoardCanvas` rewrite + pure
   `boardCamera.ts`): wheel-zoom-to-cursor, drag-empty-space to pan, tokens scale with zoom and
   stay anchored to map coords. All verified by build + Vitest; live visuals await an eyeball.
+- **Morning batch** (7 items, each tested + committed; see `docs/BATCH_PROGRESS.md`): (1) starting
+  gear offers **Light/Medium armor only** via data flag `CreationConfig.startingArmorWeights`
+  (Heavy stays in the catalog); (2) the **Measure tool is on the player bar** too; (3) one GM
+  **grid+measure line-color toggle** (white/black, session-only) replaces the old auto-brightness
+  detection; (4) **token click-cycling** (`tokensAtCell`/`cycleSelection`) + **free-cell creature
+  placement** (`firstFreeCell`) fix stacked-token un-clickability; (5) **Rules drawer collapses to
+  name-only rows** that expand on click (search unchanged, auto-expands matches); (6) **soft-block
+  movement collision** — pass through but can't land on a creature/character cell (`blocksMovement`/
+  `occupiedCells`/`canLandOn`, footprint-based via optional `Token.size`; ghost ring turns red when
+  it can't land); (7) **shared party token on travel-scale maps** — DATA flag `MapType.partyScale`
+  (Solryn: World/Area/City); one gold `kind:'party'` token any player drags, char tokens hidden,
+  `draggedBy`/`draggedAt` soft-lock (`partyMode.ts`). ⚠️ Item 7 needs the user to **redeploy
+  `database.rules.json`** (new `party` token write clause) and the GM to open the board once (it
+  seeds the token). Live board visuals/multiplayer still await an eyeball (no Firebase egress here).
 
 ## NEXT UP — candidates (await the user's go-ahead)
 
-Character-builder polish is done (race grid, info-page consolidation, roll-all, welcome
-splash). Open candidates — pick per the user:
+Character-builder polish and the 7-item morning batch are done. Open candidates — pick per the user:
+- **Redeploy `database.rules.json`** so players can move the party token live (carryover from
+  morning Item 7).
 - `TokenCard`: GM clicking a **player** token shows no stats — a real gap (load
   `characters/<characterId>` read-only).
+- Render **multi-square tokens** (`Token.size` exists and collision honours it; rendering/placement
+  UI is the missing half).
 - Hardening: server-side permission filtering; bundle code-splitting (build warns >500 kB).
 
 ## Backlog / known follow-ups

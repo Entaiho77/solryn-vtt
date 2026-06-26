@@ -2,9 +2,11 @@ import type { MapType, QualityScale } from '../../engine/schema';
 
 /** Map types set the grid scale at upload (no manual grid alignment). */
 export const mapTypes: MapType[] = [
-  { id: 'world', name: 'World map', perSquare: { value: 20, unit: 'mi' }, note: '≈ a day’s travel on foot.' },
-  { id: 'area', name: 'Area map', perSquare: { value: 5, unit: 'mi' } },
-  { id: 'city', name: 'City map', perSquare: { value: 0.25, unit: 'mi' } },
+  // World / Area / City are travel-scale: the party shares one token, no per-character tokens.
+  { id: 'world', name: 'World map', perSquare: { value: 20, unit: 'mi' }, partyScale: true, note: '≈ a day’s travel on foot.' },
+  { id: 'area', name: 'Area map', perSquare: { value: 5, unit: 'mi' }, partyScale: true },
+  { id: 'city', name: 'City map', perSquare: { value: 0.25, unit: 'mi' }, partyScale: true },
+  // Battle is tactical: individual character/creature tokens, grid collision, etc.
   { id: 'battle', name: 'Battle map', perSquare: { value: 5, unit: 'ft' } },
   { id: 'custom', name: 'Custom', perSquare: { value: 1, unit: 'unit' }, custom: true, note: 'GM defines what one square equals.' },
 ];

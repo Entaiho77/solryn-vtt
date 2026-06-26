@@ -20,6 +20,7 @@ import {
   zoomAt,
   type Camera,
 } from './boardCamera';
+import { partyLockHeldByOther, visibleOnMap } from './partyMode';
 import styles from './BoardCanvas.module.css';
 
 export type BoardTool = 'select' | 'fog' | 'measure';
@@ -53,6 +54,8 @@ interface BoardCanvasProps {
   tool: BoardTool;
   /** GM-chosen grid + measure line color (session-only): white for dark maps, black for light. */
   lineColor: 'white' | 'black';
+  /** Travel-scale map: hide per-character tokens, show the shared party token. */
+  partyScale: boolean;
   measureScale?: { value: number; unit: string };
   selectedTokenId?: string;
   /** Current-turn combatant's token, drawn with a glow. */
@@ -60,6 +63,9 @@ interface BoardCanvasProps {
   onMoveToken: (tokenId: string, col: number, row: number) => void;
   onToggleFog: (col: number, row: number, fogged: boolean) => void;
   onSelectToken: (token: Token | null) => void;
+  /** Party-token soft-lock: grab on drag start, release on drop. */
+  onGrabParty: (tokenId: string) => void;
+  onReleaseParty: (tokenId: string) => void;
 }
 
 const fmt = (n: number) =>
@@ -72,12 +78,15 @@ export function BoardCanvas({
   uid,
   tool,
   lineColor,
+  partyScale,
   measureScale,
   selectedTokenId,
   highlightTokenId,
   onMoveToken,
   onToggleFog,
   onSelectToken,
+  onGrabParty,
+  onReleaseParty,
 }: BoardCanvasProps) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -87,7 +96,7 @@ export function BoardCanvas({
   // Camera: screen = world * zoom + (x, y). Kept in a ref so pan/zoom don't re-render React.
   const camera = useRef<Camera>({ zoom: 1, x: 0, y: 0 });
 
-  const tokenDrag = useRef<{ id: string } | null>(null);
+  const tokenDrag = useRef<{ id: string; party: boolean } | null>(null);
   const fogPaint = useRef<{ target: boolean; seen: Set<string> } | null>(null);
   const measuringRef = useRef(false);
   const panRef = useRef<{ lastX: number; lastY: number } | null>(null);
@@ -100,6 +109,10 @@ export function BoardCanvas({
 
   const { cols, rows } = gridDimensions(map.width, map.height, map.gridSize);
   const fog = map.fog ?? {};
+  // Tokens to draw / hit-test on this map: on travel-scale maps character tokens fold into the
+  // shared party token; on tactical maps the party token isn't shown. (Per-viewer secrecy is
+  // still applied on top.) Also the obstacle set for movement collision.
+  const onMap = visibleOnMap(tokens, map.id, partyScale);
 
   // Leaving measure mode clears any drawn segment.
   useEffect(() => {
@@ -191,12 +204,7 @@ export function BoardCanvas({
 
     // While a token is being dragged, the cells a blocking token already occupies — used to
     // paint the drag ghost red when it's hovering a cell it isn't allowed to land on.
-    const blocked = ghost
-      ? occupiedCells(
-          tokens.filter((t) => t.mapId === map.id),
-          ghost.id,
-        )
-      : null;
+    const blocked = ghost ? occupiedCells(onMap, ghost.id) : null;
 
     if (map.gridVisible) {
       ctx.strokeStyle = gridColor;
@@ -213,8 +221,7 @@ export function BoardCanvas({
       ctx.stroke();
     }
 
-    for (const token of tokens) {
-      if (token.mapId !== map.id) continue;
+    for (const token of onMap) {
       if (tokenVisibility(token, uid, role) === 'hidden') continue;
 
       const dragging = ghost?.id === token.id;
@@ -321,6 +328,7 @@ export function BoardCanvas({
   useEffect(draw, [
     map,
     tokens,
+    partyScale,
     role,
     uid,
     selectedTokenId,
@@ -357,19 +365,26 @@ export function BoardCanvas({
     // Repeated clicks on a stacked cell cycle through the tokens (topmost first, then
     // down through the pile) so every one is reachable even when they share a square.
     const stack = tokensAtCell(
-      tokens.filter(
-        (t) => t.mapId === map.id && tokenVisibility(t, uid, role) !== 'hidden',
-      ),
+      onMap.filter((t) => tokenVisibility(t, uid, role) !== 'hidden'),
       col,
       row,
     );
     const hit = cycleSelection(stack, selectedTokenId);
     onSelectToken(hit ?? null);
-    if (hit && canControlToken(hit, uid, role)) {
-      tokenDrag.current = { id: hit.id };
+
+    // The shared party token is grabbable by anyone — unless someone else is mid-drag
+    // (soft-lock). A held party token can be selected but not grabbed, and never pans.
+    const isParty = hit?.kind === 'party';
+    const lockedByOther = !!hit && isParty && partyLockHeldByOther(hit, uid, Date.now());
+
+    if (hit && canControlToken(hit, uid, role) && !lockedByOther) {
+      if (isParty) onGrabParty(hit.id);
+      tokenDrag.current = { id: hit.id, party: isParty };
       setGhost({ id: hit.id, col, row });
+    } else if (lockedByOther) {
+      // Selected for info, but it's locked — do nothing else (no pan, no drag).
     } else {
-      // Empty space → pan the camera (Google-Maps style).
+      // Empty space (or a token you can't control) → pan the camera (Google-Maps style).
       panRef.current = { lastX: e.clientX, lastY: e.clientY };
       setPanning(true);
     }
@@ -401,21 +416,21 @@ export function BoardCanvas({
   }
 
   function handleUp() {
-    if (tokenDrag.current && ghost) {
-      const mover = tokens.find((t) => t.id === tokenDrag.current!.id);
+    const drag = tokenDrag.current;
+    if (drag && ghost) {
+      const mover = tokens.find((t) => t.id === drag.id);
       const moved = mover && (mover.col !== ghost.col || mover.row !== ghost.row);
       if (mover && moved) {
         // Soft-block: a token can pass through occupied cells while dragging but can't END
-        // its move on one. A blocked drop is cancelled — the token snaps back to where it was.
-        const occupied = occupiedCells(
-          tokens.filter((t) => t.mapId === map.id),
-          mover.id,
-        );
-        if (canLandOn(mover, ghost.col, ghost.row, occupied)) {
-          onMoveToken(mover.id, ghost.col, ghost.row);
-        }
+        // its move on one — a blocked drop is cancelled (snap back). The shared party token
+        // is non-tactical travel, so it skips the landing check and moves freely.
+        const canLand =
+          drag.party ||
+          canLandOn(mover, ghost.col, ghost.row, occupiedCells(onMap, mover.id));
+        if (canLand) onMoveToken(mover.id, ghost.col, ghost.row);
       }
     }
+    if (drag?.party) onReleaseParty(drag.id); // release the soft-lock however the drag ended
     tokenDrag.current = null;
     fogPaint.current = null;
     measuringRef.current = false;

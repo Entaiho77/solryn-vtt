@@ -93,7 +93,7 @@ export interface MapDef {
   fog?: Record<string, true>;
 }
 
-export type TokenKind = 'character' | 'creature' | 'trap';
+export type TokenKind = 'character' | 'creature' | 'trap' | 'party';
 
 export interface Token {
   id: string;
@@ -122,6 +122,13 @@ export interface Token {
   defeated?: boolean;
   /** Trap lifecycle: hidden → revealed → sprung (GM-arbitrated). */
   trapState?: 'hidden' | 'revealed' | 'sprung';
+  /**
+   * Party token (kind 'party') soft-lock: the uid currently dragging it and when they
+   * grabbed it (ms). While held by someone else (within the staleness window) other
+   * clients can't grab it; a crashed drag self-heals once the timestamp goes stale.
+   */
+  draggedBy?: string;
+  draggedAt?: number;
 }
 
 /**

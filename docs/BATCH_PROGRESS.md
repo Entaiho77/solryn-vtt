@@ -66,4 +66,26 @@ pure, footprint-based geometry so it's already multi-square-correct:
 Files: `boardGeometry.ts` (+4 helpers), `types.ts` (`Token.size?`), `BoardCanvas.tsx`,
 `boardGeometry.test.ts` (+5). Build clean, 169 tests.
 
-## 7. Shared party token on world-scale maps — ⏳ NEXT
+## 7. Shared party token on world-scale maps — ✅ DONE
+Driven by a DATA flag (keystone), not hardcoded map ids: new `MapType.partyScale` (Solryn sets
+it on World / Area / City; Battle/Custom stay tactical). On a party-scale active map:
+- **One shared party token** (`kind:'party'`, gold) that **any player** can drag — `canControlToken`
+  returns true for `party`, and the RTDB token rule now also allows a member to write a `party`
+  token. The GM's client **seeds** the token (single authority → no duplicate-create race); each
+  party-scale map gets its own, once.
+- **Individual character tokens hidden** (not deleted) — `visibleOnMap` folds `character` tokens
+  away on party-scale maps and hides the `party` token on tactical maps; used for draw, hit-test,
+  and the collision obstacle set. The player char-token auto-create is skipped on these maps.
+- **Soft-lock while dragging** — grab stamps `draggedBy`+`draggedAt`; others can't grab it until
+  release. `partyLockHeldByOther` honours the lock but self-heals a crashed drag after
+  `PARTY_LOCK_STALE_MS` (8 s). The party token skips movement collision (travel isn't tactical).
+- `TokenCard` is suppressed for the party token (no character/stats behind it).
+
+⚠️ **User action — redeploy `database.rules.json`** for players to move the party token live
+(the new `kind === 'party'` clause). Until then a player's move is rejected and reverts.
+Caveats: the GM must open the board once for the token to appear (GM-seeded by design); live
+board behaviour is unverified here (no Firebase egress) — needs an eyeball. Files: `system.ts`,
+`world.ts`, `types.ts`, `permissions/index.ts`, `board.ts`, `partyMode.ts` (new), `BoardCanvas.tsx`,
+`BoardScreen.tsx`, `database.rules.json`, `partyMode.test.ts` (+8). Build clean, 177 tests.
+
+## ✅ All 7 morning items complete (commits 0696f03 · 79f5975 · df6d22c · 1a45f90 · 21b3732 · 5887d9c · this).

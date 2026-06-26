@@ -3,10 +3,14 @@ import type { SystemDefinition } from '../../engine/schema';
 import type { Character, Game, Role, Token } from '../../data/types';
 import {
   addToken,
+  grabPartyToken,
   moveToken,
+  releasePartyToken,
   setGridVisible,
   toggleFogSquare,
 } from '../../data/board';
+import { gridDimensions } from './boardGeometry';
+import { isPartyScale } from './partyMode';
 import { BoardShell, type BarItem } from './BoardShell';
 import { BoardCanvas, type BoardTool } from './BoardCanvas';
 import { TokenCard } from './TokenCard';
@@ -57,14 +61,16 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   const activeType = activeMap
     ? system.mapTypes.find((t) => t.id === activeMap.typeId)
     : undefined;
+  const partyScale = isPartyScale(activeType);
   const measureScale = activeMap
     ? (activeMap.customSquare ?? activeType?.perSquare ?? { value: 1, unit: 'sq' })
     : undefined;
 
-  // Auto-create the player's character token on the active map (once per map).
+  // Auto-create the player's character token on the active map (once per map). Skipped on
+  // travel-scale maps, where the party rides a single shared token instead.
   const attempted = useRef<Set<string>>(new Set());
   useEffect(() => {
-    if (role !== 'player' || !character || !activeMap) return;
+    if (role !== 'player' || !character || !activeMap || partyScale) return;
     const exists = tokens.some(
       (t) => t.characterId === character.id && t.mapId === activeMap.id,
     );
@@ -84,7 +90,27 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
       ownerUserId: uid,
       characterId: character.id,
     });
-  }, [role, character, activeMap, tokens, gameId, uid]);
+  }, [role, character, activeMap, partyScale, tokens, gameId, uid]);
+
+  // On a travel-scale map the party shares one token. The GM's client seeds it (single
+  // authority → no duplicate race); any player can then drag it. Once per such map.
+  const partyAttempted = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    if (role !== 'gm' || !activeMap || !partyScale) return;
+    const exists = tokens.some((t) => t.kind === 'party' && t.mapId === activeMap.id);
+    if (exists || partyAttempted.current.has(activeMap.id)) return;
+    partyAttempted.current.add(activeMap.id);
+    const { cols, rows } = gridDimensions(activeMap.width, activeMap.height, activeMap.gridSize);
+    void addToken(gameId, {
+      mapId: activeMap.id,
+      kind: 'party',
+      name: 'Party',
+      col: Math.floor(cols / 2),
+      row: Math.floor(rows / 2),
+      color: '#e9c46a',
+      visible: true,
+    });
+  }, [role, activeMap, partyScale, tokens, gameId]);
 
   function toggle(side: 'left' | 'right', id: string) {
     setMeasuring(false); // opening a drawer exits measure mode
@@ -223,6 +249,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             uid={uid}
             tool={tool}
             lineColor={lineColor}
+            partyScale={partyScale}
             measureScale={measureScale}
             selectedTokenId={selected?.id}
             highlightTokenId={highlightTokenId}
@@ -231,6 +258,8 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
             }
             onSelectToken={(t) => setSelectedId(t?.id ?? null)}
+            onGrabParty={(id) => void grabPartyToken(gameId, id, uid)}
+            onReleaseParty={(id) => void releasePartyToken(gameId, id)}
           />
         ) : (
           <div className={styles.empty}>
@@ -240,7 +269,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
           </div>
         )}
 
-        {selected && (
+        {selected && selected.kind !== 'party' && (
           <TokenCard
             token={selected}
             system={system}
