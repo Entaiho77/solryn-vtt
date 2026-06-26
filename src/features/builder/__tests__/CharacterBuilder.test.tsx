@@ -19,15 +19,34 @@ describe('CharacterBuilder (integration smoke)', () => {
       screen.getByRole('button', { name: /Next: Choose race/ }),
     ).toBeDisabled();
 
-    // Exactly one "Roll" button is visible at a time (sequential, anti-fishing).
+    // The per-stat "Roll NdM" button advances one stat at a time (sequential, anti-fishing).
     for (let i = 0; i < solrynSystem.coreStats.length; i++) {
-      fireEvent.click(screen.getByRole('button', { name: /^Roll/ }));
+      fireEvent.click(screen.getByRole('button', { name: /^Roll \d/ }));
     }
 
     expect(
       screen.getByRole('button', { name: /Next: Choose race/ }),
     ).toBeEnabled();
     // No reroll: once all are rolled, no Roll buttons remain.
+    expect(screen.queryByRole('button', { name: /^Roll/ })).toBeNull();
+  });
+
+  it('"Roll all stats" rolls every stat at once and enables Next', () => {
+    render(
+      <CharacterBuilder
+        system={solrynSystem}
+        gameId="g"
+        ownerUserId="u"
+        onFinish={async () => {}}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Roll all stats/ }));
+
+    expect(
+      screen.getByRole('button', { name: /Next: Choose race/ }),
+    ).toBeEnabled();
+    // Everything is locked in one click — no per-stat or roll-all buttons remain.
     expect(screen.queryByRole('button', { name: /^Roll/ })).toBeNull();
   });
 });

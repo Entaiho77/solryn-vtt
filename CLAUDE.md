@@ -74,13 +74,15 @@ not from here. Don't route around egress-policy (403) denials — report them.
   appended last) 4-per-page via a generic `'info'` step kind carrying an `InfoCard[]`, rendered
   by `DerivedGroupStep`. `DerivedStep`/`ReputationStep` removed; reputation now sits on page 2
   (before Skills). Each card keeps its value + formula + explanation visible.
+- **"Roll all stats" button** on the roll step: rolls each *unrolled* stat once and locks it
+  (anti-fishing preserved — the reducer ignores a roll for an already-set stat, so it can
+  never reroll); per-stat rolling still works. Both paths covered by tests.
 
 ## NEXT UP — candidates (await the user's go-ahead)
 
-The user is steering character-builder design, so the held builder items are the natural
-next pieces — confirm scope/approach before building either:
+The user is steering character-builder design, so the held welcome/orientation screen is the
+natural next builder piece — confirm scope/approach before building:
 - A welcome/orientation screen before step 1 (lands a new player on "Roll stats" cold today).
-- A "Roll all stats" button on the roll step (note the anti-fishing design intent).
 
 ## Backlog / known follow-ups
 

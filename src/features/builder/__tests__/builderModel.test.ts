@@ -111,6 +111,17 @@ describe('reducer', () => {
     }
     expect(draft.knownSpellIds).toHaveLength(5);
   });
+
+  it('roll-all never rerolls: a second pass leaves locked stats unchanged', () => {
+    const order = solrynSystem.creation.statOrder;
+    let draft = createInitialDraft();
+    // First "Roll all": every stat rolls once and locks.
+    for (const id of order) draft = reducer(draft, { type: 'rollStat', statId: id, value: 5 });
+    const first = { ...draft.coreScores };
+    // A second "Roll all" tries to set every (already-locked) stat again → no change.
+    for (const id of order) draft = reducer(draft, { type: 'rollStat', statId: id, value: 9 });
+    expect(draft.coreScores).toEqual(first);
+  });
 });
 
 describe('canAdvanceStep gating', () => {
