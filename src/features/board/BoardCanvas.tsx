@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-  type MouseEvent,
-} from 'react';
+import { useEffect, useReducer, useRef, useState, type MouseEvent } from 'react';
 import type { MapDef, Role, Token } from '../../data/types';
 import { squareKey } from '../../data/board';
 import { canControlToken, fogStyle, tokenVisibility } from '../../permissions';
@@ -16,9 +10,19 @@ import {
   pixelToCell,
   tokenAtCell,
 } from './boardGeometry';
+import {
+  pan,
+  screenToWorld,
+  worldToScreen,
+  zoomAt,
+  type Camera,
+} from './boardCamera';
 import styles from './BoardCanvas.module.css';
 
 export type BoardTool = 'select' | 'fog' | 'measure';
+
+const MIN_ZOOM = 0.25;
+const MAX_ZOOM = 4;
 
 const COLORS = {
   board: '#1a1d24',
@@ -89,14 +93,20 @@ export function BoardCanvas({
   onToggleFog,
   onSelectToken,
 }: BoardCanvasProps) {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgCache = useRef<Map<string, HTMLImageElement>>(new Map());
   const luminance = useRef<Map<string, number>>(new Map());
   const [version, bump] = useReducer((v) => v + 1, 0);
 
+  // Camera: screen = world * zoom + (x, y). Kept in a ref so pan/zoom don't re-render React.
+  const camera = useRef<Camera>({ zoom: 1, x: 0, y: 0 });
+
   const tokenDrag = useRef<{ id: string } | null>(null);
   const fogPaint = useRef<{ target: boolean; seen: Set<string> } | null>(null);
   const measuringRef = useRef(false);
+  const panRef = useRef<{ lastX: number; lastY: number } | null>(null);
+  const [panning, setPanning] = useState(false);
   const [ghost, setGhost] = useReducer(
     (_: unknown, v: { id: string; col: number; row: number } | null) => v,
     null,
@@ -111,7 +121,7 @@ export function BoardCanvas({
     if (tool !== 'measure') setMeasure(null);
   }, [tool]);
 
-  // Escape clears an active measuring line (#9).
+  // Escape clears an active measuring line.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') {
@@ -121,6 +131,41 @@ export function BoardCanvas({
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Size the canvas backing buffer to the viewport (the camera, not the map, defines size).
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const canvas = canvasRef.current;
+    if (!wrap || !canvas) return;
+    const resize = () => {
+      canvas.width = Math.max(1, wrap.clientWidth);
+      canvas.height = Math.max(1, wrap.clientHeight);
+      bump();
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(wrap);
+    return () => ro.disconnect();
+  }, []);
+
+  // Wheel zoom toward the cursor (non-passive so we can preventDefault the page scroll).
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    function onWheel(e: WheelEvent) {
+      e.preventDefault();
+      const rect = canvas!.getBoundingClientRect();
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      const next = zoomAt(camera.current, sx, sy, factor, MIN_ZOOM, MAX_ZOOM);
+      if (next === camera.current) return;
+      camera.current = next;
+      bump();
+    }
+    canvas.addEventListener('wheel', onWheel, { passive: false });
+    return () => canvas.removeEventListener('wheel', onWheel);
   }, []);
 
   function getImage(src?: string): HTMLImageElement | null {
@@ -145,15 +190,19 @@ export function BoardCanvas({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const g = map.gridSize;
+    const cam = camera.current;
 
-    ctx.clearRect(0, 0, map.width, map.height);
+    // Clear + viewport backdrop in screen space, then switch into world space via the camera.
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = COLORS.board;
-    ctx.fillRect(0, 0, map.width, map.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(cam.zoom, 0, 0, cam.zoom, cam.x, cam.y);
 
     const bg = getImage(map.imageUrl);
     if (bg) ctx.drawImage(bg, 0, 0, map.width, map.height);
 
-    // Grid + measure colors adapt to map brightness so they read on light maps too (#3/#5).
+    // Grid + measure colors adapt to map brightness so they read on light maps too.
     const mapLum = luminance.current.get(map.imageUrl);
     const lightMap = mapLum != null && mapLum > 0.55;
     const gridColor = lightMap ? 'rgba(24, 26, 34, 0.5)' : 'rgba(255, 255, 255, 0.18)';
@@ -161,7 +210,7 @@ export function BoardCanvas({
 
     if (map.gridVisible) {
       ctx.strokeStyle = gridColor;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1 / cam.zoom; // keep grid lines ~1px on screen at any zoom
       ctx.beginPath();
       for (let c = 0; c <= cols; c++) {
         ctx.moveTo(c * g, 0);
@@ -208,7 +257,7 @@ export function BoardCanvas({
 
       if (token.id === highlightTokenId) {
         ctx.strokeStyle = COLORS.teal;
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 3 / cam.zoom;
         ctx.beginPath();
         ctx.arc(x, y, radius + 5, 0, Math.PI * 2);
         ctx.stroke();
@@ -216,7 +265,7 @@ export function BoardCanvas({
 
       const selected = token.id === selectedTokenId;
       const sprung = token.kind === 'trap' && token.trapState === 'sprung';
-      ctx.lineWidth = selected ? 4 : 2;
+      ctx.lineWidth = (selected ? 4 : 2) / cam.zoom;
       ctx.strokeStyle = selected
         ? COLORS.teal
         : sprung
@@ -249,8 +298,8 @@ export function BoardCanvas({
       const a = cellCenter(measure.sc, measure.sr, g);
       const b = cellCenter(measure.ec, measure.er, g);
       ctx.strokeStyle = measureColor;
-      ctx.lineWidth = 2;
-      ctx.setLineDash([6, 4]);
+      ctx.lineWidth = 2 / cam.zoom;
+      ctx.setLineDash([6 / cam.zoom, 4 / cam.zoom]);
       ctx.beginPath();
       ctx.moveTo(a.x, a.y);
       ctx.lineTo(b.x, b.y);
@@ -259,14 +308,19 @@ export function BoardCanvas({
 
       const squares = gridDistanceSquares(measure.sc, measure.sr, measure.ec, measure.er);
       const label = `${squares} sq · ${fmt(squares * measureScale.value)} ${measureScale.unit}`;
+      // Draw the label at a constant on-screen size regardless of zoom.
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      const sb = worldToScreen(cam, b.x, b.y);
       ctx.font = 'bold 12px sans-serif';
       const w = ctx.measureText(label).width + 12;
       ctx.fillStyle = 'rgba(15,17,21,0.9)';
-      ctx.fillRect(b.x + 8, b.y - 12, w, 22);
+      ctx.fillRect(sb.x + 8, sb.y - 12, w, 22);
       ctx.fillStyle = COLORS.amber;
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
-      ctx.fillText(label, b.x + 14, b.y - 1);
+      ctx.fillText(label, sb.x + 14, sb.y - 1);
+      ctx.restore();
     }
   }
 
@@ -282,12 +336,15 @@ export function BoardCanvas({
     version,
   ]);
 
+  /** Mouse event → world (map) pixel coords, undoing the camera. */
   function eventCell(e: MouseEvent<HTMLCanvasElement>) {
-    const cell = pixelToCell(e.nativeEvent.offsetX, e.nativeEvent.offsetY, map.gridSize);
+    const w = screenToWorld(camera.current, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    const cell = pixelToCell(w.x, w.y, map.gridSize);
     return clampCell(cell.col, cell.row, cols, rows);
   }
 
   function handleDown(e: MouseEvent<HTMLCanvasElement>) {
+    if (e.button !== 0) return; // left button only (right-click handled separately)
     const { col, row } = eventCell(e);
 
     if (tool === 'measure') {
@@ -314,10 +371,22 @@ export function BoardCanvas({
     if (hit && canControlToken(hit, uid, role)) {
       tokenDrag.current = { id: hit.id };
       setGhost({ id: hit.id, col, row });
+    } else {
+      // Empty space → pan the camera (Google-Maps style).
+      panRef.current = { lastX: e.clientX, lastY: e.clientY };
+      setPanning(true);
     }
   }
 
   function handleMove(e: MouseEvent<HTMLCanvasElement>) {
+    if (panRef.current) {
+      const dx = e.clientX - panRef.current.lastX;
+      const dy = e.clientY - panRef.current.lastY;
+      panRef.current = { lastX: e.clientX, lastY: e.clientY };
+      camera.current = pan(camera.current, dx, dy);
+      bump();
+      return;
+    }
     const { col, row } = eventCell(e);
     if (measuringRef.current) {
       setMeasure((m) => (m ? { ...m, ec: col, er: row } : m));
@@ -341,10 +410,12 @@ export function BoardCanvas({
     tokenDrag.current = null;
     fogPaint.current = null;
     measuringRef.current = false;
+    panRef.current = null;
+    setPanning(false);
     setGhost(null);
   }
 
-  // Right-click clears an active measuring line instead of starting a new one (#9).
+  // Right-click clears an active measuring line instead of starting a new one.
   function handleContextMenu(e: MouseEvent<HTMLCanvasElement>) {
     if (tool === 'measure') {
       e.preventDefault();
@@ -353,13 +424,15 @@ export function BoardCanvas({
     }
   }
 
+  const cursor =
+    tool === 'measure' || tool === 'fog' ? 'crosshair' : panning ? 'grabbing' : 'grab';
+
   return (
-    <div className={styles.scroll}>
+    <div className={styles.scroll} ref={wrapRef}>
       <canvas
         ref={canvasRef}
-        width={map.width}
-        height={map.height}
-        className={`${styles.canvas} ${tool !== 'select' ? styles.fogCursor : ''}`}
+        className={styles.canvas}
+        style={{ cursor }}
         onMouseDown={handleDown}
         onMouseMove={handleMove}
         onMouseUp={handleUp}

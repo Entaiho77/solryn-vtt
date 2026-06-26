@@ -81,6 +81,13 @@ not from here. Don't route around egress-policy (403) denials — report them.
   gated by a `started` flag in `CharacterBuilder`) previewing the upcoming steps — derived
   from the live step plan so it stays accurate — plus the "rolls lock" heads-up and a Begin
   button. Step 1 remains "Roll stats".
+- **Overnight batch** (3 items, each tested + committed): (1) initiative tracker redesigned as
+  a **full-width centered turn carousel** — active combatant centered/enlarged, neighbors
+  shrink+fade, CSS-slide on Next, click-to-jump via new `setTurn` op; (2) **character naming is
+  its own builder step** (`'name'` kind, `NameStep`) right after Choose Race — gear no longer
+  holds the name field; (3) **board is a pan/zoom camera** (`BoardCanvas` rewrite + pure
+  `boardCamera.ts`): wheel-zoom-to-cursor, drag-empty-space to pan, tokens scale with zoom and
+  stay anchored to map coords. All verified by build + Vitest; live visuals await an eyeball.
 
 ## NEXT UP — candidates (await the user's go-ahead)
 
