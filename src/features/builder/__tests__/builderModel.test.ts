@@ -23,25 +23,32 @@ function rolledDraft(arc: number): BuilderDraft {
   };
 }
 
-describe('buildStepPlan (data-driven, not hardcoded to 13)', () => {
+describe('buildStepPlan (data-driven step count)', () => {
   it('non-caster gets no spell step', () => {
     const plan = buildStepPlan(solrynSystem, rolledDraft(2)); // ARC mod 0
     expect(plan.some((s) => s.kind === 'spells')).toBe(false);
-    // roll + race + 7 derived + skills + reputation + gear = 12
-    expect(plan).toHaveLength(12);
+    // roll + race + 2 info pages + skills + gear = 6
+    expect(plan).toHaveLength(6);
   });
 
-  it('caster gets the spell step (13 total)', () => {
+  it('caster gets the spell step (7 total)', () => {
     const plan = buildStepPlan(solrynSystem, rolledDraft(6)); // ARC mod 2 → 4 known
     expect(plan.some((s) => s.kind === 'spells')).toBe(true);
-    expect(plan).toHaveLength(13);
+    expect(plan).toHaveLength(7);
   });
 
-  it('emits one derived step per system derived stat, in order', () => {
-    const derived = buildStepPlan(solrynSystem, rolledDraft(6))
-      .filter((s) => s.kind === 'derived')
-      .map((s) => s.derivedId);
-    expect(derived).toEqual(solrynSystem.derivedStats.map((d) => d.id));
+  it('chunks derived stats + reputation into info pages of four, derived in order', () => {
+    const info = buildStepPlan(solrynSystem, rolledDraft(6)).filter(
+      (s) => s.kind === 'info',
+    );
+    expect(info).toHaveLength(2); // 7 derived + reputation = 8 → two pages
+    const cards = info.flatMap((s) => s.cards ?? []);
+    const derivedIds = cards.flatMap((c) =>
+      c.type === 'derived' ? [c.derivedId] : [],
+    );
+    expect(derivedIds).toEqual(solrynSystem.derivedStats.map((d) => d.id));
+    expect(cards[cards.length - 1].type).toBe('reputation');
+    expect(info[0].cards).toHaveLength(4);
   });
 });
 

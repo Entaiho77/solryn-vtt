@@ -11,10 +11,9 @@ import {
 import type { StepFrameNav } from './StepFrame';
 import { RollStatsStep } from './steps/RollStatsStep';
 import { ChooseRaceStep } from './steps/ChooseRaceStep';
-import { DerivedStep } from './steps/DerivedStep';
+import { DerivedGroupStep } from './steps/DerivedGroupStep';
 import { SkillsStep } from './steps/SkillsStep';
 import { SpellsStep } from './steps/SpellsStep';
-import { ReputationStep } from './steps/ReputationStep';
 import { GearStep } from './steps/GearStep';
 
 interface CharacterBuilderProps {
@@ -129,14 +128,13 @@ export function CharacterBuilder({
     <>
       {step.kind === 'roll' && <RollStatsStep {...common} />}
       {step.kind === 'ancestry' && <ChooseRaceStep {...common} />}
-      {step.kind === 'derived' && (
-        <DerivedStep {...common} derivedId={step.derivedId!} />
+      {step.kind === 'info' && (
+        <DerivedGroupStep {...common} cards={step.cards!} />
       )}
       {step.kind === 'skills' && (
         <SkillsStep {...common} subIndex={skillsSubIndex} />
       )}
       {step.kind === 'spells' && <SpellsStep {...common} />}
-      {step.kind === 'reputation' && <ReputationStep {...common} />}
       {step.kind === 'gear' && <GearStep {...common} />}
       {error && <p style={{ textAlign: 'center', color: 'var(--accent-red)' }}>{error}</p>}
     </>

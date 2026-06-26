@@ -157,18 +157,22 @@ export function ancestryChoicesComplete(
 export type StepKind =
   | 'roll'
   | 'ancestry'
-  | 'derived'
+  | 'info'
   | 'skills'
   | 'spells'
-  | 'reputation'
   | 'gear';
+
+/** One read-only stat card on a consolidated 'info' page (a derived stat, or reputation). */
+export type InfoCard =
+  | { type: 'derived'; derivedId: string }
+  | { type: 'reputation' };
 
 export interface StepDescriptor {
   kind: StepKind;
   title: string;
   instruction: string;
-  /** For 'derived' steps: which derived stat this page explains. */
-  derivedId?: string;
+  /** For 'info' steps: the up-to-four read-only stat cards shown on this page. */
+  cards?: InfoCard[];
 }
 
 export function buildStepPlan(
@@ -192,12 +196,26 @@ export function buildStepPlan(
     });
   }
 
-  for (const ds of system.derivedStats) {
+  // Consolidate the read-only stats — every derived stat plus reputation — into "info"
+  // pages of four cards each. This is generic, not Solryn-specific: it just chunks the
+  // system's derived-stat list (in order), with reputation appended as the final card.
+  const infoCards: InfoCard[] = system.derivedStats.map((ds) => ({
+    type: 'derived' as const,
+    derivedId: ds.id,
+  }));
+  if (system.creation.startingReputation != null) {
+    infoCards.push({ type: 'reputation' });
+  }
+  const perPage = 4;
+  const pageCount = Math.ceil(infoCards.length / perPage);
+  for (let i = 0; i < infoCards.length; i += perPage) {
+    const page = Math.floor(i / perPage) + 1;
     steps.push({
-      kind: 'derived',
-      derivedId: ds.id,
-      title: ds.name,
-      instruction: `Here’s how your ${ds.name} is worked out — no input needed.`,
+      kind: 'info',
+      title: pageCount > 1 ? `Your stats (${page} of ${pageCount})` : 'Your stats',
+      instruction:
+        'These are all worked out from your rolls — nothing to choose. Each card shows the math.',
+      cards: infoCards.slice(i, i + perPage),
     });
   }
 
@@ -216,12 +234,6 @@ export function buildStepPlan(
       instruction: 'Choose the spells you know.',
     });
   }
-
-  steps.push({
-    kind: 'reputation',
-    title: 'Reputation',
-    instruction: `No choice here — everyone starts ${system.creation.startingReputation}.`,
-  });
 
   steps.push({
     kind: 'gear',
@@ -262,8 +274,7 @@ export function canAdvanceStep(
         Boolean(draft.equippedArmorId) &&
         Boolean(draft.equippedWeaponId)
       );
-    case 'derived':
-    case 'reputation':
+    case 'info':
       return true;
   }
 }
