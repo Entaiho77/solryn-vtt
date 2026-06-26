@@ -3,8 +3,21 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { CharacterBuilder } from '../CharacterBuilder';
 import { solrynSystem } from '../../../systems/solryn';
 
+function renderBuilder() {
+  render(
+    <CharacterBuilder
+      system={solrynSystem}
+      gameId="g"
+      ownerUserId="u"
+      onFinish={async () => {}}
+    />,
+  );
+  // Step past the welcome/orientation splash into the numbered flow.
+  fireEvent.click(screen.getByRole('button', { name: /Begin/ }));
+}
+
 describe('CharacterBuilder (integration smoke)', () => {
-  it('starts on the roll step with Next gated, and enables it after all stats are rolled', () => {
+  it('opens on a welcome splash (not a numbered step); Begin reveals step 1', () => {
     render(
       <CharacterBuilder
         system={solrynSystem}
@@ -13,6 +26,21 @@ describe('CharacterBuilder (integration smoke)', () => {
         onFinish={async () => {}}
       />,
     );
+
+    // Welcome first: a heading, but no step counter and no Roll button yet.
+    expect(
+      screen.getByRole('heading', { name: /Create your character/i }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Step 1 of/)).toBeNull();
+    expect(screen.queryByRole('button', { name: /^Roll/ })).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: /Begin/ }));
+
+    expect(screen.getByText(/Step 1 of/)).toBeInTheDocument();
+  });
+
+  it('starts on the roll step with Next gated, and enables it after all stats are rolled', () => {
+    renderBuilder();
 
     expect(screen.getByText(/Step 1 of/)).toBeInTheDocument();
     expect(
@@ -32,14 +60,7 @@ describe('CharacterBuilder (integration smoke)', () => {
   });
 
   it('"Roll all stats" rolls every stat at once and enables Next', () => {
-    render(
-      <CharacterBuilder
-        system={solrynSystem}
-        gameId="g"
-        ownerUserId="u"
-        onFinish={async () => {}}
-      />,
-    );
+    renderBuilder();
 
     fireEvent.click(screen.getByRole('button', { name: /Roll all stats/ }));
 

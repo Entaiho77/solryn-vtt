@@ -15,6 +15,7 @@ import { DerivedGroupStep } from './steps/DerivedGroupStep';
 import { SkillsStep } from './steps/SkillsStep';
 import { SpellsStep } from './steps/SpellsStep';
 import { GearStep } from './steps/GearStep';
+import { WelcomeStep } from './steps/WelcomeStep';
 
 interface CharacterBuilderProps {
   system: SystemDefinition;
@@ -52,6 +53,7 @@ export function CharacterBuilder({
   const [skillsSubIndex, setSkillsSubIndex] = useState(0);
   const [finishing, setFinishing] = useState(false);
   const [error, setError] = useState('');
+  const [started, setStarted] = useState(false);
 
   const plan = buildStepPlan(system, draft);
   const idx = Math.min(stepIndex, plan.length - 1);
@@ -123,6 +125,13 @@ export function CharacterBuilder({
   };
 
   const common = { system, draft, dispatch, nav } as const;
+
+  // A one-time orientation splash before the numbered flow (not counted as a step).
+  if (!started) {
+    return (
+      <WelcomeStep system={system} draft={draft} onBegin={() => setStarted(true)} />
+    );
+  }
 
   return (
     <>

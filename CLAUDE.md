@@ -77,12 +77,18 @@ not from here. Don't route around egress-policy (403) denials — report them.
 - **"Roll all stats" button** on the roll step: rolls each *unrolled* stat once and locks it
   (anti-fishing preserved — the reducer ignores a roll for an already-set stat, so it can
   never reroll); per-stat rolling still works. Both paths covered by tests.
+- **Welcome/orientation splash** before step 1: a one-time, *uncounted* intro (`WelcomeStep`,
+  gated by a `started` flag in `CharacterBuilder`) previewing the upcoming steps — derived
+  from the live step plan so it stays accurate — plus the "rolls lock" heads-up and a Begin
+  button. Step 1 remains "Roll stats".
 
 ## NEXT UP — candidates (await the user's go-ahead)
 
-The user is steering character-builder design, so the held welcome/orientation screen is the
-natural next builder piece — confirm scope/approach before building:
-- A welcome/orientation screen before step 1 (lands a new player on "Roll stats" cold today).
+Character-builder polish is done (race grid, info-page consolidation, roll-all, welcome
+splash). Open candidates — pick per the user:
+- `TokenCard`: GM clicking a **player** token shows no stats — a real gap (load
+  `characters/<characterId>` read-only).
+- Hardening: server-side permission filtering; bundle code-splitting (build warns >500 kB).
 
 ## Backlog / known follow-ups
 
