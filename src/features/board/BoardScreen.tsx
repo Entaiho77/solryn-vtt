@@ -111,6 +111,16 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} />,
   };
 
+  // Distance measuring is available to everyone — players measure their own movement/range.
+  const measureAction: BarItem = {
+    kind: 'action',
+    id: 'measure',
+    label: 'Measure distance',
+    glyph: '↔',
+    active: measuring,
+    onClick: () => setMeasuring((m) => !m),
+  };
+
   const left: BarItem[] =
     role === 'gm'
       ? [initiative, dice, chat, rules]
@@ -124,14 +134,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   let right: BarItem[] = [];
   if (role === 'gm') {
     right = [
-      {
-        kind: 'action',
-        id: 'measure',
-        label: 'Measure distance',
-        glyph: '↔',
-        active: measuring,
-        onClick: () => setMeasuring((m) => !m),
-      },
+      measureAction,
       { kind: 'divider', id: 'd1' },
       {
         kind: 'drawer',
@@ -169,6 +172,8 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     ];
   } else if (character) {
     right = [
+      measureAction,
+      { kind: 'divider', id: 'pd1' },
       {
         kind: 'drawer',
         id: 'character',
