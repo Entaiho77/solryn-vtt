@@ -24,8 +24,22 @@ replaces the previous per-map auto-brightness detection with explicit GM control
 `imageLuminance` + the luminance cache were removed. Players keep white (toggle is GM-only). Files:
 `BoardCanvas.tsx`, `BoardScreen.tsx`. Build clean, 156 tests.
 
-## 4. Token click-priority / stacking — ⏳ NEXT (investigate first)
-## 4. Token click-priority / stacking — ⏳ (investigate first)
-## 5. Rules panel: collapse to names, expand on click (keep search) — ⏳
+## 4. Token click-priority / stacking — ✅ DONE
+Investigation result: `tokenAtCell` already returned the *topmost* token, so the reported
+"can't click the later token" wasn't a z-index/hit-size bug — it was **multiple tokens sharing
+one grid cell** (only the topmost is reachable), made worse by `AddCreatureDrawer` dropping
+every creature on the exact centre cell so they piled up. Two-part fix:
+- **Click-cycling** — repeated clicks on a stacked cell rotate through the pile (topmost first,
+  then down, wrapping back to top), so every token is reachable. New pure `tokensAtCell` +
+  `cycleSelection(stack, currentId)`; `BoardCanvas.handleDown` uses them with `selectedTokenId`.
+- **Free-cell placement** — new creatures land on the nearest free cell to centre via new pure
+  `firstFreeCell` (growing Chebyshev rings, board-clamped). `AddCreatureDrawer` now takes
+  `tokens` and computes occupied cells. Click-cycling is the safety net for a rapid burst that
+  places faster than tokens sync back (so no extra local de-stacking state needed).
+Item 6's movement-collision rule will stop stacking happening during play too. Files:
+`boardGeometry.ts` (+3 helpers), `BoardCanvas.tsx`, `AddCreatureDrawer.tsx`, `BoardScreen.tsx`,
+`boardGeometry.test.ts` (+8). Build clean, 164 tests.
+
+## 5. Rules panel: collapse to names, expand on click (keep search) — ⏳ NEXT
 ## 6. Token grid-square collision — soft block (pass through, can't land) — ⏳
 ## 7. Shared party token on world-scale maps — ⏳

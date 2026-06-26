@@ -7,7 +7,7 @@ import {
   saveCreature,
   useMyCreatures,
 } from '../../../data/creatures';
-import { gridDimensions } from '../boardGeometry';
+import { firstFreeCell, gridDimensions } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
 import s from './drawers.module.css';
 
@@ -21,11 +21,13 @@ export function AddCreatureDrawer({
   gameId,
   uid,
   activeMap,
+  tokens,
 }: {
   system: SystemDefinition;
   gameId: string;
   uid: string;
   activeMap?: MapDef;
+  tokens: Token[];
 }) {
   const [tab, setTab] = useState<'bestiary' | 'mine' | 'build'>('bestiary');
   const [category, setCategory] = useState<Category>('creature');
@@ -48,7 +50,14 @@ export function AddCreatureDrawer({
   const center = { col: Math.floor(cols / 2), row: Math.floor(rows / 2) };
 
   function place(token: Omit<Token, 'id' | 'mapId' | 'col' | 'row'>) {
-    void addToken(gameId, { ...token, mapId: activeMap!.id, col: center.col, row: center.row });
+    // Drop onto the nearest free cell to centre so multiple creatures don't pile up on
+    // one square (which would hide all but the topmost). Click-cycling is the safety net
+    // if a rapid burst places faster than tokens sync back.
+    const occupied = new Set(
+      tokens.filter((t) => t.mapId === activeMap!.id).map((t) => `${t.col},${t.row}`),
+    );
+    const cell = firstFreeCell(occupied, center.col, center.row, cols, rows);
+    void addToken(gameId, { ...token, mapId: activeMap!.id, col: cell.col, row: cell.row });
   }
 
   function placeStatBlock(

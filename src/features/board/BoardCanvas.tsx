@@ -5,10 +5,11 @@ import { canControlToken, fogStyle, tokenVisibility } from '../../permissions';
 import {
   cellCenter,
   clampCell,
+  cycleSelection,
   gridDimensions,
   gridDistanceSquares,
   pixelToCell,
-  tokenAtCell,
+  tokensAtCell,
 } from './boardGeometry';
 import {
   pan,
@@ -338,13 +339,16 @@ export function BoardCanvas({
       return;
     }
 
-    const hit = tokenAtCell(
+    // Repeated clicks on a stacked cell cycle through the tokens (topmost first, then
+    // down through the pile) so every one is reachable even when they share a square.
+    const stack = tokensAtCell(
       tokens.filter(
         (t) => t.mapId === map.id && tokenVisibility(t, uid, role) !== 'hidden',
       ),
       col,
       row,
     );
+    const hit = cycleSelection(stack, selectedTokenId);
     onSelectToken(hit ?? null);
     if (hit && canControlToken(hit, uid, role)) {
       tokenDrag.current = { id: hit.id };

@@ -4,10 +4,13 @@ import {
   cellCenter,
   cellToPixel,
   clampCell,
+  cycleSelection,
+  firstFreeCell,
   gridDimensions,
   gridDistanceSquares,
   pixelToCell,
   tokenAtCell,
+  tokensAtCell,
 } from '../boardGeometry';
 
 describe('pixelToCell', () => {
@@ -46,6 +49,71 @@ describe('tokenAtCell', () => {
     expect(tokenAtCell(tokens, 1, 1)?.id).toBe('b');
     expect(tokenAtCell(tokens, 2, 0)?.id).toBe('c');
     expect(tokenAtCell(tokens, 5, 5)).toBeUndefined();
+  });
+});
+
+describe('tokensAtCell', () => {
+  const tokens = [
+    { id: 'a', col: 1, row: 1 },
+    { id: 'b', col: 1, row: 1 },
+    { id: 'c', col: 2, row: 0 },
+  ] as Token[];
+
+  it('returns every token in a cell, bottom → top', () => {
+    expect(tokensAtCell(tokens, 1, 1).map((t) => t.id)).toEqual(['a', 'b']);
+    expect(tokensAtCell(tokens, 2, 0).map((t) => t.id)).toEqual(['c']);
+    expect(tokensAtCell(tokens, 5, 5)).toEqual([]);
+  });
+});
+
+describe('cycleSelection (click-cycling through a stack)', () => {
+  const stack = [
+    { id: 'a', col: 1, row: 1 },
+    { id: 'b', col: 1, row: 1 },
+    { id: 'c', col: 1, row: 1 },
+  ] as Token[]; // a bottom, c top
+
+  it('first click (nothing selected here) picks the topmost', () => {
+    expect(cycleSelection(stack, undefined)?.id).toBe('c');
+    expect(cycleSelection(stack, 'z')?.id).toBe('c'); // selection not in this stack
+  });
+
+  it('repeat clicks step down and wrap back to the top', () => {
+    expect(cycleSelection(stack, 'c')?.id).toBe('b');
+    expect(cycleSelection(stack, 'b')?.id).toBe('a');
+    expect(cycleSelection(stack, 'a')?.id).toBe('c'); // wrap
+  });
+
+  it('returns undefined for an empty cell', () => {
+    expect(cycleSelection([], 'a')).toBeUndefined();
+  });
+});
+
+describe('firstFreeCell (creature placement)', () => {
+  it('keeps the start cell when it is free', () => {
+    expect(firstFreeCell(new Set(), 2, 2, 5, 5)).toEqual({ col: 2, row: 2 });
+  });
+
+  it('finds the nearest free cell when the start is taken', () => {
+    const occupied = new Set(['2,2']);
+    const cell = firstFreeCell(occupied, 2, 2, 5, 5);
+    expect(occupied.has(`${cell.col},${cell.row}`)).toBe(false);
+    expect(gridDistanceSquares(2, 2, cell.col, cell.row)).toBe(1); // adjacent ring
+  });
+
+  it('searches outward past a full inner ring', () => {
+    // centre + all 8 neighbours occupied → must land two rings out.
+    const occupied = new Set<string>();
+    for (let c = 1; c <= 3; c++) for (let r = 1; r <= 3; r++) occupied.add(`${c},${r}`);
+    const cell = firstFreeCell(occupied, 2, 2, 7, 7);
+    expect(occupied.has(`${cell.col},${cell.row}`)).toBe(false);
+    expect(gridDistanceSquares(2, 2, cell.col, cell.row)).toBe(2);
+  });
+
+  it('falls back to the start cell when the whole board is full', () => {
+    const occupied = new Set<string>();
+    for (let c = 0; c < 3; c++) for (let r = 0; r < 3; r++) occupied.add(`${c},${r}`);
+    expect(firstFreeCell(occupied, 1, 1, 3, 3)).toEqual({ col: 1, row: 1 });
   });
 });
 

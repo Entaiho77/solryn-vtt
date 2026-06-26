@@ -151,7 +151,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         label: 'Add creature',
         glyph: '✚',
         content: (
-          <AddCreatureDrawer system={system} gameId={gameId} uid={uid} activeMap={activeMap} />
+          <AddCreatureDrawer
+            system={system}
+            gameId={gameId}
+            uid={uid}
+            activeMap={activeMap}
+            tokens={tokens}
+          />
         ),
       },
       { kind: 'divider', id: 'd2' },
