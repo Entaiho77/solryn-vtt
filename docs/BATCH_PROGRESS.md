@@ -17,7 +17,14 @@ The "Measure distance" action (now a shared `BarItem`) is on the player's right 
 just the GM's. The measure interaction in `BoardCanvas` was already role-agnostic, so no engine
 change. Files: `BoardScreen.tsx`. Build clean, 156 tests.
 
-## 3. Grid + measure line color toggle (white/black, one toggle, session-only) — ⏳ NEXT
+## 3. Grid + measure line color toggle (white/black, one toggle, session-only) — ✅ DONE
+One GM right-bar toggle (glyph ○/●) flips BOTH the grid lines and the measure line between white and
+black together. Session-only React state in `BoardScreen`, passed to `BoardCanvas`. NOTE: this
+replaces the previous per-map auto-brightness detection with explicit GM control (as requested) —
+`imageLuminance` + the luminance cache were removed. Players keep white (toggle is GM-only). Files:
+`BoardCanvas.tsx`, `BoardScreen.tsx`. Build clean, 156 tests.
+
+## 4. Token click-priority / stacking — ⏳ NEXT (investigate first)
 ## 4. Token click-priority / stacking — ⏳ (investigate first)
 ## 5. Rules panel: collapse to names, expand on click (keep search) — ⏳
 ## 6. Token grid-square collision — soft block (pass through, can't land) — ⏳

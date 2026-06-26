@@ -45,6 +45,8 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [measuring, setMeasuring] = useState(false);
+  // Session-only GM toggle for grid + measure line color (white for dark maps, black for light).
+  const [lineColor, setLineColor] = useState<'white' | 'black'>('white');
 
   const tool: BoardTool = measuring
     ? 'measure'
@@ -163,6 +165,14 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
           activeMap && void setGridVisible(gameId, activeMap.id, !activeMap.gridVisible),
       },
       {
+        kind: 'action',
+        id: 'linecolor',
+        label: `Grid & measure lines: ${lineColor} — click for ${lineColor === 'white' ? 'black' : 'white'}`,
+        glyph: lineColor === 'white' ? '○' : '●',
+        active: lineColor === 'black',
+        onClick: () => setLineColor((c) => (c === 'white' ? 'black' : 'white')),
+      },
+      {
         kind: 'drawer',
         id: 'maps',
         label: 'Maps',
@@ -206,6 +216,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             role={role}
             uid={uid}
             tool={tool}
+            lineColor={lineColor}
             measureScale={measureScale}
             selectedTokenId={selected?.id}
             highlightTokenId={highlightTokenId}

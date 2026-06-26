@@ -48,6 +48,8 @@ interface BoardCanvasProps {
   role: Role;
   uid: string;
   tool: BoardTool;
+  /** GM-chosen grid + measure line color (session-only): white for dark maps, black for light. */
+  lineColor: 'white' | 'black';
   measureScale?: { value: number; unit: string };
   selectedTokenId?: string;
   /** Current-turn combatant's token, drawn with a glow. */
@@ -60,32 +62,13 @@ interface BoardCanvasProps {
 const fmt = (n: number) =>
   Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.?0+$/, '');
 
-/** Average perceptual luminance (0–1) of an image, sampled at 16×16. null if unreadable. */
-function imageLuminance(img: HTMLImageElement): number | null {
-  try {
-    const c = document.createElement('canvas');
-    c.width = 16;
-    c.height = 16;
-    const cx = c.getContext('2d');
-    if (!cx) return null;
-    cx.drawImage(img, 0, 0, 16, 16);
-    const { data } = cx.getImageData(0, 0, 16, 16);
-    let sum = 0;
-    for (let i = 0; i < data.length; i += 4) {
-      sum += (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
-    }
-    return sum / (data.length / 4);
-  } catch {
-    return null; // cross-origin/tainted canvas — caller falls back to defaults
-  }
-}
-
 export function BoardCanvas({
   map,
   tokens,
   role,
   uid,
   tool,
+  lineColor,
   measureScale,
   selectedTokenId,
   highlightTokenId,
@@ -96,7 +79,6 @@ export function BoardCanvas({
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgCache = useRef<Map<string, HTMLImageElement>>(new Map());
-  const luminance = useRef<Map<string, number>>(new Map());
   const [version, bump] = useReducer((v) => v + 1, 0);
 
   // Camera: screen = world * zoom + (x, y). Kept in a ref so pan/zoom don't re-render React.
@@ -174,11 +156,7 @@ export function BoardCanvas({
     const existing = cache.get(src);
     if (existing) return existing.complete && existing.naturalWidth > 0 ? existing : null;
     const img = new Image();
-    img.onload = () => {
-      const lum = imageLuminance(img);
-      if (lum != null) luminance.current.set(src, lum);
-      bump();
-    };
+    img.onload = () => bump();
     img.src = src;
     cache.set(src, img);
     return null;
@@ -202,11 +180,11 @@ export function BoardCanvas({
     const bg = getImage(map.imageUrl);
     if (bg) ctx.drawImage(bg, 0, 0, map.width, map.height);
 
-    // Grid + measure colors adapt to map brightness so they read on light maps too.
-    const mapLum = luminance.current.get(map.imageUrl);
-    const lightMap = mapLum != null && mapLum > 0.55;
-    const gridColor = lightMap ? 'rgba(24, 26, 34, 0.5)' : 'rgba(255, 255, 255, 0.18)';
-    const measureColor = lightMap ? '#b3261e' : COLORS.amber;
+    // Grid + measure line color: a single GM toggle (session-only), white or black, so the GM
+    // can match whichever map is loaded (light maps → black, dark maps → white).
+    const dark = lineColor === 'black';
+    const gridColor = dark ? 'rgba(0, 0, 0, 0.45)' : 'rgba(255, 255, 255, 0.45)';
+    const measureColor = dark ? '#000000' : '#ffffff';
 
     if (map.gridVisible) {
       ctx.strokeStyle = gridColor;
