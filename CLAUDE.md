@@ -69,6 +69,11 @@ not from here. Don't route around egress-policy (403) denials — report them.
 - **Choose Race step redesigned**: compact 3-column grid; replace-on-select side-panel
   detail with a pinned orientation line; flexible-bonus picker under the grid; optional
   `Ancestry.flavor` added (empty for the 9 races, renders only when filled in).
+- **Builder info-page consolidation**: the 8 no-input derived-stat/reputation steps are now
+  **2 "info" pages of 4 stacked cards**. `buildStepPlan` chunks `derivedStats` (+ reputation,
+  appended last) 4-per-page via a generic `'info'` step kind carrying an `InfoCard[]`, rendered
+  by `DerivedGroupStep`. `DerivedStep`/`ReputationStep` removed; reputation now sits on page 2
+  (before Skills). Each card keeps its value + formula + explanation visible.
 
 ## NEXT UP — candidates (await the user's go-ahead)
 
