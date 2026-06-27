@@ -1,0 +1,2656 @@
+[
+  {
+    "id": "aboleth",
+    "name": "Aboleth",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Aberration",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Tentacle",
+        "diceExpr": "8d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The aboleth can breathe air and water."
+      },
+      {
+        "name": "Mucous Cloud",
+        "description": "While underwater, the aboleth is surrounded by transformative mucus. A creature that touches the aboleth or that hits it with a melee attack while within 5 ft. of it must make a DC 14 Constitution saving throw. On a failure, the creature is diseased for 1d4 hours. The diseased creature can breathe…"
+      },
+      {
+        "name": "Probing Telepathy",
+        "description": "If a creature communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires if the aboleth can see the creature."
+      },
+      {
+        "name": "Enslave",
+        "description": "The aboleth targets one creature it can see within 30 ft. of it. The target must succeed on a DC 14 Wisdom saving throw or be magically charmed by the aboleth until the aboleth dies or until it is on a different plane of existence from the… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "The Underdark"
+    ]
+  },
+  {
+    "id": "acolyte",
+    "name": "Acolyte",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Club",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spellcasting",
+        "description": "The acolyte is a 1st-level spellcaster. (Innate magic — see notes.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "adult-black-dragon",
+    "name": "Adult Black Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Acid Breath",
+        "description": "The dragon exhales acid in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 54 (12d8) acid damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Caustic",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-blue-dragon",
+    "name": "Adult Blue Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 ft. of the dragon and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Lightning Breath",
+        "description": "The dragon exhales lightning in a 90-foot line that is 5 ft. wide. Each creature in that line must make a DC 19 Dexterity saving throw, taking 66 (12d10) lightning damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-brass-dragon",
+    "name": "Adult Brass Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 95,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 45 (13d6) fire damage on a failed… (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-bronze-dragon",
+    "name": "Adult Bronze Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Lightning Breath. The dragon exhales lightning in a 90-foot line that is 5 feet wide. Each creature in that line must make a DC 19 Dexterity saving throw, taking 66 (12d10) lightning… (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-copper-dragon",
+    "name": "Adult Copper Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 101,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 54 (12d8) acid damage on a failed… (Once per encounter.)"
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Caustic",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-gold-dragon",
+    "name": "Adult Gold Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 21 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 21 Dexterity saving throw, taking 66 (12d10) fire damage on a failed save, or half as… (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-green-dragon",
+    "name": "Adult Green Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Poison Breath",
+        "description": "The dragon exhales poisonous gas in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 56 (16d6) poison damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Venom",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-red-dragon",
+    "name": "Adult Red Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 ft. of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Fire Breath",
+        "description": "The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 21 Dexterity saving throw, taking 63 (18d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-silver-dragon",
+    "name": "Adult Silver Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 18 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Cold Breath. The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a DC 20 Constitution saving throw, taking 58 (13d8) cold damage on a failed save, or… (Once per encounter.)"
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Tidal",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "adult-white-dragon",
+    "name": "Adult White Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ice Walk",
+        "description": "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, difficult terrain composed of ice or snow doesn't cost it extra movement."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 ft. of the dragon and aware of it must succeed on a DC 14 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Cold Breath",
+        "description": "The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a DC 19 Constitution saving throw, taking 54 (12d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Tidal",
+      "dc": 18
+    },
+    "native": [
+      "Frozen Wastes",
+      "Mountains"
+    ]
+  },
+  {
+    "id": "air-elemental",
+    "name": "Air Elemental",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Elemental",
+    "hp": 50,
+    "dr": 4,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "hover"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Air Form",
+        "description": "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+      },
+      {
+        "name": "Whirlwind",
+        "description": "Each creature in the elemental's space must make a DC 13 Strength saving throw. On a failure, a target takes 15 (3d8 + 2) bludgeoning damage and is flung up 20 feet away from the elemental in a random direction and knocked prone. If a… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Thunder-Hardened",
+        "description": "Takes half damage from Thunder attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be grappled, paralyzed, petrified, prone, restrained, unconscious."
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 16
+    },
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "ancient-black-dragon",
+    "name": "Ancient Black Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Acid Breath",
+        "description": "The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a DC 22 Dexterity saving throw, taking 67 (15d8) acid damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Caustic",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-blue-dragon",
+    "name": "Ancient Blue Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 20 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Lightning Breath",
+        "description": "The dragon exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a DC 23 Dexterity saving throw, taking 88 (16d10) lightning damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-brass-dragon",
+    "name": "Ancient Brass Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 18 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons: Fire Breath. The dragon exhales fire in an 90-foot line that is 10 feet wide. Each creature in that line must make a DC 21 Dexterity saving throw, taking 56 (16d6) fire damage on a… (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-bronze-dragon",
+    "name": "Ancient Bronze Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 20 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Lightning Breath. The dragon exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a DC 23 Dexterity saving throw, taking 88 (16d10) lightning… (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-copper-dragon",
+    "name": "Ancient Copper Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 90-foot line that is 10 feet wide. Each creature in that line must make a DC 22 Dexterity saving throw, taking 63 (14d8) acid damage on a… (Once per encounter.)"
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Caustic",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-gold-dragon",
+    "name": "Ancient Gold Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 24 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 24 Dexterity saving throw, taking 71 (13d10) fire damage on a failed save, or half as… (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-green-dragon",
+    "name": "Ancient Green Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Poison Breath",
+        "description": "The dragon exhales poisonous gas in a 90-foot cone. Each creature in that area must make a DC 22 Constitution saving throw, taking 77 (22d6) poison damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Venom",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-red-dragon",
+    "name": "Ancient Red Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 21 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Fire Breath",
+        "description": "The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 24 Dexterity saving throw, taking 91 (26d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-silver-dragon",
+    "name": "Ancient Silver Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 21 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Cold Breath. The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a DC 24 Constitution saving throw, taking 67 (15d8) cold damage on a failed save, or… (Once per encounter.)"
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Tidal",
+      "dc": 19
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ancient-white-dragon",
+    "name": "Ancient White Dragon",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ice Walk",
+        "description": "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, difficult terrain composed of ice or snow doesn't cost it extra movement."
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the dragon fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its… (Once per encounter.)"
+      },
+      {
+        "name": "Cold Breath",
+        "description": "The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a DC 22 Constitution saving throw, taking 72 (16d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Tidal",
+      "dc": 19
+    },
+    "native": [
+      "Frozen Wastes",
+      "Mountains"
+    ]
+  },
+  {
+    "id": "androsphinx",
+    "name": "Androsphinx",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Monstrosity",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "7d10+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Inscrutable",
+        "description": "The sphinx is immune to any effect that would sense its emotions or read its thoughts, as well as any divination spell that it refuses. Wisdom (Insight) checks made to ascertain the sphinx's intentions or sincerity have disadvantage."
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The sphinx's weapon attacks are magical."
+      },
+      {
+        "name": "Spellcasting",
+        "description": "The sphinx is a 12th-level spellcaster. (Innate magic — see notes.)"
+      },
+      {
+        "name": "Psychicward",
+        "description": "Immune to Psychic damage"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Naturebound",
+      "dc": 19
+    },
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "animated-armor",
+    "name": "Animated Armor",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Construct",
+    "hp": 18,
+    "dr": 3,
+    "speed": {
+      "value": 25,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Antimagic Susceptibility",
+        "description": "The armor is incapacitated while in the area of an antimagic field. If targeted by dispel magic, the armor must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute."
+      },
+      {
+        "name": "False Appearance",
+        "description": "While the armor remains motionless, it is indistinguishable from a normal suit of armor."
+      },
+      {
+        "name": "Lifeless Frame",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Psychicward",
+        "description": "Immune to Psychic damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, charmed, deafened, frightened, paralyzed, petrified."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins"
+    ]
+  },
+  {
+    "id": "ankheg",
+    "name": "Ankheg",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Monstrosity",
+    "hp": 21,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "burrow"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Acid Spray",
+        "description": "The ankheg spits acid in a line that is 30 ft. long and 5 ft. wide, provided that it has no creature grappled. Each creature in that line must make a DC 13 Dexterity saving throw, taking 10 (3d6) acid damage on a failed save, or half as… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "ape",
+    "name": "Ape",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Fist",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "archmage",
+    "name": "Archmage",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Humanoid",
+    "hp": 54,
+    "dr": 6,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Dagger",
+        "diceExpr": "13d4+1",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magic Resistance",
+        "description": "The archmage has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Spellcasting",
+        "description": "The archmage is an 18th-level spellcaster. (Innate magic — see notes.)"
+      },
+      {
+        "name": "Damage from spells-Hardened",
+        "description": "Takes half damage from Damage from spells attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Shadow",
+      "dc": 18
+    },
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "assassin",
+    "name": "Assassin",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Humanoid",
+    "hp": 43,
+    "dr": 5,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "8d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Assassinate",
+        "description": "During its first turn, the assassin has advantage on attack rolls against any creature that hasn't taken a turn. Any hit the assassin scores against a surprised creature is a critical hit."
+      },
+      {
+        "name": "Evasion",
+        "description": "If the assassin is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, the assassin instead takes no damage if it succeeds on the saving throw, and only half damage if it fails."
+      },
+      {
+        "name": "Sneak Attack (1/Turn)",
+        "description": "The assassin deals an extra 13 (4d6) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 ft. of an ally of the assassin that isn't incapacitated and the assassin doesn't have disadvantage on the attack roll."
+      },
+      {
+        "name": "Poison-Hardened",
+        "description": "Takes half damage from Poison attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "awakened-shrub",
+    "name": "Awakened Shrub",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Plant",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Rake",
+        "diceExpr": "2d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "False Appearance",
+        "description": "While the shrub remains motionless, it is indistinguishable from a normal shrub."
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Tinder-Dry",
+        "description": "Takes double damage from Fire attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "awakened-tree",
+    "name": "Awakened Tree",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Plant",
+    "hp": 32,
+    "dr": 2,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "False Appearance",
+        "description": "While the tree remains motionless, it is indistinguishable from a normal tree."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Tinder-Dry",
+        "description": "Takes double damage from Fire attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "axe-beak",
+    "name": "Axe Beak",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d8",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "azer",
+    "name": "Azer",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Elemental",
+    "hp": 21,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Warhammer",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heated Body",
+        "description": "A creature that touches the azer or hits it with a melee attack while within 5 ft. of it takes 5 (1d10) fire damage."
+      },
+      {
+        "name": "Heated Weapons",
+        "description": "When the azer hits with a metal melee weapon, it deals an extra 3 (1d6) fire damage (included in the attack)."
+      },
+      {
+        "name": "Illumination",
+        "description": "The azer sheds bright light in a 10-foot radius and dim light for an additional 10 ft.."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "baboon",
+    "name": "Baboon",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pack Tactics",
+        "description": "The baboon has advantage on an attack roll against a creature if at least one of the baboon's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "badger",
+    "name": "Badger",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "burrow"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The badger has advantage on Wisdom (Perception) checks that rely on smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "balor",
+    "name": "Balor",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Fiend",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 80,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "5d8+1",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Whip",
+        "diceExpr": "5d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Death Throes",
+        "description": "When the balor dies, it explodes, and each creature within 30 feet of it must make a DC 20 Dexterity saving throw, taking 70 (20d6) fire damage on a failed save, or half as much damage on a successful one. The explosion ignites flammable objects in that area that aren't being worn or carried, and…"
+      },
+      {
+        "name": "Fire Aura",
+        "description": "At the start of each of the balor's turns, each creature within 5 feet of it takes 10 (3d6) fire damage, and flammable objects in the aura that aren't being worn or carried ignite. A creature that touches the balor or hits it with a melee attack while within 5 feet of it takes 10 (3d6) fire damage."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The balor has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The balor's weapon attacks are magical."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "bandit",
+    "name": "Bandit",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Light Crossbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "bandit-captain",
+    "name": "Bandit Captain",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 36,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Dagger",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "barbed-devil",
+    "name": "Barbed Devil",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Fiend",
+    "hp": 61,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d6",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Hurl Flame",
+        "diceExpr": "2d6",
+        "damageType": "Fire",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Barbed Hide",
+        "description": "At the start of each of its turns, the barbed devil deals 5 (1d10) piercing damage to any creature grappling it."
+      },
+      {
+        "name": "Devil's Sight",
+        "description": "Magical darkness doesn't impede the devil's darkvision."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The devil has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 16
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "basilisk",
+    "name": "Basilisk",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Monstrosity",
+    "hp": 29,
+    "dr": 3,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Petrifying Gaze",
+        "description": "If a creature starts its turn within 30 ft. of the basilisk and the two of them can see each other, the basilisk can force the creature to make a DC 12 Constitution saving throw if the basilisk isn't incapacitated. On a failed save, the creature magically begins to turn to stone and is restrained.…"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "bat",
+    "name": "Bat",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Echolocation",
+        "description": "The bat can't use its blindsight while deafened."
+      },
+      {
+        "name": "Keen Hearing",
+        "description": "The bat has advantage on Wisdom (Perception) checks that rely on hearing."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "bearded-devil",
+    "name": "Bearded Devil",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Fiend",
+    "hp": 29,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Beard",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Glaive",
+        "diceExpr": "1d10+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Devil's Sight",
+        "description": "Magical darkness doesn't impede the devil's darkvision."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The devil has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Steadfast",
+        "description": "The devil can't be frightened while it can see an allied creature within 30 feet of it."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "behir",
+    "name": "Behir",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Monstrosity",
+    "hp": 92,
+    "dr": 6,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "4d10",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lightning Breath",
+        "description": "The behir exhales a line of lightning that is 20 ft. long and 5 ft. wide. Each creature in that line must make a DC 16 Dexterity saving throw, taking 66 (12d10) lightning damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Naturebound",
+      "dc": 18
+    },
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "berserker",
+    "name": "Berserker",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 37,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d12+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Reckless",
+        "description": "At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "black-bear",
+    "name": "Black Bear",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The bear has advantage on Wisdom (Perception) checks that rely on smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "black-dragon-wyrmling",
+    "name": "Black Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Dragon",
+    "hp": 18,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Acid Breath",
+        "description": "The dragon exhales acid in a 15-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 22 (5d8) acid damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Caustic",
+      "dc": 14
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "black-pudding",
+    "name": "Black Pudding",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Ooze",
+    "hp": 47,
+    "dr": 3,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amorphous",
+        "description": "The pudding can move through a space as narrow as 1 inch wide without squeezing."
+      },
+      {
+        "name": "Corrosive Form",
+        "description": "A creature that touches the pudding or hits it with a melee attack while within 5 feet of it takes 4 (1d8) acid damage. Any nonmagical weapon made of metal or wood that hits the pudding corrodes. After dealing damage, the weapon takes a permanent and cumulative -1 penalty to damage rolls. If its…"
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The pudding can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Slashingward",
+        "description": "Immune to Slashing damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, charmed, exhausted, frightened, prone."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Caverns"
+    ]
+  },
+  {
+    "id": "blink-dog",
+    "name": "Blink Dog",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Fey",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Hearing and Smell",
+        "description": "The dog has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+      },
+      {
+        "name": "Teleport",
+        "description": "The dog magically teleports, along with any equipment it is wearing or carrying, up to 40 ft. to an unoccupied space it can see. Before or after teleporting, the dog can make one bite attack. (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "blood-hawk",
+    "name": "Blood Hawk",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Sight",
+        "description": "The hawk has advantage on Wisdom (Perception) checks that rely on sight."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "The hawk has advantage on an attack roll against a creature if at least one of the hawk's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "blue-dragon-wyrmling",
+    "name": "Blue Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Dragon",
+    "hp": 29,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lightning Breath",
+        "description": "The dragon exhales lightning in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 15
+    },
+    "native": [
+      "Mountains"
+    ]
+  }
+]
