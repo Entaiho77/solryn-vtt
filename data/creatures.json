@@ -9447,5 +9447,2252 @@
       "Ruins",
       "Crypts"
     ]
+  },
+  {
+    "id": "mule",
+    "name": "Mule",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Beast of Burden",
+        "description": "The mule is considered to be a Large animal for the purpose of determining its carrying capacity."
+      },
+      {
+        "name": "Sure-Footed",
+        "description": "The mule has advantage on Strength and Dexterity saving throws made against effects that would knock it prone."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "mummy",
+    "name": "Mummy",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Undead",
+    "hp": 32,
+    "dr": 3,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Rotting Fist",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dreadful Glare",
+        "description": "The mummy targets one creature it can see within 60 ft. of it. If the target can see the mummy, it must succeed on a DC 11 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If the target… (Once per encounter.)"
+      },
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Necroticward",
+        "description": "Immune to Necrotic damage"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Tinder-Dry",
+        "description": "Takes double damage from Fire attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "mummy-lord",
+    "name": "Mummy Lord",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Undead",
+    "hp": 53,
+    "dr": 6,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Rotting Fist",
+        "diceExpr": "10d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magic Resistance",
+        "description": "The mummy lord has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Rejuvenation",
+        "description": "A destroyed mummy lord gains a new body in 24 hours if its heart is intact, regaining all its hit points and becoming active again. The new body appears within 5 feet of the mummy lord's heart."
+      },
+      {
+        "name": "Spellcasting",
+        "description": "The mummy lord is a 10th-level spellcaster. (Innate magic — see notes.)"
+      },
+      {
+        "name": "Dreadful Glare",
+        "description": "The mummy lord targets one creature it can see within 60 feet of it. If the target can see the mummy lord, it must succeed on a DC 16 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If… (Once per encounter.)"
+      },
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Necroticward",
+        "description": "Immune to Necrotic damage"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Tinder-Dry",
+        "description": "Takes double damage from Fire attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Shadow",
+      "dc": 18
+    },
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "nalfeshnee",
+    "name": "Nalfeshnee",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Fiend",
+    "hp": 101,
+    "dr": 6,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magic Resistance",
+        "description": "The nalfeshnee has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Horror Nimbus",
+        "description": "The nalfeshnee magically emits scintillating, multicolored light. Each creature within 15 feet of the nalfeshnee that can see the light must succeed on a DC 15 Wisdom saving throw or be frightened for 1 minute. A creature can repeat the… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 18
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "night-hag",
+    "name": "Night Hag",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Fiend",
+    "hp": 62,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Claws (Hag Form Only)",
+        "diceExpr": "4d8+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Innate Spellcasting",
+        "description": "The hag's innate spellcasting ability is Charisma (spell save DC 14, +6 to hit with spell attacks). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The hag has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Night Hag Items",
+        "description": "A night hag carries two very rare magic items that she must craft for herself If either object is lost, the night hag will go to great lengths to retrieve it, as creating a new tool takes time and effort. Heartstone: This lustrous black gem allows a night hag to become ethereal while it is in her…"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed."
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 16
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "nightmare",
+    "name": "Nightmare",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Fiend",
+    "hp": 37,
+    "dr": 3,
+    "speed": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "3d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Confer Fire Resistance",
+        "description": "The nightmare can grant resistance to fire damage to anyone riding it."
+      },
+      {
+        "name": "Illumination",
+        "description": "The nightmare sheds bright light in a 10-foot radius and dim light for an additional 10 feet."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "noble",
+    "name": "Noble",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Rapier",
+        "diceExpr": "1d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "ochre-jelly",
+    "name": "Ochre Jelly",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Ooze",
+    "hp": 25,
+    "dr": 2,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amorphous",
+        "description": "The jelly can move through a space as narrow as 1 inch wide without squeezing."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The jelly can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Slashingward",
+        "description": "Immune to Slashing damage"
+      },
+      {
+        "name": "Acid-Hardened",
+        "description": "Takes half damage from Acid attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, charmed, blinded, exhausted, frightened, prone."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Caverns"
+    ]
+  },
+  {
+    "id": "octopus",
+    "name": "Octopus",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Tentacles",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hold Breath",
+        "description": "While out of water, the octopus can hold its breath for 30 minutes."
+      },
+      {
+        "name": "Underwater Camouflage",
+        "description": "The octopus has advantage on Dexterity (Stealth) checks made while underwater."
+      },
+      {
+        "name": "Water Breathing",
+        "description": "The octopus can breathe only underwater."
+      },
+      {
+        "name": "Ink Cloud",
+        "description": "A 5-foot-radius cloud of ink extends all around the octopus if it is underwater. The area is heavily obscured for 1 minute, although a significant current can disperse the ink. After releasing the ink, the octopus can use the Dash action… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "ogre",
+    "name": "Ogre",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Giant",
+    "hp": 32,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Greatclub",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "ogre-zombie",
+    "name": "Ogre Zombie",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Undead",
+    "hp": 47,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Morningstar",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Undead Fortitude",
+        "description": "If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5+the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead."
+      },
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "oni",
+    "name": "Oni",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Giant",
+    "hp": 61,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Claw (Oni Form Only)",
+        "diceExpr": "2d8",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Glaive",
+        "diceExpr": "2d10+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Innate Spellcasting",
+        "description": "The oni's innate spellcasting ability is Charisma (spell save DC 13). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The oni's weapon attacks are magical."
+      },
+      {
+        "name": "Regeneration",
+        "description": "The oni regains 10 hit points at the start of its turn if it has at least 1 hit point."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "orc",
+    "name": "Orc",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aggressive",
+        "description": "As a bonus action, the orc can move up to its speed toward a hostile creature that it can see."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "otyugh",
+    "name": "Otyugh",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Aberration",
+    "hp": 63,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Tentacle",
+        "diceExpr": "3d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Limited Telepathy",
+        "description": "The otyugh can magically transmit simple messages and images to any creature within 120 ft. of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
+      },
+      {
+        "name": "Tentacle Slam",
+        "description": "The otyugh slams creatures grappled by it into each other or a solid surface. Each creature must succeed on a DC 14 Constitution saving throw or take 10 (2d6 + 3) bludgeoning damage and be stunned until the end of the otyugh's next turn.… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Underdark"
+    ]
+  },
+  {
+    "id": "owl",
+    "name": "Owl",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Talons",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flyby",
+        "description": "The owl doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+      },
+      {
+        "name": "Keen Hearing and Sight",
+        "description": "The owl has advantage on Wisdom (Perception) checks that rely on hearing or sight."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "owlbear",
+    "name": "Owlbear",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Monstrosity",
+    "hp": 32,
+    "dr": 3,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "2d8",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Sight and Smell",
+        "description": "The owlbear has advantage on Wisdom (Perception) checks that rely on sight or smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "panther",
+    "name": "Panther",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The panther has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Pounce",
+        "description": "If the panther moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 12 Strength saving throw or be knocked prone. If the target is prone, the panther can make one bite attack against it as a bonus action."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "pegasus",
+    "name": "Pegasus",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Celestial",
+    "hp": 32,
+    "dr": 2,
+    "speed": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": {
+      "type": "Radiant",
+      "dc": 14
+    },
+    "native": [
+      "The Upper Planes"
+    ]
+  },
+  {
+    "id": "phase-spider",
+    "name": "Phase Spider",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Monstrosity",
+    "hp": 18,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ethereal Jaunt",
+        "description": "As a bonus action, the spider can magically shift from the Material Plane to the Ethereal Plane, or vice versa."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Web Walker",
+        "description": "The spider ignores movement restrictions caused by webbing."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "pit-fiend",
+    "name": "Pit Fiend",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Fiend",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d6+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "2d8",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Mace",
+        "diceExpr": "2d6+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d10+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fear Aura",
+        "description": "Any creature hostile to the pit fiend that starts its turn within 20 feet of the pit fiend must make a DC 21 Wisdom saving throw, unless the pit fiend is incapacitated. On a failed save, the creature is frightened until the start of its next turn. If a creature's saving throw is successful, the…"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The pit fiend has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The pit fiend's weapon attacks are magical."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The pit fiend's spellcasting ability is Charisma (spell save DC 21). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "planetar",
+    "name": "Planetar",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Celestial",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 120,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "10d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Angelic Weapons",
+        "description": "The planetar's weapon attacks are magical. When the planetar hits with any weapon, the weapon deals an extra 5d8 radiant damage (included in the attack)."
+      },
+      {
+        "name": "Divine Awareness",
+        "description": "The planetar knows if it hears a lie."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The planetar's spellcasting ability is Charisma (spell save DC 20). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The planetar has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Radiant-Hardened",
+        "description": "Takes half damage from Radiant attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, exhausted, frightened."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Radiant",
+      "dc": 18
+    },
+    "native": [
+      "The Upper Planes"
+    ]
+  },
+  {
+    "id": "plesiosaurus",
+    "name": "Plesiosaurus",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 37,
+    "dr": 2,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hold Breath",
+        "description": "The plesiosaurus can hold its breath for 1 hour."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "poisonous-snake",
+    "name": "Poisonous Snake",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "polar-bear",
+    "name": "Polar Bear",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 23,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The bear has advantage on Wisdom (Perception) checks that rely on smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "pony",
+    "name": "Pony",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "priest",
+    "name": "Priest",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 25,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Mace",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Divine Eminence",
+        "description": "As a bonus action, the priest can expend a spell slot to cause its melee weapon attacks to magically deal an extra 10 (3d6) radiant damage to a target on a hit. This benefit lasts until the end of the turn. If the priest expends a spell slot of 2nd level or higher, the extra damage increases by 1d6…"
+      },
+      {
+        "name": "Spellcasting",
+        "description": "The priest is a 5th-level spellcaster. (Innate magic — see notes.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "pseudodragon",
+    "name": "Pseudodragon",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Dragon",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 15,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Sting",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Senses",
+        "description": "The pseudodragon has advantage on Wisdom (Perception) checks that rely on sight, hearing, or smell."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The pseudodragon has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Limited Telepathy",
+        "description": "The pseudodragon can magically communicate simple ideas, emotions, and images telepathically with any creature within 100 ft. of it that can understand a language."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "purple-worm",
+    "name": "Purple Worm",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Monstrosity",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "burrow"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Tail Stinger",
+        "diceExpr": "4d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tunneler",
+        "description": "The worm can burrow through solid rock at half its burrow speed and leaves a 10-foot-diameter tunnel in its wake."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Naturebound",
+      "dc": 18
+    },
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "quasit",
+    "name": "Quasit",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Fiend",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Claw (Bite in Beast Form)",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shapechanger",
+        "description": "The quasit can use its action to polymorph into a beast form that resembles a bat (speed 10 ft. fly 40 ft.), a centipede (40 ft., climb 40 ft.), or a toad (40 ft., swim 40 ft.), or back into its true form . Its statistics are the same in each form, except for the speed changes noted. Any equipment…"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The quasit has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Scare",
+        "description": "One creature of the quasit's choice within 20 ft. of it must succeed on a DC 10 Wisdom saving throw or be frightened for 1 minute. The target can repeat the saving throw at the end of each of its turns, with disadvantage if the quasit is… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "quipper",
+    "name": "Quipper",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Blood Frenzy",
+        "description": "The quipper has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+      },
+      {
+        "name": "Water Breathing",
+        "description": "The quipper can breathe only underwater."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "rakshasa",
+    "name": "Rakshasa",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Fiend",
+    "hp": 61,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "10d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Limited Magic Immunity",
+        "description": "The rakshasa can't be affected or detected by spells of 6th level or lower unless it wishes to be. It has advantage on saving throws against all other spells and magical effects."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The rakshasa's innate spellcasting ability is Charisma (spell save DC 18, +10 to hit with spell attacks). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Piercing from magic weapons wielded by good creatures Frailty",
+        "description": "Takes double damage from Piercing from magic weapons wielded by good creatures attacks"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 18
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "rat",
+    "name": "Rat",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The rat has advantage on Wisdom (Perception) checks that rely on smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "raven",
+    "name": "Raven",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mimicry",
+        "description": "The raven can mimic simple sounds it has heard, such as a person whispering, a baby crying, or an animal chittering. A creature that hears the sounds can tell they are imitations with a successful DC 10 Wisdom (Insight) check."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "red-dragon-wyrmling",
+    "name": "Red Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Dragon",
+    "hp": 41,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fire Breath",
+        "description": "The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 15
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "reef-shark",
+    "name": "Reef Shark",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pack Tactics",
+        "description": "The shark has advantage on an attack roll against a creature if at least one of the shark's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      },
+      {
+        "name": "Water Breathing",
+        "description": "The shark can breathe only underwater."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "remorhaz",
+    "name": "Remorhaz",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Monstrosity",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "burrow"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "6d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heated Body",
+        "description": "A creature that touches the remorhaz or hits it with a melee attack while within 5 feet of it takes 10 (3d6) fire damage."
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Naturebound",
+      "dc": 18
+    },
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "rhinoceros",
+    "name": "Rhinoceros",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 25,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Charge",
+        "description": "If the rhinoceros moves at least 20 ft. straight toward a target and then hits it with a gore attack on the same turn, the target takes an extra 9 (2d8) bludgeoning damage. If the target is a creature, it must succeed on a DC 15 Strength saving throw or be knocked prone."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "riding-horse",
+    "name": "Riding Horse",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "roc",
+    "name": "Roc",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Monstrosity",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 120,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "4d8",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "4d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Sight",
+        "description": "The roc has advantage on Wisdom (Perception) checks that rely on sight."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Naturebound",
+      "dc": 18
+    },
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "roper",
+    "name": "Roper",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Monstrosity",
+    "hp": 51,
+    "dr": 5,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8+1",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "False Appearance",
+        "description": "While the roper remains motionless, it is indistinguishable from a normal cave formation, such as a stalagmite."
+      },
+      {
+        "name": "Grasping Tendrils",
+        "description": "The roper can have up to six tendrils at a time. Each tendril can be attacked (AC 20; 10 hit points; immunity to poison and psychic damage). Destroying a tendril deals no damage to the roper, which can extrude a replacement tendril on its next turn. A tendril can also be broken if a creature takes…"
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The roper can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Caverns",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "rug-of-smothering",
+    "name": "Rug of Smothering",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Construct",
+    "hp": 18,
+    "dr": 2,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [],
+    "abilities": [
+      {
+        "name": "Antimagic Susceptibility",
+        "description": "The rug is incapacitated while in the area of an antimagic field. If targeted by dispel magic, the rug must succeed on a Constitution saving throw against the caster's spell save DC or fall unconscious for 1 minute."
+      },
+      {
+        "name": "Damage Transfer",
+        "description": "While it is grappling a creature, the rug takes only half the damage dealt to it, and the creature grappled by the rug takes the other half."
+      },
+      {
+        "name": "False Appearance",
+        "description": "While the rug remains motionless, it is indistinguishable from a normal rug."
+      },
+      {
+        "name": "Lifeless Frame",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Psychicward",
+        "description": "Immune to Psychic damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, charmed, blinded, frightened, paralyzed, petrified."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins"
+    ]
+  },
+  {
+    "id": "rust-monster",
+    "name": "Rust Monster",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Monstrosity",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Iron Scent",
+        "description": "The rust monster can pinpoint, by scent, the location of ferrous metal within 30 feet of it."
+      },
+      {
+        "name": "Rust Metal",
+        "description": "Any nonmagical weapon made of metal that hits the rust monster corrodes. After dealing damage, the weapon takes a permanent and cumulative -1 penalty to damage rolls. If its penalty drops to -5, the weapon is destroyed. Nonmagical ammunition made of metal that hits the rust monster is destroyed…"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "saber-toothed-tiger",
+    "name": "Saber-Toothed Tiger",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 29,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The tiger has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Pounce",
+        "description": "If the tiger moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the tiger can make one bite attack against it as a bonus action."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "sahuagin",
+    "name": "Sahuagin",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Blood Frenzy",
+        "description": "The sahuagin has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+      },
+      {
+        "name": "Limited Amphibiousness",
+        "description": "The sahuagin can breathe air and water, but it needs to be submerged at least once every 4 hours to avoid suffocating."
+      },
+      {
+        "name": "Shark Telepathy",
+        "description": "The sahuagin can magically command any shark within 120 feet of it, using a limited telepathy."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "salamander",
+    "name": "Salamander",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Elemental",
+    "hp": 50,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Spear",
+        "diceExpr": "1d6",
+        "damageType": "Fire",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "5d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heated Body",
+        "description": "A creature that touches the salamander or hits it with a melee attack while within 5 ft. of it takes 7 (2d6) fire damage."
+      },
+      {
+        "name": "Heated Weapons",
+        "description": "Any metal melee weapon the salamander wields deals an extra 3 (1d6) fire damage on a hit (included in the attack)."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Frost-Brittle",
+        "description": "Takes double damage from Cold attacks"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 16
+    },
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "satyr",
+    "name": "Satyr",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Fey",
+    "hp": 17,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magic Resistance",
+        "description": "The satyr has advantage on saving throws against spells and other magical effects."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "scorpion",
+    "name": "Scorpion",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Sting",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "scout",
+    "name": "Scout",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Hearing and Sight",
+        "description": "The scout has advantage on Wisdom (Perception) checks that rely on hearing or sight."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "sea-hag",
+    "name": "Sea Hag",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Fey",
+    "hp": 29,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d6+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The hag can breathe air and water."
+      },
+      {
+        "name": "Horrific Appearance",
+        "description": "Any humanoid that starts its turn within 30 feet of the hag and can see the hag's true form must make a DC 11 Wisdom saving throw. On a failed save, the creature is frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the hag is…"
+      },
+      {
+        "name": "Death Glare",
+        "description": "The hag targets one frightened creature she can see within 30 ft. of her. If the target can see the hag, it must succeed on a DC 11 Wisdom saving throw against this magic or drop to 0 hit points. (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "Forests"
+    ]
+  },
+  {
+    "id": "sea-horse",
+    "name": "Sea Horse",
+    "threatTier": "Non-combatant",
+    "tierRating": 0,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [],
+    "abilities": [
+      {
+        "name": "Water Breathing",
+        "description": "The sea horse can breathe only underwater."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "Wilderness"
+    ]
   }
 ]
