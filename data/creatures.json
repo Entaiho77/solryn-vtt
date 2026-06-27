@@ -2652,5 +2652,2278 @@
     "native": [
       "Mountains"
     ]
+  },
+  {
+    "id": "boar",
+    "name": "Boar",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Tusk",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Charge",
+        "description": "If the boar moves at least 20 ft. straight toward a target and then hits it with a tusk attack on the same turn, the target takes an extra 3 (1d6) slashing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone."
+      },
+      {
+        "name": "Relentless",
+        "description": "If the boar takes 7 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "bone-devil",
+    "name": "Bone Devil",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Fiend",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "2d8",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Sting",
+        "diceExpr": "4d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Devil's Sight",
+        "description": "Magical darkness doesn't impede the devil's darkvision."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The devil has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 17
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "brass-dragon-wyrmling",
+    "name": "Brass Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Dragon",
+    "hp": 16,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in an 20-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 14 (4d6) fire damage on a failed… (Once per encounter.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 14
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "bronze-dragon-wyrmling",
+    "name": "Bronze Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Dragon",
+    "hp": 18,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon can breathe air and water."
+      },
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Lightning Breath. The dragon exhales lightning in a 40-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 16 (3d10) lightning… (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 14
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "brown-bear",
+    "name": "Brown Bear",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 19,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The bear has advantage on Wisdom (Perception) checks that rely on smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "bugbear",
+    "name": "Bugbear",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Morningstar",
+        "diceExpr": "1d8",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Brute",
+        "description": "A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack)."
+      },
+      {
+        "name": "Surprise Attack",
+        "description": "If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "bulette",
+    "name": "Bulette",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Monstrosity",
+    "hp": 52,
+    "dr": 4,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "burrow"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d12",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Standing Leap",
+        "description": "The bulette's long jump is up to 30 ft. and its high jump is up to 15 ft., with or without a running start."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "camel",
+    "name": "Camel",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "cat",
+    "name": "Cat",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The cat has advantage on Wisdom (Perception) checks that rely on smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "centaur",
+    "name": "Centaur",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Monstrosity",
+    "hp": 25,
+    "dr": 2,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Pike",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Hooves",
+        "diceExpr": "1d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Charge",
+        "description": "If the centaur moves at least 30 ft. straight toward a target and then hits it with a pike attack on the same turn, the target takes an extra 10 (3d6) piercing damage."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "chain-devil",
+    "name": "Chain Devil",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Fiend",
+    "hp": 47,
+    "dr": 5,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Chain",
+        "diceExpr": "8d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Devil's Sight",
+        "description": "Magical darkness doesn't impede the devil's darkvision."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The devil has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Animate Chains",
+        "description": "Up to four chains the devil can see within 60 feet of it magically sprout razor-edged barbs and animate under the devil's control, provided that the chains aren't being worn or carried. Each animated chain is an object with AC 20, 20 hit… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 17
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "chimera",
+    "name": "Chimera",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Monstrosity",
+    "hp": 63,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Horns",
+        "diceExpr": "1d12",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "2d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fire Breath",
+        "description": "The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 31 (7d8) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "chuul",
+    "name": "Chuul",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Aberration",
+    "hp": 51,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Pincer",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The chuul can breathe air and water."
+      },
+      {
+        "name": "Sense Magic",
+        "description": "The chuul senses magic within 120 feet of it at will. This trait otherwise works like the detect magic spell but isn't itself magical."
+      },
+      {
+        "name": "Tentacles",
+        "description": "One creature grappled by the chuul must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns,… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Underdark"
+    ]
+  },
+  {
+    "id": "clay-golem",
+    "name": "Clay Golem",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Construct",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "5d10",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Acid Absorption",
+        "description": "Whenever the golem is subjected to acid damage, it takes no damage and instead regains a number of hit points equal to the acid damage dealt."
+      },
+      {
+        "name": "Berserk",
+        "description": "Whenever the golem starts its turn with 60 hit points or fewer, roll a d6. On a 6, the golem goes berserk. On each of its turns while berserk, the golem attacks the nearest creature it can see. If no creature is near enough to move to and attack, the golem attacks an object, with preference for an…"
+      },
+      {
+        "name": "Immutable Form",
+        "description": "The golem is immune to any spell or effect that would alter its form."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The golem has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The golem's weapon attacks are magical."
+      },
+      {
+        "name": "Haste",
+        "description": "Until the end of its next turn, the golem magically gains a +2 bonus to its AC, has advantage on Dexterity saving throws, and can use its slam attack as a bonus action. (Once per encounter.)"
+      },
+      {
+        "name": "Lifeless Frame",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      },
+      {
+        "name": "Psychicward",
+        "description": "Immune to Psychic damage"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed, petrified."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins"
+    ]
+  },
+  {
+    "id": "cloaker",
+    "name": "Cloaker",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Aberration",
+    "hp": 43,
+    "dr": 5,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "3d8",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Damage Transfer",
+        "description": "While attached to a creature, the cloaker takes only half the damage dealt to it (rounded down). and that creature takes the other half."
+      },
+      {
+        "name": "False Appearance",
+        "description": "While the cloaker remains motionless without its underside exposed, it is indistinguishable from a dark leather cloak."
+      },
+      {
+        "name": "Light Sensitivity",
+        "description": "While in bright light, the cloaker has disadvantage on attack rolls and Wisdom (Perception) checks that rely on sight."
+      },
+      {
+        "name": "Moan",
+        "description": "Each creature within 60 feet of the cloaker that can hear its moan and that isn't an aberration must succeed on a DC 13 Wisdom saving throw or become frightened until the end of the cloaker's next turn. If a creature's saving throw is… (Once per encounter.)"
+      },
+      {
+        "name": "Phantasms",
+        "description": "The cloaker magically creates three illusory duplicates of itself if it isn't in bright light. The duplicates move with it and mimic its actions, shifting position so as to make it impossible to track which cloaker is the real one. If the… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Underdark"
+    ]
+  },
+  {
+    "id": "cloud-giant",
+    "name": "Cloud Giant",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Giant",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Morningstar",
+        "diceExpr": "6d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The giant has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The giant's innate spellcasting ability is Charisma. (Innate magic — see notes.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "cockatrice",
+    "name": "Cockatrice",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Monstrosity",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "commoner",
+    "name": "Commoner",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Club",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "constrictor-snake",
+    "name": "Constrictor Snake",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "copper-dragon-wyrmling",
+    "name": "Copper Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Dragon",
+    "hp": 16,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 20-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 18 (4d8) acid damage on a failed… (Once per encounter.)"
+      },
+      {
+        "name": "Acidward",
+        "description": "Immune to Acid damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Caustic",
+      "dc": 14
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "couatl",
+    "name": "Couatl",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Celestial",
+    "hp": 53,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "2d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Innate Spellcasting",
+        "description": "The couatl's spellcasting ability is Charisma (spell save DC 14). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The couatl's weapon attacks are magical."
+      },
+      {
+        "name": "Shielded Mind",
+        "description": "The couatl is immune to scrying and to any effect that would sense its emotions, read its thoughts, or detect its location."
+      },
+      {
+        "name": "Psychicward",
+        "description": "Immune to Psychic damage"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Radiant-Hardened",
+        "description": "Takes half damage from Radiant attacks"
+      }
+    ],
+    "soulCore": {
+      "type": "Radiant",
+      "dc": 15
+    },
+    "native": [
+      "The Upper Planes"
+    ]
+  },
+  {
+    "id": "crab",
+    "name": "Crab",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The crab can breathe air and water."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "crocodile",
+    "name": "Crocodile",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hold Breath",
+        "description": "The crocodile can hold its breath for 15 minutes."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "cult-fanatic",
+    "name": "Cult Fanatic",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Dagger",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Devotion",
+        "description": "The fanatic has advantage on saving throws against being charmed or frightened."
+      },
+      {
+        "name": "Spellcasting",
+        "description": "The fanatic is a 4th-level spellcaster. (Innate magic — see notes.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "cultist",
+    "name": "Cultist",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Devotion",
+        "description": "The cultist has advantage on saving throws against being charmed or frightened."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "darkmantle",
+    "name": "Darkmantle",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Monstrosity",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Crush",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Echolocation",
+        "description": "The darkmantle can't use its blindsight while deafened."
+      },
+      {
+        "name": "False Appearance",
+        "description": "While the darkmantle remains motionless, it is indistinguishable from a cave formation such as a stalactite or stalagmite."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Caverns",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "death-dog",
+    "name": "Death Dog",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Monstrosity",
+    "hp": 21,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Two-Headed",
+        "description": "The dog has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, or knocked unconscious."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "deep-gnome-svirfneblin",
+    "name": "Deep Gnome (Svirfneblin)",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "War Pick",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Poisoned Dart",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Stone Camouflage",
+        "description": "The gnome has advantage on Dexterity (Stealth) checks made to hide in rocky terrain."
+      },
+      {
+        "name": "Gnome Cunning",
+        "description": "The gnome has advantage on Intelligence, Wisdom, and Charisma saving throws against magic."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The gnome's innate spellcasting ability is Intelligence (spell save DC 11). (Innate magic — see notes.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "deer",
+    "name": "Deer",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "deva",
+    "name": "Deva",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Celestial",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Mace",
+        "diceExpr": "8d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Angelic Weapons",
+        "description": "The deva's weapon attacks are magical. When the deva hits with any weapon, the weapon deals an extra 4d8 radiant damage (included in the attack)."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The deva's spellcasting ability is Charisma (spell save DC 17). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The deva has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Radiant-Hardened",
+        "description": "Takes half damage from Radiant attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, exhausted, frightened."
+      }
+    ],
+    "soulCore": {
+      "type": "Radiant",
+      "dc": 17
+    },
+    "native": [
+      "The Upper Planes"
+    ]
+  },
+  {
+    "id": "dire-wolf",
+    "name": "Dire Wolf",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 20,
+    "dr": 2,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Hearing and Smell",
+        "description": "The wolf has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "djinni",
+    "name": "Djinni",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Elemental",
+    "hp": 89,
+    "dr": 6,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "10d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Elemental Demise",
+        "description": "If the djinni dies, its body disintegrates into a warm breeze, leaving behind only equipment the djinni was wearing or carrying."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The djinni's innate spellcasting ability is Charisma (spell save DC 17, +9 to hit with spell attacks). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Create Whirlwind",
+        "description": "A 5-foot-radius, 30-foot-tall cylinder of swirling air magically forms on a point the djinni can see within 120 feet of it. The whirlwind lasts as long as the djinni maintains concentration (as if concentrating on a spell). Any creature… (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Thunderward",
+        "description": "Immune to Thunder damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Storm",
+      "dc": 18
+    },
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "doppelganger",
+    "name": "Doppelganger",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Monstrosity",
+    "hp": 29,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shapechanger",
+        "description": "The doppelganger can use its action to polymorph into a Small or Medium humanoid it has seen, or back into its true form. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
+      },
+      {
+        "name": "Ambusher",
+        "description": "In the first round of combat, the doppelganger has advantage on attack rolls against any creature it has surprised."
+      },
+      {
+        "name": "Surprise Attack",
+        "description": "If the doppelganger surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 10 (3d6) damage from the attack."
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "draft-horse",
+    "name": "Draft Horse",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "2d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "dragon-turtle",
+    "name": "Dragon Turtle",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Dragon",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d12+3",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "2d8",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d12+3",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The dragon turtle can breathe air and water."
+      },
+      {
+        "name": "Steam Breath",
+        "description": "The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 52 (15d6) fire damage on a failed save, or half as much damage on a successful one. Being underwater… (Once per encounter.)"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 19
+    },
+    "native": [
+      "Coastal Waters",
+      "Mountains"
+    ]
+  },
+  {
+    "id": "dretch",
+    "name": "Dretch",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Fiend",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fetid Cloud",
+        "description": "A 10-foot radius of disgusting green gas extends out from the dretch. The gas spreads around corners, and its area is lightly obscured. It lasts for 1 minute or until a strong wind disperses it. Any creature that starts its turn in that… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "drider",
+    "name": "Drider",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Monstrosity",
+    "hp": 68,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "2d8+1",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fey Ancestry",
+        "description": "The drider has advantage on saving throws against being charmed, and magic can't put the drider to sleep."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The drider's innate spellcasting ability is Wisdom (spell save DC 13). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The drider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "description": "While in sunlight, the drider has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+      },
+      {
+        "name": "Web Walker",
+        "description": "The drider ignores movement restrictions caused by webbing."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "drow",
+    "name": "Drow",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Hand Crossbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fey Ancestry",
+        "description": "The drow has advantage on saving throws against being charmed, and magic can't put the drow to sleep."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The drow's spellcasting ability is Charisma (spell save DC 11). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "description": "While in sunlight, the drow has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "druid",
+    "name": "Druid",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [],
+    "abilities": [
+      {
+        "name": "Spellcasting",
+        "description": "The druid is a 4th-level spellcaster. (Innate magic — see notes.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "dryad",
+    "name": "Dryad",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Fey",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Club",
+        "diceExpr": "3d4+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Innate Spellcasting",
+        "description": "The dryad's innate spellcasting ability is Charisma (spell save DC 14). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The dryad has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Speak with Beasts and Plants",
+        "description": "The dryad can communicate with beasts and plants as if they shared a language."
+      },
+      {
+        "name": "Tree Stride",
+        "description": "Once on her turn, the dryad can use 10 ft. of her movement to step magically into one living tree within her reach and emerge from a second living tree within 60 ft. of the first tree, appearing in an unoccupied space within 5 ft. of the second tree. Both trees must be large or bigger."
+      },
+      {
+        "name": "Fey Charm",
+        "description": "The dryad targets one humanoid or beast that she can see within 30 feet of her. If the target can see the dryad, it must succeed on a DC 14 Wisdom saving throw or be magically charmed. The charmed creature regards the dryad as a trusted… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "duergar",
+    "name": "Duergar",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 3,
+    "speed": {
+      "value": 25,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "War Pick",
+        "diceExpr": "1d8",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Duergar Resilience",
+        "description": "The duergar has advantage on saving throws against poison, spells, and illusions, as well as to resist being charmed or paralyzed."
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "description": "While in sunlight, the duergar has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+      },
+      {
+        "name": "Enlarge",
+        "description": "For 1 minute, the duergar magically increases in size, along with anything it is wearing or carrying. While enlarged, the duergar is Large, doubles its damage dice on Strength-based weapon attacks (included in the attacks), and makes… (Once per encounter.)"
+      },
+      {
+        "name": "Invisibility",
+        "description": "The duergar magically turns invisible until it attacks, casts a spell, or uses its Enlarge, or until its concentration is broken, up to 1 hour (as if concentrating on a spell). Any equipment the duergar wears or carries is invisible with… (Once per encounter.)"
+      },
+      {
+        "name": "Poison-Hardened",
+        "description": "Takes half damage from Poison attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "dust-mephit",
+    "name": "Dust Mephit",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Elemental",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Death Burst",
+        "description": "When the mephit dies, it explodes in a burst of dust. Each creature within 5 ft. of it must then succeed on a DC 10 Constitution saving throw or be blinded for 1 minute. A blinded creature can repeat the saving throw on each of its turns, ending the effect on itself on a success."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The mephit can innately cast sleep, requiring no material components. (Innate magic — see notes.)"
+      },
+      {
+        "name": "Blinding Breath",
+        "description": "The mephit exhales a 15-foot cone of blinding dust. Each creature in that area must succeed on a DC 10 Dexterity saving throw or be blinded for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Tinder-Dry",
+        "description": "Takes double damage from Fire attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "eagle",
+    "name": "Eagle",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Talons",
+        "diceExpr": "2d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Sight",
+        "description": "The eagle has advantage on Wisdom (Perception) checks that rely on sight."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "earth-elemental",
+    "name": "Earth Elemental",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Elemental",
+    "hp": 69,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "burrow"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Earth Glide",
+        "description": "The elemental can burrow through nonmagical, unworked earth and stone. While doing so, the elemental doesn't disturb the material it moves through."
+      },
+      {
+        "name": "Siege Monster",
+        "description": "The elemental deals double damage to objects and structures."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Thunder Frailty",
+        "description": "Takes double damage from Thunder attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be paralyzed, petrified, unconscious."
+      }
+    ],
+    "soulCore": {
+      "type": "Earthen",
+      "dc": 16
+    },
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "efreeti",
+    "name": "Efreeti",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Elemental",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "5d6",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Hurl Flame",
+        "diceExpr": "4d6+2",
+        "damageType": "Fire",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Elemental Demise",
+        "description": "If the efreeti dies, its body disintegrates in a flash of fire and puff of smoke, leaving behind only equipment the djinni was wearing or carrying."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The efreeti's innate spell casting ability is Charisma (spell save DC 15, +7 to hit with spell attacks). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 18
+    },
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "elephant",
+    "name": "Elephant",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Beast",
+    "hp": 42,
+    "dr": 3,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Stomp",
+        "diceExpr": "1d10+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Trampling Charge",
+        "description": "If the elephant moves at least 20 ft. straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 12 Strength saving throw or be knocked prone. If the target is prone, the elephant can make one stomp attack against it as a bonus action."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "elk",
+    "name": "Elk",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Hooves",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Charge",
+        "description": "If the elk moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 7 (2d6) damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "erinyes",
+    "name": "Erinyes",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Fiend",
+    "hp": 84,
+    "dr": 6,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "3d8",
+        "damageType": "Poison",
+        "note": ""
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "5d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hellish Weapons",
+        "description": "The erinyes's weapon attacks are magical and deal an extra 13 (3d8) poison damage on a hit (included in the attacks)."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The erinyes has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 18
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "ettercap",
+    "name": "Ettercap",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Monstrosity",
+    "hp": 24,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spider Climb",
+        "description": "The ettercap can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Web Sense",
+        "description": "While in contact with a web, the ettercap knows the exact location of any other creature in contact with the same web."
+      },
+      {
+        "name": "Web Walker",
+        "description": "The ettercap ignores movement restrictions caused by webbing."
+      },
+      {
+        "name": "Web",
+        "description": "Ranged Weapon Attack: +4 to hit, range 30/60 ft., one Large or smaller creature. Hit: The creature is restrained by webbing. As an action, the restrained creature can make a DC 11 Strength check, escaping from the webbing on a success. The… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "ettin",
+    "name": "Ettin",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Giant",
+    "hp": 47,
+    "dr": 3,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Battleaxe",
+        "diceExpr": "1d8+2",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Morningstar",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Two Heads",
+        "description": "The ettin has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious."
+      },
+      {
+        "name": "Wakeful",
+        "description": "When one of the ettin's heads is asleep, its other head is awake."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
   }
 ]
