@@ -2,7 +2,7 @@
 
 Source: D&D 5e SRD-2014 monster dataset (334 creatures). CR->TR mapping, TR band tables (DR / dmg-per-round), HP x0.55 with floor 16 and ceiling (70 non-Legendary / 105 Legendary), DR = (AC-10)/2 clamped to band. Format: `Name | CR x -> TR y | judgment notes`. 'standard conversion' = no judgment beyond the standard pipeline.
 
-Converted so far: 100 / 334
+Converted so far: 150 / 334
 
 Aboleth | CR 10 -> TR 5 | hp clamped 74->70
 Acolyte | CR 0.25 -> TR 1 | standard conversion
@@ -104,3 +104,53 @@ Elk | CR 0.25 -> TR 1 | standard conversion
 Erinyes | CR 12 -> TR 6 | TR6+/Legendary extrapolated; soulCore Infernal dc18 [elite fiend]
 Ettercap | CR 2 -> TR 2 | standard conversion
 Ettin | CR 4 -> TR 3 | standard conversion
+Fire Elemental | CR 5 -> TR 4 | soulCore Infernal dc16 [elemental(Infernal)]
+Fire Giant | CR 9 -> TR 5 | hp clamped 89->70
+Flesh Golem | CR 5 -> TR 4 | standard conversion
+Flying Snake | CR 0.125 -> TR 1 | standard conversion
+Flying Sword | CR 0.25 -> TR 1 | standard conversion
+Frog | CR 0 -> TR 0 | standard conversion
+Frost Giant | CR 8 -> TR 5 | hp clamped 76->70
+Gargoyle | CR 2 -> TR 2 | standard conversion
+Gelatinous Cube | CR 2 -> TR 2 | standard conversion
+Ghast | CR 2 -> TR 2 | standard conversion
+Ghost | CR 4 -> TR 3 | standard conversion
+Ghoul | CR 1 -> TR 2 | standard conversion
+Giant Ape | CR 7 -> TR 4 | hp clamped 86->70
+Giant Badger | CR 0.25 -> TR 1 | standard conversion
+Giant Bat | CR 0.25 -> TR 1 | standard conversion
+Giant Boar | CR 2 -> TR 2 | standard conversion
+Giant Centipede | CR 0.25 -> TR 1 | standard conversion
+Giant Constrictor Snake | CR 2 -> TR 2 | standard conversion
+Giant Crab | CR 0.125 -> TR 1 | standard conversion
+Giant Crocodile | CR 5 -> TR 4 | standard conversion
+Giant Eagle | CR 1 -> TR 2 | standard conversion
+Giant Elk | CR 2 -> TR 2 | standard conversion
+Giant Fire Beetle | CR 0 -> TR 1 | standard conversion
+Giant Frog | CR 0.25 -> TR 1 | standard conversion
+Giant Goat | CR 0.5 -> TR 1 | standard conversion
+Giant Hyena | CR 1 -> TR 2 | standard conversion
+Giant Lizard | CR 0.25 -> TR 1 | standard conversion
+Giant Octopus | CR 1 -> TR 2 | standard conversion
+Giant Owl | CR 0.25 -> TR 1 | standard conversion
+Giant Poisonous Snake | CR 0.25 -> TR 1 | standard conversion
+Giant Rat | CR 0.125 -> TR 1 | standard conversion
+Giant Rat (Diseased) | CR 0.125 -> TR 1 | standard conversion
+Giant Scorpion | CR 3 -> TR 3 | standard conversion
+Giant Sea Horse | CR 0.5 -> TR 1 | standard conversion
+Giant Shark | CR 5 -> TR 4 | standard conversion
+Giant Spider | CR 1 -> TR 2 | standard conversion
+Giant Toad | CR 1 -> TR 2 | standard conversion
+Giant Vulture | CR 1 -> TR 2 | standard conversion
+Giant Wasp | CR 0.5 -> TR 1 | standard conversion
+Giant Weasel | CR 0.125 -> TR 1 | standard conversion
+Giant Wolf Spider | CR 0.25 -> TR 1 | standard conversion
+Gibbering Mouther | CR 2 -> TR 2 | standard conversion
+Glabrezu | CR 9 -> TR 5 | hp clamped 86->70; soulCore Infernal dc17 [elite fiend]
+Gladiator | CR 5 -> TR 4 | standard conversion
+Gnoll | CR 0.5 -> TR 1 | standard conversion
+Goat | CR 0 -> TR 1 | standard conversion
+Goblin | CR 0.25 -> TR 1 | standard conversion
+Gold Dragon Wyrmling | CR 3 -> TR 3 | soulCore Infernal dc15 [dragon-by-age]
+Gorgon | CR 5 -> TR 4 | dmg out-of-band(24 vs 16-22)
+Gray Ooze | CR 0.5 -> TR 1 | standard conversion
