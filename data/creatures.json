@@ -11694,5 +11694,2566 @@
       "Coastal Waters",
       "Wilderness"
     ]
+  },
+  {
+    "id": "shadow",
+    "name": "Shadow",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Undead",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Strength Drain",
+        "diceExpr": "1d6+2",
+        "damageType": "Necrotic",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amorphous",
+        "description": "The shadow can move through a space as narrow as 1 inch wide without squeezing."
+      },
+      {
+        "name": "Shadow Stealth",
+        "description": "While in dim light or darkness, the shadow can take the Hide action as a bonus action. Its stealth bonus is also improved to +6."
+      },
+      {
+        "name": "Sunlight Weakness",
+        "description": "While in sunlight, the shadow has disadvantage on attack rolls, ability checks, and saving throws."
+      },
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Necroticward",
+        "description": "Immune to Necrotic damage"
+      },
+      {
+        "name": "Acid-Hardened",
+        "description": "Takes half damage from Acid attacks"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Thunder-Hardened",
+        "description": "Takes half damage from Thunder attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Light-Cursed",
+        "description": "Takes double damage from Radiant attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be frightened, grappled, paralyzed, petrified, prone, restrained."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "shambling-mound",
+    "name": "Shambling Mound",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Plant",
+    "hp": 70,
+    "dr": 4,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lightning Absorption",
+        "description": "Whenever the shambling mound is subjected to lightning damage, it takes no damage and regains a number of hit points equal to the lightning damage dealt."
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, blinded, exhausted."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "shield-guardian",
+    "name": "Shield Guardian",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Construct",
+    "hp": 70,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Fist",
+        "diceExpr": "5d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bound",
+        "description": "The shield guardian is magically bound to an amulet. As long as the guardian and its amulet are on the same plane of existence, the amulet's wearer can telepathically call the guardian to travel to it, and the guardian knows the distance and direction to the amulet. If the guardian is within 60…"
+      },
+      {
+        "name": "Regeneration",
+        "description": "The shield guardian regains 10 hit points at the start of its turn if it has at least 1 hit. point."
+      },
+      {
+        "name": "Spell Storing",
+        "description": "A spellcaster who wears the shield guardian's amulet can cause the guardian to store one spell of 4th level or lower. To do so, the wearer must cast the spell on the guardian. The spell has no effect but is stored within the guardian. When commanded to do so by the wearer or when a situation arises…"
+      },
+      {
+        "name": "Lifeless Frame",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins"
+    ]
+  },
+  {
+    "id": "shrieker",
+    "name": "Shrieker",
+    "threatTier": "Non-combatant",
+    "tierRating": 0,
+    "type": "Plant",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [],
+    "abilities": [
+      {
+        "name": "False Appearance",
+        "description": "While the shrieker remains motionless, it is indistinguishable from an ordinary fungus."
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, blinded, frightened."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "silver-dragon-wyrmling",
+    "name": "Silver Dragon Wyrmling",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Dragon",
+    "hp": 25,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Breath Weapons",
+        "description": "The dragon uses one of the following breath weapons. Cold Breath. The dragon exhales an icy blast in a 15-foot cone. Each creature in that area must make a DC 13 Constitution saving throw, taking 18 (4d8) cold damage on a failed save, or… (Once per encounter.)"
+      },
+      {
+        "name": "Coldward",
+        "description": "Immune to Cold damage"
+      }
+    ],
+    "soulCore": {
+      "type": "Tidal",
+      "dc": 14
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "skeleton",
+    "name": "Skeleton",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Undead",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be poisoned or exhausted."
+      },
+      {
+        "name": "Brittle Frame",
+        "description": "Takes double damage from Bludgeoning attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "solar",
+    "name": "Solar",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Celestial",
+    "hp": 105,
+    "dr": 7,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 150,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "12d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Angelic Weapons",
+        "description": "The solar's weapon attacks are magical. When the solar hits with any weapon, the weapon deals an extra 6d8 radiant damage (included in the attack)."
+      },
+      {
+        "name": "Divine Awareness",
+        "description": "The solar knows if it hears a lie."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The solar's spell casting ability is Charisma (spell save DC 25). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The solar has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Necroticward",
+        "description": "Immune to Necrotic damage"
+      },
+      {
+        "name": "Radiant-Hardened",
+        "description": "Takes half damage from Radiant attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Radiant",
+      "dc": 19
+    },
+    "native": [
+      "The Upper Planes"
+    ]
+  },
+  {
+    "id": "specter",
+    "name": "Specter",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Undead",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "hover"
+    },
+    "attacks": [
+      {
+        "name": "Life Drain",
+        "diceExpr": "2d6+2",
+        "damageType": "Necrotic",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Incorporeal Movement",
+        "description": "The specter can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends its turn inside an object."
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "description": "While in sunlight, the specter has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+      },
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Necroticward",
+        "description": "Immune to Necrotic damage"
+      },
+      {
+        "name": "Acid-Hardened",
+        "description": "Takes half damage from Acid attacks"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Thunder-Hardened",
+        "description": "Takes half damage from Thunder attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, grappled, paralyzed, petrified, prone, restrained, unconscious."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "spider",
+    "name": "Spider",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spider Climb",
+        "description": "The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Web Sense",
+        "description": "While in contact with a web, the spider knows the exact location of any other creature in contact with the same web."
+      },
+      {
+        "name": "Web Walker",
+        "description": "The spider ignores movement restrictions caused by webbing."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "spirit-naga",
+    "name": "Spirit Naga",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Monstrosity",
+    "hp": 41,
+    "dr": 5,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "8d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rejuvenation",
+        "description": "If it dies, the naga returns to life in 1d6 days and regains all its hit points. Only a wish spell can prevent this trait from functioning."
+      },
+      {
+        "name": "Spellcasting",
+        "description": "The naga is a 10th-level spellcaster. (Innate magic — see notes.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "sprite",
+    "name": "Sprite",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Fey",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "1d4",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heart Sight",
+        "description": "The sprite touches a creature and magically knows the creature's current emotional state. If the target fails a DC 10 Charisma saving throw, the sprite also knows the creature's alignment. Celestials, fiends, and undead automatically fail… (Once per encounter.)"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "spy",
+    "name": "Spy",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cunning Action",
+        "description": "On each of its turns, the spy can use a bonus action to take the Dash, Disengage, or Hide action."
+      },
+      {
+        "name": "Sneak Attack (1/Turn)",
+        "description": "The spy deals an extra 7 (2d6) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 ft. of an ally of the spy that isn't incapacitated and the spy doesn't have disadvantage on the attack roll."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "steam-mephit",
+    "name": "Steam Mephit",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Elemental",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Death Burst",
+        "description": "When the mephit dies, it explodes in a cloud of steam. Each creature within 5 ft. of the mephit must succeed on a DC 10 Dexterity saving throw or take 4 (1d8) fire damage."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The mephit can innately cast blur, requiring no material components. (Innate magic — see notes.)"
+      },
+      {
+        "name": "Steam Breath",
+        "description": "The mephit exhales a 15-foot cone of scalding steam. Each creature in that area must succeed on a DC 10 Dexterity saving throw, taking 4 (1d8) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "stirge",
+    "name": "Stirge",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Blood Drain",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "stone-giant",
+    "name": "Stone Giant",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Giant",
+    "hp": 69,
+    "dr": 4,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Greatclub",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Stone Camouflage",
+        "description": "The giant has advantage on Dexterity (Stealth) checks made to hide in rocky terrain."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "stone-golem",
+    "name": "Stone Golem",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Construct",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "6d8",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Immutable Form",
+        "description": "The golem is immune to any spell or effect that would alter its form."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The golem has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The golem's weapon attacks are magical."
+      },
+      {
+        "name": "Slow",
+        "description": "The golem targets one or more creatures it can see within 10 ft. of it. Each target must make a DC 17 Wisdom saving throw against this magic. On a failed save, a target can't use reactions, its speed is halved, and it can't make more than… (Once per encounter.)"
+      },
+      {
+        "name": "Lifeless Frame",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Psychicward",
+        "description": "Immune to Psychic damage"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed, petrified."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins"
+    ]
+  },
+  {
+    "id": "storm-giant",
+    "name": "Storm Giant",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Giant",
+    "hp": 105,
+    "dr": 6,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "10d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Amphibious",
+        "description": "The giant can breathe air and water."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The giant's innate spellcasting ability is Charisma (spell save DC 17). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Lightning Strike",
+        "description": "The giant hurls a magical lightning bolt at a point it can see within 500 feet of it. Each creature within 10 feet of that point must make a DC 17 Dexterity saving throw, taking 54 (12d8) lightning damage on a failed save, or half as much… (Once per encounter.)"
+      },
+      {
+        "name": "Lightningward",
+        "description": "Immune to Lightning damage"
+      },
+      {
+        "name": "Thunderward",
+        "description": "Immune to Thunder damage"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Earthen",
+      "dc": 18
+    },
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "succubus-incubus",
+    "name": "Succubus/Incubus",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Fiend",
+    "hp": 36,
+    "dr": 3,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Claw (Fiend Form Only)",
+        "diceExpr": "4d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Telepathic Bond",
+        "description": "The fiend ignores the range restriction on its telepathy when communicating with a creature it has charmed. The two don't even need to be on the same plane of existence."
+      },
+      {
+        "name": "Shapechanger",
+        "description": "The fiend can use its action to polymorph into a Small or Medium humanoid, or back into its true form. Without wings, the fiend loses its flying speed. Other than its size and speed, its statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to…"
+      },
+      {
+        "name": "Charm",
+        "description": "One humanoid the fiend can see within 30 feet of it must succeed on a DC 15 Wisdom saving throw or be magically charmed for 1 day. The charmed target obeys the fiend's verbal or telepathic commands. If the target suffers any harm or… (Once per encounter.)"
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Poison-Hardened",
+        "description": "Takes half damage from Poison attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "swarm-of-bats",
+    "name": "Swarm of Bats",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Echolocation",
+        "description": "The swarm can't use its blindsight while deafened."
+      },
+      {
+        "name": "Keen Hearing",
+        "description": "The swarm has advantage on Wisdom (Perception) checks that rely on hearing."
+      },
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny bat. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-beetles",
+    "name": "Swarm of Beetles",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-centipedes",
+    "name": "Swarm of Centipedes",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-insects",
+    "name": "Swarm of Insects",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-poisonous-snakes",
+    "name": "Swarm of Poisonous Snakes",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 20,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny snake. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-quippers",
+    "name": "Swarm of Quippers",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Blood Frenzy",
+        "description": "The swarm has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+      },
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny quipper. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Water Breathing",
+        "description": "The swarm can breathe only underwater."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Coastal Waters",
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-rats",
+    "name": "Swarm of Rats",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The swarm has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-ravens",
+    "name": "Swarm of Ravens",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Beaks",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny raven. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-spiders",
+    "name": "Swarm of Spiders",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The swarm can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Web Sense",
+        "description": "While in contact with a web, the swarm knows the exact location of any other creature in contact with the same web."
+      },
+      {
+        "name": "Web Walker",
+        "description": "The swarm ignores movement restrictions caused by webbing."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "swarm-of-wasps",
+    "name": "Swarm of Wasps",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Swarm of Tiny Beasts",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Swarm",
+        "description": "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Slashing-Hardened",
+        "description": "Takes half damage from Slashing attacks"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "tarrasque",
+    "name": "Tarrasque",
+    "threatTier": "Legendary",
+    "tierRating": 7,
+    "type": "Monstrosity",
+    "hp": 105,
+    "dr": 8,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d12",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "2d8",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Horns",
+        "diceExpr": "2d10",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d6+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Resistance",
+        "description": "If the tarrasque fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The tarrasque has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Reflective Carapace",
+        "description": "Any time the tarrasque is targeted by a magic missile spell, a line spell, or a spell that requires a ranged attack roll, roll a d6. On a 1 to 5, the tarrasque is unaffected. On a 6, the tarrasque is unaffected, and the effect is reflected back at the caster as though it originated from the…"
+      },
+      {
+        "name": "Siege Monster",
+        "description": "The tarrasque deals double damage to objects and structures."
+      },
+      {
+        "name": "Frightful Presence",
+        "description": "Each creature of the tarrasque's choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Fireward",
+        "description": "Immune to Fire damage"
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, frightened, paralyzed."
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Naturebound",
+      "dc": 19
+    },
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "thug",
+    "name": "Thug",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 18,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Mace",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pack Tactics",
+        "description": "The thug has advantage on an attack roll against a creature if at least one of the thug's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "tiger",
+    "name": "Tiger",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Beast",
+    "hp": 20,
+    "dr": 2,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The tiger has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Pounce",
+        "description": "If the tiger moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 13 Strength saving throw or be knocked prone. If the target is prone, the tiger can make one bite attack against it as a bonus action."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "treant",
+    "name": "Treant",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Plant",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "8d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "False Appearance",
+        "description": "While the treant remains motionless, it is indistinguishable from a normal tree."
+      },
+      {
+        "name": "Siege Monster",
+        "description": "The treant deals double damage to objects and structures."
+      },
+      {
+        "name": "Bludgeoning-Hardened",
+        "description": "Takes half damage from Bludgeoning attacks"
+      },
+      {
+        "name": "Piercing-Hardened",
+        "description": "Takes half damage from Piercing attacks"
+      },
+      {
+        "name": "Tinder-Dry",
+        "description": "Takes double damage from Fire attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "tribal-warrior",
+    "name": "Tribal Warrior",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Humanoid",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [],
+    "abilities": [
+      {
+        "name": "Pack Tactics",
+        "description": "The warrior has advantage on an attack roll against a creature if at least one of the warrior's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "triceratops",
+    "name": "Triceratops",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Beast",
+    "hp": 52,
+    "dr": 4,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "2d8+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Stomp",
+        "diceExpr": "2d10",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Trampling Charge",
+        "description": "If the triceratops moves at least 20 ft. straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 13 Strength saving throw or be knocked prone. If the target is prone, the triceratops can make one stomp attack against it as a bonus action."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "troll",
+    "name": "Troll",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Giant",
+    "hp": 46,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "4d6",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Smell",
+        "description": "The troll has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Regeneration",
+        "description": "The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Mountains"
+    ]
+  },
+  {
+    "id": "tyrannosaurus-rex",
+    "name": "Tyrannosaurus Rex",
+    "threatTier": "Deadly",
+    "tierRating": 5,
+    "type": "Beast",
+    "hp": 70,
+    "dr": 5,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d12",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d8+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "unicorn",
+    "name": "Unicorn",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Celestial",
+    "hp": 37,
+    "dr": 4,
+    "speed": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "3d6",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Horn",
+        "diceExpr": "2d8",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Charge",
+        "description": "If the unicorn moves at least 20 ft. straight toward a target and then hits it with a horn attack on the same turn, the target takes an extra 9 (2d8) piercing damage. If the target is a creature, it must succeed on a DC 15 Strength saving throw or be knocked prone."
+      },
+      {
+        "name": "Innate Spellcasting",
+        "description": "The unicorn's innate spellcasting ability is Charisma (spell save DC 14). (Innate magic — see notes.)"
+      },
+      {
+        "name": "Magic Resistance",
+        "description": "The unicorn has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Magic Weapons",
+        "description": "The unicorn's weapon attacks are magical."
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be charmed, paralyzed."
+      }
+    ],
+    "soulCore": {
+      "type": "Radiant",
+      "dc": 16
+    },
+    "native": [
+      "The Upper Planes"
+    ]
+  },
+  {
+    "id": "vampire-spawn",
+    "name": "Vampire Spawn",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Undead",
+    "hp": 45,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d6+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "3d4",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Regeneration",
+        "description": "The vampire regains 10 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from holy water, this trait doesn't function at the start of the vampire's next turn."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The vampire can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Vampire Weaknesses",
+        "description": "The vampire has the following flaws: Forbiddance. The vampire can't enter a residence without an invitation from one of the occupants. Harmed by Running Water. The vampire takes 20 acid damage when it ends its turn in running water. Stake to the Heart. The vampire is destroyed if a piercing weapon…"
+      },
+      {
+        "name": "Necrotic-Hardened",
+        "description": "Takes half damage from Necrotic attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": {
+      "type": "Shadow",
+      "dc": 16
+    },
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "vampire-bat-form",
+    "name": "Vampire, Bat Form",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Undead",
+    "hp": 79,
+    "dr": 6,
+    "speed": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "10d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shapechanger",
+        "description": "If the vampire isn't in sun light or running water, it can use its action to polymorph into a Tiny bat or a Medium cloud of mist, or back into its true form. While in bat form, the vampire can't speak, its walking speed is 5 feet, and it has a flying speed of 30 feet. Its statistics, other than its…"
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the vampire fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Misty Escape",
+        "description": "When it drops to 0 hit points outside its resting place, the vampire transforms into a cloud of mist (as in the Shapechanger trait) instead of falling unconscious, provided that it isn't in sunlight or running water. If it can't transform, it is destroyed. While it has 0 hit points in mist form, it…"
+      },
+      {
+        "name": "Regeneration",
+        "description": "The vampire regains 20 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from holy water, this trait doesn't function at the start of the vampire's next turn."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The vampire can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Vampire Weaknesses",
+        "description": "The vampire has the following flaws: Forbiddance. The vampire can't enter a residence without an invitation from one of the occupants. Harmed by Running Water. The vampire takes 20 acid damage if it ends its turn in running water. Stake to the Heart. If a piercing weapon made of wood is driven into…"
+      },
+      {
+        "name": "Charm",
+        "description": "The vampire targets one humanoid it can see within 30 ft. of it. If the target can see the vampire, the target must succeed on a DC 17 Wisdom saving throw against this magic or be charmed by the vampire. The charmed target regards the… (Once per encounter.)"
+      },
+      {
+        "name": "Necrotic-Hardened",
+        "description": "Takes half damage from Necrotic attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Shadow",
+      "dc": 18
+    },
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "vampire-mist-form",
+    "name": "Vampire, Mist Form",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Undead",
+    "hp": 79,
+    "dr": 6,
+    "speed": {
+      "value": 0,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 20,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [],
+    "abilities": [
+      {
+        "name": "Shapechanger",
+        "description": "If the vampire isn't in sun light or running water, it can use its action to polymorph into a Tiny bat or a Medium cloud of mist, or back into its true form. While in bat form, the vampire can't speak, its walking speed is 5 feet, and it has a flying speed of 30 feet. Its statistics, other than its…"
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the vampire fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Misty Escape",
+        "description": "When it drops to 0 hit points outside its resting place, the vampire transforms into a cloud of mist (as in the Shapechanger trait) instead of falling unconscious, provided that it isn't in sunlight or running water. If it can't transform, it is destroyed. While it has 0 hit points in mist form, it…"
+      },
+      {
+        "name": "Regeneration",
+        "description": "The vampire regains 20 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from holy water, this trait doesn't function at the start of the vampire's next turn."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The vampire can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Vampire Weaknesses",
+        "description": "The vampire has the following flaws: Forbiddance. The vampire can't enter a residence without an invitation from one of the occupants. Harmed by Running Water. The vampire takes 20 acid damage if it ends its turn in running water. Stake to the Heart. If a piercing weapon made of wood is driven into…"
+      },
+      {
+        "name": "Necrotic-Hardened",
+        "description": "Takes half damage from Necrotic attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Shadow",
+      "dc": 18
+    },
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "vampire-vampire-form",
+    "name": "Vampire, Vampire Form",
+    "threatTier": "Legendary",
+    "tierRating": 6,
+    "type": "Undead",
+    "hp": 79,
+    "dr": 6,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Unarmed Strike",
+        "diceExpr": "2d8+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "7d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shapechanger",
+        "description": "If the vampire isn't in sun light or running water, it can use its action to polymorph into a Tiny bat or a Medium cloud of mist, or back into its true form. While in bat form, the vampire can't speak, its walking speed is 5 feet, and it has a flying speed of 30 feet. Its statistics, other than its…"
+      },
+      {
+        "name": "Legendary Resistance",
+        "description": "If the vampire fails a saving throw, it can choose to succeed instead."
+      },
+      {
+        "name": "Misty Escape",
+        "description": "When it drops to 0 hit points outside its resting place, the vampire transforms into a cloud of mist (as in the Shapechanger trait) instead of falling unconscious, provided that it isn't in sunlight or running water. If it can't transform, it is destroyed. While it has 0 hit points in mist form, it…"
+      },
+      {
+        "name": "Regeneration",
+        "description": "The vampire regains 20 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from holy water, this trait doesn't function at the start of the vampire's next turn."
+      },
+      {
+        "name": "Spider Climb",
+        "description": "The vampire can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+      },
+      {
+        "name": "Vampire Weaknesses",
+        "description": "The vampire has the following flaws: Forbiddance. The vampire can't enter a residence without an invitation from one of the occupants. Harmed by Running Water. The vampire takes 20 acid damage if it ends its turn in running water. Stake to the Heart. If a piercing weapon made of wood is driven into…"
+      },
+      {
+        "name": "Charm",
+        "description": "The vampire targets one humanoid it can see within 30 ft. of it. If the target can see the vampire, the target must succeed on a DC 17 Wisdom saving throw against this magic or be charmed by the vampire. The charmed target regards the… (Once per encounter.)"
+      },
+      {
+        "name": "Necrotic-Hardened",
+        "description": "Takes half damage from Necrotic attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Legendary Trait",
+        "description": "Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+      }
+    ],
+    "soulCore": {
+      "type": "Shadow",
+      "dc": 18
+    },
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "veteran",
+    "name": "Veteran",
+    "threatTier": "Tough",
+    "tierRating": 3,
+    "type": "Humanoid",
+    "hp": 32,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "4d6",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
+  },
+  {
+    "id": "violet-fungus",
+    "name": "Violet Fungus",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Plant",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 5,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Rotting Touch",
+        "diceExpr": "1d8",
+        "damageType": "Necrotic",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "False Appearance",
+        "description": "While the violet fungus remains motionless, it is indistinguishable from an ordinary fungus."
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be blinded, blinded, frightened."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Forests"
+    ]
+  },
+  {
+    "id": "vrock",
+    "name": "Vrock",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Fiend",
+    "hp": 57,
+    "dr": 4,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "2d6+1",
+        "damageType": "Piercing",
+        "note": ""
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "2d10",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magic Resistance",
+        "description": "The vrock has advantage on saving throws against spells and other magical effects."
+      },
+      {
+        "name": "Spores",
+        "description": "A 15-foot-radius cloud of toxic spores extends out from the vrock. The spores spread around corners. Each creature in that area must succeed on a DC 14 Constitution saving throw or become poisoned. While poisoned in this way, a target… (Once per encounter.)"
+      },
+      {
+        "name": "Stunning Screech",
+        "description": "The vrock emits a horrific screech. Each creature within 20 feet of it that can hear it and that isn't a demon must succeed on a DC 14 Constitution saving throw or be stunned until the end of the vrock's next turn . (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be poisoned."
+      },
+      {
+        "name": "Cold-Hardened",
+        "description": "Takes half damage from Cold attacks"
+      },
+      {
+        "name": "Fire-Hardened",
+        "description": "Takes half damage from Fire attacks"
+      },
+      {
+        "name": "Lightning-Hardened",
+        "description": "Takes half damage from Lightning attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      }
+    ],
+    "soulCore": {
+      "type": "Infernal",
+      "dc": 16
+    },
+    "native": [
+      "The Lower Planes"
+    ]
+  },
+  {
+    "id": "vulture",
+    "name": "Vulture",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 10,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 50,
+      "unit": "ft",
+      "mode": "fly"
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "2d4",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Sight and Smell",
+        "description": "The vulture has advantage on Wisdom (Perception) checks that rely on sight or smell."
+      },
+      {
+        "name": "Pack Tactics",
+        "description": "The vulture has advantage on an attack roll against a creature if at least one of the vulture's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "warhorse",
+    "name": "Warhorse",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 1,
+    "speed": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Trampling Charge",
+        "description": "If the horse moves at least 20 ft. straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the horse can make another attack with its hooves against it as a bonus action."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "warhorse-skeleton",
+    "name": "Warhorse Skeleton",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Undead",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 60,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Undying Husk",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Brittle Frame",
+        "description": "Takes double damage from Bludgeoning attacks"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Ruins",
+      "Crypts"
+    ]
+  },
+  {
+    "id": "water-elemental",
+    "name": "Water Elemental",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Elemental",
+    "hp": 63,
+    "dr": 4,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 90,
+      "unit": "ft",
+      "mode": "swim"
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Water Form",
+        "description": "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+      },
+      {
+        "name": "Freeze",
+        "description": "If the elemental takes cold damage, it partially freezes; its speed is reduced by 20 ft. until the end of its next turn."
+      },
+      {
+        "name": "Whelm",
+        "description": "Each creature in the elemental's space must make a DC 15 Strength saving throw. On a failure, a target takes 13 (2d8 + 4) bludgeoning damage. If it is Large or smaller, it is also grappled (escape DC 14). Until this grapple ends, the… (Once per encounter.)"
+      },
+      {
+        "name": "Hardened Vitality",
+        "description": "Immune to Poison damage; cannot be exhausted or poisoned."
+      },
+      {
+        "name": "Acid-Hardened",
+        "description": "Takes half damage from Acid attacks"
+      },
+      {
+        "name": "Mundane Ward",
+        "description": "Takes half damage from nonmagical weapons"
+      },
+      {
+        "name": "Steadfast Form",
+        "description": "Cannot be grappled, paralyzed, petrified, prone, restrained, unconscious."
+      }
+    ],
+    "soulCore": {
+      "type": "Tidal",
+      "dc": 16
+    },
+    "native": [
+      "Elemental Planes"
+    ]
+  },
+  {
+    "id": "weasel",
+    "name": "Weasel",
+    "threatTier": "Easy",
+    "tierRating": 1,
+    "type": "Beast",
+    "hp": 16,
+    "dr": 2,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keen Hearing and Smell",
+        "description": "The weasel has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Wilderness"
+    ]
+  },
+  {
+    "id": "werebear-bear-form",
+    "name": "Werebear, Bear Form",
+    "threatTier": "Deadly",
+    "tierRating": 4,
+    "type": "Humanoid",
+    "hp": 70,
+    "dr": 4,
+    "speed": {
+      "value": 40,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "speedSecondary": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "climb"
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "4d8+1",
+        "damageType": "Slashing",
+        "note": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shapechanger",
+        "description": "The werebear can use its action to polymorph into a Large bear-humanoid hybrid or into a Large bear, or back into its true form, which is humanoid. Its statistics, other than its size and AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its…"
+      },
+      {
+        "name": "Keen Smell",
+        "description": "The werebear has advantage on Wisdom (Perception) checks that rely on smell."
+      },
+      {
+        "name": "Spectral Resilience",
+        "description": "Immune to nonmagical weapon damage"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Settlements"
+    ]
   }
 ]

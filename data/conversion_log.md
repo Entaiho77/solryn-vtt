@@ -2,7 +2,7 @@
 
 Source: D&D 5e SRD-2014 monster dataset (334 creatures). CR->TR mapping, TR band tables (DR / dmg-per-round), HP x0.55 with floor 16 and ceiling (70 non-Legendary / 105 Legendary), DR = (AC-10)/2 clamped to band. Format: `Name | CR x -> TR y | judgment notes`. 'standard conversion' = no judgment beyond the standard pipeline.
 
-Converted so far: 250 / 334
+Converted so far: 300 / 334
 
 Aboleth | CR 10 -> TR 5 | hp clamped 74->70
 Acolyte | CR 0.25 -> TR 1 | standard conversion
@@ -254,3 +254,53 @@ Scorpion | CR 0 -> TR 1 | standard conversion
 Scout | CR 0.5 -> TR 1 | standard conversion
 Sea Hag | CR 2 -> TR 2 | standard conversion
 Sea Horse | CR 0 -> TR 0 | standard conversion
+Shadow | CR 0.5 -> TR 1 | standard conversion
+Shambling Mound | CR 5 -> TR 4 | hp clamped 75->70
+Shield Guardian | CR 7 -> TR 4 | hp clamped 78->70
+Shrieker | CR 0 -> TR 0 | standard conversion
+Silver Dragon Wyrmling | CR 2 -> TR 2 | soulCore Tidal dc14 [dragon-by-age]
+Skeleton | CR 0.25 -> TR 1 | standard conversion
+Solar | CR 21 -> TR 7 | hp clamped 134->105; TR6+/Legendary extrapolated; soulCore Radiant dc19 [celestial]
+Specter | CR 1 -> TR 2 | standard conversion
+Spider | CR 0 -> TR 1 | standard conversion
+Spirit Naga | CR 8 -> TR 5 | standard conversion
+Sprite | CR 0.25 -> TR 1 | standard conversion
+Spy | CR 1 -> TR 2 | standard conversion
+Steam Mephit | CR 0.25 -> TR 1 | standard conversion
+Stirge | CR 0.125 -> TR 1 | standard conversion
+Stone Giant | CR 7 -> TR 4 | standard conversion
+Stone Golem | CR 10 -> TR 5 | hp clamped 98->70
+Storm Giant | CR 13 -> TR 6 | hp clamped 127->105; TR6+/Legendary extrapolated; soulCore Earthen dc18 [unique high-CR giant -> Earthen (review)]
+Succubus/Incubus | CR 4 -> TR 3 | standard conversion
+Swarm of Bats | CR 0.25 -> TR 1 | standard conversion
+Swarm of Beetles | CR 0.5 -> TR 1 | standard conversion
+Swarm of Centipedes | CR 0.5 -> TR 1 | standard conversion
+Swarm of Insects | CR 0.5 -> TR 1 | standard conversion
+Swarm of Poisonous Snakes | CR 2 -> TR 2 | standard conversion
+Swarm of Quippers | CR 1 -> TR 2 | standard conversion
+Swarm of Rats | CR 0.25 -> TR 1 | standard conversion
+Swarm of Ravens | CR 0.25 -> TR 1 | standard conversion
+Swarm of Spiders | CR 0.5 -> TR 1 | standard conversion
+Swarm of Wasps | CR 0.5 -> TR 1 | standard conversion
+Tarrasque | CR 30 -> TR 7 | hp clamped 372->105; TR6+/Legendary extrapolated; soulCore Naturebound dc19 [unique high-CR monstrosity -> Naturebound (review)]
+Thug | CR 0.5 -> TR 1 | standard conversion
+Tiger | CR 1 -> TR 2 | standard conversion
+Treant | CR 9 -> TR 5 | hp clamped 76->70
+Tribal Warrior | CR 0.125 -> TR 1 | standard conversion
+Triceratops | CR 5 -> TR 4 | standard conversion
+Troll | CR 5 -> TR 4 | standard conversion
+Tyrannosaurus Rex | CR 8 -> TR 5 | hp clamped 75->70
+Unicorn | CR 5 -> TR 4 | soulCore Radiant dc16 [celestial]
+Vampire Spawn | CR 5 -> TR 4 | soulCore Shadow dc16 [elite undead]
+Vampire, Bat Form | CR 13 -> TR 6 | TR6+/Legendary extrapolated; soulCore Shadow dc18 [elite undead]
+Vampire, Mist Form | CR 13 -> TR 6 | TR6+/Legendary extrapolated; soulCore Shadow dc18 [elite undead]
+Vampire, Vampire Form | CR 13 -> TR 6 | TR6+/Legendary extrapolated; soulCore Shadow dc18 [elite undead]
+Veteran | CR 3 -> TR 3 | standard conversion
+Violet Fungus | CR 0.25 -> TR 1 | standard conversion
+Vrock | CR 6 -> TR 4 | soulCore Infernal dc16 [elite fiend]
+Vulture | CR 0 -> TR 1 | standard conversion
+Warhorse | CR 0.5 -> TR 1 | standard conversion
+Warhorse Skeleton | CR 0.5 -> TR 1 | standard conversion
+Water Elemental | CR 5 -> TR 4 | soulCore Tidal dc16 [elemental(Tidal)]
+Weasel | CR 0 -> TR 1 | standard conversion
+Werebear, Bear Form | CR 5 -> TR 4 | hp clamped 74->70
