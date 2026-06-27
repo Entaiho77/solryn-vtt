@@ -1,4 +1,5 @@
 import type { BestiaryEntry, StatBlockShape } from '../../engine/schema';
+import { generatedBestiary } from './bestiary.generated';
 
 /**
  * Stat-block shapes drive the add-creature form's fields by category. Solryn creatures
@@ -35,7 +36,10 @@ export const statBlockShapes: StatBlockShape[] = [
  * per creature are flagged for Matthew — the ruleset names soul cores but not full loot
  * tables.)
  */
-export const bestiary: BestiaryEntry[] = [
+// Hand-authored canonical starters (Solryn v1.2 MRD §7.4). The bulk SRD +
+// Eribor conversions live in bestiary.generated.ts (provisional) and are
+// appended below — see scripts/genBestiary.ts.
+const starterBestiary: BestiaryEntry[] = [
   {
     id: 'mossback-hare',
     name: 'Mossback Hare',
@@ -107,3 +111,6 @@ export const bestiary: BestiaryEntry[] = [
     abilities: ['Spellcaster: Entangle, Sporeblind, Chitin Shield (1/rest each)', 'Nature magic'],
   },
 ];
+
+// The full Solryn bestiary: hand-authored starters + provisional conversions.
+export const bestiary: BestiaryEntry[] = [...starterBestiary, ...generatedBestiary];

@@ -13,7 +13,8 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "seed:export": "vite-node scripts/exportSeed.ts",
-    "seed:push": "firebase database:set /systems ./seed/systems.json"
+    "seed:push": "firebase database:set /systems ./seed/systems.json",
+    "gen:bestiary": "vite-node scripts/genBestiary.ts"
   },
   "dependencies": {
     "firebase": "^12.15.0",
