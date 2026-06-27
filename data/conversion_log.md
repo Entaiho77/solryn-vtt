@@ -2,7 +2,7 @@
 
 Source: D&D 5e SRD-2014 monster dataset (334 creatures). CR->TR mapping, TR band tables (DR / dmg-per-round), HP x0.55 with floor 16 and ceiling (70 non-Legendary / 105 Legendary), DR = (AC-10)/2 clamped to band. Format: `Name | CR x -> TR y | judgment notes`. 'standard conversion' = no judgment beyond the standard pipeline.
 
-Converted so far: 300 / 334
+Converted so far: 334 / 334
 
 Aboleth | CR 10 -> TR 5 | hp clamped 74->70
 Acolyte | CR 0.25 -> TR 1 | standard conversion
@@ -304,3 +304,37 @@ Warhorse Skeleton | CR 0.5 -> TR 1 | standard conversion
 Water Elemental | CR 5 -> TR 4 | soulCore Tidal dc16 [elemental(Tidal)]
 Weasel | CR 0 -> TR 1 | standard conversion
 Werebear, Bear Form | CR 5 -> TR 4 | hp clamped 74->70
+Werebear, Human Form | CR 5 -> TR 4 | hp clamped 74->70
+Werebear, Hybrid Form | CR 5 -> TR 4 | hp clamped 74->70
+Wereboar, Boar Form | CR 4 -> TR 3 | standard conversion
+Wereboar, Human Form | CR 4 -> TR 3 | standard conversion
+Wereboar, Hybrid Form | CR 4 -> TR 3 | standard conversion
+Wererat, Human Form | CR 2 -> TR 2 | standard conversion
+Wererat, Hybrid Form | CR 2 -> TR 2 | standard conversion
+Wererat, Rat Form | CR 2 -> TR 2 | standard conversion
+Weretiger, Human Form | CR 4 -> TR 3 | standard conversion
+Weretiger, Hybrid Form | CR 4 -> TR 3 | standard conversion
+Weretiger, Tiger Form | CR 4 -> TR 3 | standard conversion
+Werewolf, Human Form | CR 3 -> TR 3 | standard conversion
+Werewolf, Hybrid Form | CR 3 -> TR 3 | standard conversion
+Werewolf, Wolf Form | CR 3 -> TR 3 | standard conversion
+White Dragon Wyrmling | CR 2 -> TR 2 | soulCore Tidal dc14 [dragon-by-age]
+Wight | CR 3 -> TR 3 | standard conversion
+Will-o'-Wisp | CR 2 -> TR 2 | standard conversion
+Winter Wolf | CR 3 -> TR 3 | standard conversion
+Wolf | CR 0.25 -> TR 1 | standard conversion
+Worg | CR 0.5 -> TR 1 | standard conversion
+Wraith | CR 5 -> TR 4 | soulCore Shadow dc16 [elite undead]
+Wyvern | CR 6 -> TR 4 | soulCore Storm dc16 [elite dragon]
+Xorn | CR 5 -> TR 4 | soulCore Earthen dc16 [elemental(Earthen)]
+Young Black Dragon | CR 7 -> TR 4 | soulCore Caustic dc16 [dragon-by-age]
+Young Blue Dragon | CR 9 -> TR 5 | hp clamped 84->70; soulCore Storm dc17 [dragon-by-age]
+Young Brass Dragon | CR 6 -> TR 4 | soulCore Infernal dc16 [dragon-by-age]
+Young Bronze Dragon | CR 8 -> TR 5 | hp clamped 78->70; soulCore Storm dc17 [dragon-by-age]
+Young Copper Dragon | CR 7 -> TR 4 | soulCore Caustic dc16 [dragon-by-age]
+Young Gold Dragon | CR 10 -> TR 5 | hp clamped 98->70; soulCore Infernal dc17 [dragon-by-age]
+Young Green Dragon | CR 8 -> TR 5 | hp clamped 75->70; soulCore Venom dc17 [dragon-by-age]
+Young Red Dragon | CR 10 -> TR 5 | hp clamped 98->70; soulCore Infernal dc17 [dragon-by-age]
+Young Silver Dragon | CR 9 -> TR 5 | hp clamped 92->70; soulCore Tidal dc17 [dragon-by-age]
+Young White Dragon | CR 6 -> TR 4 | hp clamped 73->70; soulCore Tidal dc16 [dragon-by-age]
+Zombie | CR 0.25 -> TR 1 | standard conversion
