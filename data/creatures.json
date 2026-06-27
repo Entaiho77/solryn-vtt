@@ -5167,7 +5167,7 @@
       },
       {
         "name": "Steadfast Form",
-        "description": "Cannot be blinded, charmed, blinded, frightened, paralyzed, petrified."
+        "description": "Cannot be blinded, charmed, frightened, paralyzed, petrified."
       }
     ],
     "soulCore": null,
@@ -9864,7 +9864,7 @@
       },
       {
         "name": "Steadfast Form",
-        "description": "Cannot be blinded, charmed, blinded, exhausted, frightened, prone."
+        "description": "Cannot be blinded, charmed, exhausted, frightened, prone."
       }
     ],
     "soulCore": null,
@@ -11315,7 +11315,7 @@
       },
       {
         "name": "Steadfast Form",
-        "description": "Cannot be blinded, charmed, blinded, frightened, paralyzed, petrified."
+        "description": "Cannot be blinded, charmed, frightened, paralyzed, petrified."
       }
     ],
     "soulCore": null,
@@ -11821,7 +11821,7 @@
       },
       {
         "name": "Steadfast Form",
-        "description": "Cannot be blinded, blinded, exhausted."
+        "description": "Cannot be blinded, exhausted."
       }
     ],
     "soulCore": null,
@@ -11898,7 +11898,7 @@
       },
       {
         "name": "Steadfast Form",
-        "description": "Cannot be blinded, blinded, frightened."
+        "description": "Cannot be blinded, frightened."
       }
     ],
     "soulCore": null,
@@ -13923,7 +13923,7 @@
       },
       {
         "name": "Steadfast Form",
-        "description": "Cannot be blinded, blinded, frightened."
+        "description": "Cannot be blinded, frightened."
       }
     ],
     "soulCore": null,
