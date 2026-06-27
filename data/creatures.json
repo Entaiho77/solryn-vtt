@@ -65,7 +65,7 @@
     "attacks": [
       {
         "name": "Club",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -1719,7 +1719,7 @@
     "attacks": [
       {
         "name": "Rake",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       }
@@ -1830,7 +1830,7 @@
     "attacks": [
       {
         "name": "Warhammer",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -1883,7 +1883,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -2073,7 +2073,7 @@
       },
       {
         "name": "Dagger",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -2106,13 +2106,13 @@
       },
       {
         "name": "Tail",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Piercing",
         "note": ""
       },
       {
         "name": "Hurl Flame",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Fire",
         "note": ""
       }
@@ -2589,7 +2589,7 @@
     "attacks": [
       {
         "name": "Beak",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -2710,7 +2710,7 @@
     "attacks": [
       {
         "name": "Claw",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       },
@@ -2985,7 +2985,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -3157,7 +3157,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Piercing",
         "note": ""
       },
@@ -3169,7 +3169,7 @@
       },
       {
         "name": "Claws",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Slashing",
         "note": ""
       }
@@ -3422,7 +3422,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -3449,7 +3449,7 @@
     "attacks": [
       {
         "name": "Club",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -3563,13 +3563,13 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Piercing",
         "note": ""
       },
       {
         "name": "Constrict",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -3886,7 +3886,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -4113,7 +4113,7 @@
     "attacks": [
       {
         "name": "Hooves",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -4151,7 +4151,7 @@
       },
       {
         "name": "Claw",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       },
@@ -4264,7 +4264,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "4d4",
+        "diceExpr": "1d10+4",
         "damageType": "Piercing",
         "note": ""
       },
@@ -4496,7 +4496,7 @@
     "attacks": [
       {
         "name": "Claws",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       }
@@ -4549,7 +4549,7 @@
     "attacks": [
       {
         "name": "Talons",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       }
@@ -5697,7 +5697,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -5810,7 +5810,7 @@
       },
       {
         "name": "Tail",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -5996,7 +5996,7 @@
     "attacks": [
       {
         "name": "Ram",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -6192,7 +6192,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -6219,7 +6219,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -6255,7 +6255,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -6291,7 +6291,7 @@
     "attacks": [
       {
         "name": "Claw",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Bludgeoning",
         "note": ""
       },
@@ -6413,7 +6413,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       }
@@ -6577,7 +6577,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -6842,7 +6842,7 @@
     "attacks": [
       {
         "name": "Ram",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -7167,7 +7167,7 @@
     "attacks": [
       {
         "name": "Tentacles",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Slashing",
         "note": ""
       },
@@ -7252,7 +7252,7 @@
     "attacks": [
       {
         "name": "Spiked Bone Club",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -7465,7 +7465,7 @@
     "attacks": [
       {
         "name": "Claws",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       },
@@ -7803,7 +7803,7 @@
       },
       {
         "name": "Tail",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       },
@@ -7873,7 +7873,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       }
@@ -7997,7 +7997,7 @@
       },
       {
         "name": "Claws",
-        "diceExpr": "4d4",
+        "diceExpr": "1d10+4",
         "damageType": "Slashing",
         "note": ""
       },
@@ -8064,7 +8064,7 @@
     "attacks": [
       {
         "name": "Claws",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       }
@@ -8323,7 +8323,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -8594,7 +8594,7 @@
     "attacks": [
       {
         "name": "Fist",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -8898,7 +8898,7 @@
     "attacks": [
       {
         "name": "Claws",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       }
@@ -8998,7 +8998,7 @@
     "attacks": [
       {
         "name": "Gore",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       },
@@ -9190,7 +9190,7 @@
     "attacks": [
       {
         "name": "Snake Hair",
-        "diceExpr": "4d4",
+        "diceExpr": "1d10+4",
         "damageType": "Piercing",
         "note": ""
       },
@@ -9202,7 +9202,7 @@
       },
       {
         "name": "Longbow",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       }
@@ -9464,7 +9464,7 @@
     "attacks": [
       {
         "name": "Hooves",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -9971,7 +9971,7 @@
     "attacks": [
       {
         "name": "Morningstar",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -10013,7 +10013,7 @@
     "attacks": [
       {
         "name": "Claw (Oni Form Only)",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       },
@@ -10186,7 +10186,7 @@
       },
       {
         "name": "Claws",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       }
@@ -10356,7 +10356,7 @@
       },
       {
         "name": "Claw",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       },
@@ -10615,7 +10615,7 @@
     "attacks": [
       {
         "name": "Hooves",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -11139,7 +11139,7 @@
     "attacks": [
       {
         "name": "Gore",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -11171,7 +11171,7 @@
     "attacks": [
       {
         "name": "Hooves",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Bludgeoning",
         "note": ""
       }
@@ -12336,7 +12336,7 @@
     "attacks": [
       {
         "name": "Claws",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Slashing",
         "note": ""
       }
@@ -12389,7 +12389,7 @@
     "attacks": [
       {
         "name": "Blood Drain",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -12642,7 +12642,7 @@
     "attacks": [
       {
         "name": "Bites",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -12703,7 +12703,7 @@
     "attacks": [
       {
         "name": "Bites",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -12756,7 +12756,7 @@
     "attacks": [
       {
         "name": "Bites",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -12809,7 +12809,7 @@
     "attacks": [
       {
         "name": "Bites",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -13082,7 +13082,7 @@
     "attacks": [
       {
         "name": "Bites",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -13147,7 +13147,7 @@
     "attacks": [
       {
         "name": "Bites",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -13201,7 +13201,7 @@
       },
       {
         "name": "Claw",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       },
@@ -13544,13 +13544,13 @@
     "attacks": [
       {
         "name": "Hooves",
-        "diceExpr": "3d6",
+        "diceExpr": "1d12+4",
         "damageType": "Bludgeoning",
         "note": ""
       },
       {
         "name": "Horn",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       }
@@ -13611,7 +13611,7 @@
       },
       {
         "name": "Claws",
-        "diceExpr": "3d4",
+        "diceExpr": "1d6+4",
         "damageType": "Slashing",
         "note": ""
       }
@@ -14026,7 +14026,7 @@
     "attacks": [
       {
         "name": "Beak",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -14453,13 +14453,13 @@
     "attacks": [
       {
         "name": "Maul",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Bludgeoning",
         "note": ""
       },
       {
         "name": "Tusks",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Slashing",
         "note": ""
       }
@@ -14641,7 +14641,7 @@
     "attacks": [
       {
         "name": "Scimitar",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Slashing",
         "note": ""
       },
@@ -14838,7 +14838,7 @@
       },
       {
         "name": "Claws",
-        "diceExpr": "3d4",
+        "diceExpr": "1d6+4",
         "damageType": "Slashing",
         "note": ""
       }
@@ -14962,13 +14962,13 @@
     "attacks": [
       {
         "name": "Life Drain",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Necrotic",
         "note": ""
       },
       {
         "name": "Longbow",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Piercing",
         "note": ""
       }
@@ -15018,7 +15018,7 @@
     "attacks": [
       {
         "name": "Shock",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Lightning",
         "note": ""
       }
@@ -15148,7 +15148,7 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d4",
+        "diceExpr": "1d4+2",
         "damageType": "Piercing",
         "note": ""
       }
@@ -15302,19 +15302,19 @@
     "attacks": [
       {
         "name": "Bite",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Piercing",
         "note": ""
       },
       {
         "name": "Claws",
-        "diceExpr": "2d8",
+        "diceExpr": "1d8+4",
         "damageType": "Slashing",
         "note": ""
       },
       {
         "name": "Stinger",
-        "diceExpr": "2d6",
+        "diceExpr": "1d6+3",
         "damageType": "Piercing",
         "note": ""
       }
@@ -15413,7 +15413,7 @@
       },
       {
         "name": "Claw",
-        "diceExpr": "3d6",
+        "diceExpr": "1d12+4",
         "damageType": "Slashing",
         "note": ""
       }
@@ -15879,7 +15879,7 @@
       },
       {
         "name": "Claw",
-        "diceExpr": "3d6",
+        "diceExpr": "1d12+4",
         "damageType": "Slashing",
         "note": ""
       }

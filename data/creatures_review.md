@@ -42,7 +42,7 @@
 
 ### Acolyte  ·  Humanoid
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk
-- **Attacks:** Club **2d4** Bludgeoning
+- **Attacks:** Club **1d4+2** Bludgeoning
 - **Abilities:** *Spellcasting* — The acolyte is a 1st-level spellcaster. (Innate magic — see notes.)
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
@@ -55,7 +55,7 @@
 
 ### Awakened Shrub  ·  Plant
 - **HP** 16  ·  **DR** 1  ·  **Speed** 20 ft walk
-- **Attacks:** Rake **2d4** Slashing
+- **Attacks:** Rake **1d4+2** Slashing
 - **Abilities:** *False Appearance* — While the shrub remains motionless, it is indistinguishable from a normal shrub.; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Tinder-Dry* — Takes double damage from Fire attacks
 - **Soul Core:** —  ·  **Native:** Forests
 - **Conversion note:** standard conversion
@@ -68,7 +68,7 @@
 
 ### Baboon  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk, 30 ft climb
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Abilities:** *Pack Tactics* — The baboon has advantage on an attack roll against a creature if at least one of the baboon's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -109,7 +109,7 @@
 
 ### Blood Hawk  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 10 ft walk, 60 ft fly
-- **Attacks:** Beak **2d4** Piercing
+- **Attacks:** Beak **1d4+2** Piercing
 - **Abilities:** *Keen Sight* — The hawk has advantage on Wisdom (Perception) checks that rely on sight.; *Pack Tactics* — The hawk has advantage on an attack roll against a creature if at least one of the hawk's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -123,7 +123,7 @@
 
 ### Camel  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 50 ft walk
-- **Attacks:** Bite **2d4** Bludgeoning
+- **Attacks:** Bite **1d4+2** Bludgeoning
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -136,13 +136,13 @@
 
 ### Cockatrice  ·  Monstrosity
 - **HP** 16  ·  **DR** 1  ·  **Speed** 20 ft walk, 40 ft fly
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Commoner  ·  Humanoid
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk
-- **Attacks:** Club **2d4** Bludgeoning
+- **Attacks:** Club **1d4+2** Bludgeoning
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
 
@@ -189,13 +189,13 @@
 
 ### Deer  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 50 ft walk
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Draft Horse  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 40 ft walk
-- **Attacks:** Hooves **2d4** Bludgeoning
+- **Attacks:** Hooves **1d4+2** Bludgeoning
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -215,14 +215,14 @@
 
 ### Dust Mephit  ·  Elemental
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk, 30 ft fly
-- **Attacks:** Claws **2d4** Slashing
+- **Attacks:** Claws **1d4+2** Slashing
 - **Abilities:** *Death Burst* — When the mephit dies, it explodes in a burst of dust. Each creature within 5 ft. of it must then succeed on a DC 10 Constitution saving throw or be blinded for 1 minute. A blinded creature can repeat the saving throw on each of its turns, ending the effect on itself on a success.; *Innate Spellcasting* — The mephit can innately cast sleep, requiring no material components. (Innate magic — see notes.); *Blinding Breath* — The mephit exhales a 15-foot cone of blinding dust. Each creature in that area must succeed on a DC 10 Dexterity saving throw or be blinded for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the… (Once per encounter.); *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Tinder-Dry* — Takes double damage from Fire attacks
 - **Soul Core:** —  ·  **Native:** Elemental Planes
 - **Conversion note:** standard conversion
 
 ### Eagle  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 10 ft walk, 60 ft fly
-- **Attacks:** Talons **2d4** Slashing
+- **Attacks:** Talons **1d4+2** Slashing
 - **Abilities:** *Keen Sight* — The eagle has advantage on Wisdom (Perception) checks that rely on sight.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -264,7 +264,7 @@
 
 ### Giant Centipede  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 30 ft walk, 30 ft climb
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -291,7 +291,7 @@
 
 ### Giant Goat  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 40 ft walk
-- **Attacks:** Ram **2d4** Bludgeoning
+- **Attacks:** Ram **1d4+2** Bludgeoning
 - **Abilities:** *Charge* — If the goat moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 5 (2d4) bludgeoning damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.; *Sure-Footed* — The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it prone.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -311,20 +311,20 @@
 
 ### Giant Poisonous Snake  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 30 ft walk, 30 ft swim
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Giant Rat  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Abilities:** *Keen Smell* — The rat has advantage on Wisdom (Perception) checks that rely on smell.; *Pack Tactics* — The rat has advantage on an attack roll against a creature if at least one of the rat's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Giant Rat (Diseased)  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Abilities:** *Keen Smell* — The rat has advantage on Wisdom (Perception) checks that rely on smell.; *Pack Tactics* — The rat has advantage on an attack roll against a creature if at least one of the rat's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -344,7 +344,7 @@
 
 ### Giant Weasel  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 40 ft walk
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Abilities:** *Keen Hearing and Smell* — The weasel has advantage on Wisdom (Perception) checks that rely on hearing or smell.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -365,7 +365,7 @@
 
 ### Goat  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 40 ft walk
-- **Attacks:** Ram **2d4** Bludgeoning
+- **Attacks:** Ram **1d4+2** Bludgeoning
 - **Abilities:** *Charge* — If the goat moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 2 (1d4) bludgeoning damage. If the target is a creature, it must succeed on a DC 10 Strength saving throw or be knocked prone.; *Sure-Footed* — The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it prone.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -386,7 +386,7 @@
 
 ### Grimlock  ·  Humanoid
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk
-- **Attacks:** Spiked Bone Club **2d4** Bludgeoning
+- **Attacks:** Spiked Bone Club **1d4+2** Bludgeoning
 - **Abilities:** *Blind Senses* — The grimlock can't use its blindsight while deafened and unable to smell.; *Keen Hearing and Smell* — The grimlock has advantage on Wisdom (Perception) checks that rely on hearing or smell.; *Stone Camouflage* — The grimlock has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.; *Steadfast Form* — Cannot be blinded.
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
@@ -427,14 +427,14 @@
 
 ### Ice Mephit  ·  Elemental
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk, 30 ft fly
-- **Attacks:** Claws **2d4** Slashing
+- **Attacks:** Claws **1d4+2** Slashing
 - **Abilities:** *Death Burst* — When the mephit dies, it explodes in a burst of jagged ice. Each creature within 5 ft. of it must make a DC 10 Dexterity saving throw, taking 4 (1d8) slashing damage on a failed save, or half as much damage on a successful one.; *False Appearance* — While the mephit remains motionless, it is indistinguishable from an ordinary shard of ice.; *Innate Spellcasting* — The mephit can innately cast fog cloud, requiring no material components. (Innate magic — see notes.); *Frost Breath* — The mephit exhales a 15-foot cone of cold air. Each creature in that area must succeed on a DC 10 Dexterity saving throw, taking 5 (2d4) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.); *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Coldward* — Immune to Cold damage; *Brittle Frame* — Takes double damage from Bludgeoning attacks; *Tinder-Dry* — Takes double damage from Fire attacks
 - **Soul Core:** —  ·  **Native:** Frozen Wastes, Elemental Planes
 - **Conversion note:** standard conversion
 
 ### Jackal  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 40 ft walk
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Abilities:** *Keen Hearing and Smell* — The jackal has advantage on Wisdom (Perception) checks that rely on hearing or smell.; *Pack Tactics* — The jackal has advantage on an attack roll against a creature if at least one of the jackal's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -448,7 +448,7 @@
 
 ### Lemure  ·  Fiend
 - **HP** 16  ·  **DR** 1  ·  **Speed** 15 ft walk
-- **Attacks:** Fist **2d4** Bludgeoning
+- **Attacks:** Fist **1d4+2** Bludgeoning
 - **Abilities:** *Devil's Sight* — Magical darkness doesn't impede the lemure's darkvision.; *Hellish Rejuvenation* — A lemure that dies in the Nine Hells comes back to life with all its hit points in 1d10 days unless it is killed by a good-aligned creature with a bless spell cast on that creature or its remains are sprinkled with holy water.; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Cold-Hardened* — Takes half damage from Cold attacks; *Steadfast Form* — Cannot be charmed, frightened.
 - **Soul Core:** —  ·  **Native:** The Nine Hells, The Lower Planes
 - **Conversion note:** standard conversion
@@ -468,7 +468,7 @@
 
 ### Magma Mephit  ·  Elemental
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk, 30 ft fly
-- **Attacks:** Claws **2d4** Slashing
+- **Attacks:** Claws **1d4+2** Slashing
 - **Abilities:** *Death Burst* — When the mephit dies, it explodes in a burst of lava. Each creature within 5 ft. of it must make a DC 11 Dexterity saving throw, taking 7 (2d6) fire damage on a failed save, or half as much damage on a successful one.; *False Appearance* — While the mephit remains motionless, it is indistinguishable from an ordinary mound of magma.; *Innate Spellcasting* — The mephit can innately cast heat metal (spell save DC 10), requiring no material components. (Innate magic — see notes.); *Fire Breath* — The mephit exhales a 15-foot cone of fire. Each creature in that area must make a DC 11 Dexterity saving throw, taking 7 (2d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.); *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Frost-Brittle* — Takes double damage from Cold attacks
 - **Soul Core:** —  ·  **Native:** Elemental Planes
 - **Conversion note:** standard conversion
@@ -496,7 +496,7 @@
 
 ### Mule  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 40 ft walk
-- **Attacks:** Hooves **2d4** Bludgeoning
+- **Attacks:** Hooves **1d4+2** Bludgeoning
 - **Abilities:** *Beast of Burden* — The mule is considered to be a Large animal for the purpose of determining its carrying capacity.; *Sure-Footed* — The mule has advantage on Strength and Dexterity saving throws made against effects that would knock it prone.
 - **Soul Core:** —  ·  **Native:** Settlements, Wilderness
 - **Conversion note:** standard conversion
@@ -543,7 +543,7 @@
 
 ### Pony  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 40 ft walk
-- **Attacks:** Hooves **2d4** Bludgeoning
+- **Attacks:** Hooves **1d4+2** Bludgeoning
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -584,7 +584,7 @@
 
 ### Riding Horse  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 60 ft walk
-- **Attacks:** Hooves **2d4** Bludgeoning
+- **Attacks:** Hooves **1d4+2** Bludgeoning
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -652,41 +652,41 @@
 
 ### Steam Mephit  ·  Elemental
 - **HP** 16  ·  **DR** 1  ·  **Speed** 30 ft walk, 30 ft fly
-- **Attacks:** Claws **2d4** Slashing
+- **Attacks:** Claws **1d4+2** Slashing
 - **Abilities:** *Death Burst* — When the mephit dies, it explodes in a cloud of steam. Each creature within 5 ft. of the mephit must succeed on a DC 10 Dexterity saving throw or take 4 (1d8) fire damage.; *Innate Spellcasting* — The mephit can innately cast blur, requiring no material components. (Innate magic — see notes.); *Steam Breath* — The mephit exhales a 15-foot cone of scalding steam. Each creature in that area must succeed on a DC 10 Dexterity saving throw, taking 4 (1d8) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.); *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage
 - **Soul Core:** —  ·  **Native:** Elemental Planes
 - **Conversion note:** standard conversion
 
 ### Stirge  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 10 ft walk, 40 ft fly
-- **Attacks:** Blood Drain **2d4** Piercing
+- **Attacks:** Blood Drain **1d4+2** Piercing
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Swarm of Bats  ·  Swarm of Tiny Beasts
 - **HP** 16  ·  **DR** 1  ·  **Speed** 0 ft walk, 30 ft fly
-- **Attacks:** Bites **2d4** Piercing
+- **Attacks:** Bites **1d4+2** Piercing
 - **Abilities:** *Echolocation* — The swarm can't use its blindsight while deafened.; *Keen Hearing* — The swarm has advantage on Wisdom (Perception) checks that rely on hearing.; *Swarm* — The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny bat. The swarm can't regain hit points or gain temporary hit points.; *Bludgeoning-Hardened* — Takes half damage from Bludgeoning attacks; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Slashing-Hardened* — Takes half damage from Slashing attacks; *Steadfast Form* — Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Swarm of Beetles  ·  Swarm of Tiny Beasts
 - **HP** 16  ·  **DR** 1  ·  **Speed** 20 ft walk, 20 ft climb
-- **Attacks:** Bites **2d4** Piercing
+- **Attacks:** Bites **1d4+2** Piercing
 - **Abilities:** *Swarm* — The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.; *Bludgeoning-Hardened* — Takes half damage from Bludgeoning attacks; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Slashing-Hardened* — Takes half damage from Slashing attacks; *Steadfast Form* — Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Swarm of Centipedes  ·  Swarm of Tiny Beasts
 - **HP** 16  ·  **DR** 1  ·  **Speed** 20 ft walk, 20 ft climb
-- **Attacks:** Bites **2d4** Piercing
+- **Attacks:** Bites **1d4+2** Piercing
 - **Abilities:** *Swarm* — The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.; *Bludgeoning-Hardened* — Takes half damage from Bludgeoning attacks; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Slashing-Hardened* — Takes half damage from Slashing attacks; *Steadfast Form* — Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Swarm of Insects  ·  Swarm of Tiny Beasts
 - **HP** 16  ·  **DR** 1  ·  **Speed** 20 ft walk, 20 ft climb
-- **Attacks:** Bites **2d4** Piercing
+- **Attacks:** Bites **1d4+2** Piercing
 - **Abilities:** *Swarm* — The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.; *Bludgeoning-Hardened* — Takes half damage from Bludgeoning attacks; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Slashing-Hardened* — Takes half damage from Slashing attacks; *Steadfast Form* — Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -707,14 +707,14 @@
 
 ### Swarm of Spiders  ·  Swarm of Tiny Beasts
 - **HP** 16  ·  **DR** 1  ·  **Speed** 20 ft walk, 20 ft climb
-- **Attacks:** Bites **2d4** Piercing
+- **Attacks:** Bites **1d4+2** Piercing
 - **Abilities:** *Swarm* — The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.; *Spider Climb* — The swarm can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.; *Web Sense* — While in contact with a web, the swarm knows the exact location of any other creature in contact with the same web.; *Web Walker* — The swarm ignores movement restrictions caused by webbing.; *Bludgeoning-Hardened* — Takes half damage from Bludgeoning attacks; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Slashing-Hardened* — Takes half damage from Slashing attacks; *Steadfast Form* — Cannot be charmed, frightened, paralyzed, petrified, prone, restrained, stunned.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Swarm of Wasps  ·  Swarm of Tiny Beasts
 - **HP** 16  ·  **DR** 1  ·  **Speed** 5 ft walk, 30 ft fly
-- **Attacks:** Bites **2d4** Piercing
+- **Attacks:** Bites **1d4+2** Piercing
 - **Abilities:** *Swarm* — The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain hit points or gain temporary hit points.; *Bludgeoning-Hardened* — Takes half damage from Bludgeoning attacks; *Piercing-Hardened* — Takes half damage from Piercing attacks; *Slashing-Hardened* — Takes half damage from Slashing attacks; *Steadfast Form* — Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -742,7 +742,7 @@
 
 ### Vulture  ·  Beast
 - **HP** 16  ·  **DR** 1  ·  **Speed** 10 ft walk, 50 ft fly
-- **Attacks:** Beak **2d4** Piercing
+- **Attacks:** Beak **1d4+2** Piercing
 - **Abilities:** *Keen Sight and Smell* — The vulture has advantage on Wisdom (Perception) checks that rely on sight or smell.; *Pack Tactics* — The vulture has advantage on an attack roll against a creature if at least one of the vulture's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -770,7 +770,7 @@
 
 ### Wolf  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 40 ft walk
-- **Attacks:** Bite **2d4** Piercing
+- **Attacks:** Bite **1d4+2** Piercing
 - **Abilities:** *Keen Hearing and Smell* — The wolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.; *Pack Tactics* — The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -819,14 +819,14 @@
 
 ### Azer  ·  Elemental
 - **HP** 21  ·  **DR** 2  ·  **Speed** 30 ft walk
-- **Attacks:** Warhammer **2d8** Bludgeoning
+- **Attacks:** Warhammer **1d8+4** Bludgeoning
 - **Abilities:** *Heated Body* — A creature that touches the azer or hits it with a melee attack while within 5 ft. of it takes 5 (1d10) fire damage.; *Heated Weapons* — When the azer hits with a metal melee weapon, it deals an extra 3 (1d6) fire damage (included in the attack).; *Illumination* — The azer sheds bright light in a 10-foot radius and dim light for an additional 10 ft..; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage
 - **Soul Core:** —  ·  **Native:** Elemental Planes
 - **Conversion note:** standard conversion
 
 ### Bandit Captain  ·  Humanoid
 - **HP** 36  ·  **DR** 2  ·  **Speed** 30 ft walk
-- **Attacks:** Scimitar **1d6+1** Slashing; Dagger **2d4** Piercing
+- **Attacks:** Scimitar **1d6+1** Slashing; Dagger **1d4+2** Piercing
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
 
@@ -1006,7 +1006,7 @@
 
 ### Giant Spider  ·  Beast
 - **HP** 16  ·  **DR** 2  ·  **Speed** 30 ft walk, 30 ft climb
-- **Attacks:** Bite **2d8** Piercing
+- **Attacks:** Bite **1d8+4** Piercing
 - **Abilities:** *Spider Climb* — The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.; *Web Sense* — While in contact with a web, the spider knows the exact location of any other creature in contact with the same web.; *Web Walker* — The spider ignores movement restrictions caused by webbing.; *Web* — Ranged Weapon Attack: +5 to hit, range 30/60 ft., one creature. Hit: The target is restrained by webbing. As an action, the restrained target can make a DC 12 Strength check, bursting the webbing on a success. The webbing can also be… (Once per encounter.)
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1041,7 +1041,7 @@
 
 ### Grick  ·  Monstrosity
 - **HP** 16  ·  **DR** 2  ·  **Speed** 30 ft walk, 30 ft climb
-- **Attacks:** Tentacles **2d6** Slashing; Beak **1d6** Piercing
+- **Attacks:** Tentacles **1d6+3** Slashing; Beak **1d6** Piercing
 - **Abilities:** *Stone Camouflage* — The grick has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.; *Mundane Ward* — Takes half damage from nonmagical weapons
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1055,7 +1055,7 @@
 
 ### Harpy  ·  Monstrosity
 - **HP** 21  ·  **DR** 2  ·  **Speed** 20 ft walk, 40 ft fly
-- **Attacks:** Claws **2d4** Slashing; Club **1d4+1** Bludgeoning
+- **Attacks:** Claws **1d4+2** Slashing; Club **1d4+1** Bludgeoning
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -1068,7 +1068,7 @@
 
 ### Hunter Shark  ·  Beast
 - **HP** 25  ·  **DR** 2  ·  **Speed** 0 ft walk, 40 ft swim
-- **Attacks:** Bite **2d8** Piercing
+- **Attacks:** Bite **1d8+4** Piercing
 - **Abilities:** *Blood Frenzy* — The shark has advantage on melee attack rolls against any creature that doesn't have all its hit points.; *Water Breathing* — The shark can breathe only underwater.
 - **Soul Core:** —  ·  **Native:** Coastal Waters, Wilderness
 - **Conversion note:** standard conversion
@@ -1123,7 +1123,7 @@
 
 ### Ogre Zombie  ·  Undead
 - **HP** 47  ·  **DR** 2  ·  **Speed** 30 ft walk
-- **Attacks:** Morningstar **2d8** Bludgeoning
+- **Attacks:** Morningstar **1d8+4** Bludgeoning
 - **Abilities:** *Undead Fortitude* — If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5+the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead.; *Undying Husk* — Immune to Poison damage; cannot be poisoned.
 - **Soul Core:** —  ·  **Native:** Ruins, Crypts
 - **Conversion note:** standard conversion
@@ -1164,7 +1164,7 @@
 
 ### Rhinoceros  ·  Beast
 - **HP** 25  ·  **DR** 2  ·  **Speed** 40 ft walk
-- **Attacks:** Gore **2d8** Bludgeoning
+- **Attacks:** Gore **1d8+4** Bludgeoning
 - **Abilities:** *Charge* — If the rhinoceros moves at least 20 ft. straight toward a target and then hits it with a gore attack on the same turn, the target takes an extra 9 (2d8) bludgeoning damage. If the target is a creature, it must succeed on a DC 15 Strength saving throw or be knocked prone.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1262,7 +1262,7 @@
 
 ### Will-o'-Wisp  ·  Undead
 - **HP** 16  ·  **DR** 3  ·  **Speed** 0 ft walk, 50 ft hover
-- **Attacks:** Shock **2d8** Lightning
+- **Attacks:** Shock **1d8+4** Lightning
 - **Abilities:** *Consume Life* — As a bonus action, the will-o'-wisp can target one creature it can see within 5 ft. of it that has 0 hit points and is still alive. The target must succeed on a DC 10 Constitution saving throw against this magic or die. If the target dies, the will-o'-wisp regains 10 (3d6) hit points.; *Ephemeral* — The will-o'-wisp can't wear or carry anything.; *Incorporeal Movement* — The will-o'-wisp can move through other creatures and objects as if they were difficult terrain. It takes 5 (1d10) force damage if it ends its turn inside an object.; *Variable Illumination* — The will-o'-wisp sheds bright light in a 5- to 20-foot radius and dim light for an additional number of ft. equal to the chosen radius. The will-o'-wisp can alter the radius as a bonus action.; *Undying Husk* — Immune to Poison damage; cannot be exhausted or poisoned.; *Lightningward* — Immune to Lightning damage; *Acid-Hardened* — Takes half damage from Acid attacks; *Cold-Hardened* — Takes half damage from Cold attacks; *Fire-Hardened* — Takes half damage from Fire attacks; *Necrotic-Hardened* — Takes half damage from Necrotic attacks; *Thunder-Hardened* — Takes half damage from Thunder attacks; *Mundane Ward* — Takes half damage from nonmagical weapons; *Steadfast Form* — Cannot be grappled, paralyzed, prone, restrained, unconscious.
 - **Soul Core:** —  ·  **Native:** Ruins, Crypts
 - **Conversion note:** standard conversion
@@ -1311,7 +1311,7 @@
 
 ### Couatl  ·  Celestial
 - **HP** 53  ·  **DR** 4  ·  **Speed** 30 ft walk, 90 ft fly
-- **Attacks:** Bite **2d6** Piercing; Constrict **2d6** Bludgeoning
+- **Attacks:** Bite **1d6+3** Piercing; Constrict **1d6+3** Bludgeoning
 - **Abilities:** *Innate Spellcasting* — The couatl's spellcasting ability is Charisma (spell save DC 14). (Innate magic — see notes.); *Magic Weapons* — The couatl's weapon attacks are magical.; *Shielded Mind* — The couatl is immune to scrying and to any effect that would sense its emotions, read its thoughts, or detect its location.; *Psychicward* — Immune to Psychic damage; *Spectral Resilience* — Immune to nonmagical weapon damage; *Radiant-Hardened* — Takes half damage from Radiant attacks
 - **Soul Core:** Radiant (DC 15)  ·  **Native:** The Upper Planes
 - **Conversion note:** soulCore Radiant dc15 [celestial]
@@ -1346,7 +1346,7 @@
 
 ### Giant Scorpion  ·  Beast
 - **HP** 29  ·  **DR** 3  ·  **Speed** 40 ft walk
-- **Attacks:** Claw **2d8** Bludgeoning; Sting **1d8** Piercing
+- **Attacks:** Claw **1d8+4** Bludgeoning; Sting **1d8** Piercing
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
@@ -1422,7 +1422,7 @@
 
 ### Owlbear  ·  Monstrosity
 - **HP** 32  ·  **DR** 3  ·  **Speed** 40 ft walk
-- **Attacks:** Beak **1d10** Piercing; Claws **2d8** Slashing
+- **Attacks:** Beak **1d10** Piercing; Claws **1d8+4** Slashing
 - **Abilities:** *Keen Sight and Smell* — The owlbear has advantage on Wisdom (Perception) checks that rely on sight or smell.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1470,14 +1470,14 @@
 
 ### Wereboar, Hybrid Form  ·  Humanoid
 - **HP** 43  ·  **DR** 3  ·  **Speed** 30 ft walk
-- **Attacks:** Maul **2d6** Bludgeoning; Tusks **2d6** Slashing
+- **Attacks:** Maul **1d6+3** Bludgeoning; Tusks **1d6+3** Slashing
 - **Abilities:** *Shapechanger* — The wereboar can use its action to polymorph into a boar-humanoid hybrid or into a boar, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.; *Charge (Boar or Hybrid Form Only)* — If the wereboar moves at least 15 feet straight toward a target and then hits it with its tusks on the same turn, the target takes an extra 7 (2d6) slashing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.; *Relentless* — If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead.; *Spectral Resilience* — Immune to nonmagical weapon damage
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
 
 ### Weretiger, Human Form  ·  Humanoid
 - **HP** 66  ·  **DR** 3  ·  **Speed** 30 ft walk
-- **Attacks:** Scimitar **2d6** Slashing; Longbow **1d8+2** Piercing
+- **Attacks:** Scimitar **1d6+3** Slashing; Longbow **1d8+2** Piercing
 - **Abilities:** *Shapechanger* — The weretiger can use its action to polymorph into a tiger-humanoid hybrid or into a tiger, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it…; *Keen Hearing and Smell* — The weretiger has advantage on Wisdom (Perception) checks that rely on hearing or smell.; *Spectral Resilience* — Immune to nonmagical weapon damage
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
@@ -1505,7 +1505,7 @@
 
 ### Werewolf, Hybrid Form  ·  Humanoid
 - **HP** 32  ·  **DR** 3  ·  **Speed** 30 ft walk
-- **Attacks:** Bite **1d8+2** Piercing; Claws **3d4** Slashing
+- **Attacks:** Bite **1d8+2** Piercing; Claws **1d6+4** Slashing
 - **Abilities:** *Shapechanger* — The werewolf can use its action to polymorph into a wolf-humanoid hybrid or into a wolf, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.; *Keen Hearing and Smell* — The werewolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.; *Spectral Resilience* — Immune to nonmagical weapon damage
 - **Soul Core:** —  ·  **Native:** Settlements
 - **Conversion note:** standard conversion
@@ -1519,7 +1519,7 @@
 
 ### Wight  ·  Undead
 - **HP** 25  ·  **DR** 3  ·  **Speed** 30 ft walk
-- **Attacks:** Life Drain **2d6** Necrotic; Longbow **2d8** Piercing
+- **Attacks:** Life Drain **1d6+3** Necrotic; Longbow **1d8+4** Piercing
 - **Abilities:** *Sunlight Sensitivity* — While in sunlight, the wight has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.; *Undying Husk* — Immune to Poison damage; cannot be exhausted or poisoned.; *Necrotic-Hardened* — Takes half damage from Necrotic attacks; *Mundane Ward* — Takes half damage from nonmagical weapons
 - **Soul Core:** —  ·  **Native:** Ruins, Crypts
 - **Conversion note:** standard conversion
@@ -1547,7 +1547,7 @@
 
 ### Barbed Devil  ·  Fiend
 - **HP** 61  ·  **DR** 4  ·  **Speed** 30 ft walk
-- **Attacks:** Claw **1d6+1** Piercing; Tail **2d6** Piercing; Hurl Flame **2d6** Fire
+- **Attacks:** Claw **1d6+1** Piercing; Tail **1d6+3** Piercing; Hurl Flame **1d6+3** Fire
 - **Abilities:** *Barbed Hide* — At the start of each of its turns, the barbed devil deals 5 (1d10) piercing damage to any creature grappling it.; *Devil's Sight* — Magical darkness doesn't impede the devil's darkvision.; *Magic Resistance* — The devil has advantage on saving throws against spells and other magical effects.; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Cold-Hardened* — Takes half damage from Cold attacks; *Mundane Ward* — Takes half damage from nonmagical weapons
 - **Soul Core:** Infernal (DC 16)  ·  **Native:** The Lower Planes
 - **Conversion note:** soulCore Infernal dc16 [elite fiend]
@@ -1561,14 +1561,14 @@
 
 ### Chimera  ·  Monstrosity
 - **HP** 63  ·  **DR** 4  ·  **Speed** 30 ft walk, 60 ft fly
-- **Attacks:** Bite **2d6** Piercing; Horns **1d12** Bludgeoning; Claws **2d6** Slashing
+- **Attacks:** Bite **1d6+3** Piercing; Horns **1d12** Bludgeoning; Claws **1d6+3** Slashing
 - **Abilities:** *Fire Breath* — The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 31 (7d8) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Drider  ·  Monstrosity
 - **HP** 68  ·  **DR** 4  ·  **Speed** 30 ft walk, 30 ft climb
-- **Attacks:** Bite **4d4** Piercing; Longbow **2d8+1** Piercing
+- **Attacks:** Bite **1d10+4** Piercing; Longbow **2d8+1** Piercing
 - **Abilities:** *Fey Ancestry* — The drider has advantage on saving throws against being charmed, and magic can't put the drider to sleep.; *Innate Spellcasting* — The drider's innate spellcasting ability is Wisdom (spell save DC 13). (Innate magic — see notes.); *Spider Climb* — The drider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.; *Sunlight Sensitivity* — While in sunlight, the drider has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.; *Web Walker* — The drider ignores movement restrictions caused by webbing.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1602,7 +1602,7 @@
 
 ### Giant Crocodile  ·  Beast
 - **HP** 47  ·  **DR** 4  ·  **Speed** 30 ft walk, 50 ft swim
-- **Attacks:** Bite **2d10+1** Piercing; Tail **2d8** Bludgeoning
+- **Attacks:** Bite **2d10+1** Piercing; Tail **1d8+4** Bludgeoning
 - **Abilities:** *Hold Breath* — The crocodile can hold its breath for 30 minutes.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1657,14 +1657,14 @@
 
 ### Mammoth  ·  Beast
 - **HP** 69  ·  **DR** 4  ·  **Speed** 40 ft walk
-- **Attacks:** Gore **2d8** Piercing; Stomp **2d10** Bludgeoning
+- **Attacks:** Gore **1d8+4** Piercing; Stomp **2d10** Bludgeoning
 - **Abilities:** *Trampling Charge* — If the mammoth moves at least 20 ft. straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 18 Strength saving throw or be knocked prone. If the target is prone, the mammoth can make one stomp attack against it as a bonus action.
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
 
 ### Medusa  ·  Monstrosity
 - **HP** 70  ·  **DR** 4  ·  **Speed** 30 ft walk
-- **Attacks:** Snake Hair **4d4** Piercing; Shortsword **1d4** Piercing; Longbow **2d8** Piercing
+- **Attacks:** Snake Hair **1d10+4** Piercing; Shortsword **1d4** Piercing; Longbow **1d8+4** Piercing
 - **Abilities:** *Petrifying Gaze* — When a creature that can see the medusa's eyes starts its turn within 30 ft. of the medusa, the medusa can force it to make a DC 14 Constitution saving throw if the medusa isn't incapacitated and can see the creature. If the saving throw fails by 5 or more, the creature is instantly petrified.…
 - **Soul Core:** —  ·  **Native:** Wilderness
 - **Conversion note:** standard conversion
@@ -1678,7 +1678,7 @@
 
 ### Oni  ·  Giant
 - **HP** 61  ·  **DR** 4  ·  **Speed** 30 ft walk, 30 ft fly
-- **Attacks:** Claw (Oni Form Only) **2d8** Slashing; Glaive **2d10+1** Slashing
+- **Attacks:** Claw (Oni Form Only) **1d8+4** Slashing; Glaive **2d10+1** Slashing
 - **Abilities:** *Innate Spellcasting* — The oni's innate spellcasting ability is Charisma (spell save DC 13). (Innate magic — see notes.); *Magic Weapons* — The oni's weapon attacks are magical.; *Regeneration* — The oni regains 10 hit points at the start of its turn if it has at least 1 hit point.
 - **Soul Core:** —  ·  **Native:** Mountains
 - **Conversion note:** standard conversion
@@ -1741,14 +1741,14 @@
 
 ### Unicorn  ·  Celestial
 - **HP** 37  ·  **DR** 4  ·  **Speed** 50 ft walk
-- **Attacks:** Hooves **3d6** Bludgeoning; Horn **2d8** Piercing
+- **Attacks:** Hooves **1d12+4** Bludgeoning; Horn **1d8+4** Piercing
 - **Abilities:** *Charge* — If the unicorn moves at least 20 ft. straight toward a target and then hits it with a horn attack on the same turn, the target takes an extra 9 (2d8) piercing damage. If the target is a creature, it must succeed on a DC 15 Strength saving throw or be knocked prone.; *Innate Spellcasting* — The unicorn's innate spellcasting ability is Charisma (spell save DC 14). (Innate magic — see notes.); *Magic Resistance* — The unicorn has advantage on saving throws against spells and other magical effects.; *Magic Weapons* — The unicorn's weapon attacks are magical.; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Steadfast Form* — Cannot be charmed, paralyzed.
 - **Soul Core:** Radiant (DC 16)  ·  **Native:** The Upper Planes
 - **Conversion note:** soulCore Radiant dc16 [celestial]
 
 ### Vampire Spawn  ·  Undead
 - **HP** 45  ·  **DR** 4  ·  **Speed** 30 ft walk
-- **Attacks:** Bite **3d6+1** Piercing; Claws **3d4** Slashing
+- **Attacks:** Bite **3d6+1** Piercing; Claws **1d6+4** Slashing
 - **Abilities:** *Regeneration* — The vampire regains 10 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from holy water, this trait doesn't function at the start of the vampire's next turn.; *Spider Climb* — The vampire can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.; *Vampire Weaknesses* — The vampire has the following flaws: Forbiddance. The vampire can't enter a residence without an invitation from one of the occupants. Harmed by Running Water. The vampire takes 20 acid damage when it ends its turn in running water. Stake to the Heart. The vampire is destroyed if a piercing weapon…; *Necrotic-Hardened* — Takes half damage from Necrotic attacks; *Mundane Ward* — Takes half damage from nonmagical weapons
 - **Soul Core:** Shadow (DC 16)  ·  **Native:** Ruins, Crypts
 - **Conversion note:** soulCore Shadow dc16 [elite undead]
@@ -1797,7 +1797,7 @@
 
 ### Wyvern  ·  Dragon
 - **HP** 61  ·  **DR** 4  ·  **Speed** 20 ft walk, 80 ft fly
-- **Attacks:** Bite **2d6** Piercing; Claws **2d8** Slashing; Stinger **2d6** Piercing
+- **Attacks:** Bite **1d6+3** Piercing; Claws **1d8+4** Slashing; Stinger **1d6+3** Piercing
 - **Soul Core:** Storm (DC 16)  ·  **Native:** Mountains
 - **Conversion note:** soulCore Storm dc16 [elite dragon]
 
@@ -1810,7 +1810,7 @@
 
 ### Young Black Dragon  ·  Dragon
 - **HP** 70  ·  **DR** 4  ·  **Speed** 40 ft walk, 80 ft fly
-- **Attacks:** Bite **2d10** Piercing; Claw **3d6** Slashing
+- **Attacks:** Bite **2d10** Piercing; Claw **1d12+4** Slashing
 - **Abilities:** *Amphibious* — The dragon can breathe air and water.; *Acid Breath* — The dragon exhales acid in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 49 (11d8) acid damage on a failed save, or half as much damage on a successful one. (Once per encounter.); *Acidward* — Immune to Acid damage
 - **Soul Core:** Caustic (DC 16)  ·  **Native:** Mountains
 - **Conversion note:** soulCore Caustic dc16 [dragon-by-age]
@@ -1831,7 +1831,7 @@
 
 ### Young White Dragon ⚠️  ·  Dragon
 - **HP** 70  ·  **DR** 4  ·  **Speed** 40 ft walk, 80 ft fly
-- **Attacks:** Bite **2d10** Piercing; Claw **3d6** Slashing
+- **Attacks:** Bite **2d10** Piercing; Claw **1d12+4** Slashing
 - **Abilities:** *Ice Walk* — The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, difficult terrain composed of ice or snow doesn't cost it extra movement.; *Cold Breath* — The dragon exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 15 Constitution saving throw, taking 45 (10d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.); *Coldward* — Immune to Cold damage
 - **Soul Core:** Tidal (DC 16)  ·  **Native:** Frozen Wastes, Mountains
 - **Conversion note:** hp clamped 73->70; soulCore Tidal dc16 [dragon-by-age]
@@ -1859,7 +1859,7 @@
 
 ### Bone Devil ⚠️  ·  Fiend
 - **HP** 70  ·  **DR** 5  ·  **Speed** 40 ft walk, 40 ft fly
-- **Attacks:** Claw **2d8** Slashing; Sting **4d8** Piercing
+- **Attacks:** Claw **1d8+4** Slashing; Sting **4d8** Piercing
 - **Abilities:** *Devil's Sight* — Magical darkness doesn't impede the devil's darkvision.; *Magic Resistance* — The devil has advantage on saving throws against spells and other magical effects.; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Cold-Hardened* — Takes half damage from Cold attacks; *Mundane Ward* — Takes half damage from nonmagical weapons
 - **Soul Core:** Infernal (DC 17)  ·  **Native:** The Lower Planes
 - **Conversion note:** hp clamped 78->70; soulCore Infernal dc17 [elite fiend]
@@ -2117,14 +2117,14 @@
 
 ### Horned Devil ⚠️  ·  Fiend
 - **HP** 98  ·  **DR** 6  ·  **Speed** 20 ft walk, 60 ft fly
-- **Attacks:** Fork **3d8** Piercing; Tail **2d8** Piercing; Hurl Flame **3d6+1** Fire
+- **Attacks:** Fork **3d8** Piercing; Tail **1d8+4** Piercing; Hurl Flame **3d6+1** Fire
 - **Abilities:** *Devil's Sight* — Magical darkness doesn't impede the devil's darkvision.; *Magic Resistance* — The devil has advantage on saving throws against spells and other magical effects.; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Cold-Hardened* — Takes half damage from Cold attacks; *Mundane Ward* — Takes half damage from nonmagical weapons; *Legendary Trait* — Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]
 - **Soul Core:** Infernal (DC 18)  ·  **Native:** The Lower Planes
 - **Conversion note:** TR6+/Legendary extrapolated; soulCore Infernal dc18 [elite fiend]
 
 ### Ice Devil ⚠️  ·  Fiend
 - **HP** 99  ·  **DR** 6  ·  **Speed** 40 ft walk
-- **Attacks:** Bite **3d6+1** Piercing; Claws **4d4** Slashing; Tail **3d6+1** Bludgeoning
+- **Attacks:** Bite **3d6+1** Piercing; Claws **1d10+4** Slashing; Tail **3d6+1** Bludgeoning
 - **Abilities:** *Devil's Sight* — Magical darkness doesn't impede the devil's darkvision.; *Magic Resistance* — The devil has advantage on saving throws against spells and other magical effects.; *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Mundane Ward* — Takes half damage from nonmagical weapons; *Legendary Trait* — Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]
 - **Soul Core:** Infernal (DC 18)  ·  **Native:** Frozen Wastes, The Lower Planes
 - **Conversion note:** TR6+/Legendary extrapolated; soulCore Infernal dc18 [elite fiend]
@@ -2327,7 +2327,7 @@
 
 ### Dragon Turtle ⚠️  ·  Dragon
 - **HP** 105  ·  **DR** 7  ·  **Speed** 20 ft walk, 40 ft swim
-- **Attacks:** Bite **2d12+3** Piercing; Claw **2d8** Slashing; Tail **2d12+3** Bludgeoning
+- **Attacks:** Bite **2d12+3** Piercing; Claw **1d8+4** Slashing; Tail **2d12+3** Bludgeoning
 - **Abilities:** *Amphibious* — The dragon turtle can breathe air and water.; *Steam Breath* — The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 52 (15d6) fire damage on a failed save, or half as much damage on a successful one. Being underwater… (Once per encounter.); *Fire-Hardened* — Takes half damage from Fire attacks; *Legendary Trait* — Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]
 - **Soul Core:** Infernal (DC 19)  ·  **Native:** Coastal Waters, Mountains
 - **Conversion note:** hp clamped 188->105; TR6+/Legendary extrapolated; soulCore Infernal dc19 [elite dragon]
@@ -2348,7 +2348,7 @@
 
 ### Pit Fiend ⚠️  ·  Fiend
 - **HP** 105  ·  **DR** 7  ·  **Speed** 30 ft walk, 60 ft fly
-- **Attacks:** Bite **3d6+1** Piercing; Claw **2d8** Slashing; Mace **2d6+1** Bludgeoning; Tail **2d10+2** Bludgeoning
+- **Attacks:** Bite **3d6+1** Piercing; Claw **1d8+4** Slashing; Mace **2d6+1** Bludgeoning; Tail **2d10+2** Bludgeoning
 - **Abilities:** *Fear Aura* — Any creature hostile to the pit fiend that starts its turn within 20 feet of the pit fiend must make a DC 21 Wisdom saving throw, unless the pit fiend is incapacitated. On a failed save, the creature is frightened until the start of its next turn. If a creature's saving throw is successful, the…; *Magic Resistance* — The pit fiend has advantage on saving throws against spells and other magical effects.; *Magic Weapons* — The pit fiend's weapon attacks are magical.; *Innate Spellcasting* — The pit fiend's spellcasting ability is Charisma (spell save DC 21). (Innate magic — see notes.); *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Cold-Hardened* — Takes half damage from Cold attacks; *Mundane Ward* — Takes half damage from nonmagical weapons; *Legendary Trait* — Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]
 - **Soul Core:** Infernal (DC 19)  ·  **Native:** The Lower Planes
 - **Conversion note:** hp clamped 165->105; TR6+/Legendary extrapolated; soulCore Infernal dc19 [elite fiend]
@@ -2362,7 +2362,7 @@
 
 ### Tarrasque ⚠️  ·  Monstrosity
 - **HP** 105  ·  **DR** 8  ·  **Speed** 40 ft walk
-- **Attacks:** Bite **2d12** Piercing; Claw **2d8** Slashing; Horns **2d10** Piercing; Tail **2d6+1** Bludgeoning
+- **Attacks:** Bite **2d12** Piercing; Claw **1d8+4** Slashing; Horns **2d10** Piercing; Tail **2d6+1** Bludgeoning
 - **Abilities:** *Legendary Resistance* — If the tarrasque fails a saving throw, it can choose to succeed instead.; *Magic Resistance* — The tarrasque has advantage on saving throws against spells and other magical effects.; *Reflective Carapace* — Any time the tarrasque is targeted by a magic missile spell, a line spell, or a spell that requires a ranged attack roll, roll a d6. On a 1 to 5, the tarrasque is unaffected. On a 6, the tarrasque is unaffected, and the effect is reflected back at the caster as though it originated from the…; *Siege Monster* — The tarrasque deals double damage to objects and structures.; *Frightful Presence* — Each creature of the tarrasque's choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with… (Once per encounter.); *Hardened Vitality* — Immune to Poison damage; cannot be poisoned.; *Fireward* — Immune to Fire damage; *Spectral Resilience* — Immune to nonmagical weapon damage; *Steadfast Form* — Cannot be charmed, frightened, paralyzed.; *Legendary Trait* — Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]
 - **Soul Core:** Naturebound (DC 19)  ·  **Native:** Wilderness
 - **Conversion note:** hp clamped 372->105; TR6+/Legendary extrapolated; soulCore Naturebound dc19 [unique high-CR monstrosity -> Naturebound (review)]
