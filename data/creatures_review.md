@@ -1,6 +1,6 @@
 # Solryn Bestiary — D&D 5e SRD Conversion (Design Review)
 
-**334 creatures** converted from the D&D 5e SRD-2014 dataset, grouped by Threat Tier. HP = 5e HP ×0.55 (floor 16; ceiling 70 non-Legendary / 105 Legendary). DR = (AC−10)/2 clamped to the tier band. Damage scaled so each round's bundled attacks land in the tier's dmg/rd band.
+**335 creatures** converted from the D&D 5e SRD-2014 dataset, grouped by Threat Tier. HP = 5e HP ×0.55 (floor 16; ceiling 70 non-Legendary / 105 Legendary). DR = (AC−10)/2 clamped to the tier band. Damage scaled so each round's bundled attacks land in the tier's dmg/rd band.
 
 ⚠️ = needs a designer second look (out-of-band damage, extrapolated TR6–7 band, HP clamped, or a guessed Soul Core type).
 
@@ -793,7 +793,7 @@
 
 ## Threat Tier 2 — Tough  ·  DR 2-3 · dmg/rd 7-10
 
-*68 creatures*
+*69 creatures*
 
 
 ### Animated Armor  ·  Construct
@@ -1030,6 +1030,13 @@
 - **Attacks:** Bites **2d6+2** Piercing
 - **Abilities:** *Aberrant Ground* — The ground in a 10-foot radius around the mouther is doughlike difficult terrain. Each creature that starts its turn in that area must succeed on a DC 10 Strength saving throw or have its speed reduced to 0 until the start of its next turn.; *Gibbering* — The mouther babbles incoherently while it can see any creature and isn't incapacitated. Each creature that starts its turn within 20 feet of the mouther and can hear the gibbering must succeed on a DC 10 Wisdom saving throw. On a failure, the creature can't take reactions until the start of its…; *Blinding Spittle* — The mouther spits a chemical glob at a point it can see within 15 feet of it. The glob explodes in a blinding flash of light on impact. Each creature within 5 feet of the flash must succeed on a DC 13 Dexterity saving throw or be blinded… (Once per encounter.); *Steadfast Form* — Cannot be prone.
 - **Soul Core:** —  ·  **Native:** The Underdark
+- **Conversion note:** standard conversion
+
+### Goblin Warrior  ·  Humanoid
+- **HP** 5  ·  **DR** 5  ·  **Speed** 30 ft walk
+- **Attacks:** Short Sword **1d6+1** Slashing; Shortbow **1d6** Piercing
+- **Abilities:** *Nimble Escape* — Can disengage or hide as a bonus action
+- **Soul Core:** —  ·  **Native:** Caves, Ruins
 - **Conversion note:** standard conversion
 
 ### Green Dragon Wyrmling  ·  Dragon

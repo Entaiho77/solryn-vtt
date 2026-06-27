@@ -52,7 +52,9 @@
         "Versatile: Choose +1 to any two attributes",
         "Quick Learner: -1 week on downtime for skill training (3 weeks instead of 4)"
       ],
-      "weaknesses": ["Disadvantage on saves vs disease"]
+      "weaknesses": [
+        "Disadvantage on saves vs disease"
+      ]
     },
     {
       "name": "Elf",
@@ -63,7 +65,9 @@
         "Bonus Spells: Learn 3 additional spells beyond Arcana Modifier × 2",
         "Poison Vulnerability: Disadvantage on saves vs poison"
       ],
-      "weaknesses": ["Vulnerable to poison"]
+      "weaknesses": [
+        "Vulnerable to poison"
+      ]
     },
     {
       "name": "Dwarf",
@@ -75,7 +79,9 @@
         "Poison Resistance: Advantage on saves vs poison",
         "Cannot be magically healed (potions and rest only)"
       ],
-      "weaknesses": ["Cannot benefit from magical healing"]
+      "weaknesses": [
+        "Cannot benefit from magical healing"
+      ]
     },
     {
       "name": "Gnome",
@@ -87,13 +93,23 @@
         "Immune to Disoriented condition",
         "Lucky: Reroll any 1 on damage dice (take new result)"
       ],
-      "weaknesses": ["Small size limits carrying capacity"]
+      "weaknesses": [
+        "Small size limits carrying capacity"
+      ]
     }
   ],
   "character_creation": {
     "attribute_rolling": {
       "method": "Roll 2d4 for each attribute IN ORDER",
-      "order": ["STR", "NIM", "END", "WIS", "INT", "ARC", "LCK"],
+      "order": [
+        "STR",
+        "NIM",
+        "END",
+        "WIS",
+        "INT",
+        "ARC",
+        "LCK"
+      ],
       "note": "You may NOT rearrange results"
     },
     "attribute_modifiers": {
@@ -120,99 +136,233 @@
     ]
   },
   "base_skills": [
-    {"name": "Athletics", "attribute": "STR", "description": "Climbing, jumping, swimming, physical exertion"},
-    {"name": "Acrobatics", "attribute": "NIM", "description": "Balance, tumbling, agility"},
-    {"name": "Stealth", "attribute": "NIM", "description": "Sneaking, hiding, moving silently"},
-    {"name": "Perception", "attribute": "WIS", "description": "Noticing details, spotting hidden things"},
-    {"name": "Insight", "attribute": "WIS", "description": "Reading people, detecting lies"},
-    {"name": "Survival", "attribute": "WIS", "description": "Tracking, foraging, navigating wilderness"},
-    {"name": "Investigation", "attribute": "INT", "description": "Finding clues, deducing information"},
-    {"name": "Arcana", "attribute": "ARC", "description": "Knowledge of magic and spells"},
-    {"name": "Medicine", "attribute": "INT", "description": "Healing, diagnosing ailments"},
-    {"name": "Persuasion", "attribute": "INT", "description": "Convincing others through logic"},
-    {"name": "Intimidation", "attribute": "STR", "description": "Threatening or coercing"},
-    {"name": "Deception", "attribute": "INT", "description": "Lying convincingly"}
+    {
+      "name": "Athletics",
+      "attribute": "STR",
+      "description": "Climbing, jumping, swimming, physical exertion"
+    },
+    {
+      "name": "Acrobatics",
+      "attribute": "NIM",
+      "description": "Balance, tumbling, agility"
+    },
+    {
+      "name": "Stealth",
+      "attribute": "NIM",
+      "description": "Sneaking, hiding, moving silently"
+    },
+    {
+      "name": "Perception",
+      "attribute": "WIS",
+      "description": "Noticing details, spotting hidden things"
+    },
+    {
+      "name": "Insight",
+      "attribute": "WIS",
+      "description": "Reading people, detecting lies"
+    },
+    {
+      "name": "Survival",
+      "attribute": "WIS",
+      "description": "Tracking, foraging, navigating wilderness"
+    },
+    {
+      "name": "Investigation",
+      "attribute": "INT",
+      "description": "Finding clues, deducing information"
+    },
+    {
+      "name": "Arcana",
+      "attribute": "ARC",
+      "description": "Knowledge of magic and spells"
+    },
+    {
+      "name": "Medicine",
+      "attribute": "INT",
+      "description": "Healing, diagnosing ailments"
+    },
+    {
+      "name": "Persuasion",
+      "attribute": "INT",
+      "description": "Convincing others through logic"
+    },
+    {
+      "name": "Intimidation",
+      "attribute": "STR",
+      "description": "Threatening or coercing"
+    },
+    {
+      "name": "Deception",
+      "attribute": "INT",
+      "description": "Lying convincingly"
+    }
   ],
   "weapon_skills": [
-    {"name": "One-Handed Weapons", "description": "Swords, axes, maces, daggers"},
-    {"name": "Two-Handed Weapons", "description": "Greatswords, battleaxes, mauls"},
-    {"name": "Ranged Weapons", "description": "Bows, crossbows, thrown weapons"},
-    {"name": "Polearms", "description": "Spears, halberds, glaives"},
-    {"name": "Unarmed Combat", "description": "Fists, kicks, grappling"}
+    {
+      "name": "One-Handed Weapons",
+      "description": "Swords, axes, maces, daggers"
+    },
+    {
+      "name": "Two-Handed Weapons",
+      "description": "Greatswords, battleaxes, mauls"
+    },
+    {
+      "name": "Ranged Weapons",
+      "description": "Bows, crossbows, thrown weapons"
+    },
+    {
+      "name": "Polearms",
+      "description": "Spears, halberds, glaives"
+    },
+    {
+      "name": "Unarmed Combat",
+      "description": "Fists, kicks, grappling"
+    }
   ],
   "crafting_skills": [
-    {"name": "Blacksmithing", "description": "Forging metal weapons and armor"},
-    {"name": "Woodworking", "description": "Crafting bows, arrows, wooden items"},
-    {"name": "Alchemy", "description": "Creating potions and alchemical items"},
-    {"name": "Leatherworking", "description": "Crafting leather armor and goods"},
-    {"name": "Enchanting", "description": "Imbuing items with magical properties"},
-    {"name": "Cooking", "description": "Preparing food and beneficial meals"}
+    {
+      "name": "Blacksmithing",
+      "description": "Forging metal weapons and armor"
+    },
+    {
+      "name": "Woodworking",
+      "description": "Crafting bows, arrows, wooden items"
+    },
+    {
+      "name": "Alchemy",
+      "description": "Creating potions and alchemical items"
+    },
+    {
+      "name": "Leatherworking",
+      "description": "Crafting leather armor and goods"
+    },
+    {
+      "name": "Enchanting",
+      "description": "Imbuing items with magical properties"
+    },
+    {
+      "name": "Cooking",
+      "description": "Preparing food and beneficial meals"
+    }
   ],
   "skill_progression": {
-    "untrained": {"points": 0, "bonus": "Disadvantage, attribute modifier only"},
-    "novice": {"points": 3, "bonus": "+1"},
-    "journeyman": {"points": 6, "bonus": "+2"},
-    "master": {"points": 9, "bonus": "+3"}
+    "untrained": {
+      "points": 0,
+      "bonus": "Disadvantage, attribute modifier only"
+    },
+    "novice": {
+      "points": 3,
+      "bonus": "+1"
+    },
+    "journeyman": {
+      "points": 6,
+      "bonus": "+2"
+    },
+    "master": {
+      "points": 9,
+      "bonus": "+3"
+    }
   },
   "conditions": [
     {
       "name": "Poisoned",
       "description": "You've ingested or absorbed a toxin",
-      "effects": ["Lasts 1d4 rounds", "Take initial damage each round", "Can be cured with antidote"],
+      "effects": [
+        "Lasts 1d4 rounds",
+        "Take initial damage each round",
+        "Can be cured with antidote"
+      ],
       "save": "Endurance"
     },
     {
       "name": "Venomous",
       "description": "You've been injected with venom (bite, sting)",
-      "effects": ["Identical to Poisoned", "Requires antivenom (not antidote)"],
+      "effects": [
+        "Identical to Poisoned",
+        "Requires antivenom (not antidote)"
+      ],
       "save": "Endurance"
     },
     {
       "name": "Entangled",
       "description": "Caught in ropes, vines, nets, or grappled",
-      "effects": ["Speed becomes 0", "STR or Athletics check to break free", "Failure = lose turn"],
+      "effects": [
+        "Speed becomes 0",
+        "STR or Athletics check to break free",
+        "Failure = lose turn"
+      ],
       "save": "Strength or Athletics"
     },
     {
       "name": "Stunned",
       "description": "Dazed, shocked, or overwhelmed",
-      "effects": ["Cannot move or take actions", "Attacks ignore DR", "Lasts 1d4 rounds"],
+      "effects": [
+        "Cannot move or take actions",
+        "Attacks ignore DR",
+        "Lasts 1d4 rounds"
+      ],
       "save": "Any attribute"
     },
     {
       "name": "Blinded",
       "description": "Cannot see",
-      "effects": ["Melee: base damage only", "Ranged: impossible", "Attacks ignore DR", "Lasts 1d4 rounds"],
+      "effects": [
+        "Melee: base damage only",
+        "Ranged: impossible",
+        "Attacks ignore DR",
+        "Lasts 1d4 rounds"
+      ],
       "save": "Any logical attribute"
     },
     {
       "name": "Frightened",
       "description": "Terrified of specific source",
-      "effects": ["Cannot attack source", "Cannot move closer", "Disadvantage on checks", "Lasts 1d4 rounds"],
+      "effects": [
+        "Cannot attack source",
+        "Cannot move closer",
+        "Disadvantage on checks",
+        "Lasts 1d4 rounds"
+      ],
       "save": "Wisdom or Luck"
     },
     {
       "name": "Paralyzed",
       "description": "Cannot move any part of body",
-      "effects": ["Cannot move or act", "Attacks auto-crit (ignore DR, double max damage)", "Lasts 1d4 rounds"],
+      "effects": [
+        "Cannot move or act",
+        "Attacks auto-crit (ignore DR, double max damage)",
+        "Lasts 1d4 rounds"
+      ],
       "save": "Endurance or Wisdom"
     },
     {
       "name": "Unconscious",
       "description": "Magically put to sleep (not 0 HP)",
-      "effects": ["Cannot perceive or act", "Attacks ignore DR", "Wake if damaged or shaken", "Lasts 1d4 rounds"],
+      "effects": [
+        "Cannot perceive or act",
+        "Attacks ignore DR",
+        "Wake if damaged or shaken",
+        "Lasts 1d4 rounds"
+      ],
       "save": "Intelligence or Endurance"
     },
     {
       "name": "Exhausted",
       "description": "Physically and mentally drained",
-      "effects": ["Disadvantage on all d20 rolls", "Movement halved", "Only removed by long rest"],
+      "effects": [
+        "Disadvantage on all d20 rolls",
+        "Movement halved",
+        "Only removed by long rest"
+      ],
       "save": "None (requires rest)"
     },
     {
       "name": "Disoriented",
       "description": "Confused about direction or location (Gnomes immune)",
-      "effects": ["Lasts 1d4 rounds", "Roll 1d4 each turn for random effect"],
+      "effects": [
+        "Lasts 1d4 rounds",
+        "Roll 1d4 each turn for random effect"
+      ],
       "save": "Wisdom or Intelligence"
     }
   ],
@@ -241,62 +391,6 @@
       "name": "Critical Hits",
       "description": "Natural 20 on damage roll or specific abilities",
       "details": "Critical hits ignore DR and deal double maximum damage"
-    }
-  ],
-  "monsters": [
-    {
-      "name": "Goblin Warrior",
-      "type": "Humanoid",
-      "challenge": 1,
-      "attributes": {
-        "STR": 3,
-        "NIM": 6,
-        "END": 4,
-        "WIS": 3,
-        "INT": 4,
-        "ARC": 2,
-        "LCK": 3
-      },
-      "hp": 5,
-      "dr": "Light armor (2) + NIM +2 + END +1 = 5",
-      "attacks": [
-        {
-          "name": "Short Sword",
-          "damage": "1d6+1"
-        },
-        {
-          "name": "Shortbow",
-          "damage": "1d6",
-          "range": "80/320"
-        }
-      ],
-      "abilities": ["Nimble Escape: Can disengage or hide as bonus action"]
-    },
-    {
-      "name": "Stone Golem",
-      "type": "Construct",
-      "challenge": 5,
-      "attributes": {
-        "STR": 8,
-        "NIM": 2,
-        "END": 8,
-        "WIS": 4,
-        "INT": 2,
-        "ARC": 2,
-        "LCK": 2
-      },
-      "hp": 16,
-      "dr": "Heavy armor (6) + NIM +0 + END +2 = 8",
-      "attacks": [
-        {
-          "name": "Slam",
-          "damage": "2d10+2"
-        }
-      ],
-      "abilities": [
-        "Immutable Form: Immune to any spell that would alter form",
-        "Magic Resistance: Advantage on saves against spells"
-      ]
     }
   ]
 }

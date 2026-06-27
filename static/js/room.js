@@ -1182,24 +1182,27 @@ function formatRuleItem(item, category) {
             <div class="rule-details">${item.details}</div>
         `;
     } else if (category === 'monsters') {
+        const speedStr = item.speed ? `${item.speed.value} ${item.speed.unit} ${item.speed.mode}` : '';
+        const speed2Str = item.speedSecondary ? `, ${item.speedSecondary.value} ${item.speedSecondary.unit} ${item.speedSecondary.mode}` : '';
         html += `
             <h4>${item.name}</h4>
-            <p><strong>Type:</strong> ${item.type} | <strong>Challenge:</strong> ${item.challenge}</p>
-            <p><strong>HP:</strong> ${item.hp} | <strong>Armor:</strong> ${item.armor}</p>
+            <p><strong>Threat:</strong> ${item.threatTier} (TR ${item.tierRating}) | <strong>Type:</strong> ${item.type}</p>
+            <p><strong>HP:</strong> ${item.hp} | <strong>DR:</strong> ${item.dr} | <strong>Speed:</strong> ${speedStr}${speed2Str}</p>
             <div class="rule-details">
-                <strong>Attributes:</strong><br>
-                ${Object.entries(item.attributes).map(([k, v]) => `${k}: ${v}`).join(' | ')}
-                <br><br>
-                <strong>Attacks:</strong>
-                <ul>
-                    ${item.attacks.map(a => `<li><strong>${a.name}:</strong> ${a.damage}${a.range ? ` (Range: ${a.range})` : ''}</li>`).join('')}
-                </ul>
-                ${item.abilities ? `
+                ${item.attacks && item.attacks.length ? `
+                    <strong>Attacks:</strong>
+                    <ul>
+                        ${item.attacks.map(a => `<li><strong>${a.name}:</strong> ${a.diceExpr} ${a.damageType}${a.note ? ` (${a.note})` : ''}</li>`).join('')}
+                    </ul>
+                ` : '<em>Non-combatant</em><br>'}
+                ${item.abilities && item.abilities.length ? `
                     <strong>Abilities:</strong>
                     <ul>
-                        ${item.abilities.map(a => `<li>${a}</li>`).join('')}
+                        ${item.abilities.map(a => `<li><strong>${a.name}</strong>${a.description ? `: ${a.description}` : ''}</li>`).join('')}
                     </ul>
                 ` : ''}
+                ${item.soulCore ? `<strong>Soul Core:</strong> ${item.soulCore.type} (DC ${item.soulCore.dc})<br>` : ''}
+                ${item.native && item.native.length ? `<strong>Native:</strong> ${item.native.join(', ')}` : ''}
             </div>
         `;
     }

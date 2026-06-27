@@ -21,12 +21,24 @@ def generate_room_code():
             return code
 
 def load_solryn_rules():
-    """Load Solryn rules from JSON file"""
+    """Load Solryn rules from JSON file.
+
+    The bestiary lives in its own canonical file (data/creatures.json) so there
+    is a single source of truth for monsters; it is exposed here under the
+    'monsters' category alongside the other rules.
+    """
+    rules = {}
     rules_path = os.path.join('data', 'solryn_rules.json')
     if os.path.exists(rules_path):
         with open(rules_path, 'r') as f:
-            return json.load(f)
-    return {}
+            rules = json.load(f)
+
+    creatures_path = os.path.join('data', 'creatures.json')
+    if os.path.exists(creatures_path):
+        with open(creatures_path, 'r') as f:
+            rules['monsters'] = json.load(f)
+
+    return rules
 
 @app.route('/')
 def index():

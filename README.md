@@ -145,7 +145,12 @@ solryn_vtt/
 ├── app.py                 # Main Flask application
 ├── requirements.txt       # Python dependencies
 ├── data/
-│   └── solryn_rules.json # Game rules database
+│   ├── solryn_rules.json    # Game rules database (attributes, skills, conditions, combat)
+│   ├── creatures.json       # Canonical bestiary — 335 creatures (served as the "Monsters" category)
+│   ├── conversion_log.md    # Per-creature notes from the 5e SRD → Solryn conversion
+│   ├── creatures_review.md  # Human-readable bestiary, grouped by Threat Tier
+│   ├── creatures_review.pdf # PDF export of the bestiary review
+│   └── dice_fix_review.md   # Review log for the dice-notation fix
 ├── static/
 │   ├── css/
 │   │   └── style.css     # Main stylesheet

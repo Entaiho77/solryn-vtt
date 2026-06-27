@@ -6901,6 +6901,45 @@
     ]
   },
   {
+    "id": "goblin-warrior",
+    "name": "Goblin Warrior",
+    "threatTier": "Tough",
+    "tierRating": 2,
+    "type": "Humanoid",
+    "hp": 5,
+    "dr": 5,
+    "speed": {
+      "value": 30,
+      "unit": "ft",
+      "mode": "walk"
+    },
+    "attacks": [
+      {
+        "name": "Short Sword",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing",
+        "note": ""
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": "Range 80/320"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Nimble Escape",
+        "description": "Can disengage or hide as a bonus action"
+      }
+    ],
+    "soulCore": null,
+    "native": [
+      "Caves",
+      "Ruins"
+    ]
+  },
+  {
     "id": "gold-dragon-wyrmling",
     "name": "Gold Dragon Wyrmling",
     "threatTier": "Tough",
