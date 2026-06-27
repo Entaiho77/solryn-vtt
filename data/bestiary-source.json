@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "1.0",
+  "source": "Solryn v1.2 Master Reference Document, Section 7.4",
+  "creatures": [
+    {
+      "id": "mossback-hare",
+      "name": "Mossback Hare",
+      "threatTier": "Non-combatant",
+      "type": "Beast",
+      "hp": 8,
+      "dr": 0,
+      "speed": { "value": 30, "unit": "ft", "mode": "walk" },
+      "speedAlt": { "value": 35, "unit": "ft", "mode": "walk" },
+      "attacks": [],
+      "abilities": [
+        { "name": "Burrow Dodge", "description": "" },
+        { "name": "Lichen Blend", "description": "Natural camouflage" }
+      ],
+      "harvestable": "Sleeproot moss (healing ingredient)",
+      "soulCore": null,
+      "native": ["Highland meadows"]
+    },
+    {
+      "id": "duskwatcher-owlcat",
+      "name": "Duskwatcher Owlcat",
+      "threatTier": "Easy",
+      "type": "Predator",
+      "hp": 22,
+      "dr": 1,
+      "speed": { "value": 30, "unit": "ft", "mode": "walk" },
+      "speedSecondary": { "value": 40, "unit": "ft", "mode": "glide" },
+      "attacks": [
+        {
+          "name": "Claw/bite",
+          "diceExpr": "1d6+3",
+          "damageType": "Slashing",
+          "note": "Pounce adds +1d4"
+        }
+      ],
+      "abilities": [
+        { "name": "Silent Descent", "description": "" },
+        { "name": "Twilight Tracker", "description": "" },
+        { "name": "Hiss-Screech", "description": "" }
+      ],
+      "soulCore": null,
+      "native": ["Highland woods", "Canopy trails"]
+    },
+    {
+      "id": "bramble-boar",
+      "name": "Bramble Boar",
+      "threatTier": "Easy",
+      "type": "Beast",
+      "hp": 28,
+      "dr": 2,
+      "speed": { "value": 30, "unit": "ft", "mode": "walk" },
+      "attacks": [
+        {
+          "name": "Gore",
+          "diceExpr": "1d6+4",
+          "damageType": "Piercing",
+          "note": "Charge adds +1d4"
+        }
+      ],
+      "abilities": [
+        { "name": "Thornshake", "description": "Area of effect" },
+        { "name": "Brushbreaker", "description": "" },
+        { "name": "Pain-Fueled Rage", "description": "" }
+      ],
+      "soulCore": null,
+      "native": ["Highland thickets", "Brambles"]
+    },
+    {
+      "id": "crag-hound",
+      "name": "Crag Hound",
+      "threatTier": "Easy",
+      "type": "Shadow Beast",
+      "hp": 24,
+      "dr": 2,
+      "speed": { "value": 35, "unit": "ft", "mode": "walk" },
+      "attacks": [
+        {
+          "name": "Bite",
+          "diceExpr": "1d6+3",
+          "damageType": "Piercing",
+          "note": ""
+        }
+      ],
+      "abilities": [
+        { "name": "Mountain Ghost", "description": "" },
+        { "name": "Death-Stalker", "description": "" },
+        { "name": "Shadowmeld", "description": "" }
+      ],
+      "soulCore": { "type": "Shadowbound", "dc": 14 },
+      "native": ["Mountain passes", "Cliff trails"]
+    },
+    {
+      "id": "knockerkin",
+      "name": "Knockerkin",
+      "threatTier": "Easy",
+      "type": "Fey",
+      "hp": 18,
+      "dr": 1,
+      "speed": { "value": 25, "unit": "ft", "mode": "walk" },
+      "speedSecondary": { "value": 20, "unit": "ft", "mode": "climb" },
+      "attacks": [
+        {
+          "name": "Pick jab",
+          "diceExpr": "1d4+2",
+          "damageType": "Piercing",
+          "note": ""
+        }
+      ],
+      "abilities": [
+        { "name": "False Echo", "description": "" },
+        { "name": "Tunnel Slinker", "description": "" },
+        { "name": "Greed Sense", "description": "" }
+      ],
+      "soulCore": null,
+      "soulCoreNote": "Can be captured alive",
+      "native": ["Abandoned mines", "Caves"]
+    },
+    {
+      "id": "lantern-wraith",
+      "name": "Lantern Wraith",
+      "threatTier": "Easy",
+      "type": "Spirit",
+      "hp": 18,
+      "dr": 1,
+      "speed": { "value": 20, "unit": "ft", "mode": "float" },
+      "attacks": [
+        {
+          "name": "Lantern touch",
+          "diceExpr": "1d6",
+          "damageType": "Arcane",
+          "note": ""
+        }
+      ],
+      "abilities": [
+        { "name": "Lurelight Pulse", "description": "" },
+        { "name": "Misty Allure", "description": "" },
+        { "name": "Ethereal Drift", "description": "" }
+      ],
+      "soulCore": { "type": "Arcane/Spirit", "dc": 14 },
+      "native": ["Misty forests", "Old roads"]
+    },
+    {
+      "id": "hollow-man",
+      "name": "Hollow Man",
+      "threatTier": "Easy",
+      "type": "Construct",
+      "hp": 22,
+      "dr": 2,
+      "speed": { "value": 25, "unit": "ft", "mode": "walk" },
+      "attacks": [
+        {
+          "name": "Slam",
+          "diceExpr": "1d6+1",
+          "damageType": "Slashing",
+          "note": ""
+        }
+      ],
+      "abilities": [
+        { "name": "Effigy Stillness", "description": "" },
+        { "name": "Silent Lurch", "description": "" },
+        { "name": "Restraining thorns", "description": "" }
+      ],
+      "soulCore": null,
+      "native": ["Deep woods", "Abandoned farmland"]
+    },
+    {
+      "id": "whippoorwail",
+      "name": "Whippoorwail",
+      "threatTier": "Easy",
+      "type": "Spirit Beast",
+      "hp": 16,
+      "dr": 1,
+      "speed": { "value": 30, "unit": "ft", "mode": "fly" },
+      "attacks": [
+        {
+          "name": "Peck",
+          "diceExpr": "1d4+2",
+          "damageType": "Piercing",
+          "secondaryDiceExpr": "1",
+          "secondaryDamageType": "Arcane",
+          "note": ""
+        }
+      ],
+      "abilities": [
+        { "name": "Death-Linked", "description": "" },
+        { "name": "Cry of the Dying", "description": "Blocks Luck recovery" }
+      ],
+      "soulCore": { "type": "Fading Core", "dc": 13, "note": "Destroyed by Radiant" },
+      "native": ["Forest edges", "Burial grounds"]
+    },
+    {
+      "id": "hollowkin",
+      "name": "Hollowkin",
+      "threatTier": "Easy",
+      "type": "Spirit",
+      "hp": 28,
+      "dr": 2,
+      "speed": { "value": 30, "unit": "ft", "mode": "walk" },
+      "speedSecondary": { "value": 20, "unit": "ft", "mode": "hover" },
+      "attacks": [
+        {
+          "name": "Mind lash",
+          "diceExpr": "1d8",
+          "damageType": "Psychic",
+          "secondaryDiceExpr": "1d4",
+          "secondaryDamageType": "Arcane",
+          "note": ""
+        }
+      ],
+      "abilities": [
+        { "name": "Misty Veil", "description": "" },
+        { "name": "Fade Step", "description": "" },
+        { "name": "Test of the Soul", "description": "" },
+        { "name": "Mirror Echo", "description": "" }
+      ],
+      "soulCore": { "type": "Ethereal Core", "dc": 14 },
+      "native": ["Highland ridges", "Misty ruins"]
+    },
+    {
+      "id": "trellin-shaman",
+      "name": "T'rellin Shaman",
+      "threatTier": "Easy",
+      "type": "Insectoid Caster",
+      "hp": 22,
+      "dr": 1,
+      "speed": { "value": 30, "unit": "ft", "mode": "walk" },
+      "speedSecondary": { "value": 30, "unit": "ft", "mode": "climb" },
+      "attacks": [
+        {
+          "name": "Staff strike",
+          "diceExpr": "1d6",
+          "damageType": "Bludgeoning",
+          "note": ""
+        }
+      ],
+      "spells": [
+        { "name": "Entangle", "usage": "1/rest" },
+        { "name": "Sporeblind", "usage": "1/rest" },
+        { "name": "Chitin Shield", "usage": "1/rest" }
+      ],
+      "abilities": [
+        { "name": "Spellcaster", "description": "" },
+        { "name": "Nature magic", "description": "" }
+      ],
+      "soulCore": { "type": "Naturebound Core", "dc": 14 },
+      "native": ["Canopy sanctuaries", "Oak groves"]
+    }
+  ]
+}
