@@ -2,7 +2,7 @@
 
 Source: D&D 5e SRD-2014 monster dataset (334 creatures). CR->TR mapping, TR band tables (DR / dmg-per-round), HP x0.55 with floor 16 and ceiling (70 non-Legendary / 105 Legendary), DR = (AC-10)/2 clamped to band. Format: `Name | CR x -> TR y | judgment notes`. 'standard conversion' = no judgment beyond the standard pipeline.
 
-Converted so far: 150 / 334
+Converted so far: 200 / 334
 
 Aboleth | CR 10 -> TR 5 | hp clamped 74->70
 Acolyte | CR 0.25 -> TR 1 | standard conversion
@@ -154,3 +154,53 @@ Goblin | CR 0.25 -> TR 1 | standard conversion
 Gold Dragon Wyrmling | CR 3 -> TR 3 | soulCore Infernal dc15 [dragon-by-age]
 Gorgon | CR 5 -> TR 4 | dmg out-of-band(24 vs 16-22)
 Gray Ooze | CR 0.5 -> TR 1 | standard conversion
+Green Dragon Wyrmling | CR 2 -> TR 2 | soulCore Venom dc14 [dragon-by-age]
+Green Hag | CR 3 -> TR 3 | soulCore Naturebound dc15 [notable fey]
+Grick | CR 2 -> TR 2 | standard conversion
+Griffon | CR 2 -> TR 2 | standard conversion
+Grimlock | CR 0.25 -> TR 1 | standard conversion
+Guard | CR 0.125 -> TR 1 | standard conversion
+Guardian Naga | CR 10 -> TR 5 | standard conversion
+Gynosphinx | CR 11 -> TR 6 | TR6+/Legendary extrapolated; soulCore Naturebound dc18 [unique high-CR monstrosity -> Naturebound (review)]
+Half-Red Dragon Veteran | CR 5 -> TR 4 | standard conversion
+Harpy | CR 1 -> TR 2 | standard conversion
+Hawk | CR 0 -> TR 1 | standard conversion
+Hell Hound | CR 3 -> TR 3 | standard conversion
+Hezrou | CR 8 -> TR 5 | hp clamped 75->70; soulCore Infernal dc17 [elite fiend]
+Hill Giant | CR 5 -> TR 4 | standard conversion
+Hippogriff | CR 1 -> TR 2 | standard conversion
+Hobgoblin | CR 0.5 -> TR 1 | standard conversion
+Homunculus | CR 0 -> TR 1 | standard conversion
+Horned Devil | CR 11 -> TR 6 | TR6+/Legendary extrapolated; soulCore Infernal dc18 [elite fiend]
+Hunter Shark | CR 2 -> TR 2 | standard conversion
+Hydra | CR 8 -> TR 5 | hp clamped 95->70
+Hyena | CR 0 -> TR 1 | standard conversion
+Ice Devil | CR 14 -> TR 6 | TR6+/Legendary extrapolated; soulCore Infernal dc18 [elite fiend]
+Ice Mephit | CR 0.5 -> TR 1 | standard conversion
+Imp | CR 1 -> TR 2 | standard conversion
+Invisible Stalker | CR 6 -> TR 4 | soulCore Venom dc16 [elemental(Venom)]
+Iron Golem | CR 16 -> TR 6 | hp clamped 116->105; TR6+/Legendary extrapolated; soulCore Earthen dc18 [unique high-CR construct -> Earthen (review)]
+Jackal | CR 0 -> TR 1 | standard conversion
+Killer Whale | CR 3 -> TR 3 | standard conversion
+Knight | CR 3 -> TR 3 | standard conversion
+Kobold | CR 0.125 -> TR 1 | standard conversion
+Kraken | CR 23 -> TR 7 | hp clamped 260->105; TR6+/Legendary extrapolated; soulCore Naturebound dc19 [unique high-CR monstrosity -> Naturebound (review)]
+Lamia | CR 4 -> TR 3 | standard conversion
+Lemure | CR 0 -> TR 1 | standard conversion
+Lich | CR 21 -> TR 7 | TR6+/Legendary extrapolated; soulCore Shadow dc19 [elite undead]
+Lion | CR 1 -> TR 2 | standard conversion
+Lizard | CR 0 -> TR 1 | standard conversion
+Lizardfolk | CR 0.5 -> TR 1 | dmg out-of-band(10 vs 4-6)
+Mage | CR 6 -> TR 4 | standard conversion
+Magma Mephit | CR 0.5 -> TR 1 | standard conversion
+Magmin | CR 0.5 -> TR 1 | standard conversion
+Mammoth | CR 6 -> TR 4 | standard conversion
+Manticore | CR 3 -> TR 3 | standard conversion
+Marilith | CR 16 -> TR 6 | TR6+/Legendary extrapolated; soulCore Infernal dc18 [elite fiend]
+Mastiff | CR 0.125 -> TR 1 | standard conversion
+Medusa | CR 6 -> TR 4 | standard conversion
+Merfolk | CR 0.125 -> TR 1 | standard conversion
+Merrow | CR 2 -> TR 2 | standard conversion
+Mimic | CR 2 -> TR 2 | standard conversion
+Minotaur | CR 3 -> TR 3 | standard conversion
+Minotaur Skeleton | CR 2 -> TR 2 | standard conversion
