@@ -269,6 +269,14 @@ export interface StatBlockShape {
   fields: StatBlockField[];
 }
 
+/** A single rollable attack. `diceExpr` is a clean term parseDice accepts (e.g. "1d8+4"). */
+export interface AttackEntry {
+  name: string;
+  diceExpr: string;
+  damageType: string;
+  note?: string;
+}
+
 export interface BestiaryEntry {
   id: string;
   name: string;
@@ -277,6 +285,8 @@ export interface BestiaryEntry {
   /** Free-form values keyed by field id (kept generic per the schema philosophy). */
   stats: Record<string, number | string>;
   abilities?: string[];
+  /** Structured, rollable attacks. The display string lives at stats.damage. */
+  attacks?: AttackEntry[];
   /** Harvest/loot pool id (ties into the universal harvest mechanic). */
   lootPoolId?: string;
   provisional?: boolean;

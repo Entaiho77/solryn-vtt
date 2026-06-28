@@ -84,6 +84,13 @@ const entries = data.creatures
       native: (c.native ?? []).join(', '),
     },
     abilities: abilityStrs(c.abilities),
+    // Structured rollable attacks, carried through alongside the display string.
+    attacks: (c.attacks ?? []).map((a) => ({
+      name: a.name,
+      diceExpr: a.diceExpr,
+      damageType: a.damageType,
+      ...(a.note ? { note: a.note } : {}),
+    })),
     provisional: true,
   }));
 

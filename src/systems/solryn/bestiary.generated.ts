@@ -29,6 +29,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Frailty: Takes double damage from Fire attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed."
     ],
+    "attacks": [
+      {
+        "name": "Acid Bite",
+        "diceExpr": "2d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -53,6 +60,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Steadfast Form: Cannot be charmed, frightened, poisoned."
     ],
+    "attacks": [
+      {
+        "name": "Acid Spit",
+        "diceExpr": "4d6",
+        "damageType": "Acid"
+      },
+      {
+        "name": "Ravenous Bite",
+        "diceExpr": "3d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -75,6 +94,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Steadfast Form: Cannot be poisoned, diseased."
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "2d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -101,6 +132,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Steadfast Form: Cannot be poisoned, diseased."
     ],
+    "attacks": [
+      {
+        "name": "Bone Staff",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Rotting Beak",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -126,6 +169,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Bludgeoning from non-magical weapons-Hardened: Takes half damage from Bludgeoning from non-magical weapons attacks",
       "Steadfast Form: Cannot be frightened, poisoned."
     ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talon Swipe",
+        "diceExpr": "3d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -146,6 +201,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Pack Tactics: The Drakekin Warrior has advantage on attack rolls against a creature if at least one of the Drakekin's allies is within 5 feet of the creature and not incapacitated. Draconic Resilience. The Drakekin’s thick, scaled hide grants it a…",
       "Fire-Hardened: Takes half damage from Fire attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Drakeblade",
+        "diceExpr": "2d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -169,6 +236,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: Multiattack. The Warlord makes three melee attacks with its Drakefang Greatsword. Drakefang Greatsword. *Melee Weapon Attack:* +9 to hit, reach 5 ft., one target. Hit: 15 (2d10 + 5) slashing damage plus 7 (2d6) fire…",
       "Fire-Hardened: Takes half damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Drakefang Greatsword",
+        "diceExpr": "5d10",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -190,6 +264,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fiery Devotion: Whenever the Fire Priest casts a spell that deals fire damage, it can choose one ally within 30 feet to gain 10 temporary hit points. Blessing of the Flame. All allied Drakekin within 30 feet deal an additional 4 (1d8) fire damage with…",
       "Spellcasting: The Fire Priest is a 9th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 15, +7 to hit with spell attacks). It has the following spells prepared: Cantrips (At Will): Sacred Flame, Thaumaturgy, Fire Bolt 1st Level (4…",
       "Fire-Hardened: Takes half damage from Fire attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Drakeflame Staff",
+        "diceExpr": "5d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -220,6 +301,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, stunned.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "6d10",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -241,6 +329,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Pack Tactics: The hyena gnoll has advantage on an attack roll against a creature if at least one of its allies is within 5 feet of the creature and the ally isn’t incapacitated.",
       "Rampage: When the hyena gnoll reduces a creature to 0 hit points with a melee attack on its turn, it can take a bonus action to move up to half its speed and make a bite attack.",
       "Hyena Companion (Optional): The hyena gnoll is often accompanied by a trained hyena, which acts independently but follows its commands. The hyena has the statistics of a regular hyena."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Spear",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -264,6 +364,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Rage (Recharges after a Long Rest): As a bonus action, the warlord enters a rage for 1 minute. While raging:",
       "Reckless Attack: At the start of its turn, the warlord can make all melee attacks this turn with advantage, but attack rolls against it also have advantage until the start of its next turn."
     ],
+    "attacks": [
+      {
+        "name": "Strike",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning",
+        "note": "scaled to TR band (source attack unparsed)"
+      }
+    ],
     "provisional": true
   },
   {
@@ -284,6 +392,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Pack Tactics: The hyena gnoll shaman has advantage on an attack roll against a creature if at least one of the shaman's allies is within 5 feet of the creature and the ally isn’t incapacitated. Spellcasting: The hyena gnoll shaman is a 4th-level…",
       "Cantrips (at will): *Druidcraft, Produce Flame, Thorn Whip*"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Quarterstaff",
+        "diceExpr": "2d6",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -312,6 +432,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d12+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tentacle Slam",
+        "diceExpr": "2d10+3",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Tail Swipe",
+        "diceExpr": "1d10",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -335,6 +472,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison Resistance: The thorned spider has resistance to poison damage.",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -356,6 +500,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Boney Carapace: The Shield Spider’s AC is 16 due to its boney carapace, providing natural armor.",
       "Underground Ambusher: The Shield Spider has advantage on attack rolls against creatures that have not yet acted in combat when it ambushes from its underground nest.",
       "Spider Climb: The Shield Spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -379,6 +530,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning Bite: The Phase Spider’s bite deals lightning damage instead of poison.",
       "Phase Step (At Will): As a bonus action, the Phase Spider magically teleports up to 10 feet to an unoccupied space it can see.",
       "Lightning-Hardened: Takes half damage from Lightning attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10+2",
+        "damageType": "Lightning"
+      }
     ],
     "provisional": true
   },
@@ -406,6 +564,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -427,6 +592,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Web Trap: The arachnid horror can use its web to create a trap on the ground or in the air. As an action, the arachnid horror can create a 10-foot cube of webbing. The area becomes difficult terrain, and a creature entering or starting its turn in…",
       "Venomous Bite: A creature that takes damage from the arachnid horror's bite attack must succeed on a DC 15 Constitution saving throw or be poisoned for 1 minute. While poisoned in this way, the creature is also paralyzed. The creature can repeat the…",
       "Wall Climb: The arachnid horror can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -454,6 +626,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Steadfast Form: Cannot be charmed, frightened."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "5d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d8+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -484,6 +668,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -513,6 +704,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "2d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Slam",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -538,6 +746,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, prone, restrained."
+    ],
+    "attacks": [
+      {
+        "name": "Ethereal Sword",
+        "diceExpr": "4d8+1",
+        "damageType": "Force"
+      }
     ],
     "provisional": true
   },
@@ -565,6 +780,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, prone, restrained."
+    ],
+    "attacks": [
+      {
+        "name": "Spectral Touch",
+        "diceExpr": "5d6",
+        "damageType": "Necrotic"
+      },
+      {
+        "name": "Necrotic Bolt",
+        "diceExpr": "3d6",
+        "damageType": "Necrotic"
+      }
     ],
     "provisional": true
   },
@@ -600,6 +827,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, grappled, paralyzed, petrified, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Life Drain",
+        "diceExpr": "3d6",
+        "damageType": "Necrotic"
+      },
+      {
+        "name": "Shadow Bolt",
+        "diceExpr": "2d6+1",
+        "damageType": "Necrotic"
+      }
+    ],
     "provisional": true
   },
   {
@@ -633,6 +872,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, grappled, paralyzed, petrified, prone, restrained, unconscious."
+    ],
+    "attacks": [
+      {
+        "name": "Withering Touch",
+        "diceExpr": "4d6",
+        "damageType": "Necrotic"
+      }
     ],
     "provisional": true
   },
@@ -668,6 +914,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Paralyzing Touch",
+        "diceExpr": "10d6",
+        "damageType": "Cold"
+      }
+    ],
     "provisional": true
   },
   {
@@ -701,6 +954,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, grappled, paralyzed, petrified, prone, restrained, stunned.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Spectral Claw",
+        "diceExpr": "10d6",
+        "damageType": "Necrotic"
+      }
+    ],
     "provisional": true
   },
   {
@@ -728,6 +988,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning-Hardened: Takes half damage from Lightning attacks",
       "Steadfast Form: Cannot be blinded, charmed, deafened, frightened, prone."
     ],
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "4d8+1",
+        "damageType": "Acid"
+      }
+    ],
     "provisional": true
   },
   {
@@ -750,6 +1017,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "None-Hardened: Takes half damage from None attacks",
       "Steadfast Form: Cannot be none."
     ],
+    "attacks": [
+      {
+        "name": "Stomp",
+        "diceExpr": "2d8+2",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -770,6 +1049,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Pack Tactics: The velociraptor has advantage on an attack roll against a creature if at least one of the velociraptor’s allies is within 5 feet of the creature and the ally isn’t incapacitated. Pounce. If the velociraptor moves at least 20 feet straight…"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -788,6 +1079,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Frozen Wastes, Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d12",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -806,6 +1109,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Frozen Wastes, Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "2d8+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Stomp",
+        "diceExpr": "2d10",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -825,6 +1140,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Sight: The pteranodon has advantage on Wisdom (Perception) checks that rely on sight."
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -853,6 +1180,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercingward: Immune to Piercing damage",
       "Spectral Resilience: Immune to nonmagical weapon damage",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified."
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "6d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -884,6 +1218,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "7d8+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -913,6 +1254,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercingward: Immune to Piercing damage",
       "Spectral Resilience: Immune to nonmagical weapon damage",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified."
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "5d10",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -945,6 +1293,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Spectral Resilience: Immune to nonmagical weapon damage",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -975,6 +1330,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Thunder Frailty: Takes double damage from Thunder attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "3d10+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1002,6 +1364,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Fire Frailty: Takes double damage from Fire attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified."
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "6d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -1033,6 +1402,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Frailty: Takes double damage from Fire attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "7d8+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -1066,6 +1442,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "7d8+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1098,6 +1481,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "7d8+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1128,6 +1518,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Thunder Frailty: Takes double damage from Thunder attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "6d10",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -1160,6 +1557,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Shadowy Grasp",
+        "diceExpr": "3d8+1",
+        "damageType": "Necrotic"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1188,6 +1597,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "7d8+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1215,6 +1631,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d10",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Rock Throw",
+        "diceExpr": "2d10+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1236,6 +1664,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Perfect Camouflage: When the small rock crab is not moving, it is indistinguishable from a boulder. It has advantage on Dexterity (Stealth) checks made to hide in rocky terrain. Creatures that fail a DC 13 Wisdom (Perception) check cannot discern that the…",
       "Amphibious: The small rock crab can breathe air and water.",
       "Sneak Attack: The small rock crab deals an extra 1d6 damage to one creature it hits with an attack if it has advantage on the attack roll."
+    ],
+    "attacks": [
+      {
+        "name": "Claw Attack",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -1259,6 +1694,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Amphibious: The rock crab can breathe air and water.",
       "Sneak Attack: The rock crab deals an extra 2d6 damage to one creature it hits with an attack if it has advantage on the attack roll."
     ],
+    "attacks": [
+      {
+        "name": "Claw Attack",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1281,6 +1723,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Amphibious: The giant rock crab can breathe air and water.",
       "Sneak Attack: The giant rock crab deals an extra 3d6 damage to one creature it hits with an attack if it has advantage on the attack roll."
     ],
+    "attacks": [
+      {
+        "name": "Claw Attack",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1302,6 +1751,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Ambusher: The giant praying mantis has advantage on attack rolls against creatures it has surprised.",
       "Camouflage: The giant praying mantis can use its natural coloration to blend into its surroundings. While motionless, it is indistinguishable from the surrounding vegetation. It has advantage on Dexterity (Stealth) checks made to hide.",
       "Keen Senses: The giant praying mantis has advantage on Wisdom (Perception) checks that rely on sight."
+    ],
+    "attacks": [
+      {
+        "name": "Scythe Attack",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Mandibles",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1326,6 +1787,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Camouflage: The frostbite mantis has advantage on Dexterity (Stealth) checks made to hide in snowy or icy terrain. While motionless, it is indistinguishable from its surroundings.",
       "Cold-Hardened: Takes half damage from Cold attacks"
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d8+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1348,6 +1821,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fiery Strike: When the magma mantis hits a creature with its claws, the target takes an additional 10 (3d6) fire damage. If the target is a flammable object, it ignites and continues to burn until extinguished.",
       "Heat Immunity: The magma mantis is immune to fire damage and can withstand extreme heat without harm.",
       "Fire-Hardened: Takes half damage from Fire attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d8+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1374,6 +1859,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1396,6 +1888,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Armor Plating: The burrowing beetle's thick exoskeleton provides it with enhanced protection, granting it a higher armor class.",
       "Acid-Hardened: Takes half damage from Acid attacks"
     ],
+    "attacks": [
+      {
+        "name": "Mandibles",
+        "diceExpr": "1d10+3",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Acidic Spit",
+        "diceExpr": "1d8",
+        "damageType": "Acid"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1416,6 +1920,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Fire Aura: At the start of each of the fire ant colossus's turns, each creature within 10 feet of it takes 10 (3d6) fire damage, and flammable objects in the area that aren't being worn or carried ignite. A creature that touches the fire ant colossus…",
       "Fire-Hardened: Takes half damage from Fire attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Mandible Crush",
+        "diceExpr": "5d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1439,6 +1950,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Aura: At the start of each of the swarm's turns, each creature in the swarm's space takes 3 (1d6) fire damage, and flammable objects in the area that aren't being worn or carried ignite. A creature that touches the swarm or hits it with a melee…",
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+    ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1467,6 +1985,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, poisoned."
     ],
+    "attacks": [
+      {
+        "name": "Claw Attack",
+        "diceExpr": "5d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1494,6 +2019,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Steadfast Form: Cannot be charmed, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Claw Attack",
+        "diceExpr": "1d8+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Stinger Attack",
+        "diceExpr": "3d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1516,6 +2053,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Electric Shock: When the lightning bug leviathan hits a creature with its bite or tail attack, the target must succeed on a DC 17 Constitution saving throw or take an additional 22 (4d10) lightning damage and be stunned until the end of their next turn.",
       "Flight: The lightning bug leviathan can fly at a speed of 80 feet. It can hover in place and maneuver with great agility.",
       "Lightning-Hardened: Takes half damage from Lightning attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail Attack",
+        "diceExpr": "3d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -1541,6 +2090,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fear: All creatures within 30 feet of the queen must succeed on a DC 18 Wisdom saving throw or be frightened for 1 minute.",
       "Rage: All insects within 30 feet of the queen gain advantage on attack rolls and deal an extra 1d6 damage for 1 minute.",
       "Royal Guard: The hive mind queen is always accompanied by 1d4 + 2 royal guard insects. These loyal protectors have an AC of 16, 50 hit points, and can make one attack per turn with a +6 to hit, dealing 12 (2d8 + 3) piercing damage. They act on the…"
+    ],
+    "attacks": [
+      {
+        "name": "Sting",
+        "diceExpr": "4d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -1568,6 +2129,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Venomous Sting",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1593,6 +2166,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "And slashing-Hardened: Takes half damage from And slashing attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1616,6 +2201,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Steadfast Form: Cannot be charmed, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Sting",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1638,6 +2235,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Scavenger Instinct: The carrion beetle has advantage on Wisdom (Perception) checks to detect dead or dying creatures within 60 feet.",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Rotting Bite",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "2d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1659,6 +2268,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Foul Stench: The juvenile carrion beetle emits a nauseating odor in a 5-foot radius. Creatures that start their turn within this area must succeed on a DC 12 Constitution saving throw or be poisoned until the start of their next turn. While poisoned in…",
       "Scavenger Instinct: The juvenile carrion beetle has advantage on Wisdom (Perception) checks to detect dead or dying creatures within 30 feet.",
       "Poison-Hardened: Takes half damage from Poison attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -1687,6 +2308,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1711,6 +2339,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Psychic-Hardened: Takes half damage from Psychic attacks",
       "Steadfast Form: Cannot be charmed, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Proboscis",
+        "diceExpr": "3d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Wing Buffet",
+        "diceExpr": "2d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1734,6 +2374,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Heat Resistance: The sand scorpion has resistance to fire damage due to its adaptation to the harsh desert environment.",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+1",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Sting",
+        "diceExpr": "3d8+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1756,6 +2408,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison Sting: When the shadow wasp hits a creature with its sting attack, the target must succeed on a DC 14 Constitution saving throw or take 21 (6d6) poison damage and be poisoned for 1 minute. The poisoned target can repeat the saving throw at the…",
       "Stealth: The shadow wasp has advantage on Dexterity (Stealth) checks made in dim light or darkness.",
       "Necrotic-Hardened: Takes half damage from Necrotic attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Sting",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1781,6 +2445,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Bludgeoning-Hardened: Takes half damage from Bludgeoning attacks",
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
+    ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1809,6 +2485,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Firebolt",
+        "diceExpr": "2d6",
+        "damageType": "Fire"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1831,6 +2519,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Web Walker: The acidic silk spinner can move across its own webs and other webs without being hindered by difficult terrain.",
       "Climbing Agility: The acidic silk spinner has advantage on Dexterity (Stealth) checks made to hide in web-covered areas.",
       "Acid-Hardened: Takes half damage from Acid attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1858,6 +2553,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1881,6 +2583,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Resistance: The pyrocricket has resistance to fire damage.",
       "Fire-Hardened: Takes half damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Fiery Claws",
+        "diceExpr": "2d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1900,6 +2614,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Poison-Hardened: Takes half damage from Poison attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Proboscis",
+        "diceExpr": "3d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -1922,6 +2648,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Ice Armor: The frost beetle's carapace is coated in a layer of ice, granting it resistance to cold damage and a +2 bonus to AC against melee attacks.",
       "Cold Resistance: The frost beetle has resistance to cold damage.",
       "Cold-Hardened: Takes half damage from Cold attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Mandibles",
+        "diceExpr": "2d8+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Icy Claws",
+        "diceExpr": "3d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -1946,6 +2684,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Aerial Acrobatics: The bladed dragonfly is highly agile in the air, allowing it to take the Disengage or Dash action as a bonus action on each of its turns.",
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Piercing-Hardened: Takes half damage from Piercing attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Wing Slash",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -1972,6 +2722,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Mandibles",
+        "diceExpr": "1d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Charge",
+        "diceExpr": "2d8+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -1991,6 +2753,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Bioluminescence: The glowing firefly can emit bright, colorful light from its abdomen. As a bonus action, it can choose to shed bright light in a 20-foot radius and dim light for an additional 20 feet. The light lasts until the firefly dismisses it (no…"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Light Flash",
+        "diceExpr": "1d6+2",
+        "damageType": "Radiant"
+      }
     ],
     "provisional": true
   },
@@ -2012,6 +2786,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Swarm: The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny firefly. The swarm can't regain hit points or gain temporary hit points.",
       "Bioluminescence: The swarm of glowing fireflies can emit bright, colorful light from their abdomens. As a bonus action, the swarm can choose to shed bright light in a 20-foot radius and dim light for an additional 20 feet. The light lasts until the swarm…"
+    ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "3d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Light Flash",
+        "diceExpr": "1d6",
+        "damageType": "Radiant"
+      }
     ],
     "provisional": true
   },
@@ -2038,6 +2824,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Horn",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Mandibles",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2059,6 +2857,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Wing Buzz: As an action, the sonic cicada can create a continuous buzzing sound with its wings. Each creature within 30 feet of the cicada that can hear the sound must succeed on a DC 14 Wisdom saving throw or be incapacitated for 1 minute. The…",
       "Sound Manipulation: The sonic cicada can use sound to create simple auditory illusions. As an action, it can mimic the sounds of other creatures, create phantom noises, or amplify or mute existing sounds within a 30-foot radius. These effects last for 1…",
       "Thunder-Hardened: Takes half damage from Thunder attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Sonic Screech",
+        "diceExpr": "2d6+1",
+        "damageType": "Thunder"
+      }
     ],
     "provisional": true
   },
@@ -2083,6 +2893,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Survival Instinct: The wasteland roach has advantage on Wisdom (Perception) checks to detect threats and traps within 60 feet.",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2106,6 +2928,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Swamp Camouflage: The swamp centipede has advantage on Dexterity (Stealth) checks made to hide in swampy or marshy terrain. While motionless, it is indistinguishable from its surroundings.",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "2d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2128,6 +2962,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Temporal Shift: The void dragon can manipulate time, giving it advantage on attack rolls, ability checks, and saving throws until the end of its next turn. It can use this ability once per short or long rest.",
       "Psychic-Hardened: Takes half damage from Psychic attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -2153,6 +3004,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Thunder-Hardened: Takes half damage from Thunder attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2176,6 +3044,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Radiant-Hardened: Takes half damage from Radiant attacks",
       "Psychic-Hardened: Takes half damage from Psychic attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -2201,6 +3086,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2223,6 +3125,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Shadow Aura: At the start of each of the shadow dragon's turns, each creature within 10 feet of it takes 10 (3d6) necrotic damage.",
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -2247,6 +3166,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2269,6 +3205,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Freezing Presence: The frost dragon can use its action to create a freezing aura in a 30-foot radius centered on itself. The area is heavily obscured by icy mist, and each creature other than the dragon that starts its turn in the area must make a DC 22…",
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -2297,6 +3250,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, exhausted, frightened, paralyzed, poisoned.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2320,6 +3290,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2342,6 +3329,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Illusionary Aura: The dream dragon can use its action to create an aura of illusions in a 30-foot radius centered on itself. Each creature in that area must make a DC 21 Wisdom saving throw. On a failed save, the creature is charmed and experiences vivid…",
       "Psychic-Hardened: Takes half damage from Psychic attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -2368,6 +3372,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2392,6 +3413,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Psychic-Hardened: Takes half damage from Psychic attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "4d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Wing Slash",
+        "diceExpr": "1d10+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2412,6 +3450,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Steadfast Form: Cannot be charmed."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -2436,6 +3481,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Probing Telepathy: If a creature communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires if the aboleth can see the creature.",
       "Enslave: The aboleth targets one creature it can see within 30 ft. of it. The target must succeed on a DC 14 Wisdom saving throw or be magically charmed by the aboleth until the aboleth dies or until it is on a different plane of existence from the… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Tentacle",
+        "diceExpr": "8d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2455,6 +3507,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Spellcasting: The acolyte is a 1st-level spellcaster. (Innate magic — see notes.)"
+    ],
+    "attacks": [
+      {
+        "name": "Club",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -2481,6 +3540,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Acidward: Immune to Acid damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2505,6 +3576,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightningward: Immune to Lightning damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2528,6 +3611,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 45 (13d6) fire damage on a failed… (Once per encounter.)",
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2554,6 +3649,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightningward: Immune to Lightning damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2577,6 +3684,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 60-foot line that is 5 feet wide. Each creature in that line must make a DC 18 Dexterity saving throw, taking 54 (12d8) acid damage on a failed… (Once per encounter.)",
       "Acidward: Immune to Acid damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2603,6 +3722,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2628,6 +3759,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2651,6 +3794,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Breath: The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 21 Dexterity saving throw, taking 63 (18d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2676,6 +3831,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Coldward: Immune to Cold damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2700,6 +3867,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold Breath: The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a DC 19 Constitution saving throw, taking 54 (12d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Coldward: Immune to Cold damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2727,6 +3906,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be grappled, paralyzed, petrified, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2752,6 +3938,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Acidward: Immune to Acid damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2776,6 +3974,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightningward: Immune to Lightning damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2799,6 +4009,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons: Fire Breath. The dragon exhales fire in an 90-foot line that is 10 feet wide. Each creature in that line must make a DC 21 Dexterity saving throw, taking 56 (16d6) fire damage on a… (Once per encounter.)",
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2825,6 +4047,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightningward: Immune to Lightning damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2848,6 +4082,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 90-foot line that is 10 feet wide. Each creature in that line must make a DC 22 Dexterity saving throw, taking 63 (14d8) acid damage on a… (Once per encounter.)",
       "Acidward: Immune to Acid damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2874,6 +4120,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2899,6 +4157,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2922,6 +4192,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Breath: The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 24 Dexterity saving throw, taking 91 (26d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2947,6 +4229,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Coldward: Immune to Cold damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "7d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -2971,6 +4265,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold Breath: The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a DC 22 Constitution saving throw, taking 72 (16d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Coldward: Immune to Cold damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "6d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -2998,6 +4304,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "7d10+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3022,6 +4335,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Psychicward: Immune to Psychic damage",
       "Steadfast Form: Cannot be blinded, charmed, deafened, frightened, paralyzed, petrified."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3042,6 +4362,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Acid Spray: The ankheg spits acid in a line that is 30 ft. long and 5 ft. wide, provided that it has no creature grappled. Each creature in that line must make a DC 13 Dexterity saving throw, taking 10 (3d6) acid damage on a failed save, or half as… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3060,6 +4387,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Fist",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3084,6 +4418,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Dagger",
+        "diceExpr": "13d4+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3107,6 +4448,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Sneak Attack (1/Turn): The assassin deals an extra 13 (4d6) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 ft. of an ally of the assassin that isn't incapacitated and the assassin doesn't have disadvantage on the attack roll.",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "8d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3128,6 +4476,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "False Appearance: While the shrub remains motionless, it is indistinguishable from a normal shrub.",
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Tinder-Dry: Takes double damage from Fire attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Rake",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -3152,6 +4507,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Tinder-Dry: Takes double damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3170,6 +4532,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3194,6 +4563,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Warhammer",
+        "diceExpr": "1d8+4",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3214,6 +4590,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Pack Tactics: The baboon has advantage on an attack roll against a creature if at least one of the baboon's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3233,6 +4616,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Smell: The badger has advantage on Wisdom (Perception) checks that rely on smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3263,6 +4653,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "5d8+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Whip",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3281,6 +4683,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Settlements"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Light Crossbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3299,6 +4713,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Settlements"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Dagger",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3325,6 +4751,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d6+3",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hurl Flame",
+        "diceExpr": "1d6+3",
+        "damageType": "Fire"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3344,6 +4787,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Petrifying Gaze: If a creature starts its turn within 30 ft. of the basilisk and the two of them can see each other, the basilisk can force the creature to make a DC 12 Constitution saving throw if the basilisk isn't incapacitated. On a failed save, the creature magically begins to turn to stone and is restrained.…"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3365,6 +4815,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Echolocation: The bat can't use its blindsight while deafened.",
       "Keen Hearing: The bat has advantage on Wisdom (Perception) checks that rely on hearing."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3392,6 +4849,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Beard",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Glaive",
+        "diceExpr": "1d10+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3414,6 +4883,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightningward: Immune to Lightning damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "4d10",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3434,6 +4915,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Reckless: At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
     ],
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d12+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3453,6 +4941,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Smell: The bear has advantage on Wisdom (Perception) checks that rely on smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -3475,6 +4975,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Amphibious: The dragon can breathe air and water.",
       "Acid Breath: The dragon exhales acid in a 15-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 22 (5d8) acid damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Acidward: Immune to Acid damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3503,6 +5010,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashingward: Immune to Slashing damage",
       "Steadfast Form: Cannot be blinded, charmed, exhausted, frightened, prone."
     ],
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3523,6 +5037,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Hearing and Smell: The dog has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Teleport: The dog magically teleports, along with any equipment it is wearing or carrying, up to 40 ft. to an unoccupied space it can see. Before or after teleporting, the dog can make one bite attack. (Once per encounter.)"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3545,6 +5066,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Sight: The hawk has advantage on Wisdom (Perception) checks that rely on sight.",
       "Pack Tactics: The hawk has advantage on an attack roll against a creature if at least one of the hawk's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3566,6 +5094,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning Breath: The dragon exhales lightning in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Lightningward: Immune to Lightning damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3586,6 +5121,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Charge: If the boar moves at least 20 ft. straight toward a target and then hits it with a tusk attack on the same turn, the target takes an extra 3 (1d6) slashing damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.",
       "Relentless: If the boar takes 7 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
+    ],
+    "attacks": [
+      {
+        "name": "Tusk",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -3612,6 +5154,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Sting",
+        "diceExpr": "4d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3632,6 +5186,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Breath Weapons: The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in an 20-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 14 (4d6) fire damage on a failed… (Once per encounter.)",
       "Fireward: Immune to Fire damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3655,6 +5216,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Lightning Breath. The dragon exhales lightning in a 40-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 16 (3d10) lightning… (Once per encounter.)",
       "Lightningward: Immune to Lightning damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3674,6 +5242,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Smell: The bear has advantage on Wisdom (Perception) checks that rely on smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -3696,6 +5276,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Brute: A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).",
       "Surprise Attack: If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack."
     ],
+    "attacks": [
+      {
+        "name": "Morningstar",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3716,6 +5308,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Standing Leap: The bulette's long jump is up to 30 ft. and its high jump is up to 15 ft., with or without a running start."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d12",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3734,6 +5333,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3754,6 +5360,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Smell: The cat has advantage on Wisdom (Perception) checks that rely on smell."
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3773,6 +5386,23 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Charge: If the centaur moves at least 30 ft. straight toward a target and then hits it with a pike attack on the same turn, the target takes an extra 10 (3d6) piercing damage."
+    ],
+    "attacks": [
+      {
+        "name": "Pike",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hooves",
+        "diceExpr": "1d6",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3800,6 +5430,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Chain",
+        "diceExpr": "8d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3819,6 +5456,23 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Fire Breath: The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 31 (7d8) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+3",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Horns",
+        "diceExpr": "1d12",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+3",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -3842,6 +5496,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Sense Magic: The chuul senses magic within 120 feet of it at will. This trait otherwise works like the detect magic spell but isn't itself magical.",
       "Tentacles: One creature grappled by the chuul must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns,… (Once per encounter.)",
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned."
+    ],
+    "attacks": [
+      {
+        "name": "Pincer",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -3867,6 +5528,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Moan: Each creature within 60 feet of the cloaker that can hear its moan and that isn't an aberration must succeed on a DC 13 Wisdom saving throw or become frightened until the end of the cloaker's next turn. If a creature's saving throw is… (Once per encounter.)",
       "Phantasms: The cloaker magically creates three illusory duplicates of itself if it isn't in bright light. The duplicates move with it and mimic its actions, shifting position so as to make it impossible to track which cloaker is the real one. If the… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "3d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3888,6 +5561,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The giant has advantage on Wisdom (Perception) checks that rely on smell.",
       "Innate Spellcasting: The giant's innate spellcasting ability is Charisma. (Innate magic — see notes.)"
     ],
+    "attacks": [
+      {
+        "name": "Morningstar",
+        "diceExpr": "6d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3906,6 +5586,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3924,6 +5611,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Settlements"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Club",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3942,6 +5636,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -3962,6 +5668,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Breath Weapons: The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 20-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 18 (4d8) acid damage on a failed… (Once per encounter.)",
       "Acidward: Immune to Acid damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -3988,6 +5701,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Spectral Resilience: Immune to nonmagical weapon damage",
       "Radiant-Hardened: Takes half damage from Radiant attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+3",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "1d6+3",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4008,6 +5733,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Amphibious: The crab can breathe air and water."
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4027,6 +5759,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Hold Breath: The crocodile can hold its breath for 15 minutes."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -4049,6 +5788,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Dark Devotion: The fanatic has advantage on saving throws against being charmed or frightened.",
       "Spellcasting: The fanatic is a 4th-level spellcaster. (Innate magic — see notes.)"
     ],
+    "attacks": [
+      {
+        "name": "Dagger",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4068,6 +5814,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Dark Devotion: The cultist has advantage on saving throws against being charmed or frightened."
+    ],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -4090,6 +5843,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Echolocation: The darkmantle can't use its blindsight while deafened.",
       "False Appearance: While the darkmantle remains motionless, it is indistinguishable from a cave formation such as a stalactite or stalagmite."
     ],
+    "attacks": [
+      {
+        "name": "Crush",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4109,6 +5869,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Two-Headed: The dog has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, or knocked unconscious."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -4132,6 +5899,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Gnome Cunning: The gnome has advantage on Intelligence, Wisdom, and Charisma saving throws against magic.",
       "Innate Spellcasting: The gnome's innate spellcasting ability is Intelligence (spell save DC 11). (Innate magic — see notes.)"
     ],
+    "attacks": [
+      {
+        "name": "War Pick",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Poisoned Dart",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4150,6 +5929,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4175,6 +5961,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, exhausted, frightened."
     ],
+    "attacks": [
+      {
+        "name": "Mace",
+        "diceExpr": "8d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4195,6 +5988,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Hearing and Smell: The wolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Pack Tactics: The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -4221,6 +6021,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Thunderward: Immune to Thunder damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "10d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4244,6 +6051,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Surprise Attack: If the doppelganger surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 10 (3d6) damage from the attack.",
       "Steadfast Form: Cannot be charmed."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4262,6 +6076,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4284,6 +6105,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steam Breath: The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 52 (15d6) fire damage on a failed save, or half as much damage on a successful one. Being underwater… (Once per encounter.)",
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d12+3",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d12+3",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -4309,6 +6147,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Lightning-Hardened: Takes half damage from Lightning attacks"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4333,6 +6183,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Sunlight Sensitivity: While in sunlight, the drider has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.",
       "Web Walker: The drider ignores movement restrictions caused by webbing."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10+4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "2d8+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4355,6 +6217,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Innate Spellcasting: The drow's spellcasting ability is Charisma (spell save DC 11). (Innate magic — see notes.)",
       "Sunlight Sensitivity: While in sunlight, the drow has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
     ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hand Crossbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4375,6 +6249,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Spellcasting: The druid is a 4th-level spellcaster. (Innate magic — see notes.)"
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -4398,6 +6273,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Speak with Beasts and Plants: The dryad can communicate with beasts and plants as if they shared a language.",
       "Tree Stride: Once on her turn, the dryad can use 10 ft. of her movement to step magically into one living tree within her reach and emerge from a second living tree within 60 ft. of the first tree, appearing in an unoccupied space within 5 ft. of the second tree. Both trees must be large or bigger.",
       "Fey Charm: The dryad targets one humanoid or beast that she can see within 30 feet of her. If the target can see the dryad, it must succeed on a DC 14 Wisdom saving throw or be magically charmed. The charmed creature regards the dryad as a trusted… (Once per encounter.)"
+    ],
+    "attacks": [
+      {
+        "name": "Club",
+        "diceExpr": "3d4+1",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -4423,6 +6305,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Invisibility: The duergar magically turns invisible until it attacks, casts a spell, or uses its Enlarge, or until its concentration is broken, up to 1 hour (as if concentrating on a spell). Any equipment the duergar wears or carries is invisible with… (Once per encounter.)",
       "Poison-Hardened: Takes half damage from Poison attacks"
     ],
+    "attacks": [
+      {
+        "name": "War Pick",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4447,6 +6341,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Tinder-Dry: Takes double damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4466,6 +6367,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Sight: The eagle has advantage on Wisdom (Perception) checks that rely on sight."
+    ],
+    "attacks": [
+      {
+        "name": "Talons",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -4492,6 +6400,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Thunder Frailty: Takes double damage from Thunder attacks",
       "Steadfast Form: Cannot be paralyzed, petrified, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4515,6 +6430,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Hurl Flame",
+        "diceExpr": "4d6+2",
+        "damageType": "Fire"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4535,6 +6462,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Trampling Charge: If the elephant moves at least 20 ft. straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 12 Strength saving throw or be knocked prone. If the target is prone, the elephant can make one stomp attack against it as a bonus action."
     ],
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Stomp",
+        "diceExpr": "1d10+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4554,6 +6493,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Charge: If the elk moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 7 (2d6) damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+    ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Hooves",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -4581,6 +6532,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "3d8",
+        "damageType": "Poison"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "5d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4604,6 +6567,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Web Walker: The ettercap ignores movement restrictions caused by webbing.",
       "Web: Ranged Weapon Attack: +4 to hit, range 30/60 ft., one Large or smaller creature. Hit: The creature is restrained by webbing. As an action, the restrained creature can make a DC 11 Strength check, escaping from the webbing on a success. The… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4624,6 +6599,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Two Heads: The ettin has advantage on Wisdom (Perception) checks and on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious.",
       "Wakeful: When one of the ettin's heads is asleep, its other head is awake."
+    ],
+    "attacks": [
+      {
+        "name": "Battleaxe",
+        "diceExpr": "1d8+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Morningstar",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -4651,6 +6638,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be grappled, paralyzed, petrified, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Touch",
+        "diceExpr": "5d6+2",
+        "damageType": "Fire"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4671,6 +6665,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "8d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4690,6 +6691,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Flyby: The snake doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -4715,6 +6723,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Psychicward: Immune to Psychic damage",
       "Steadfast Form: Cannot be blinded, charmed, frightened, paralyzed, petrified."
     ],
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "1d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4736,6 +6751,7 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Amphibious: The frog can breathe air and water",
       "Standing Leap: The frog's long jump is up to 10 ft. and its high jump is up to 5 ft., with or without a running start."
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -4755,6 +6771,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Coldward: Immune to Cold damage"
+    ],
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "4d12+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -4779,6 +6802,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be petrified."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4801,6 +6836,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Transparent: Even when the cube is in plain sight, it takes a successful DC 15 Wisdom (Perception) check to spot a cube that has neither moved nor attacked. A creature that tries to enter the cube's space while unaware of the cube is surprised by the cube.",
       "Engulf: The cube moves up to its speed. While doing so, it can enter Large or smaller creatures' spaces. Whenever the cube enters a creature's space, the creature must make a DC 12 Dexterity saving throw. On a successful save, the creature can… (Once per encounter.)",
       "Steadfast Form: Cannot be blinded, charmed, deafened, exhausted, frightened, prone."
+    ],
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "2d6+2",
+        "damageType": "Acid"
+      }
     ],
     "provisional": true
   },
@@ -4826,6 +6868,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Steadfast Form: Cannot be charmed."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4847,6 +6901,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Undying Husk: Immune to Poison damage; cannot be poisoned or exhausted.",
       "Steadfast Form: Cannot be charmed."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4865,6 +6931,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Fist",
+        "diceExpr": "3d10+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4884,6 +6957,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Smell: The badger has advantage on Wisdom (Perception) checks that rely on smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -4906,6 +6991,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Echolocation: The bat can't use its blindsight while deafened.",
       "Keen Hearing: The bat has advantage on Wisdom (Perception) checks that rely on hearing."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4927,6 +7019,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Charge: If the boar moves at least 20 ft. straight toward a target and then hits it with a tusk attack on the same turn, the target takes an extra 7 (2d6) slashing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.",
       "Relentless: If the boar takes 10 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
     ],
+    "attacks": [
+      {
+        "name": "Tusk",
+        "diceExpr": "2d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4945,6 +7044,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4963,6 +7069,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Constrict",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -4982,6 +7100,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Amphibious: The crab can breathe air and water."
+    ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -5003,6 +7128,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Hold Breath: The crocodile can hold its breath for 30 minutes."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8+4",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5022,6 +7159,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Sight: The eagle has advantage on Wisdom (Perception) checks that rely on sight."
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -5043,6 +7192,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Charge: If the elk moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 7 (2d6) damage. If the target is a creature, it must succeed on a DC 14 Strength saving throw or be knocked prone."
     ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Hooves",
+        "diceExpr": "1d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5062,6 +7223,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Illumination: The beetle sheds bright light in a 10-foot radius and dim light for an additional 10 ft.."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -5084,6 +7252,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Amphibious: The frog can breathe air and water",
       "Standing Leap: The frog's long jump is up to 20 ft. and its high jump is up to 10 ft., with or without a running start."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5105,6 +7280,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Charge: If the goat moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 5 (2d4) bludgeoning damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.",
       "Sure-Footed: The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it prone."
     ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5125,6 +7307,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Rampage: When the hyena reduces a creature to 0 hit points with a melee attack on its turn, the hyena can take a bonus action to move up to half its speed and make a bite attack."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5143,6 +7332,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5166,6 +7362,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Water Breathing: The octopus can breathe only underwater.",
       "Ink Cloud: A 20-foot-radius cloud of ink extends all around the octopus if it is underwater. The area is heavily obscured for 1 minute, although a significant current can disperse the ink. After releasing the ink, the octopus can use the Dash action… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Tentacles",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5187,6 +7390,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Flyby: The owl doesn't provoke opportunity attacks when it flies out of an enemy's reach.",
       "Keen Hearing and Sight: The owl has advantage on Wisdom (Perception) checks that rely on hearing or sight."
     ],
+    "attacks": [
+      {
+        "name": "Talons",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5205,6 +7415,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5225,6 +7442,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Smell: The rat has advantage on Wisdom (Perception) checks that rely on smell.",
       "Pack Tactics: The rat has advantage on an attack roll against a creature if at least one of the rat's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5247,6 +7471,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The rat has advantage on Wisdom (Perception) checks that rely on smell.",
       "Pack Tactics: The rat has advantage on an attack roll against a creature if at least one of the rat's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5265,6 +7496,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+4",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Sting",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5286,6 +7529,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Charge: If the sea horse moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 7 (2d6) bludgeoning damage. If the target is a creature, it must succeed on a DC 11 Strength saving throw or be knocked prone.",
       "Water Breathing: The sea horse can breathe only underwater."
     ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5306,6 +7556,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Blood Frenzy: The shark has advantage on melee attack rolls against any creature that doesn't have all its hit points.",
       "Water Breathing: The shark can breathe only underwater."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5330,6 +7587,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Web Walker: The spider ignores movement restrictions caused by webbing.",
       "Web: Ranged Weapon Attack: +5 to hit, range 30/60 ft., one creature. Hit: The target is restrained by webbing. As an action, the restrained target can make a DC 12 Strength check, bursting the webbing on a success. The webbing can also be… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5350,6 +7614,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Amphibious: The toad can breathe air and water",
       "Standing Leap: The toad's long jump is up to 20 ft. and its high jump is up to 10 ft., with or without a running start."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5372,6 +7643,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Sight and Smell: The vulture has advantage on Wisdom (Perception) checks that rely on sight or smell.",
       "Pack Tactics: The vulture has advantage on an attack roll against a creature if at least one of the vulture's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d4+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5390,6 +7673,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Sting",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5409,6 +7699,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Hearing and Smell: The weasel has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5432,6 +7729,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Web Sense: While in contact with a web, the spider knows the exact location of any other creature in contact with the same web.",
       "Web Walker: The spider ignores movement restrictions caused by webbing."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5454,6 +7758,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Gibbering: The mouther babbles incoherently while it can see any creature and isn't incapacitated. Each creature that starts its turn within 20 feet of the mouther and can hear the gibbering must succeed on a DC 10 Wisdom saving throw. On a failure, the creature can't take reactions until the start of its…",
       "Blinding Spittle: The mouther spits a chemical glob at a point it can see within 15 feet of it. The glob explodes in a blinding flash of light on impact. Each creature within 5 feet of the flash must succeed on a DC 13 Dexterity saving throw or be blinded… (Once per encounter.)",
       "Steadfast Form: Cannot be prone."
+    ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5481,6 +7792,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning-Hardened: Takes half damage from Lightning attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Pincer",
+        "diceExpr": "3d10+2",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Fist",
+        "diceExpr": "3d4+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5502,6 +7825,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Brave: The gladiator has advantage on saving throws against being frightened.",
       "Brute: A melee weapon deals one extra die of its damage when the gladiator hits with it (included in the attack)."
     ],
+    "attacks": [
+      {
+        "name": "Shield Bash",
+        "diceExpr": "8d4",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5521,6 +7851,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Rampage: When the gnoll reduces a creature to 0 hit points with a melee attack on its turn, the gnoll can take a bonus action to move up to half its speed and make a bite attack."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5543,6 +7885,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Charge: If the goat moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 2 (1d4) bludgeoning damage. If the target is a creature, it must succeed on a DC 10 Strength saving throw or be knocked prone.",
       "Sure-Footed: The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it prone."
     ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5563,6 +7912,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Nimble Escape: The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
     ],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5582,6 +7943,19 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Nimble Escape: Can disengage or hide as a bonus action"
+    ],
+    "attacks": [
+      {
+        "name": "Short Sword",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d6",
+        "damageType": "Piercing",
+        "note": "Range 80/320"
+      }
     ],
     "provisional": true
   },
@@ -5605,6 +7979,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 22 (4d10) fire damage on a failed save, or half as… (Once per encounter.)",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5626,6 +8007,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Trampling Charge: If the gorgon moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 16 Strength saving throw or be knocked prone. If the target is prone, the gorgon can make one attack with its hooves against it as a bonus action.",
       "Petrifying Breath: The gorgon exhales petrifying gas in a 30-foot cone. Each creature in that area must succeed on a DC 13 Constitution saving throw. On a failed save, a target begins to turn to stone and is restrained. The restrained target must repeat the… (Once per encounter.)",
       "Steadfast Form: Cannot be petrified."
+    ],
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "2d12",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hooves",
+        "diceExpr": "2d10",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -5653,6 +8046,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Steadfast Form: Cannot be blinded, charmed, deafened, exhausted, frightened, prone."
     ],
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5674,6 +8074,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Amphibious: The dragon can breathe air and water.",
       "Poison Breath: The dragon exhales poisonous gas in a 15-foot cone. Each creature in that area must make a DC 11 Constitution saving throw, taking 21 (6d6) poison damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5697,6 +8104,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Innate Spellcasting: The hag's innate spellcasting ability is Charisma (spell save DC 12). (Innate magic — see notes.)",
       "Mimicry: The hag can mimic animal sounds and humanoid voices. A creature that hears the sounds can tell they are imitations with a successful DC 14 Wisdom (Insight) check."
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "3d8",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5718,6 +8132,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Stone Camouflage: The grick has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Tentacles",
+        "diceExpr": "1d6+3",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Beak",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5737,6 +8163,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Sight: The griffon has advantage on Wisdom (Perception) checks that rely on sight."
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -5761,6 +8199,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Stone Camouflage: The grimlock has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.",
       "Steadfast Form: Cannot be blinded."
     ],
+    "attacks": [
+      {
+        "name": "Spiked Bone Club",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5779,6 +8224,7 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Settlements"
     },
     "abilities": [],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -5801,6 +8247,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Spellcasting: The naga is an 11th-level spellcaster. (Innate magic — see notes.)",
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Steadfast Form: Cannot be charmed."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "6d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5828,6 +8281,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "7d8+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5849,6 +8309,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Breath: The veteran exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Fire-Hardened: Takes half damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "5d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5867,6 +8334,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Club",
+        "diceExpr": "1d4+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5886,6 +8365,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Sight: The hawk has advantage on Wisdom (Perception) checks that rely on sight."
+    ],
+    "attacks": [
+      {
+        "name": "Talons",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -5909,6 +8395,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Pack Tactics: The hound has advantage on an attack roll against a creature if at least one of the hound's allies is within 5 ft. of the creature and the ally isn't incapacitated.",
       "Fire Breath: The hound exhales fire in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Fireward: Immune to Fire damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -5936,6 +8429,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning-Hardened: Takes half damage from Lightning attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5954,6 +8459,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Mountains"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Greatclub",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5974,6 +8486,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Sight: The hippogriff has advantage on Wisdom (Perception) checks that rely on sight."
     ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -5993,6 +8517,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Martial Advantage: Once per turn, the hobgoblin can deal an extra 7 (2d6) damage to a creature it hits with a weapon attack if that creature is within 5 ft. of an ally of the hobgoblin that isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Longbow",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6015,6 +8546,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Telepathic Bond: While the homunculus is on the same plane of existence as its master, it can magically convey what it senses to its master, and the two can communicate telepathically.",
       "Lifeless Frame: Immune to Poison damage; cannot be poisoned.",
       "Steadfast Form: Cannot be charmed."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6042,6 +8580,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Fork",
+        "diceExpr": "3d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hurl Flame",
+        "diceExpr": "3d6+1",
+        "damageType": "Fire"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6063,6 +8618,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Blood Frenzy: The shark has advantage on melee attack rolls against any creature that doesn't have all its hit points.",
       "Water Breathing: The shark can breathe only underwater."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6082,6 +8644,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Pack Tactics: The hyena has advantage on an attack roll against a creature if at least one of the hyena's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6107,6 +8676,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d10+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "3d6+1",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -6135,6 +8721,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Brittle Frame: Takes double damage from Bludgeoning attacks",
       "Tinder-Dry: Takes double damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6161,6 +8754,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Sting (Bite in Beast Form)",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6185,6 +8785,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be grappled, paralyzed, petrified, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "5d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6205,6 +8812,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Hearing and Smell: The jackal has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Pack Tactics: The jackal has advantage on an attack roll against a creature if at least one of the jackal's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6228,6 +8842,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hold Breath: The whale can hold its breath for 30 minutes",
       "Keen Hearing: The whale has advantage on Wisdom (Perception) checks that rely on hearing."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6249,6 +8870,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Brave: The knight has advantage on saving throws against being frightened.",
       "Leadership: For 1 minute, the knight can utter a special command or warning whenever a nonhostile creature that it can see within 30 ft. of it makes an attack roll or a saving throw. The creature can add a d4 to its roll provided it can hear and… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "4d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6269,6 +8897,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Sunlight Sensitivity: While in sunlight, the kobold has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.",
       "Pack Tactics: The kobold has advantage on an attack roll against a creature if at least one of the kobold's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Dagger",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Sling",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -6297,6 +8937,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be frightened, paralyzed.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "5d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tentacle",
+        "diceExpr": "5d6+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6316,6 +8968,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Innate Spellcasting: The lamia's innate spellcasting ability is Charisma (spell save DC 13). (Innate magic — see notes.)"
+    ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d10",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Dagger",
+        "diceExpr": "1d4+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6341,6 +9005,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Steadfast Form: Cannot be charmed, frightened."
+    ],
+    "attacks": [
+      {
+        "name": "Fist",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -6372,6 +9043,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Paralyzing Touch",
+        "diceExpr": "12d6",
+        "damageType": "Cold"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6395,6 +9073,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Pounce: If the lion moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 13 Strength saving throw or be knocked prone. If the target is prone, the lion can make one bite attack against it as a bonus action.",
       "Running Leap: With a 10-foot running start, the lion can long jump up to 25 ft.."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6413,6 +9103,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6433,6 +9130,28 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Hold Breath: The lizardfolk can hold its breath for 15 minutes."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Heavy Club",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Spiked Shield",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6452,6 +9171,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Spellcasting: The mage is a 9th-level spellcaster. (Innate magic — see notes.)"
+    ],
+    "attacks": [
+      {
+        "name": "Dagger",
+        "diceExpr": "8d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6479,6 +9205,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Frost-Brittle: Takes double damage from Cold attacks"
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6502,6 +9235,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Touch",
+        "diceExpr": "1d6+2",
+        "damageType": "Fire"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6522,6 +9262,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Trampling Charge: If the mammoth moves at least 20 ft. straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 18 Strength saving throw or be knocked prone. If the target is prone, the mammoth can make one stomp attack against it as a bonus action."
     ],
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Stomp",
+        "diceExpr": "2d10",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6541,6 +9293,23 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Tail Spike Regrowth: The manticore has twenty-four tail spikes. Used spikes regrow when the manticore finishes a long rest."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail Spike",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6570,6 +9339,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "6d8+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "1d10",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6589,6 +9370,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Hearing and Smell: The mastiff has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6610,6 +9398,23 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Petrifying Gaze: When a creature that can see the medusa's eyes starts its turn within 30 ft. of the medusa, the medusa can force it to make a DC 14 Constitution saving throw if the medusa isn't incapacitated and can see the creature. If the saving throw fails by 5 or more, the creature is instantly petrified.…"
     ],
+    "attacks": [
+      {
+        "name": "Snake Hair",
+        "diceExpr": "1d10+4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6630,6 +9435,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Amphibious: The merfolk can breathe air and water."
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -6649,6 +9455,23 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Amphibious: The merrow can breathe air and water."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Harpoon",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6675,6 +9498,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Acidward: Immune to Acid damage",
       "Steadfast Form: Cannot be prone."
     ],
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "1d6",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6696,6 +9531,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Charge: If the minotaur moves at least 10 ft. straight toward a target and then hits it with a gore attack on the same turn, the target takes an extra 9 (2d8) piercing damage. If the target is a creature, it must succeed on a DC 14 Strength saving throw or be pushed up to 10 ft. away and knocked prone.",
       "Labyrinthine Recall: The minotaur can perfectly recall any path it has traveled.",
       "Reckless: At the start of its turn, the minotaur can gain advantage on all melee weapon attack rolls it makes during that turn, but attack rolls against it have advantage until the start of its next turn."
+    ],
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d12+1",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Gore",
+        "diceExpr": "1d8+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -6719,6 +9566,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Undying Husk: Immune to Poison damage; cannot be exhausted or poisoned.",
       "Brittle Frame: Takes double damage from Bludgeoning attacks"
     ],
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d8",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Gore",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6739,6 +9598,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Beast of Burden: The mule is considered to be a Large animal for the purpose of determining its carrying capacity.",
       "Sure-Footed: The mule has advantage on Strength and Dexterity saving throws made against effects that would knock it prone."
+    ],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -6764,6 +9630,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Tinder-Dry: Takes double damage from Fire attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed."
+    ],
+    "attacks": [
+      {
+        "name": "Rotting Fist",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -6794,6 +9667,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Rotting Fist",
+        "diceExpr": "10d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6821,6 +9701,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d10+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6847,6 +9739,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed."
     ],
+    "attacks": [
+      {
+        "name": "Claws (Hag Form Only)",
+        "diceExpr": "4d8+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6869,6 +9768,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Illumination: The nightmare sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "3d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6887,6 +9793,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Settlements"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Rapier",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6912,6 +9825,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Acid-Hardened: Takes half damage from Acid attacks",
       "Steadfast Form: Cannot be blinded, charmed, exhausted, frightened, prone."
     ],
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6935,6 +9855,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Water Breathing: The octopus can breathe only underwater.",
       "Ink Cloud: A 5-foot-radius cloud of ink extends all around the octopus if it is underwater. The area is heavily obscured for 1 minute, although a significant current can disperse the ink. After releasing the ink, the octopus can use the Dash action… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Tentacles",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6953,6 +9880,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Mountains"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Greatclub",
+        "diceExpr": "1d8",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -6973,6 +9912,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Undead Fortitude: If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5+the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead.",
       "Undying Husk: Immune to Poison damage; cannot be poisoned."
+    ],
+    "attacks": [
+      {
+        "name": "Morningstar",
+        "diceExpr": "1d8+4",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -6996,6 +9942,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Magic Weapons: The oni's weapon attacks are magical.",
       "Regeneration: The oni regains 10 hit points at the start of its turn if it has at least 1 hit point."
     ],
+    "attacks": [
+      {
+        "name": "Claw (Oni Form Only)",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Glaive",
+        "diceExpr": "2d10+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7015,6 +9973,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Aggressive: As a bonus action, the orc can move up to its speed toward a hostile creature that it can see."
+    ],
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Javelin",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7037,6 +10007,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Limited Telepathy: The otyugh can magically transmit simple messages and images to any creature within 120 ft. of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond.",
       "Tentacle Slam: The otyugh slams creatures grappled by it into each other or a solid surface. Each creature must succeed on a DC 14 Constitution saving throw or take 10 (2d6 + 3) bludgeoning damage and be stunned until the end of the otyugh's next turn.… (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tentacle",
+        "diceExpr": "3d8",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7058,6 +10040,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Flyby: The owl doesn't provoke opportunity attacks when it flies out of an enemy's reach.",
       "Keen Hearing and Sight: The owl has advantage on Wisdom (Perception) checks that rely on hearing or sight."
     ],
+    "attacks": [
+      {
+        "name": "Talons",
+        "diceExpr": "1d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7077,6 +10066,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Sight and Smell: The owlbear has advantage on Wisdom (Perception) checks that rely on sight or smell."
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -7099,6 +10100,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The panther has advantage on Wisdom (Perception) checks that rely on smell.",
       "Pounce: If the panther moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 12 Strength saving throw or be knocked prone. If the target is prone, the panther can make one bite attack against it as a bonus action."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7117,6 +10130,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "The Upper Planes"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7145,6 +10165,28 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Mace",
+        "diceExpr": "2d6+1",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d10+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7172,6 +10214,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, exhausted, frightened.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "10d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7192,6 +10241,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Hold Breath: The plesiosaurus can hold its breath for 1 hour."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7210,6 +10266,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7230,6 +10293,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Smell: The bear has advantage on Wisdom (Perception) checks that rely on smell."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7248,6 +10323,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7268,6 +10350,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Divine Eminence: As a bonus action, the priest can expend a spell slot to cause its melee weapon attacks to magically deal an extra 10 (3d6) radiant damage to a target on a hit. This benefit lasts until the end of the turn. If the priest expends a spell slot of 2nd level or higher, the extra damage increases by 1d6…",
       "Spellcasting: The priest is a 5th-level spellcaster. (Innate magic — see notes.)"
+    ],
+    "attacks": [
+      {
+        "name": "Mace",
+        "diceExpr": "2d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -7291,6 +10380,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Magic Resistance: The pseudodragon has advantage on saving throws against spells and other magical effects.",
       "Limited Telepathy: The pseudodragon can magically communicate simple ideas, emotions, and images telepathically with any creature within 100 ft. of it that can understand a language."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Sting",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7311,6 +10412,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Tunneler: The worm can burrow through solid rock at half its burrow speed and leaves a 10-foot-diameter tunnel in its wake.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail Stinger",
+        "diceExpr": "4d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7339,6 +10452,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning-Hardened: Takes half damage from Lightning attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Claw (Bite in Beast Form)",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7359,6 +10479,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Blood Frenzy: The quipper has advantage on melee attack rolls against any creature that doesn't have all its hit points.",
       "Water Breathing: The quipper can breathe only underwater."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7384,6 +10511,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing from magic weapons wielded by good creatures Frailty: Takes double damage from Piercing from magic weapons wielded by good creatures attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "10d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7404,6 +10538,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Smell: The rat has advantage on Wisdom (Perception) checks that rely on smell."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7423,6 +10564,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Mimicry: The raven can mimic simple sounds it has heard, such as a person whispering, a baby crying, or an animal chittering. A creature that hears the sounds can tell they are imitations with a successful DC 10 Wisdom (Insight) check."
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7445,6 +10593,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Breath: The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7465,6 +10620,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Pack Tactics: The shark has advantage on an attack roll against a creature if at least one of the shark's allies is within 5 ft. of the creature and the ally isn't incapacitated.",
       "Water Breathing: The shark can breathe only underwater."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7489,6 +10651,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fireward: Immune to Fire damage",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "6d10",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7509,6 +10678,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Charge: If the rhinoceros moves at least 20 ft. straight toward a target and then hits it with a gore attack on the same turn, the target takes an extra 9 (2d8) bludgeoning damage. If the target is a creature, it must succeed on a DC 15 Strength saving throw or be knocked prone."
     ],
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "1d8+4",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7527,6 +10703,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d4+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7547,6 +10730,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Sight: The roc has advantage on Wisdom (Perception) checks that rely on sight.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "4d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "4d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -7569,6 +10764,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "False Appearance: While the roper remains motionless, it is indistinguishable from a normal cave formation, such as a stalagmite.",
       "Grasping Tendrils: The roper can have up to six tendrils at a time. Each tendril can be attacked (AC 20; 10 hit points; immunity to poison and psychic damage). Destroying a tendril deals no damage to the roper, which can extrude a replacement tendril on its next turn. A tendril can also be broken if a creature takes…",
       "Spider Climb: The roper can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d8+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7595,6 +10797,7 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Psychicward: Immune to Psychic damage",
       "Steadfast Form: Cannot be blinded, charmed, frightened, paralyzed, petrified."
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -7615,6 +10818,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Iron Scent: The rust monster can pinpoint, by scent, the location of ferrous metal within 30 feet of it.",
       "Rust Metal: Any nonmagical weapon made of metal that hits the rust monster corrodes. After dealing damage, the weapon takes a permanent and cumulative -1 penalty to damage rolls. If its penalty drops to -5, the weapon is destroyed. Nonmagical ammunition made of metal that hits the rust monster is destroyed…"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7637,6 +10847,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The tiger has advantage on Wisdom (Perception) checks that rely on smell.",
       "Pounce: If the tiger moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the tiger can make one bite attack against it as a bonus action."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7658,6 +10880,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Blood Frenzy: The sahuagin has advantage on melee attack rolls against any creature that doesn't have all its hit points.",
       "Limited Amphibiousness: The sahuagin can breathe air and water, but it needs to be submerged at least once every 4 hours to avoid suffocating.",
       "Shark Telepathy: The sahuagin can magically command any shark within 120 feet of it, using a limited telepathy."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -7683,6 +10917,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Frost-Brittle: Takes double damage from Cold attacks"
     ],
+    "attacks": [
+      {
+        "name": "Spear",
+        "diceExpr": "1d6",
+        "damageType": "Fire"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "5d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7703,6 +10949,23 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Magic Resistance: The satyr has advantage on saving throws against spells and other magical effects."
     ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "diceExpr": "1d4",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7721,6 +10984,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Sting",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7740,6 +11010,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Hearing and Sight: The scout has advantage on Wisdom (Perception) checks that rely on hearing or sight."
+    ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7763,6 +11045,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Horrific Appearance: Any humanoid that starts its turn within 30 feet of the hag and can see the hag's true form must make a DC 11 Wisdom saving throw. On a failed save, the creature is frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the hag is…",
       "Death Glare: The hag targets one frightened creature she can see within 30 ft. of her. If the target can see the hag, it must succeed on a DC 11 Wisdom saving throw against this magic or drop to 0 hit points. (Once per encounter.)"
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "2d6+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7783,6 +11072,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Water Breathing: The sea horse can breathe only underwater."
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -7815,6 +11105,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Light-Cursed: Takes double damage from Radiant attacks",
       "Steadfast Form: Cannot be frightened, grappled, paralyzed, petrified, prone, restrained."
     ],
+    "attacks": [
+      {
+        "name": "Strength Drain",
+        "diceExpr": "1d6+2",
+        "damageType": "Necrotic"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7838,6 +11135,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Fire-Hardened: Takes half damage from Fire attacks",
       "Steadfast Form: Cannot be blinded, exhausted."
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -7863,6 +11167,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lifeless Frame: Immune to Poison damage; cannot be exhausted or poisoned.",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed."
     ],
+    "attacks": [
+      {
+        "name": "Fist",
+        "diceExpr": "5d6+2",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7884,6 +11195,7 @@ export const generatedBestiary: BestiaryEntry[] = [
       "False Appearance: While the shrieker remains motionless, it is indistinguishable from an ordinary fungus.",
       "Steadfast Form: Cannot be blinded, frightened."
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -7905,6 +11217,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Cold Breath. The dragon exhales an icy blast in a 15-foot cone. Each creature in that area must make a DC 13 Constitution saving throw, taking 18 (4d8) cold damage on a failed save, or… (Once per encounter.)",
       "Coldward: Immune to Cold damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -7925,6 +11244,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Undying Husk: Immune to Poison damage; cannot be poisoned or exhausted.",
       "Brittle Frame: Takes double damage from Bludgeoning attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -7954,6 +11285,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, frightened.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "12d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -7985,6 +11323,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, grappled, paralyzed, petrified, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Life Drain",
+        "diceExpr": "2d6+2",
+        "damageType": "Necrotic"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8006,6 +11351,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Spider Climb: The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
       "Web Sense: While in contact with a web, the spider knows the exact location of any other creature in contact with the same web.",
       "Web Walker: The spider ignores movement restrictions caused by webbing."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8030,6 +11382,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Steadfast Form: Cannot be charmed."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "8d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8049,6 +11408,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Heart Sight: The sprite touches a creature and magically knows the creature's current emotional state. If the target fails a DC 10 Charisma saving throw, the sprite also knows the creature's alignment. Celestials, fiends, and undead automatically fail… (Once per encounter.)"
+    ],
+    "attacks": [
+      {
+        "name": "Longsword",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Shortbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8070,6 +11441,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Cunning Action: On each of its turns, the spy can use a bonus action to take the Dash, Disengage, or Hide action.",
       "Sneak Attack (1/Turn): The spy deals an extra 7 (2d6) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 ft. of an ally of the spy that isn't incapacitated and the spy doesn't have disadvantage on the attack roll."
+    ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8095,6 +11473,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Claws",
+        "diceExpr": "1d4+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8113,6 +11498,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Wilderness"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Blood Drain",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8132,6 +11524,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Stone Camouflage: The giant has advantage on Dexterity (Stealth) checks made to hide in rocky terrain."
+    ],
+    "attacks": [
+      {
+        "name": "Greatclub",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -8158,6 +11557,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Thunderward: Immune to Thunder damage",
       "Cold-Hardened: Takes half damage from Cold attacks",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
+    ],
+    "attacks": [
+      {
+        "name": "Greatsword",
+        "diceExpr": "10d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -8186,6 +11592,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison-Hardened: Takes half damage from Poison attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Claw (Fiend Form Only)",
+        "diceExpr": "4d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8212,6 +11625,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8235,6 +11655,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+    ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8260,6 +11687,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8284,6 +11718,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8307,6 +11748,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+    ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8334,6 +11782,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "2d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8359,6 +11814,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8382,6 +11844,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+    ],
+    "attacks": [
+      {
+        "name": "Beaks",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8410,6 +11879,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, paralyzed, petrified, prone, restrained, stunned."
     ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8433,6 +11909,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Slashing-Hardened: Takes half damage from Slashing attacks",
       "Steadfast Form: Cannot be charmed, frightened, grappled, paralyzed, petrified, prone, restrained, stunned."
+    ],
+    "attacks": [
+      {
+        "name": "Bites",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8463,6 +11946,28 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Steadfast Form: Cannot be charmed, frightened, paralyzed.",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR7 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d12",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Horns",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Tail",
+        "diceExpr": "2d6+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8482,6 +11987,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Pack Tactics: The thug has advantage on an attack roll against a creature if at least one of the thug's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+    ],
+    "attacks": [
+      {
+        "name": "Mace",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -8503,6 +12015,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Smell: The tiger has advantage on Wisdom (Perception) checks that rely on smell.",
       "Pounce: If the tiger moves at least 20 ft. straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 13 Strength saving throw or be knocked prone. If the target is prone, the tiger can make one bite attack against it as a bonus action."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -8528,6 +12052,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Piercing-Hardened: Takes half damage from Piercing attacks",
       "Tinder-Dry: Takes double damage from Fire attacks"
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "8d6",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8548,6 +12079,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Pack Tactics: The warrior has advantage on an attack roll against a creature if at least one of the warrior's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -8568,6 +12100,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Keen Smell: The troll has advantage on Wisdom (Perception) checks that rely on smell.",
       "Regeneration: The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "4d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -8594,6 +12138,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned.",
       "Steadfast Form: Cannot be charmed, paralyzed."
     ],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d12+4",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Horn",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8617,6 +12173,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Vampire Weaknesses: The vampire has the following flaws: Forbiddance. The vampire can't enter a residence without an invitation from one of the occupants. Harmed by Running Water. The vampire takes 20 acid damage when it ends its turn in running water. Stake to the Heart. The vampire is destroyed if a piercing weapon…",
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -8647,6 +12215,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "10d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8675,6 +12250,7 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -8704,6 +12280,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Legendary Trait: Acts twice between each player's turn (bonus minor actions). Unshakeable 3/long rest (negate a failed save or a critical hit against it). [Extrapolated TR6 band — unplaytested.]"
     ],
+    "attacks": [
+      {
+        "name": "Unarmed Strike",
+        "diceExpr": "2d8+2",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Bite",
+        "diceExpr": "7d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8722,6 +12310,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Settlements"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8742,6 +12337,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "False Appearance: While the violet fungus remains motionless, it is indistinguishable from an ordinary fungus.",
       "Steadfast Form: Cannot be blinded, frightened."
+    ],
+    "attacks": [
+      {
+        "name": "Rotting Touch",
+        "diceExpr": "1d8",
+        "damageType": "Necrotic"
+      }
     ],
     "provisional": true
   },
@@ -8770,6 +12372,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning-Hardened: Takes half damage from Lightning attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "2d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Talons",
+        "diceExpr": "2d10",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8791,6 +12405,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Sight and Smell: The vulture has advantage on Wisdom (Perception) checks that rely on sight or smell.",
       "Pack Tactics: The vulture has advantage on an attack roll against a creature if at least one of the vulture's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [
+      {
+        "name": "Beak",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8810,6 +12431,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Trampling Charge: If the horse moves at least 20 ft. straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the horse can make another attack with its hooves against it as a bonus action."
+    ],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -8831,6 +12459,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Undying Husk: Immune to Poison damage; cannot be exhausted or poisoned.",
       "Brittle Frame: Takes double damage from Bludgeoning attacks"
+    ],
+    "attacks": [
+      {
+        "name": "Hooves",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -8858,6 +12493,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be grappled, paralyzed, petrified, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "4d8+1",
+        "damageType": "Bludgeoning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8877,6 +12519,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Hearing and Smell: The weasel has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -8900,6 +12549,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The werebear has advantage on Wisdom (Perception) checks that rely on smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Claw",
+        "diceExpr": "4d8+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8922,6 +12578,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The werebear has advantage on Wisdom (Perception) checks that rely on smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Greataxe",
+        "diceExpr": "3d12",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8943,6 +12606,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Shapechanger: The werebear can use its action to polymorph into a Large bear-humanoid hybrid or into a Large bear, or back into its true form, which is humanoid. Its statistics, other than its size and AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its…",
       "Keen Smell: The werebear has advantage on Wisdom (Perception) checks that rely on smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+2",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Greataxe",
+        "diceExpr": "1d10",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -8967,6 +12647,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Relentless: If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Tusks",
+        "diceExpr": "4d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -8988,6 +12675,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Shapechanger: The wereboar can use its action to polymorph into a boar-humanoid hybrid or into a boar, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.",
       "Relentless: If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
+    ],
+    "attacks": [
+      {
+        "name": "Maul",
+        "diceExpr": "4d6",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   },
@@ -9012,6 +12706,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Relentless: If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Maul",
+        "diceExpr": "1d6+3",
+        "damageType": "Bludgeoning"
+      },
+      {
+        "name": "Tusks",
+        "diceExpr": "1d6+3",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9033,6 +12739,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Shapechanger: The wererat can use its action to polymorph into a rat-humanoid hybrid or into a giant rat, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it…",
       "Keen Smell: The wererat has advantage on Wisdom (Perception) checks that rely on smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
+    ],
+    "attacks": [
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hand Crossbow",
+        "diceExpr": "1d6+1",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -9056,6 +12774,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The wererat has advantage on Wisdom (Perception) checks that rely on smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Shortsword",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Hand Crossbow",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9078,6 +12813,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Smell: The wererat has advantage on Wisdom (Perception) checks that rely on smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d4+1",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9099,6 +12841,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Shapechanger: The weretiger can use its action to polymorph into a tiger-humanoid hybrid or into a tiger, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it…",
       "Keen Hearing and Smell: The weretiger has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
+    ],
+    "attacks": [
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d6+3",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -9123,6 +12877,28 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Pounce: If the weretiger moves at least 15 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the weretiger can make one bite attack against it as a bonus action.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d6",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Scimitar",
+        "diceExpr": "1d4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d4",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9146,6 +12922,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Pounce: If the weretiger moves at least 15 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the weretiger can make one bite attack against it as a bonus action.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d8+2",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9168,6 +12956,7 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Hearing and Smell: The werewolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [],
     "provisional": true
   },
   {
@@ -9189,6 +12978,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Shapechanger: The werewolf can use its action to polymorph into a wolf-humanoid hybrid or into a wolf, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.",
       "Keen Hearing and Smell: The werewolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d8+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d6+4",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -9212,6 +13013,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Hearing and Smell: The werewolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Spectral Resilience: Immune to nonmagical weapon damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "3d8",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9232,6 +13040,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Cold Breath: The dragon exhales an icy blast of hail in a 15-foot cone. Each creature in that area must make a DC 12 Constitution saving throw, taking 22 (5d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Coldward: Immune to Cold damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -9255,6 +13070,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Undying Husk: Immune to Poison damage; cannot be exhausted or poisoned.",
       "Necrotic-Hardened: Takes half damage from Necrotic attacks",
       "Mundane Ward: Takes half damage from nonmagical weapons"
+    ],
+    "attacks": [
+      {
+        "name": "Life Drain",
+        "diceExpr": "1d6+3",
+        "damageType": "Necrotic"
+      },
+      {
+        "name": "Longbow",
+        "diceExpr": "1d8+4",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -9288,6 +13115,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be grappled, paralyzed, prone, restrained, unconscious."
     ],
+    "attacks": [
+      {
+        "name": "Shock",
+        "diceExpr": "1d8+4",
+        "damageType": "Lightning"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9312,6 +13146,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold Breath: The wolf exhales a blast of freezing wind in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 18 (4d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Coldward: Immune to Cold damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "4d6",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9333,6 +13174,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Hearing and Smell: The wolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Pack Tactics: The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9352,6 +13200,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Keen Hearing and Smell: The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+2",
+        "damageType": "Piercing"
+      }
     ],
     "provisional": true
   },
@@ -9383,6 +13238,13 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Mundane Ward: Takes half damage from nonmagical weapons",
       "Steadfast Form: Cannot be charmed, grappled, paralyzed, petrified, prone, restrained."
     ],
+    "attacks": [
+      {
+        "name": "Life Drain",
+        "diceExpr": "4d8+1",
+        "damageType": "Necrotic"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9401,6 +13263,23 @@ export const generatedBestiary: BestiaryEntry[] = [
       "native": "Mountains"
     },
     "abilities": [],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+3",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claws",
+        "diceExpr": "1d8+4",
+        "damageType": "Slashing"
+      },
+      {
+        "name": "Stinger",
+        "diceExpr": "1d6+3",
+        "damageType": "Piercing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9424,6 +13303,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Treasure Sense: The xorn can pinpoint, by scent, the location of precious metals and stones, such as coins and gems, within 60 ft. of it.",
       "Mundane Ward: Takes half damage from nonmagical weapons"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d6+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9446,6 +13337,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Acid Breath: The dragon exhales acid in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 49 (11d8) acid damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Acidward: Immune to Acid damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d12+4",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9467,6 +13370,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning Breath: The dragon exhales lightning in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 16 Dexterity saving throw, taking 55 (10d10) lightning damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Lightningward: Immune to Lightning damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "4d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9487,6 +13402,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Breath Weapons: The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in a 40-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 42 (12d6) fire damage on a failed… (Once per encounter.)",
       "Fireward: Immune to Fire damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -9510,6 +13437,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Lightning Breath. The dragon exhales lightning in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 15 Dexterity saving throw, taking 55 (10d10) lightning… (Once per encounter.)",
       "Lightningward: Immune to Lightning damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9530,6 +13469,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Breath Weapons: The dragon uses one of the following breath weapons. Acid Breath. The dragon exhales acid in an 40-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 40 (9d8) acid damage on a failed… (Once per encounter.)",
       "Acidward: Immune to Acid damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "3d6+1",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -9553,6 +13504,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Breath Weapons: The dragon uses one of the following breath weapons. Fire Breath. The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 55 (10d10) fire damage on a failed save, or half as… (Once per encounter.)",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9575,6 +13538,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Poison Breath: The dragon exhales poisonous gas in a 30-foot cone. Each creature in that area must make a DC 14 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Hardened Vitality: Immune to Poison damage; cannot be poisoned."
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+2",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "4d6",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9596,6 +13571,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Fire Breath: The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 56 (16d6) fire damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Fireward: Immune to Fire damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10+1",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "4d6+1",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9616,6 +13603,18 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Breath Weapons: The dragon uses one of the following breath weapons. Cold Breath. The dragon exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 17 Constitution saving throw, taking 54 (12d8) cold damage on a failed save, or… (Once per encounter.)",
       "Coldward: Immune to Cold damage"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "5d6",
+        "damageType": "Slashing"
+      }
     ],
     "provisional": true
   },
@@ -9639,6 +13638,18 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Cold Breath: The dragon exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 15 Constitution saving throw, taking 45 (10d8) cold damage on a failed save, or half as much damage on a successful one. (Once per encounter.)",
       "Coldward: Immune to Cold damage"
     ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "2d10",
+        "damageType": "Piercing"
+      },
+      {
+        "name": "Claw",
+        "diceExpr": "1d12+4",
+        "damageType": "Slashing"
+      }
+    ],
     "provisional": true
   },
   {
@@ -9659,6 +13670,13 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Undead Fortitude: If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5+the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead.",
       "Undying Husk: Immune to Poison damage; cannot be poisoned."
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "1d6+2",
+        "damageType": "Bludgeoning"
+      }
     ],
     "provisional": true
   }
