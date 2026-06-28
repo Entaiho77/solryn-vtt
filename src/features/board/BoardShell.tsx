@@ -25,6 +25,9 @@ interface BoardShellProps {
   openLeft: string | null;
   openRight: string | null;
   onToggle: (side: 'left' | 'right', id: string) => void;
+  /** Selection-driven right panel (e.g. the monster card). Reuses the drawer chrome and
+   * takes the right slot when present, so it gets the same width/visual treatment. */
+  rightPanel?: { title: string; content: ReactNode; onClose: () => void };
   children: ReactNode;
 }
 
@@ -34,6 +37,7 @@ export function BoardShell({
   openLeft,
   openRight,
   onToggle,
+  rightPanel,
   children,
 }: BoardShellProps) {
   const openItem = (items: BarItem[], id: string | null) =>
@@ -57,11 +61,18 @@ export function BoardShell({
 
       <div className={styles.board}>{children}</div>
 
-      {rightOpen && (
+      {rightPanel ? (
         <aside className={`${styles.drawer} ${styles.rightDrawer}`}>
-          <DrawerHeader title={rightOpen.label} onClose={() => onToggle('right', rightOpen.id)} />
-          <div className={styles.drawerBody}>{rightOpen.content}</div>
+          <DrawerHeader title={rightPanel.title} onClose={rightPanel.onClose} />
+          <div className={styles.drawerBody}>{rightPanel.content}</div>
         </aside>
+      ) : (
+        rightOpen && (
+          <aside className={`${styles.drawer} ${styles.rightDrawer}`}>
+            <DrawerHeader title={rightOpen.label} onClose={() => onToggle('right', rightOpen.id)} />
+            <div className={styles.drawerBody}>{rightOpen.content}</div>
+          </aside>
+        )
       )}
 
       <Strip side="right" items={right} openId={openRight} onToggle={onToggle} />

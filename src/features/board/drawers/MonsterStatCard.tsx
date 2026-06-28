@@ -7,11 +7,28 @@ import { ResourceTracker } from '../../sheet/ResourceTracker';
 import { describeRoll, useRollLog } from '../../rolllog/rollLog';
 import s from './drawers.module.css';
 
-const rowStyle: React.CSSProperties = {
+const statRow: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: 'var(--space-2)',
+};
+const interactiveRow: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 'var(--space-3)',
+  paddingBlock: 'var(--space-1)',
+};
+// Name + dice on their own lines, free to wrap — no ellipsis truncation.
+const nameCol: React.CSSProperties = { display: 'flex', flexDirection: 'column', gap: 2, flex: 1, minWidth: 0 };
+const nameText: React.CSSProperties = { fontWeight: 600, overflowWrap: 'anywhere' };
+const abilityRow: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  gap: 'var(--space-3)',
+  paddingBlock: 'var(--space-1)',
 };
 
 /** First clean dice term in a free-text ability string (e.g. "...66 (12d10) lightning..."). */
@@ -21,10 +38,9 @@ function abilityDice(text: string): string | null {
 }
 
 // The merged creature card: read-only stats + tappable attacks (off the Phase-1
-// attacks[]), plus the GM token controls (Hide/Defeat/Remove) when a token is
-// supplied. Board tokens carry only flat stats, so the entry is looked up by id
-// (fallback name). Without a token (e.g. opened from the Initiative drawer) the
-// HP tracker and controls are simply omitted.
+// attacks[]), plus GM token controls. Looked up by id (fallback name). Rendered in a
+// proper side panel (BoardShell.rightPanel) — its own title/close come from the drawer
+// chrome, so this body has no header of its own.
 export function MonsterStatCard({
   system,
   name,
@@ -53,15 +69,7 @@ export function MonsterStatCard({
 
   return (
     <div className={s.section}>
-      <div style={rowStyle}>
-        <span className={s.label}>{entry.name}</span>
-        {onClose && (
-          <button type="button" className={s.place} onClick={onClose} aria-label="Close">
-            ×
-          </button>
-        )}
-      </div>
-
+      {/* Stats */}
       {token?.hp ? (
         <ResourceTracker
           label="HP"
@@ -72,46 +80,46 @@ export function MonsterStatCard({
           }
         />
       ) : (
-        <div style={rowStyle}><span className={s.itemMeta}>HP</span><span>{st.hp ?? '—'}</span></div>
+        <div style={statRow}><span className={s.itemMeta}>HP</span><span>{st.hp ?? '—'}</span></div>
       )}
-      <div style={rowStyle}><span className={s.itemMeta}>DR</span><span>{st.dr ?? '—'}</span></div>
-      <div style={rowStyle}><span className={s.itemMeta}>Speed</span><span>{st.speed ?? '—'}</span></div>
+      <div style={statRow}><span className={s.itemMeta}>DR</span><span>{st.dr ?? '—'}</span></div>
+      <div style={statRow}><span className={s.itemMeta}>Speed</span><span>{st.speed ?? '—'}</span></div>
 
       {entry.attacks && entry.attacks.length > 0 && (
-        <>
+        <div>
           <span className={s.label}>Attacks</span>
           {entry.attacks.map((a, i) => (
-            <div key={i} style={rowStyle}>
-              <span className={s.itemName}>{a.name}</span>
-              <span className={s.itemMeta}>
-                {a.diceExpr} {a.damageType}
-                {a.note ? ` (${a.note})` : ''}
+            <div key={i} style={interactiveRow}>
+              <span style={nameCol}>
+                <span style={nameText}>{a.name}</span>
+                <span className={s.itemMeta}>
+                  {a.diceExpr} {a.damageType}
+                  {a.note ? ` · ${a.note}` : ''}
+                </span>
               </span>
-              <Button size="sm" onClick={() => post(a.name, a.diceExpr, a.damageType)}>
-                Roll
-              </Button>
+              <Button onClick={() => post(a.name, a.diceExpr, a.damageType)}>Roll</Button>
             </div>
           ))}
-        </>
+        </div>
       )}
 
       {entry.abilities && entry.abilities.length > 0 && (
-        <>
+        <div>
           <span className={s.label}>Abilities</span>
           {entry.abilities.map((ab, i) => {
             const dice = abilityDice(ab);
             return (
-              <div key={i} style={rowStyle}>
-                <span className={s.hint} style={{ flex: 1 }}>{ab}</span>
+              <div key={i} style={abilityRow}>
+                <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>{ab}</span>
                 {dice && (
-                  <Button size="sm" variant="secondary" onClick={() => post(ab.split(':')[0], dice)}>
+                  <Button variant="secondary" onClick={() => post(ab.split(':')[0], dice)}>
                     Roll
                   </Button>
                 )}
               </div>
             );
           })}
-        </>
+        </div>
       )}
 
       {gmControls && (

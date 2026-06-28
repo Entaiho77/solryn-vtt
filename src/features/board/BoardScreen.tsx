@@ -27,7 +27,6 @@ import { CharacterQuickView } from './drawers/CharacterQuickView';
 import { MonsterStatCard } from './drawers/MonsterStatCard';
 import { RollLog } from '../rolllog/rollLog';
 import { canSeeMonsterStats } from '../../permissions';
-import tokenCardStyles from './TokenCard.module.css';
 import styles from './BoardScreen.module.css';
 
 interface BoardScreenProps {
@@ -123,6 +122,27 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   }
 
   const selected = selectedId ? (tokens.find((t) => t.id === selectedId) ?? null) : null;
+
+  // GM-selected creature → the merged stat card in a proper right-side slide-out panel
+  // (same chrome/width as the Add-creature drawer). Other tokens keep the floating TokenCard.
+  const showMonsterPanel = !!selected && selected.kind === 'creature' && canSeeMonsterStats(role);
+  const monsterPanel =
+    showMonsterPanel && selected
+      ? {
+          title: selected.name,
+          content: (
+            <MonsterStatCard
+              system={system}
+              name={selected.name}
+              creatureId={selected.creatureId}
+              token={selected}
+              gameId={gameId}
+              onClose={() => setSelectedId(null)}
+            />
+          ),
+          onClose: () => setSelectedId(null),
+        }
+      : undefined;
 
   const myName = game.members[uid]?.displayName ?? 'Someone';
   const dice: BarItem = { kind: 'drawer', id: 'dice', label: 'Dice', glyph: '⚄', content: <DiceDrawer /> };
@@ -245,6 +265,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
       openLeft={openLeft}
       openRight={openRight}
       onToggle={toggle}
+      rightPanel={monsterPanel}
     >
       <div className={styles.boardArea}>
         {activeMap ? (
@@ -275,31 +296,18 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
           </div>
         )}
 
-        {selected && selected.kind === 'creature' && canSeeMonsterStats(role) ? (
-          // Merged creature card: stats + tappable attacks + GM controls (one card).
-          <div className={tokenCardStyles.card}>
-            <MonsterStatCard
-              system={system}
-              name={selected.name}
-              creatureId={selected.creatureId}
-              token={selected}
-              gameId={gameId}
-              onClose={() => setSelectedId(null)}
-            />
-          </div>
-        ) : (
-          selected &&
-          selected.kind !== 'party' && (
-            <TokenCard
-              token={selected}
-              system={system}
-              role={role}
-              uid={uid}
-              gameId={gameId}
-              viewerCharacter={character}
-              onClose={() => setSelectedId(null)}
-            />
-          )
+        {/* Non-creature (or non-GM) tokens keep the floating TokenCard; GM creatures use the
+            right-side monster panel (rendered by BoardShell.rightPanel above). */}
+        {selected && selected.kind !== 'party' && !showMonsterPanel && (
+          <TokenCard
+            token={selected}
+            system={system}
+            role={role}
+            uid={uid}
+            gameId={gameId}
+            viewerCharacter={character}
+            onClose={() => setSelectedId(null)}
+          />
         )}
 
         {initState?.active && (
