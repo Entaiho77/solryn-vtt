@@ -71,7 +71,13 @@ export function RollLog() {
     <div className={s.section}>
       <div className={s.list}>
         {entries.map((e) => (
-          <div key={e.id} className={s.preview} style={{ fontFamily: 'var(--font-sans)' }}>
+          <div
+            key={e.id}
+            className={s.preview}
+            // Match the stat panel's body text exactly: it inherits body's
+            // font-family: var(--font-sans) and font-size: var(--text-base) (1rem).
+            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)' }}
+          >
             {e.text}
           </div>
         ))}
