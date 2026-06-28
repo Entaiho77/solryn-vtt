@@ -24,6 +24,7 @@ import { RulesDrawer } from './drawers/RulesDrawer';
 import { ChatDrawer } from './drawers/ChatDrawer';
 import { NotesDrawer } from './drawers/NotesDrawer';
 import { CharacterQuickView } from './drawers/CharacterQuickView';
+import { RollLog } from '../rolllog/rollLog';
 import styles from './BoardScreen.module.css';
 
 interface BoardScreenProps {
@@ -122,6 +123,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
   const myName = game.members[uid]?.displayName ?? 'Someone';
   const dice: BarItem = { kind: 'drawer', id: 'dice', label: 'Dice', glyph: '⚄', content: <DiceDrawer /> };
+  const log: BarItem = { kind: 'drawer', id: 'log', label: 'Log', glyph: '📜', content: <RollLog /> };
   const chat: BarItem = {
     kind: 'drawer',
     id: 'chat',
@@ -136,7 +138,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     id: 'initiative',
     label: 'Initiative',
     glyph: '⚔',
-    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} />,
+    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} />,
   };
 
   // Distance measuring is available to everyone — players measure their own movement/range.
@@ -151,9 +153,10 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
   const left: BarItem[] =
     role === 'gm'
-      ? [initiative, dice, chat, rules]
+      ? [initiative, dice, log, chat, rules]
       : [
           dice,
+          log,
           chat,
           { kind: 'drawer', id: 'notes', label: 'Notes', glyph: '✎', content: <NotesDrawer uid={uid} gameId={gameId} /> },
           rules,

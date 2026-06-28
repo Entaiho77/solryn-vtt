@@ -1,24 +1,23 @@
 import { useState } from 'react';
 import { rollDice } from '../../../engine/rules';
 import { Button } from '../../../components/ui/Button';
+import { RollLog, useRollLog } from '../../rolllog/rollLog';
 import s from './drawers.module.css';
 
 const QUICK = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
 
 export function DiceDrawer() {
   const [custom, setCustom] = useState('');
-  const [history, setHistory] = useState<string[]>([]);
+  const { postRoll } = useRollLog();
 
   function roll(notation: string) {
     try {
       const r = rollDice(notation);
       const mod = r.modifier ? (r.modifier > 0 ? `+${r.modifier}` : `${r.modifier}`) : '';
-      setHistory((h) =>
-        [`${notation}: ${r.rolls.join('+')}${mod} = ${r.total}`, ...h].slice(0, 14),
-      );
+      postRoll(`${notation}: ${r.rolls.join('+')}${mod} = ${r.total}`);
       setCustom('');
     } catch {
-      setHistory((h) => [`"${notation}" is not valid dice notation`, ...h].slice(0, 14));
+      postRoll(`"${notation}" is not valid dice notation`);
     }
   }
 
@@ -46,18 +45,8 @@ export function DiceDrawer() {
         </Button>
       </div>
 
-      <span className={s.label}>History</span>
-      {history.length === 0 ? (
-        <p className={s.hint}>No rolls yet. (Posting to a shared log arrives with combat.)</p>
-      ) : (
-        <div className={s.list}>
-          {history.map((line, i) => (
-            <div key={i} className={s.preview} style={{ fontFamily: 'var(--font-mono)' }}>
-              {line}
-            </div>
-          ))}
-        </div>
-      )}
+      <span className={s.label}>Log</span>
+      <RollLog />
     </div>
   );
 }

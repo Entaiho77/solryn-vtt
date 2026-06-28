@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import type { Spell, SystemDefinition, WeaponItem } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { computeSkillState, rollDice } from '../../engine/rules';
 import { setLoadedSpell, setPoolCurrent } from '../../data/characters';
 import { Button } from '../../components/ui/Button';
+import { describeRoll, useRollLog } from '../rolllog/rollLog';
 import styles from './AttacksSection.module.css';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
@@ -15,7 +15,7 @@ export function AttacksSection({
   system: SystemDefinition;
   character: Character;
 }) {
-  const [last, setLast] = useState('');
+  const { postRoll } = useRollLog();
   const mode = system.modes.skill;
 
   const weapons = character.play.equippedWeaponIds
@@ -45,19 +45,15 @@ export function AttacksSection({
   }
 
   function rollWeapon(w: WeaponItem) {
-    const r = rollDice(w.damageDice);
-    const bonus = weaponBonus(w);
-    setLast(
-      `${w.name}: rolled ${r.rolls.join('+')}${bonus ? ` ${sign(bonus)}` : ''} = ${r.total + bonus} damage`,
-    );
+    postRoll(describeRoll(w.name, rollDice(w.damageDice), { bonus: weaponBonus(w) }));
   }
 
   function cast() {
     if (!loaded || !arcanaPoolId || arcanaCurrent < loaded.cost) return;
     const r = loaded.damageDice ? rollDice(loaded.damageDice) : null;
     void setPoolCurrent(character.id, arcanaPoolId, arcanaCurrent - loaded.cost);
-    setLast(
-      `${loaded.name}: ${r ? `rolled ${r.rolls.join('+')} = ${r.total} damage` : 'cast'} (−${loaded.cost} Arcana)`,
+    postRoll(
+      `${r ? describeRoll(loaded.name, r, { type: loaded.damageType }) : `${loaded.name}: cast`} (−${loaded.cost} Arcana)`,
     );
   }
 
@@ -127,8 +123,6 @@ export function AttacksSection({
           )}
         </div>
       )}
-
-      {last && <p className={styles.last}>{last}</p>}
     </section>
   );
 }

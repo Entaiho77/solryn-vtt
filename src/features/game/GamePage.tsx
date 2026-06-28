@@ -11,6 +11,7 @@ import { RoleBadge } from '../../components/ui/Badge';
 import { GameSettingsModal } from './GameSettingsModal';
 import { CharacterBuilder } from '../builder/CharacterBuilder';
 import { BoardScreen } from '../board/BoardScreen';
+import { RollLogProvider } from '../rolllog/rollLog';
 import styles from './GamePage.module.css';
 
 export function GamePage() {
@@ -90,6 +91,7 @@ export function GamePage() {
   }
 
   return (
+    <RollLogProvider>
     <div className={styles.page}>
       <header className={styles.header}>
         <button className={styles.back} onClick={() => navigate('/')} aria-label="Back to lobby">
@@ -123,5 +125,6 @@ export function GamePage() {
         onExit={() => navigate('/')}
       />
     </div>
+    </RollLogProvider>
   );
 }
