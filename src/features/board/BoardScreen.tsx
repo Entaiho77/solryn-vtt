@@ -24,7 +24,10 @@ import { RulesDrawer } from './drawers/RulesDrawer';
 import { ChatDrawer } from './drawers/ChatDrawer';
 import { NotesDrawer } from './drawers/NotesDrawer';
 import { CharacterQuickView } from './drawers/CharacterQuickView';
+import { MonsterStatCard } from './drawers/MonsterStatCard';
 import { RollLog } from '../rolllog/rollLog';
+import { canSeeMonsterStats } from '../../permissions';
+import tokenCardStyles from './TokenCard.module.css';
 import styles from './BoardScreen.module.css';
 
 interface BoardScreenProps {
@@ -272,16 +275,31 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
           </div>
         )}
 
-        {selected && selected.kind !== 'party' && (
-          <TokenCard
-            token={selected}
-            system={system}
-            role={role}
-            uid={uid}
-            gameId={gameId}
-            viewerCharacter={character}
-            onClose={() => setSelectedId(null)}
-          />
+        {selected && selected.kind === 'creature' && canSeeMonsterStats(role) ? (
+          // Merged creature card: stats + tappable attacks + GM controls (one card).
+          <div className={tokenCardStyles.card}>
+            <MonsterStatCard
+              system={system}
+              name={selected.name}
+              creatureId={selected.creatureId}
+              token={selected}
+              gameId={gameId}
+              onClose={() => setSelectedId(null)}
+            />
+          </div>
+        ) : (
+          selected &&
+          selected.kind !== 'party' && (
+            <TokenCard
+              token={selected}
+              system={system}
+              role={role}
+              uid={uid}
+              gameId={gameId}
+              viewerCharacter={character}
+              onClose={() => setSelectedId(null)}
+            />
+          )
         )}
 
         {initState?.active && (
@@ -294,6 +312,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             gameId={gameId}
             tokens={game.tokens ?? {}}
             activeMapId={activeMap?.id}
+            onSelectToken={(id) => setSelectedId(id)}
           />
         )}
       </div>

@@ -1,6 +1,9 @@
 import type { SystemDefinition } from '../../../engine/schema';
+import type { Token } from '../../../data/types';
 import { rollDice } from '../../../engine/rules';
+import { removeToken, updateToken } from '../../../data/board';
 import { Button } from '../../../components/ui/Button';
+import { ResourceTracker } from '../../sheet/ResourceTracker';
 import { describeRoll, useRollLog } from '../../rolllog/rollLog';
 import s from './drawers.module.css';
 
@@ -17,20 +20,27 @@ function abilityDice(text: string): string | null {
   return m ? m[1].replace(/\s+/g, '') : null;
 }
 
-// Read straight off the Phase-1 attacks[] on the bestiary entry — board tokens only
-// carry flat stats, so we look the creature up by name.
+// The merged creature card: read-only stats + tappable attacks (off the Phase-1
+// attacks[]), plus the GM token controls (Hide/Defeat/Remove) when a token is
+// supplied. Board tokens carry only flat stats, so the entry is looked up by id
+// (fallback name). Without a token (e.g. opened from the Initiative drawer) the
+// HP tracker and controls are simply omitted.
 export function MonsterStatCard({
   system,
   name,
   creatureId,
+  token,
+  gameId,
+  onClose,
 }: {
   system: SystemDefinition;
   name: string;
   creatureId?: string;
+  token?: Token;
+  gameId?: string;
+  onClose?: () => void;
 }) {
   const { postRoll } = useRollLog();
-  // Prefer the stable bestiary id; fall back to name match for tokens placed
-  // before ids were stored (or built/custom tokens).
   const entry =
     (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
     system.bestiary.find((b) => b.name === name);
@@ -39,12 +49,31 @@ export function MonsterStatCard({
   const st = entry.stats;
   const post = (label: string, diceExpr: string, type?: string) =>
     postRoll(describeRoll(`${entry.name} — ${label}`, rollDice(diceExpr), { type }));
+  const gmControls = token && gameId;
 
   return (
     <div className={s.section}>
-      <span className={s.label}>{entry.name}</span>
+      <div style={rowStyle}>
+        <span className={s.label}>{entry.name}</span>
+        {onClose && (
+          <button type="button" className={s.place} onClick={onClose} aria-label="Close">
+            ×
+          </button>
+        )}
+      </div>
 
-      <div style={rowStyle}><span className={s.itemMeta}>HP</span><span>{st.hp ?? '—'}</span></div>
+      {token?.hp ? (
+        <ResourceTracker
+          label="HP"
+          current={token.hp.current}
+          max={token.hp.max}
+          onChange={(n) =>
+            gameId && void updateToken(gameId, token.id, { hp: { current: n, max: token.hp!.max } })
+          }
+        />
+      ) : (
+        <div style={rowStyle}><span className={s.itemMeta}>HP</span><span>{st.hp ?? '—'}</span></div>
+      )}
       <div style={rowStyle}><span className={s.itemMeta}>DR</span><span>{st.dr ?? '—'}</span></div>
       <div style={rowStyle}><span className={s.itemMeta}>Speed</span><span>{st.speed ?? '—'}</span></div>
 
@@ -83,6 +112,35 @@ export function MonsterStatCard({
             );
           })}
         </>
+      )}
+
+      {gmControls && (
+        <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => void updateToken(gameId, token.id, { visible: token.visible === false })}
+          >
+            {token.visible === false ? 'Reveal' : 'Hide'}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => void updateToken(gameId, token.id, { defeated: !token.defeated })}
+          >
+            {token.defeated ? 'Revive' : 'Defeat'}
+          </Button>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => {
+              void removeToken(gameId, token.id);
+              onClose?.();
+            }}
+          >
+            Remove
+          </Button>
+        </div>
       )}
     </div>
   );

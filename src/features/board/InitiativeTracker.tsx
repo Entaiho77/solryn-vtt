@@ -34,6 +34,7 @@ export function InitiativeTracker({
   gameId,
   tokens,
   activeMapId,
+  onSelectToken,
 }: {
   state: InitiativeState;
   system: SystemDefinition;
@@ -43,6 +44,7 @@ export function InitiativeTracker({
   gameId: string;
   tokens: Record<string, Token>;
   activeMapId?: string;
+  onSelectToken?: (tokenId: string) => void;
 }) {
   const current = state.order[state.turnIndex];
   const isMyTurn = current?.ownerUserId === uid;
@@ -91,7 +93,13 @@ export function InitiativeTracker({
             const opacity = isCurrent ? 1 : Math.max(0.25, 1 - 0.3 * dist);
             const tok = com.tokenId ? tokens[com.tokenId] : undefined;
             const defeated = com.kind === 'creature' && tok?.defeated;
-            const clickable = canJump && !isCurrent;
+            const canJumpHere = canJump && !isCurrent;
+            // A tap selects the token (surfaces its card); GMs also jump the turn.
+            const interactive = canJumpHere || Boolean(tok && onSelectToken);
+            const activate = () => {
+              if (tok && onSelectToken) onSelectToken(tok.id);
+              if (canJumpHere) jumpTo(i);
+            };
             return (
               <div key={com.id} className={t.slot}>
                 <div
@@ -99,25 +107,31 @@ export function InitiativeTracker({
                     t.combatant,
                     isCurrent ? t.current : '',
                     defeated ? t.defeated : '',
-                    clickable ? t.clickable : '',
+                    interactive ? t.clickable : '',
                   ]
                     .filter(Boolean)
                     .join(' ')}
                   style={{ transform: `scale(${scale})`, opacity }}
-                  onClick={clickable ? () => jumpTo(i) : undefined}
-                  role={clickable ? 'button' : undefined}
-                  tabIndex={clickable ? 0 : undefined}
+                  onClick={interactive ? activate : undefined}
+                  role={interactive ? 'button' : undefined}
+                  tabIndex={interactive ? 0 : undefined}
                   onKeyDown={
-                    clickable
+                    interactive
                       ? (e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            jumpTo(i);
+                            activate();
                           }
                         }
                       : undefined
                   }
-                  title={clickable ? `Jump to ${com.name}’s turn` : undefined}
+                  title={
+                    tok
+                      ? `View ${com.name}${canJumpHere ? ' · jump to turn' : ''}`
+                      : canJumpHere
+                        ? `Jump to ${com.name}’s turn`
+                        : undefined
+                  }
                 >
                   {isCurrent && <span className={t.turnLabel}>current turn</span>}
                   <span
