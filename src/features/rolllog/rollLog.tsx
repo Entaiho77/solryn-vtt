@@ -75,8 +75,13 @@ export function RollLog() {
             key={e.id}
             className={s.preview}
             // Match the stat panel's body text exactly: it inherits body's
-            // font-family: var(--font-sans) and font-size: var(--text-base) (1rem).
-            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)' }}
+            // font-family: var(--font-sans), font-size: var(--text-base) (1rem),
+            // and color: var(--text-primary) (.preview otherwise renders muted).
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 'var(--text-base)',
+              color: 'var(--text-primary)',
+            }}
           >
             {e.text}
           </div>
