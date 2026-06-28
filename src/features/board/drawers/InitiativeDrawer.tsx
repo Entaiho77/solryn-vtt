@@ -18,7 +18,7 @@ export function InitiativeDrawer({
   system: SystemDefinition;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [cardName, setCardName] = useState<string | null>(null);
+  const [card, setCard] = useState<{ name: string; creatureId?: string } | null>(null);
   const init = game.initiative;
   const creatures = activeMap
     ? Object.values(game.tokens ?? {}).filter(
@@ -48,13 +48,13 @@ export function InitiativeDrawer({
     setSelected(new Set());
   }
 
-  if (cardName) {
+  if (card) {
     return (
       <div className={s.section}>
-        <button type="button" className={s.place} onClick={() => setCardName(null)} style={{ alignSelf: 'flex-start' }}>
+        <button type="button" className={s.place} onClick={() => setCard(null)} style={{ alignSelf: 'flex-start' }}>
           ‹ Back
         </button>
-        <MonsterStatCard system={system} name={cardName} />
+        <MonsterStatCard system={system} name={card.name} creatureId={card.creatureId} />
       </div>
     );
   }
@@ -70,7 +70,14 @@ export function InitiativeDrawer({
           {init.order
             .filter((c) => c.kind === 'creature')
             .map((c) => (
-              <button key={c.id} type="button" className={s.item} onClick={() => setCardName(c.name)}>
+              <button
+                key={c.id}
+                type="button"
+                className={s.item}
+                onClick={() =>
+                  setCard({ name: c.name, creatureId: (c.tokenId ? game.tokens?.[c.tokenId] : undefined)?.creatureId })
+                }
+              >
                 <span className={s.itemName}>{c.name}</span>
               </button>
             ))}
@@ -105,7 +112,7 @@ export function InitiativeDrawer({
                 <span className={s.itemName}>{t.name}</span>
               </span>
             </label>
-            <button type="button" className={s.place} onClick={() => setCardName(t.name)}>
+            <button type="button" className={s.place} onClick={() => setCard({ name: t.name, creatureId: t.creatureId })}>
               Card
             </button>
           </div>

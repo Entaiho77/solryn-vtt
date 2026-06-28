@@ -114,6 +114,8 @@ export interface Token {
   /** Character tokens: the controlling player + linked character. */
   ownerUserId?: string;
   characterId?: string;
+  /** Bestiary entry id this token was placed from — stable card lookup, independent of name. */
+  creatureId?: string;
   /** Creature/trap backing stat block (HP/DR/damage, or trap fields). */
   stats?: Record<string, number | string>;
   /** Creature current/max HP (GM-tracked). */

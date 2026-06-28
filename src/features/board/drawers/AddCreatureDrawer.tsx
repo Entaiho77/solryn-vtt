@@ -64,6 +64,7 @@ export function AddCreatureDrawer({
     blockName: string,
     cat: Category,
     stats: Record<string, number | string>,
+    creatureId?: string,
   ) {
     const isTrap = cat === 'trap';
     const hpVal = Number(stats.hp);
@@ -73,6 +74,7 @@ export function AddCreatureDrawer({
       color: isTrap ? TRAP_COLOR : CREATURE_COLOR,
       visible: !isTrap, // traps start hidden until the GM reveals/springs them
       stats,
+      ...(creatureId ? { creatureId } : {}),
       ...(isTrap ? { trapState: 'hidden' as const } : {}),
       ...(!isTrap && Number.isFinite(hpVal) && hpVal > 0
         ? { hp: { current: hpVal, max: hpVal } }
@@ -124,7 +126,7 @@ export function AddCreatureDrawer({
               </span>
               <button
                 className={s.place}
-                onClick={() => placeStatBlock(b.name, b.category as Category, b.stats)}
+                onClick={() => placeStatBlock(b.name, b.category as Category, b.stats, b.id)}
               >
                 + Place
               </button>

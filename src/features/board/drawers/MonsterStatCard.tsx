@@ -19,9 +19,21 @@ function abilityDice(text: string): string | null {
 
 // Read straight off the Phase-1 attacks[] on the bestiary entry — board tokens only
 // carry flat stats, so we look the creature up by name.
-export function MonsterStatCard({ system, name }: { system: SystemDefinition; name: string }) {
+export function MonsterStatCard({
+  system,
+  name,
+  creatureId,
+}: {
+  system: SystemDefinition;
+  name: string;
+  creatureId?: string;
+}) {
   const { postRoll } = useRollLog();
-  const entry = system.bestiary.find((b) => b.name === name);
+  // Prefer the stable bestiary id; fall back to name match for tokens placed
+  // before ids were stored (or built/custom tokens).
+  const entry =
+    (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
+    system.bestiary.find((b) => b.name === name);
   if (!entry) return <p className={s.hint}>No stat block found for “{name}”.</p>;
 
   const st = entry.stats;
