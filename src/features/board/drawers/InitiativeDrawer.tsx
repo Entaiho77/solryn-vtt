@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { Combatant, Game, MapDef } from '../../../data/types';
 import type { SystemDefinition } from '../../../engine/schema';
-import { endCombat, rollInitiative, startCombat } from '../../../data/combat';
+import { endCombat, removeCombatantsByToken, rollInitiative, startCombat } from '../../../data/combat';
+import { removeToken } from '../../../data/board';
 import { Button } from '../../../components/ui/Button';
 import { MonsterStatCard } from './MonsterStatCard';
 import s from './drawers.module.css';
@@ -33,6 +34,36 @@ export function InitiativeDrawer({
       return next;
     });
   }
+
+  // --- bulk token clearing (GM, manual; never tied to End Combat) -----------
+  // Scoped to the active map. Loops the single-token removeToken, then prunes
+  // initiative so removed tokens don't linger as ghost combatants.
+  function bulkRemove(label: string, predicate: (t: import('../../../data/types').Token) => boolean) {
+    if (!activeMap) return;
+    const targets = Object.values(game.tokens ?? {}).filter(
+      (t) => t.mapId === activeMap.id && predicate(t),
+    );
+    if (targets.length === 0) return;
+    if (!window.confirm(`${label}: remove ${targets.length} token(s)? This can't be undone.`)) return;
+    const ids = new Set(targets.map((t) => t.id));
+    targets.forEach((t) => void removeToken(gameId, t.id));
+    if (init) void removeCombatantsByToken(gameId, init, ids);
+    setCard(null);
+  }
+  const removeDefeated = () => bulkRemove('Remove defeated', (t) => Boolean(t.defeated));
+  const clearAllMonsters = () => bulkRemove('Clear all monsters', (t) => t.kind === 'creature');
+
+  const cleanup = (
+    <div className={s.section}>
+      <span className={s.label}>Board cleanup</span>
+      <Button variant="ghost" size="sm" onClick={removeDefeated}>
+        Remove defeated
+      </Button>
+      <Button variant="danger" size="sm" onClick={clearAllMonsters}>
+        Clear all monsters
+      </Button>
+    </div>
+  );
 
   function roll() {
     const monsters: Combatant[] = creatures
@@ -85,6 +116,7 @@ export function InitiativeDrawer({
         <Button variant="danger" onClick={() => void endCombat(gameId)}>
           End combat
         </Button>
+        {cleanup}
       </div>
     );
   }
@@ -121,6 +153,7 @@ export function InitiativeDrawer({
       <Button onClick={roll} disabled={selected.size === 0} full>
         Roll initiative ({selected.size})
       </Button>
+      {cleanup}
     </div>
   );
 }

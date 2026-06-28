@@ -82,3 +82,21 @@ export function setTurn(
 export function endCombat(gameId: string): Promise<void> {
   return writeValue(`games/${gameId}/initiative`, null);
 }
+
+/** Drop any combatants backed by the given token ids (used when tokens are removed in
+ * bulk) so the tracker never shows ghosts. Keeps the active actor where possible. */
+export function removeCombatantsByToken(
+  gameId: string,
+  state: InitiativeState,
+  tokenIds: Set<string>,
+): Promise<void> {
+  const order = state.order.filter((c) => !(c.tokenId && tokenIds.has(c.tokenId)));
+  if (order.length === state.order.length) return Promise.resolve();
+  const removedBefore = state.order
+    .slice(0, state.turnIndex)
+    .filter((c) => c.tokenId && tokenIds.has(c.tokenId)).length;
+  let turnIndex = state.turnIndex - removedBefore;
+  if (turnIndex >= order.length) turnIndex = 0;
+  if (turnIndex < 0) turnIndex = 0;
+  return writeValue(`games/${gameId}/initiative`, { ...state, order, turnIndex });
+}
