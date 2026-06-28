@@ -42,8 +42,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   const tokens: Token[] = Object.values(game.tokens ?? {});
   const activeMap = game.activeMapId ? game.maps?.[game.activeMapId] : undefined;
   const initState = game.initiative;
-  const highlightTokenId = initState?.active
-    ? initState.order[initState.turnIndex]?.tokenId
+  // A persisted initiative can be malformed: Firebase drops empty arrays, so a fully
+  // cleared order comes back undefined. Only "active with a non-empty order" is real
+  // combat; anything else degrades to no tracker instead of crashing.
+  const combatActive =
+    !!initState?.active && Array.isArray(initState.order) && initState.order.length > 0;
+  const highlightTokenId = combatActive
+    ? initState!.order[initState!.turnIndex]?.tokenId
     : undefined;
 
   const [openLeft, setOpenLeft] = useState<string | null>(null);
@@ -310,7 +315,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
           />
         )}
 
-        {initState?.active && (
+        {combatActive && (
           <InitiativeTracker
             state={initState}
             system={system}

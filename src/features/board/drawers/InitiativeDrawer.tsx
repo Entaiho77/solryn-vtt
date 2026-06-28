@@ -91,14 +91,16 @@ export function InitiativeDrawer({
   }
 
   if (init?.active) {
+    const order = init.order ?? []; // Firebase drops empty arrays → guard against undefined.
     return (
       <div className={s.section}>
         <span className={s.label}>Combat running</span>
         <p className={s.hint}>
-          Round {init.round} · {init.order.length} combatants. Tap a monster to open its card.
+          Round {init.round ?? 1} · {order.length} combatants.{' '}
+          {order.length > 0 ? 'Tap a monster to open its card.' : 'No combatants left — end combat.'}
         </p>
         <div className={s.list}>
-          {init.order
+          {order
             .filter((c) => c.kind === 'creature')
             .map((c) => (
               <button

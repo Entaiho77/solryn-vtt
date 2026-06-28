@@ -90,8 +90,11 @@ export function removeCombatantsByToken(
   state: InitiativeState,
   tokenIds: Set<string>,
 ): Promise<void> {
-  const order = state.order.filter((c) => !(c.tokenId && tokenIds.has(c.tokenId)));
-  if (order.length === state.order.length) return Promise.resolve();
+  const order = (state.order ?? []).filter((c) => !(c.tokenId && tokenIds.has(c.tokenId)));
+  if (order.length === (state.order?.length ?? 0)) return Promise.resolve();
+  // No combatants left → end combat. (Never persist order: [] — Firebase drops empty
+  // arrays, which would leave an "active" initiative with an undefined order.)
+  if (order.length === 0) return writeValue(`games/${gameId}/initiative`, null);
   const removedBefore = state.order
     .slice(0, state.turnIndex)
     .filter((c) => c.tokenId && tokenIds.has(c.tokenId)).length;

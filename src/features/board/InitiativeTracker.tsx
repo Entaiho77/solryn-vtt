@@ -46,10 +46,11 @@ export function InitiativeTracker({
   activeMapId?: string;
   onSelectToken?: (tokenId: string) => void;
 }) {
-  const current = state.order[state.turnIndex];
+  const order = state.order ?? []; // defensive: Firebase can drop an emptied order array
+  const current = order[state.turnIndex];
   const isMyTurn = current?.ownerUserId === uid;
   const inOrder = character
-    ? state.order.some((o) => o.characterId === character.id)
+    ? order.some((o) => o.characterId === character.id)
     : true;
   const canRollIn = role === 'player' && character && activeMapId && !inOrder;
   const canJump = role === 'gm'; // GM can jump the turn by clicking a combatant
@@ -85,7 +86,7 @@ export function InitiativeTracker({
 
       <div className={t.carousel}>
         <div className={t.track} style={{ transform: `translateX(${trackX}px)` }}>
-          {state.order.map((com, i) => {
+          {order.map((com, i) => {
             const isCurrent = i === state.turnIndex;
             const dist = Math.abs(i - state.turnIndex);
             // Shrink + fade with distance from center; the active one is full-size.
