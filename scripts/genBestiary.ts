@@ -32,6 +32,7 @@ type SourceCreature = {
   abilities: Ability[];
   soulCore: { type: string; dc: number } | null;
   soulCoreNote?: string;
+  harvestable?: string;
   native: string[];
   provisional?: boolean;
 };
@@ -39,7 +40,11 @@ type SourceCreature = {
 const data = JSON.parse(readFileSync(srcPath, 'utf8')) as { creatures: SourceCreature[] };
 
 function speedStr(c: SourceCreature): string {
-  const list = [c.speed, c.speedSecondary ?? c.speedAlt].filter(Boolean) as Speed[];
+  let list = [c.speed, c.speedSecondary ?? c.speedAlt].filter(Boolean) as Speed[];
+  // Collapse a same-mode secondary (e.g. base 30 + alt 35 walk) to the higher value.
+  if (list.length === 2 && list[0].mode === list[1].mode) {
+    list = [list[0].value >= list[1].value ? list[0] : list[1]];
+  }
   return list
     .map((s, i) =>
       i === 0 ? (s.mode === 'walk' ? `${s.value}` : `${s.value} ${s.mode}`) : `${s.mode} ${s.value}`
@@ -66,38 +71,41 @@ function abilityStrs(abilities: Ability[]): string[] {
   return (abilities ?? []).map((a) => (a.description ? `${a.name}: ${a.description}` : a.name));
 }
 
-const entries = data.creatures
-  .filter((c) => c.provisional)
-  .map((c) => ({
-    id: c.id,
-    name: c.name,
-    category: c.category ?? 'creature',
-    stats: {
-      hp: c.hp,
-      dr: c.dr,
-      speed: speedStr(c),
-      damage: damageStr(c.attacks),
-      initiativeMod: 0,
-      threatLevel: c.threatTier,
-      type: c.type,
-      soulCore: soulCoreStr(c),
-      native: (c.native ?? []).join(', '),
-    },
-    abilities: abilityStrs(c.abilities),
-    // Structured rollable attacks, carried through alongside the display string.
-    attacks: (c.attacks ?? []).map((a) => ({
-      name: a.name,
-      diceExpr: a.diceExpr,
-      damageType: a.damageType,
-      ...(a.note ? { note: a.note } : {}),
-    })),
-    provisional: true,
-  }));
+// Every creature flows through here — the 10 canonical starters and the
+// provisional SRD/Eribor conversions — so all runtime entries are uniform.
+const entries = data.creatures.map((c) => ({
+  id: c.id,
+  name: c.name,
+  category: c.category ?? 'creature',
+  stats: {
+    hp: c.hp,
+    dr: c.dr,
+    speed: speedStr(c),
+    damage: damageStr(c.attacks),
+    initiativeMod: 0,
+    threatLevel: c.threatTier,
+    type: c.type,
+    soulCore: soulCoreStr(c),
+    native: (c.native ?? []).join(', '),
+  },
+  abilities: [
+    ...abilityStrs(c.abilities),
+    ...(c.harvestable ? [`Harvestable: ${c.harvestable}`] : []),
+  ],
+  // Structured rollable attacks, carried through alongside the display string.
+  attacks: (c.attacks ?? []).map((a) => ({
+    name: a.name,
+    diceExpr: a.diceExpr,
+    damageType: a.damageType,
+    ...(a.note ? { note: a.note } : {}),
+  })),
+  ...(c.provisional ? { provisional: true } : {}),
+}));
 
 const header = `// AUTO-GENERATED — do not edit by hand.
-// Produced by scripts/genBestiary.ts from data/bestiary-source.json (provisional entries).
-// These are auto-converted from the 5e SRD and Monsters of Eribor; soul-core types
-// and TR6+/Legendary bands are best-effort and flagged provisional for review.
+// Produced by scripts/genBestiary.ts from data/bestiary-source.json (all creatures:
+// the canonical starters + the SRD/Eribor conversions). Conversions carry
+// provisional: true — their soul-core types and TR6+/Legendary bands are best-effort.
 // Regenerate with: npm run gen:bestiary
 import type { BestiaryEntry } from '../../engine/schema';
 

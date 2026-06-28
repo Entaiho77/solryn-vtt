@@ -1,11 +1,286 @@
 // AUTO-GENERATED — do not edit by hand.
-// Produced by scripts/genBestiary.ts from data/bestiary-source.json (provisional entries).
-// These are auto-converted from the 5e SRD and Monsters of Eribor; soul-core types
-// and TR6+/Legendary bands are best-effort and flagged provisional for review.
+// Produced by scripts/genBestiary.ts from data/bestiary-source.json (all creatures:
+// the canonical starters + the SRD/Eribor conversions). Conversions carry
+// provisional: true — their soul-core types and TR6+/Legendary bands are best-effort.
 // Regenerate with: npm run gen:bestiary
 import type { BestiaryEntry } from '../../engine/schema';
 
 export const generatedBestiary: BestiaryEntry[] = [
+  {
+    "id": "mossback-hare",
+    "name": "Mossback Hare",
+    "category": "creature",
+    "stats": {
+      "hp": 8,
+      "dr": 0,
+      "speed": "35",
+      "damage": "—",
+      "initiativeMod": 0,
+      "threatLevel": "Non-combatant",
+      "type": "Beast",
+      "soulCore": "none",
+      "native": "Highland meadows"
+    },
+    "abilities": [
+      "Burrow Dodge",
+      "Lichen Blend: Natural camouflage",
+      "Harvestable: Sleeproot moss (healing ingredient)"
+    ],
+    "attacks": []
+  },
+  {
+    "id": "duskwatcher-owlcat",
+    "name": "Duskwatcher Owlcat",
+    "category": "creature",
+    "stats": {
+      "hp": 22,
+      "dr": 1,
+      "speed": "30 / glide 40",
+      "damage": "Claw/bite 1d6+3 slashing (Pounce adds +1d4)",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Predator",
+      "soulCore": "none",
+      "native": "Highland woods, Canopy trails"
+    },
+    "abilities": [
+      "Silent Descent",
+      "Twilight Tracker",
+      "Hiss-Screech"
+    ],
+    "attacks": [
+      {
+        "name": "Claw/bite",
+        "diceExpr": "1d6+3",
+        "damageType": "Slashing",
+        "note": "Pounce adds +1d4"
+      }
+    ]
+  },
+  {
+    "id": "bramble-boar",
+    "name": "Bramble Boar",
+    "category": "creature",
+    "stats": {
+      "hp": 28,
+      "dr": 2,
+      "speed": "30",
+      "damage": "Gore 1d6+4 piercing (Charge adds +1d4)",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Beast",
+      "soulCore": "none",
+      "native": "Highland thickets, Brambles"
+    },
+    "abilities": [
+      "Thornshake: Area of effect",
+      "Brushbreaker",
+      "Pain-Fueled Rage"
+    ],
+    "attacks": [
+      {
+        "name": "Gore",
+        "diceExpr": "1d6+4",
+        "damageType": "Piercing",
+        "note": "Charge adds +1d4"
+      }
+    ]
+  },
+  {
+    "id": "crag-hound",
+    "name": "Crag Hound",
+    "category": "creature",
+    "stats": {
+      "hp": 24,
+      "dr": 2,
+      "speed": "35",
+      "damage": "Bite 1d6+3 piercing",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Shadow Beast",
+      "soulCore": "Shadowbound (DC14)",
+      "native": "Mountain passes, Cliff trails"
+    },
+    "abilities": [
+      "Mountain Ghost",
+      "Death-Stalker",
+      "Shadowmeld"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "diceExpr": "1d6+3",
+        "damageType": "Piercing"
+      }
+    ]
+  },
+  {
+    "id": "knockerkin",
+    "name": "Knockerkin",
+    "category": "creature",
+    "stats": {
+      "hp": 18,
+      "dr": 1,
+      "speed": "25 / climb 20",
+      "damage": "Pick jab 1d4+2 piercing",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Fey",
+      "soulCore": "none",
+      "native": "Abandoned mines, Caves"
+    },
+    "abilities": [
+      "False Echo",
+      "Tunnel Slinker",
+      "Greed Sense"
+    ],
+    "attacks": [
+      {
+        "name": "Pick jab",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ]
+  },
+  {
+    "id": "lantern-wraith",
+    "name": "Lantern Wraith",
+    "category": "creature",
+    "stats": {
+      "hp": 18,
+      "dr": 1,
+      "speed": "20 float",
+      "damage": "Lantern touch 1d6 arcane",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Spirit",
+      "soulCore": "Arcane/Spirit (DC14)",
+      "native": "Misty forests, Old roads"
+    },
+    "abilities": [
+      "Lurelight Pulse",
+      "Misty Allure",
+      "Ethereal Drift"
+    ],
+    "attacks": [
+      {
+        "name": "Lantern touch",
+        "diceExpr": "1d6",
+        "damageType": "Arcane"
+      }
+    ]
+  },
+  {
+    "id": "hollow-man",
+    "name": "Hollow Man",
+    "category": "creature",
+    "stats": {
+      "hp": 22,
+      "dr": 2,
+      "speed": "25",
+      "damage": "Slam 1d6+1 slashing",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Construct",
+      "soulCore": "none",
+      "native": "Deep woods, Abandoned farmland"
+    },
+    "abilities": [
+      "Effigy Stillness",
+      "Silent Lurch",
+      "Restraining thorns"
+    ],
+    "attacks": [
+      {
+        "name": "Slam",
+        "diceExpr": "1d6+1",
+        "damageType": "Slashing"
+      }
+    ]
+  },
+  {
+    "id": "whippoorwail",
+    "name": "Whippoorwail",
+    "category": "creature",
+    "stats": {
+      "hp": 16,
+      "dr": 1,
+      "speed": "30 fly",
+      "damage": "Peck 1d4+2 piercing",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Spirit Beast",
+      "soulCore": "Fading Core (DC13)",
+      "native": "Forest edges, Burial grounds"
+    },
+    "abilities": [
+      "Death-Linked",
+      "Cry of the Dying: Blocks Luck recovery"
+    ],
+    "attacks": [
+      {
+        "name": "Peck",
+        "diceExpr": "1d4+2",
+        "damageType": "Piercing"
+      }
+    ]
+  },
+  {
+    "id": "hollowkin",
+    "name": "Hollowkin",
+    "category": "creature",
+    "stats": {
+      "hp": 28,
+      "dr": 2,
+      "speed": "30 / hover 20",
+      "damage": "Mind lash 1d8 psychic",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Spirit",
+      "soulCore": "Ethereal Core (DC14)",
+      "native": "Highland ridges, Misty ruins"
+    },
+    "abilities": [
+      "Misty Veil",
+      "Fade Step",
+      "Test of the Soul",
+      "Mirror Echo"
+    ],
+    "attacks": [
+      {
+        "name": "Mind lash",
+        "diceExpr": "1d8",
+        "damageType": "Psychic"
+      }
+    ]
+  },
+  {
+    "id": "trellin-shaman",
+    "name": "T'rellin Shaman",
+    "category": "creature",
+    "stats": {
+      "hp": 22,
+      "dr": 1,
+      "speed": "30 / climb 30",
+      "damage": "Staff strike 1d6 bludgeoning",
+      "initiativeMod": 0,
+      "threatLevel": "Easy",
+      "type": "Insectoid Caster",
+      "soulCore": "Naturebound Core (DC14)",
+      "native": "Canopy sanctuaries, Oak groves"
+    },
+    "abilities": [
+      "Spellcaster",
+      "Nature magic"
+    ],
+    "attacks": [
+      {
+        "name": "Staff strike",
+        "diceExpr": "1d6",
+        "damageType": "Bludgeoning"
+      }
+    ]
+  },
   {
     "id": "acid-fly",
     "name": "Acid Fly",
@@ -2430,7 +2705,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "stats": {
       "hp": 28,
       "dr": 3,
-      "speed": "30 / walk 60",
+      "speed": "60",
       "damage": "Claws 2d8 slashing / Bite 2d6 piercing",
       "initiativeMod": 0,
       "threatLevel": "Tough",

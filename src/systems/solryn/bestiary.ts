@@ -32,85 +32,9 @@ export const statBlockShapes: StatBlockShape[] = [
 ];
 
 /**
- * The Solryn starter bestiary — 10 canonical v1.2 creatures. (Loot/harvest pool contents
- * per creature are flagged for Matthew — the ruleset names soul cores but not full loot
- * tables.)
+ * The full Solryn bestiary. Every entry — the 10 canonical v1.2 starters and the
+ * SRD/Eribor conversions — flows through one generator path: data/bestiary-source.json
+ * is the source of truth, and scripts/genBestiary.ts flattens it into
+ * bestiary.generated.ts (run `npm run gen:bestiary`). Edit creatures there, not here.
  */
-// Hand-authored canonical starters (Solryn v1.2 MRD §7.4). The bulk SRD +
-// Eribor conversions live in bestiary.generated.ts (provisional) and are
-// appended below — see scripts/genBestiary.ts.
-const starterBestiary: BestiaryEntry[] = [
-  {
-    id: 'mossback-hare',
-    name: 'Mossback Hare',
-    category: 'creature',
-    stats: { hp: 8, dr: 0, speed: '35', damage: '—', initiativeMod: 0, threatLevel: 'Non-combatant', type: 'Beast', soulCore: 'none', native: 'Highland meadows' },
-    abilities: ['Burrow Dodge', 'Lichen Blend', 'Harvestable: Sleeproot moss (healing ingredient)'],
-  },
-  {
-    id: 'duskwatcher-owlcat',
-    name: 'Duskwatcher Owlcat',
-    category: 'creature',
-    stats: { hp: 22, dr: 1, speed: '30 / glide 40', damage: '1d6+3 slashing (pounce +1d4)', initiativeMod: 0, threatLevel: 'Easy', type: 'Predator', soulCore: 'none', native: 'Highland woods' },
-    abilities: ['Silent Descent', 'Twilight Tracker', 'Hiss-Screech'],
-  },
-  {
-    id: 'bramble-boar',
-    name: 'Bramble Boar',
-    category: 'creature',
-    stats: { hp: 28, dr: 2, speed: '30', damage: '1d6+4 piercing (charge +1d4)', initiativeMod: 0, threatLevel: 'Easy', type: 'Beast', soulCore: 'none', native: 'Highland thickets' },
-    abilities: ['Thornshake (AoE)', 'Brushbreaker', 'Pain-Fueled Rage'],
-  },
-  {
-    id: 'crag-hound',
-    name: 'Crag Hound',
-    category: 'creature',
-    stats: { hp: 24, dr: 2, speed: '35', damage: '1d6+3 piercing', initiativeMod: 0, threatLevel: 'Easy', type: 'Shadow Beast', soulCore: 'Shadowbound (DC14)', native: 'Mountain passes' },
-    abilities: ['Mountain Ghost', 'Death-Stalker', 'Shadowmeld'],
-  },
-  {
-    id: 'knockerkin',
-    name: 'Knockerkin',
-    category: 'creature',
-    stats: { hp: 18, dr: 1, speed: '25 / climb 20', damage: '1d4+2 piercing', initiativeMod: 0, threatLevel: 'Easy', type: 'Fey', soulCore: 'none (capturable)', native: 'Abandoned mines, caves' },
-    abilities: ['False Echo', 'Tunnel Slinker', 'Greed Sense'],
-  },
-  {
-    id: 'lantern-wraith',
-    name: 'Lantern Wraith',
-    category: 'creature',
-    stats: { hp: 18, dr: 1, speed: '20 float', damage: '1d6 arcane', initiativeMod: 0, threatLevel: 'Easy', type: 'Spirit', soulCore: 'Arcane/Spirit (DC14)', native: 'Misty forests' },
-    abilities: ['Lurelight Pulse', 'Misty Allure', 'Ethereal Drift'],
-  },
-  {
-    id: 'hollow-man',
-    name: 'Hollow Man',
-    category: 'creature',
-    stats: { hp: 22, dr: 2, speed: '25', damage: '1d6+1 slashing', initiativeMod: 0, threatLevel: 'Easy', type: 'Construct', soulCore: 'none', native: 'Deep woods, abandoned farmland' },
-    abilities: ['Effigy Stillness', 'Silent Lurch', 'Restraining thorns'],
-  },
-  {
-    id: 'whippoorwail',
-    name: 'Whippoorwail',
-    category: 'creature',
-    stats: { hp: 16, dr: 1, speed: '30 fly', damage: '1d4+2 piercing + 1 arcane', initiativeMod: 0, threatLevel: 'Easy', type: 'Spirit Beast', soulCore: 'Fading (DC13, destroyed by Radiant)', native: 'Forest edges, burial grounds' },
-    abilities: ['Death-Linked', 'Cry of the Dying', 'Blocks Luck recovery'],
-  },
-  {
-    id: 'hollowkin',
-    name: 'Hollowkin',
-    category: 'creature',
-    stats: { hp: 28, dr: 2, speed: '30 / hover 20', damage: '1d8 psychic + 1d4 arcane', initiativeMod: 0, threatLevel: 'Easy', type: 'Spirit', soulCore: 'Ethereal (DC14)', native: 'Highland ridges, misty ruins' },
-    abilities: ['Misty Veil', 'Fade Step', 'Test of the Soul', 'Mirror Echo'],
-  },
-  {
-    id: 'trellin-shaman',
-    name: "T'rellin Shaman",
-    category: 'creature',
-    stats: { hp: 22, dr: 1, speed: '30 / climb 30', damage: '1d6 bludgeoning (staff)', initiativeMod: 0, threatLevel: 'Easy', type: 'Insectoid Caster', soulCore: 'Naturebound (DC14)', native: 'Canopy sanctuaries' },
-    abilities: ['Spellcaster: Entangle, Sporeblind, Chitin Shield (1/rest each)', 'Nature magic'],
-  },
-];
-
-// The full Solryn bestiary: hand-authored starters + provisional conversions.
-export const bestiary: BestiaryEntry[] = [...starterBestiary, ...generatedBestiary];
+export const bestiary: BestiaryEntry[] = generatedBestiary;
