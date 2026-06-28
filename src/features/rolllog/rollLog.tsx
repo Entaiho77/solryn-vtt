@@ -71,7 +71,7 @@ export function RollLog() {
     <div className={s.section}>
       <div className={s.list}>
         {entries.map((e) => (
-          <div key={e.id} className={s.preview} style={{ fontFamily: 'var(--font-mono)' }}>
+          <div key={e.id} className={s.preview}>
             {e.text}
           </div>
         ))}
