@@ -7,12 +7,15 @@ import styles from './BoardShell.module.css';
  * one-at-a-time per side; the board reclaims width when none is open.
  */
 
+// `label` is the full descriptive name (used for title/aria); `short` is the concise
+// 1-word caption shown under the glyph. Falls back to `label` when omitted.
 export type BarItem =
-  | { kind: 'drawer'; id: string; label: string; glyph: string; content: ReactNode }
+  | { kind: 'drawer'; id: string; label: string; short?: string; glyph: string; content: ReactNode }
   | {
       kind: 'action';
       id: string;
       label: string;
+      short?: string;
       glyph: string;
       onClick: () => void;
       active?: boolean;
@@ -111,6 +114,7 @@ function Strip({
             <span className={styles.glyph} aria-hidden="true">
               {item.glyph}
             </span>
+            <span className={styles.toolLabel}>{item.short ?? item.label}</span>
           </button>
         );
       })}

@@ -150,21 +150,23 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
       : undefined;
 
   const myName = game.members[uid]?.displayName ?? 'Someone';
-  const dice: BarItem = { kind: 'drawer', id: 'dice', label: 'Dice', glyph: '⚄', content: <DiceDrawer /> };
-  const log: BarItem = { kind: 'drawer', id: 'log', label: 'Log', glyph: '📜', content: <RollLog /> };
+  const dice: BarItem = { kind: 'drawer', id: 'dice', label: 'Dice', short: 'Dice', glyph: '⚄', content: <DiceDrawer /> };
+  const log: BarItem = { kind: 'drawer', id: 'log', label: 'Log', short: 'Log', glyph: '📜', content: <RollLog /> };
   const chat: BarItem = {
     kind: 'drawer',
     id: 'chat',
     label: 'Chat',
+    short: 'Chat',
     glyph: '✉',
     content: <ChatDrawer gameId={gameId} uid={uid} displayName={myName} members={game.members} />,
   };
-  const rules: BarItem = { kind: 'drawer', id: 'rules', label: 'Rules', glyph: 'ℹ', content: <RulesDrawer system={system} /> };
+  const rules: BarItem = { kind: 'drawer', id: 'rules', label: 'Rules', short: 'Rules', glyph: 'ℹ', content: <RulesDrawer system={system} /> };
 
   const initiative: BarItem = {
     kind: 'drawer',
     id: 'initiative',
     label: 'Initiative',
+    short: 'Initiative',
     glyph: '⚔',
     content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} />,
   };
@@ -174,6 +176,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     kind: 'action',
     id: 'measure',
     label: 'Measure distance',
+    short: 'Measure',
     glyph: '↔',
     active: measuring,
     onClick: () => setMeasuring((m) => !m),
@@ -186,7 +189,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
           dice,
           log,
           chat,
-          { kind: 'drawer', id: 'notes', label: 'Notes', glyph: '✎', content: <NotesDrawer uid={uid} gameId={gameId} /> },
+          { kind: 'drawer', id: 'notes', label: 'Notes', short: 'Notes', glyph: '✎', content: <NotesDrawer uid={uid} gameId={gameId} /> },
           rules,
         ];
 
@@ -199,6 +202,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         kind: 'drawer',
         id: 'fog',
         label: 'Fog of war',
+        short: 'Fog',
         glyph: '☁',
         content: <FogDrawer gameId={gameId} activeMap={activeMap} />,
       },
@@ -206,6 +210,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         kind: 'drawer',
         id: 'creatures',
         label: 'Add creature',
+        short: 'Creature',
         glyph: '✚',
         content: (
           <AddCreatureDrawer
@@ -222,6 +227,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         kind: 'action',
         id: 'grid',
         label: 'Toggle grid',
+        short: 'Grid',
         glyph: '#',
         active: activeMap?.gridVisible,
         onClick: () =>
@@ -231,6 +237,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         kind: 'action',
         id: 'linecolor',
         label: `Grid & measure lines: ${lineColor} — click for ${lineColor === 'white' ? 'black' : 'white'}`,
+        short: 'Color',
         glyph: lineColor === 'white' ? '○' : '●',
         active: lineColor === 'black',
         onClick: () => setLineColor((c) => (c === 'white' ? 'black' : 'white')),
@@ -239,6 +246,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         kind: 'drawer',
         id: 'maps',
         label: 'Maps',
+        short: 'Maps',
         glyph: '▦',
         content: <MapsDrawer system={system} gameId={gameId} game={game} />,
       },
@@ -251,6 +259,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         kind: 'drawer',
         id: 'character',
         label: 'Character',
+        short: 'Character',
         glyph: '◈',
         content: (
           <CharacterQuickView

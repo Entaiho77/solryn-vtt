@@ -5,9 +5,9 @@
   overflow: hidden;
 }
 
-/* Thin icon strips on each edge */
+/* Icon strips on each edge — icon + caption stacked, sized for legibility. */
 .strip {
-  width: 48px;
+  width: 72px;
   flex-shrink: 0;
   background: var(--surface-bar);
   border-left: 1px solid var(--border-hairline);
@@ -20,15 +20,18 @@
 }
 
 .tool {
-  width: 38px;
-  height: 38px;
+  width: 64px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 3px;
+  padding: var(--space-2) var(--space-1);
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
-  color: var(--text-muted);
+  /* Strong default contrast — icons read clearly instead of sitting faint. */
+  color: var(--text-primary);
 }
 .tool:hover {
   background: var(--surface-raised);
@@ -40,8 +43,15 @@
   border-color: var(--accent-teal);
 }
 .glyph {
-  font-size: 1.2rem;
+  font-size: 1.65rem;
   line-height: 1;
+}
+.toolLabel {
+  font-size: 0.625rem;
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
 }
 .divider {
   width: 24px;
