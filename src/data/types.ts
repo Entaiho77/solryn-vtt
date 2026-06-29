@@ -44,6 +44,8 @@ export interface Game {
   activeMapId?: string;
   maps?: Record<string, MapDef>;
   tokens?: Record<string, Token>;
+  /** AoE/measurement shape overlays, keyed by id (object map — never an array). */
+  shapes?: Record<string, BoardShape>;
 
   // --- Combat & social (Phase E) ---
   initiative?: InitiativeState;
@@ -94,6 +96,31 @@ export interface MapDef {
 }
 
 export type TokenKind = 'character' | 'creature' | 'trap' | 'party';
+
+export type ShapeKind = 'circle' | 'cone' | 'line' | 'square';
+
+/**
+ * An AoE/measurement template overlaid on a map. Persisted (object-keyed map, never an
+ * array) so all players see it and it survives reload. Anchored to a grid cell OR a token
+ * (read live so it follows the token). `sizeFt` is radius (circle), length (cone/line), or
+ * side (square); `angleDeg` aims cone/line (0 = east). `hidden` shapes show only to the GM.
+ */
+export interface BoardShape {
+  id: string;
+  mapId: string;
+  kind: ShapeKind;
+  ownerUid: string;
+  /** Outline/fill tint (per placer). */
+  color?: string;
+  sizeFt: number;
+  /** Grid point OR token binding — an object either way, never a tuple. */
+  anchor: { col: number; row: number } | { tokenId: string };
+  /** Cone/line direction in degrees (0 = east); omitted for circle/square. */
+  angleDeg?: number;
+  /** GM-only when true; default shown to the whole table. */
+  hidden?: boolean;
+  createdAt: number;
+}
 
 export interface Token {
   id: string;

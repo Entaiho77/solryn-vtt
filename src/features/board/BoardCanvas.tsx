@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState, type MouseEvent } from 'react';
-import type { MapDef, Role, Token } from '../../data/types';
+import type { BoardShape, MapDef, Role, ShapeKind, Token } from '../../data/types';
 import { squareKey } from '../../data/board';
 import { canControlToken, fogStyle, tokenVisibility } from '../../permissions';
 import {
@@ -23,7 +23,19 @@ import {
 import { partyLockHeldByOther, visibleOnMap } from './partyMode';
 import styles from './BoardCanvas.module.css';
 
-export type BoardTool = 'select' | 'fog' | 'measure';
+export type BoardTool = 'select' | 'fog' | 'measure' | 'shape';
+
+/** The armed shape config from the Shapes drawer; the canvas resolves anchor/aim on click. */
+export interface ShapeDraft {
+  kind: ShapeKind;
+  sizeFt: number;
+  color: string;
+  anchorMode: 'grid' | 'token';
+  hidden: boolean;
+}
+
+/** What the canvas hands back when a shape is committed (id/createdAt added by the data layer). */
+export type ShapeCommit = Omit<BoardShape, 'id' | 'createdAt' | 'mapId' | 'ownerUid'>;
 
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 4;
@@ -60,6 +72,11 @@ interface BoardCanvasProps {
   selectedTokenId?: string;
   /** Current-turn combatant's token, drawn with a glow. */
   highlightTokenId?: string;
+  /** Persisted AoE/measurement shapes to draw (already filtered to this map + visibility). */
+  shapes?: BoardShape[];
+  /** Armed shape from the Shapes drawer (tool === 'shape'); null when none armed. */
+  shapeDraft?: ShapeDraft | null;
+  onCommitShape?: (shape: ShapeCommit) => void;
   onMoveToken: (tokenId: string, col: number, row: number) => void;
   onToggleFog: (col: number, row: number, fogged: boolean) => void;
   onSelectToken: (token: Token | null) => void;
@@ -70,6 +87,53 @@ interface BoardCanvasProps {
 
 const fmt = (n: number) =>
   Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.?0+$/, '');
+
+/** Feet → pixels: ft / (ft-per-square) → squares, × gridSize. */
+const ftToPx = (ft: number, ftPerSquare: number, gridSize: number) =>
+  (ft / (ftPerSquare || 1)) * gridSize;
+
+/**
+ * Build a shape's path on `ctx` (caller fills/strokes). `px` is the radius (circle), side
+ * (square), or length (cone/line). `angleDeg` aims cone/line (0 = east); circle/square ignore
+ * it. Cone is D&D-style: its width at the far end equals its length.
+ */
+function shapePath(
+  ctx: CanvasRenderingContext2D,
+  kind: ShapeKind,
+  cx: number,
+  cy: number,
+  px: number,
+  angleDeg: number,
+  gridSize: number,
+): void {
+  const a = (angleDeg * Math.PI) / 180;
+  const dx = Math.cos(a);
+  const dy = Math.sin(a);
+  const nx = -dy; // unit perpendicular
+  const ny = dx;
+  ctx.beginPath();
+  if (kind === 'circle') {
+    ctx.arc(cx, cy, px, 0, Math.PI * 2);
+  } else if (kind === 'square') {
+    ctx.rect(cx - px / 2, cy - px / 2, px, px);
+  } else if (kind === 'line') {
+    const hw = gridSize / 2; // 1 square wide
+    ctx.moveTo(cx + nx * hw, cy + ny * hw);
+    ctx.lineTo(cx - nx * hw, cy - ny * hw);
+    ctx.lineTo(cx - nx * hw + dx * px, cy - ny * hw + dy * px);
+    ctx.lineTo(cx + nx * hw + dx * px, cy + ny * hw + dy * px);
+    ctx.closePath();
+  } else {
+    // cone: apex at anchor, far edge width == length (≈53° spread)
+    const fx = cx + dx * px;
+    const fy = cy + dy * px;
+    const hw = px / 2;
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(fx + nx * hw, fy + ny * hw);
+    ctx.lineTo(fx - nx * hw, fy - ny * hw);
+    ctx.closePath();
+  }
+}
 
 export function BoardCanvas({
   map,
@@ -82,6 +146,9 @@ export function BoardCanvas({
   measureScale,
   selectedTokenId,
   highlightTokenId,
+  shapes,
+  shapeDraft,
+  onCommitShape,
   onMoveToken,
   onToggleFog,
   onSelectToken,
@@ -106,6 +173,10 @@ export function BoardCanvas({
     null,
   );
   const [measure, setMeasure] = useState<Segment | null>(null);
+  // While aiming a cone/line: the fixed anchor (grid cell or token) + current angle (deg).
+  const [shapeAim, setShapeAim] = useState<
+    { col: number; row: number; tokenId?: string; angleDeg: number } | null
+  >(null);
 
   const { cols, rows } = gridDimensions(map.width, map.height, map.gridSize);
   const fog = map.fog ?? {};
@@ -125,6 +196,7 @@ export function BoardCanvas({
       if (e.key === 'Escape') {
         measuringRef.current = false;
         setMeasure(null);
+        setShapeAim(null);
       }
     }
     window.addEventListener('keydown', onKey);
@@ -219,6 +291,52 @@ export function BoardCanvas({
         ctx.lineTo(cols * g, r * g);
       }
       ctx.stroke();
+    }
+
+    // --- AoE/measurement shapes (under tokens) ----------------------------------
+    const scaleValue = measureScale?.value ?? 1;
+    const shapeCenter = (
+      anchor: BoardShape['anchor'],
+    ): { x: number; y: number } | null => {
+      if ('tokenId' in anchor) {
+        const t = tokens.find((tk) => tk.id === anchor.tokenId);
+        return t ? cellCenter(t.col, t.row, g) : null; // token gone → drop the shape
+      }
+      return cellCenter(anchor.col, anchor.row, g);
+    };
+    const paintShape = (
+      kind: ShapeKind,
+      center: { x: number; y: number },
+      sizeFt: number,
+      angleDeg: number,
+      color: string,
+    ) => {
+      const px = ftToPx(sizeFt, scaleValue, g);
+      shapePath(ctx, kind, center.x, center.y, px, angleDeg, g);
+      ctx.save();
+      ctx.globalAlpha = 0.22;
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2 / cam.zoom;
+      ctx.stroke();
+    };
+
+    for (const shape of shapes ?? []) {
+      const center = shapeCenter(shape.anchor);
+      if (!center) continue;
+      paintShape(shape.kind, center, shape.sizeFt, shape.angleDeg ?? 0, shape.color ?? COLORS.teal);
+    }
+
+    // Live preview while placing a shape (anchor chosen, aiming or about to commit).
+    if (shapeDraft && shapeAim) {
+      const center = shapeAim.tokenId
+        ? shapeCenter({ tokenId: shapeAim.tokenId })
+        : cellCenter(shapeAim.col, shapeAim.row, g);
+      if (center) {
+        paintShape(shapeDraft.kind, center, shapeDraft.sizeFt, shapeAim.angleDeg, shapeDraft.color);
+      }
     }
 
     for (const token of onMap) {
@@ -335,6 +453,10 @@ export function BoardCanvas({
     highlightTokenId,
     ghost,
     measure,
+    shapes,
+    shapeDraft,
+    shapeAim,
+    measureScale,
     version,
   ]);
 
@@ -352,6 +474,33 @@ export function BoardCanvas({
     if (tool === 'measure') {
       measuringRef.current = true;
       setMeasure({ sc: col, sr: row, ec: col, er: row });
+      return;
+    }
+
+    if (tool === 'shape' && shapeDraft) {
+      // Anchor to a token (topmost visible at the cell) or to the grid cell itself.
+      let tokenId: string | undefined;
+      if (shapeDraft.anchorMode === 'token') {
+        const stack = tokensAtCell(
+          onMap.filter((t) => tokenVisibility(t, uid, role) !== 'hidden'),
+          col,
+          row,
+        );
+        tokenId = stack[stack.length - 1]?.id;
+      }
+      const anchor = tokenId ? { tokenId } : { col, row };
+      if (shapeDraft.kind === 'circle' || shapeDraft.kind === 'square') {
+        onCommitShape?.({
+          kind: shapeDraft.kind,
+          sizeFt: shapeDraft.sizeFt,
+          color: shapeDraft.color,
+          anchor,
+          ...(shapeDraft.hidden ? { hidden: true } : {}),
+        });
+      } else {
+        // cone/line: set the anchor, then drag to aim (committed on mouse-up).
+        setShapeAim({ col, row, tokenId, angleDeg: 0 });
+      }
       return;
     }
 
@@ -399,6 +548,17 @@ export function BoardCanvas({
       bump();
       return;
     }
+    if (shapeAim) {
+      // Aim the cone/line: angle from the fixed anchor center to the cursor (world space).
+      const w = screenToWorld(camera.current, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+      const anchorTok = shapeAim.tokenId ? tokens.find((t) => t.id === shapeAim.tokenId) : undefined;
+      const c = anchorTok
+        ? cellCenter(anchorTok.col, anchorTok.row, map.gridSize)
+        : cellCenter(shapeAim.col, shapeAim.row, map.gridSize);
+      const angleDeg = (Math.atan2(w.y - c.y, w.x - c.x) * 180) / Math.PI;
+      setShapeAim((a) => (a ? { ...a, angleDeg } : a));
+      return;
+    }
     const { col, row } = eventCell(e);
     if (measuringRef.current) {
       setMeasure((m) => (m ? { ...m, ec: col, er: row } : m));
@@ -416,6 +576,24 @@ export function BoardCanvas({
   }
 
   function handleUp() {
+    if (shapeAim) {
+      // Commit the aimed cone/line (drag released). A disarmed draft just clears the aim.
+      if (shapeDraft) {
+        const anchor = shapeAim.tokenId
+          ? { tokenId: shapeAim.tokenId }
+          : { col: shapeAim.col, row: shapeAim.row };
+        onCommitShape?.({
+          kind: shapeDraft.kind,
+          sizeFt: shapeDraft.sizeFt,
+          color: shapeDraft.color,
+          anchor,
+          angleDeg: shapeAim.angleDeg,
+          ...(shapeDraft.hidden ? { hidden: true } : {}),
+        });
+      }
+      setShapeAim(null);
+      return;
+    }
     const drag = tokenDrag.current;
     if (drag && ghost) {
       const mover = tokens.find((t) => t.id === drag.id);
@@ -449,7 +627,11 @@ export function BoardCanvas({
   }
 
   const cursor =
-    tool === 'measure' || tool === 'fog' ? 'crosshair' : panning ? 'grabbing' : 'grab';
+    tool === 'measure' || tool === 'fog' || tool === 'shape'
+      ? 'crosshair'
+      : panning
+        ? 'grabbing'
+        : 'grab';
 
   return (
     <div className={styles.scroll} ref={wrapRef}>

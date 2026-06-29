@@ -9,15 +9,17 @@ import {
   setGridVisible,
   toggleFogSquare,
 } from '../../data/board';
+import { addShape } from '../../data/shapes';
 import { useCreatureArt, useMyCreatures } from '../../data/creatures';
 import { useGameCharacterArt } from '../../data/characters';
 import { gridDimensions } from './boardGeometry';
 import { isPartyScale } from './partyMode';
 import { BoardShell, type BarItem } from './BoardShell';
-import { BoardCanvas, type BoardTool } from './BoardCanvas';
+import { BoardCanvas, type BoardTool, type ShapeDraft } from './BoardCanvas';
 import { TokenCard } from './TokenCard';
 import { InitiativeTracker } from './InitiativeTracker';
 import { InitiativeDrawer } from './drawers/InitiativeDrawer';
+import { ShapesDrawer } from './drawers/ShapesDrawer';
 import { MapsDrawer } from './drawers/MapsDrawer';
 import { FogDrawer } from './drawers/FogDrawer';
 import { AddCreatureDrawer } from './drawers/AddCreatureDrawer';
@@ -77,14 +79,18 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [measuring, setMeasuring] = useState(false);
+  // Armed shape from the Shapes drawer (drives the 'shape' canvas tool); null when none.
+  const [shapeDraft, setShapeDraft] = useState<ShapeDraft | null>(null);
   // Session-only GM toggle for grid + measure line color (white for dark maps, black for light).
   const [lineColor, setLineColor] = useState<'white' | 'black'>('white');
 
   const tool: BoardTool = measuring
     ? 'measure'
-    : role === 'gm' && openRight === 'fog'
-      ? 'fog'
-      : 'select';
+    : shapeDraft
+      ? 'shape'
+      : role === 'gm' && openRight === 'fog'
+        ? 'fog'
+        : 'select';
 
   const activeType = activeMap
     ? system.mapTypes.find((t) => t.id === activeMap.typeId)
@@ -142,6 +148,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
   function toggle(side: 'left' | 'right', id: string) {
     setMeasuring(false); // opening a drawer exits measure mode
+    setShapeDraft(null); // …and disarms any armed shape
     if (side === 'left') setOpenLeft((o) => (o === id ? null : id));
     else setOpenRight((o) => (o === id ? null : id));
   }
@@ -200,7 +207,33 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     short: 'Measure',
     glyph: '↔',
     active: measuring,
-    onClick: () => setMeasuring((m) => !m),
+    onClick: () => {
+      setShapeDraft(null); // measuring and shape placement are mutually exclusive
+      setMeasuring((m) => !m);
+    },
+  };
+
+  // Shapes are scoped to the active map; hidden shapes are GM-only (filtered like tokens).
+  const visibleShapes = Object.values(game.shapes ?? {}).filter(
+    (sh) => sh.mapId === activeMap?.id && (!sh.hidden || role === 'gm'),
+  );
+  const shapes: BarItem = {
+    kind: 'drawer',
+    id: 'shapes',
+    label: 'Shapes',
+    short: 'Shapes',
+    glyph: '◎',
+    content: (
+      <ShapesDrawer
+        gameId={gameId}
+        uid={uid}
+        role={role}
+        activeMap={activeMap}
+        shapes={game.shapes ?? {}}
+        draft={shapeDraft}
+        onChangeDraft={setShapeDraft}
+      />
+    ),
   };
 
   const left: BarItem[] =
@@ -218,6 +251,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   if (role === 'gm') {
     right = [
       measureAction,
+      shapes,
       { kind: 'divider', id: 'd1' },
       {
         kind: 'drawer',
@@ -275,6 +309,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   } else if (character) {
     right = [
       measureAction,
+      shapes,
       { kind: 'divider', id: 'pd1' },
       {
         kind: 'drawer',
@@ -315,6 +350,11 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             measureScale={measureScale}
             selectedTokenId={selected?.id}
             highlightTokenId={highlightTokenId}
+            shapes={visibleShapes}
+            shapeDraft={shapeDraft}
+            onCommitShape={(shape) =>
+              activeMap && void addShape(gameId, { ...shape, mapId: activeMap.id, ownerUid: uid })
+            }
             onMoveToken={(id, col, row) => void moveToken(gameId, id, col, row)}
             onToggleFog={(col, row, f) =>
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
