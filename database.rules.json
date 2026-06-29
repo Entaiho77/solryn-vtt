@@ -46,6 +46,13 @@
           }
         },
 
+        "shapes": {
+          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'",
+          "$shapeId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && (root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm' || newData.child('ownerUid').val() === auth.uid || data.child('ownerUid').val() === auth.uid)"
+          }
+        },
+
         "initiative": {
           ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists()"
         },
