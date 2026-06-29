@@ -1,0 +1,89 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "inviteCodes": {
+      ".read": "auth != null",
+      "$code": {
+        ".write": "auth != null"
+      }
+    },
+
+    "userGames": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$gameId": {
+          ".write": "auth != null && (auth.uid === $uid || root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm')"
+        }
+      }
+    },
+
+    "games": {
+      "$gameId": {
+        ".read": "auth != null && data.child('members').child(auth.uid).exists()",
+        ".write": "auth != null && ((!data.exists() && newData.child('createdBy').val() === auth.uid && newData.child('members').child(auth.uid).child('role').val() === 'gm') || (data.child('members').child(auth.uid).child('role').val() === 'gm' && !newData.exists()))",
+
+        "name":        { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "levelGrant":  { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "inviteCode":  { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "activeMapId": { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+        "maps":        { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
+
+        "members": {
+          "$memberId": {
+            ".write": "auth != null && ((auth.uid === $memberId && (!newData.exists() || newData.child('role').val() === 'player')) || root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm')"
+          }
+        },
+
+        "tokens": {
+          "$tokenId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && (root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm' || (newData.child('kind').val() === 'character' && newData.child('ownerUserId').val() === auth.uid) || (data.child('kind').val() === 'character' && data.child('ownerUserId').val() === auth.uid) || newData.child('kind').val() === 'party' || data.child('kind').val() === 'party')"
+          }
+        },
+
+        "shapes": {
+          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'",
+          "$shapeId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && (root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm' || newData.child('ownerUid').val() === auth.uid || data.child('ownerUid').val() === auth.uid)"
+          }
+        },
+
+        "initiative": {
+          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists()"
+        },
+
+        "chat": {
+          "$msgId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && !data.exists() && newData.child('senderId').val() === auth.uid"
+          }
+        }
+      }
+    },
+
+    "characters": {
+      ".read": "auth != null",
+      "$characterId": {
+        ".write": "auth != null && ((!data.exists() && newData.child('ownerUserId').val() === auth.uid) || data.child('ownerUserId').val() === auth.uid)"
+      }
+    },
+
+    "gameCharacters": {
+      ".read": "auth != null",
+      "$gameId": {
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      }
+    },
+
+    "systems": {
+      ".read": "auth != null",
+      ".write": false
+    }
+  }
+}
