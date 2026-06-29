@@ -4,6 +4,7 @@ import type { SystemDefinition } from '../../../engine/schema';
 import { endCombat, removeCombatantsByToken, rollInitiative, startCombat } from '../../../data/combat';
 import { removeToken } from '../../../data/board';
 import { Button } from '../../../components/ui/Button';
+import { ConfirmDialog } from '../../../components/ui/ConfirmDialog';
 import { MonsterStatCard } from './MonsterStatCard';
 import s from './drawers.module.css';
 
@@ -20,6 +21,8 @@ export function InitiativeDrawer({
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [card, setCard] = useState<{ name: string; creatureId?: string } | null>(null);
+  // Pending bulk-clear awaiting confirmation (replaces window.confirm).
+  const [confirm, setConfirm] = useState<{ message: string; onConfirm: () => void } | null>(null);
   const init = game.initiative;
   const creatures = activeMap
     ? Object.values(game.tokens ?? {}).filter(
@@ -44,11 +47,15 @@ export function InitiativeDrawer({
       (t) => t.mapId === activeMap.id && predicate(t),
     );
     if (targets.length === 0) return;
-    if (!window.confirm(`${label}: remove ${targets.length} token(s)? This can't be undone.`)) return;
-    const ids = new Set(targets.map((t) => t.id));
-    targets.forEach((t) => void removeToken(gameId, t.id));
-    if (init) void removeCombatantsByToken(gameId, init, ids);
-    setCard(null);
+    setConfirm({
+      message: `${label}: remove ${targets.length} token(s)? This can't be undone.`,
+      onConfirm: () => {
+        const ids = new Set(targets.map((t) => t.id));
+        targets.forEach((t) => void removeToken(gameId, t.id));
+        if (init) void removeCombatantsByToken(gameId, init, ids);
+        setCard(null);
+      },
+    });
   }
   const removeDefeated = () => bulkRemove('Remove defeated', (t) => Boolean(t.defeated));
   const clearAllMonsters = () => bulkRemove('Clear all monsters', (t) => t.kind === 'creature');
@@ -62,6 +69,18 @@ export function InitiativeDrawer({
       <Button variant="danger" size="sm" onClick={clearAllMonsters}>
         Clear all monsters
       </Button>
+      <ConfirmDialog
+        open={!!confirm}
+        title="Clear tokens"
+        message={confirm?.message ?? ''}
+        confirmLabel="Remove"
+        destructive
+        onConfirm={() => {
+          confirm?.onConfirm();
+          setConfirm(null);
+        }}
+        onCancel={() => setConfirm(null)}
+      />
     </div>
   );
 
