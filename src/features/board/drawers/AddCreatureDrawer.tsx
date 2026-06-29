@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
 import type { MapDef, Token } from '../../../data/types';
 import { addToken } from '../../../data/board';
@@ -44,7 +44,43 @@ export function AddCreatureDrawer({
   const [disarmDC, setDisarmDC] = useState('13');
   const [save, setSave] = useState(true);
 
+  // Bestiary filters — independent and exclusive (only one active at a time). Activating one
+  // clears the others; "Clear" resets to the full list. All live, no search button.
+  const [nameQuery, setNameQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [dmgFilter, setDmgFilter] = useState('');
+
   const myCreatures = useMyCreatures(uid);
+
+  // Distinct creature types + attack damage types actually present, for the selectors.
+  const { creatureTypes, damageTypes } = useMemo(() => {
+    const types = new Set<string>();
+    const dmg = new Set<string>();
+    for (const b of system.bestiary) {
+      const t = b.stats?.type;
+      if (typeof t === 'string' && t) types.add(t);
+      for (const a of b.attacks ?? []) if (a.damageType) dmg.add(a.damageType);
+    }
+    return {
+      creatureTypes: [...types].sort(),
+      damageTypes: [...dmg].sort(),
+    };
+  }, [system.bestiary]);
+
+  const q = nameQuery.trim().toLowerCase();
+  const filteredBestiary = q
+    ? system.bestiary.filter((b) => b.name.toLowerCase().includes(q))
+    : typeFilter
+      ? system.bestiary.filter((b) => b.stats?.type === typeFilter)
+      : dmgFilter
+        ? system.bestiary.filter((b) => (b.attacks ?? []).some((a) => a.damageType === dmgFilter))
+        : system.bestiary;
+  const filterActive = Boolean(q || typeFilter || dmgFilter);
+  const clearFilters = () => {
+    setNameQuery('');
+    setTypeFilter('');
+    setDmgFilter('');
+  };
 
   if (!activeMap) return <p className={s.hint}>Add a map first, then place creatures.</p>;
 
@@ -115,8 +151,68 @@ export function AddCreatureDrawer({
       </div>
 
       {tab === 'bestiary' && (
-        <div className={s.list}>
-          {system.bestiary.map((b) => (
+        <div className={s.section}>
+          {/* Three independent filters, one at a time. Each clears the others when used. */}
+          <input
+            className={s.input}
+            placeholder="Search name…"
+            value={nameQuery}
+            onChange={(e) => {
+              setNameQuery(e.target.value);
+              setTypeFilter('');
+              setDmgFilter('');
+            }}
+          />
+          <div className={s.row}>
+            <select
+              className={s.input}
+              value={typeFilter}
+              onChange={(e) => {
+                setTypeFilter(e.target.value);
+                setNameQuery('');
+                setDmgFilter('');
+              }}
+            >
+              <option value="">All types</option>
+              {creatureTypes.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+            <select
+              className={s.input}
+              value={dmgFilter}
+              onChange={(e) => {
+                setDmgFilter(e.target.value);
+                setNameQuery('');
+                setTypeFilter('');
+              }}
+            >
+              <option value="">All damage</option>
+              {damageTypes.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={s.row} style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+            <span className={s.itemMeta}>
+              {filteredBestiary.length} of {system.bestiary.length}
+            </span>
+            {filterActive && (
+              <button className={s.place} onClick={clearFilters}>
+                Clear
+              </button>
+            )}
+          </div>
+
+          <div className={s.list}>
+            {filteredBestiary.length === 0 && (
+              <p className={s.hint}>No creatures match.</p>
+            )}
+            {filteredBestiary.map((b) => (
             <div key={b.id} className={s.item}>
               <span className={s.itemMain}>
                 <span className={s.itemName}>{b.name}</span>
@@ -133,7 +229,8 @@ export function AddCreatureDrawer({
                 + Place
               </button>
             </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
 
