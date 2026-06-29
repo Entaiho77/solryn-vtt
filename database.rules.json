@@ -61,6 +61,13 @@
           "$msgId": {
             ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && !data.exists() && newData.child('senderId').val() === auth.uid"
           }
+        },
+
+        "rollLog": {
+          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'",
+          "$entryId": {
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists()"
+          }
         }
       }
     },

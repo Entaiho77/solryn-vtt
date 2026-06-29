@@ -91,7 +91,13 @@ export function GamePage() {
   }
 
   return (
-    <RollLogProvider>
+    <RollLogProvider
+      gameId={game.id}
+      uid={user.uid}
+      displayName={game.members[user.uid]?.displayName ?? 'Someone'}
+      log={game.rollLog}
+      canClear={role === 'gm'}
+    >
     <div className={styles.page}>
       <header className={styles.header}>
         <button className={styles.back} onClick={() => navigate('/')} aria-label="Back to lobby">
