@@ -32,3 +32,7 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOLRYN_VIRTUAL_TABLE_TOP }}
           channelId: live
           projectId: solryn-virtual-table-top
+          # Same recent CLI as the preview workflow, for consistency. (The live deploy is a
+          # production release, not a preview-channel release, so it isn't subject to the
+          # channel "already active version" precondition either way.)
+          firebaseToolsVersion: latest

@@ -30,3 +30,7 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOLRYN_VIRTUAL_TABLE_TOP }}
           projectId: solryn-virtual-table-top
+          # Pin a recent CLI: older firebase-tools treats a retried channel release of an
+          # already-active version as an error (FAILED_PRECONDITION) when a transient
+          # "premature close" triggers a retry; newer versions make the release idempotent.
+          firebaseToolsVersion: latest
