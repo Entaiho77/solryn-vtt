@@ -208,7 +208,7 @@ export function BoardCanvas({
 
     if (map.gridVisible) {
       ctx.strokeStyle = gridColor;
-      ctx.lineWidth = 1 / cam.zoom; // keep grid lines ~1px on screen at any zoom
+      ctx.lineWidth = 2 / cam.zoom; // keep grid lines ~2px on screen at any zoom
       ctx.beginPath();
       for (let c = 0; c <= cols; c++) {
         ctx.moveTo(c * g, 0);
