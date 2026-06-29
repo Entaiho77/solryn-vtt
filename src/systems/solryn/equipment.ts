@@ -1,4 +1,47 @@
-import type { EquipmentDefinition } from '../../engine/schema';
+import type { EquipmentDefinition, WeaponItem } from '../../engine/schema';
+import type { DamageType } from './damageTypes';
+
+/**
+ * Solryn weapons reference the canonical {@link DamageType} set so the data is
+ * type-checked at build time (the engine field stays a plain `string` because it
+ * is system-agnostic; this narrows it for Solryn data only).
+ */
+const weapons: (WeaponItem & { damageType: DamageType })[] = [
+  // Swords
+  { id: 'shortsword', name: 'Shortsword', weaponSkillId: 'light-swords', damageDice: '1d6', damageType: 'Piercing' },
+  { id: 'rapier', name: 'Rapier', weaponSkillId: 'light-swords', damageDice: '1d8', damageType: 'Piercing' },
+  { id: 'broadsword', name: 'Broadsword', weaponSkillId: 'heavy-swords', damageDice: '1d10', damageType: 'Slashing' },
+  { id: 'greatsword', name: 'Greatsword', weaponSkillId: 'heavy-swords', damageDice: '2d6', damageType: 'Slashing', twoHanded: true },
+  { id: 'scimitar', name: 'Scimitar', weaponSkillId: 'curved-swords', damageDice: '1d6', damageType: 'Slashing' },
+  { id: 'sabre', name: 'Sabre', weaponSkillId: 'curved-swords', damageDice: '1d8', damageType: 'Slashing' },
+  // Axes
+  { id: 'handaxe', name: 'Handaxe', weaponSkillId: 'hand-axes', damageDice: '1d6', damageType: 'Slashing' },
+  { id: 'hatchet', name: 'Hatchet', weaponSkillId: 'hand-axes', damageDice: '1d4', damageType: 'Slashing' },
+  { id: 'battleaxe', name: 'Battleaxe', weaponSkillId: 'battleaxes', damageDice: '1d8', damageType: 'Slashing' },
+  { id: 'war-axe', name: 'War Axe', weaponSkillId: 'battleaxes', damageDice: '1d10', damageType: 'Slashing' },
+  { id: 'greataxe', name: 'Greataxe', weaponSkillId: 'great-axes', damageDice: '1d12', damageType: 'Slashing', twoHanded: true },
+  // Maces / Hammers
+  { id: 'mace', name: 'Mace', weaponSkillId: 'light-maces', damageDice: '1d6', damageType: 'Bludgeoning' },
+  { id: 'club', name: 'Club', weaponSkillId: 'light-maces', damageDice: '1d4', damageType: 'Bludgeoning' },
+  { id: 'warhammer', name: 'Warhammer', weaponSkillId: 'heavy-maces', damageDice: '1d8', damageType: 'Bludgeoning' },
+  { id: 'morningstar', name: 'Morningstar', weaponSkillId: 'heavy-maces', damageDice: '1d8', damageType: 'Piercing' },
+  { id: 'maul', name: 'Maul', weaponSkillId: 'two-handed-maces', damageDice: '2d6', damageType: 'Bludgeoning', twoHanded: true },
+  { id: 'sledgehammer', name: 'Sledgehammer', weaponSkillId: 'two-handed-maces', damageDice: '1d12', damageType: 'Bludgeoning', twoHanded: true },
+  // Polearms & spears
+  { id: 'spear', name: 'Spear', weaponSkillId: 'spears', damageDice: '1d6', damageType: 'Piercing' },
+  { id: 'javelin', name: 'Javelin', weaponSkillId: 'spears', damageDice: '1d6', damageType: 'Piercing', range: '30/120' },
+  { id: 'halberd', name: 'Halberd', weaponSkillId: 'polearms', damageDice: '1d10', damageType: 'Slashing', twoHanded: true },
+  { id: 'glaive', name: 'Glaive', weaponSkillId: 'polearms', damageDice: '1d10', damageType: 'Slashing', twoHanded: true },
+  { id: 'pike', name: 'Pike', weaponSkillId: 'polearms', damageDice: '1d10', damageType: 'Piercing', twoHanded: true },
+  { id: 'lance', name: 'Lance', weaponSkillId: 'polearms', damageDice: '1d12', damageType: 'Piercing' },
+  // Daggers (added — see note)
+  { id: 'dagger', name: 'Dagger', weaponSkillId: 'daggers', damageDice: '1d4', damageType: 'Piercing', range: '20/60' },
+  // Ranged
+  { id: 'shortbow', name: 'Shortbow', weaponSkillId: 'light-bows', damageDice: '1d6', damageType: 'Piercing', range: '80/320', twoHanded: true },
+  { id: 'longbow', name: 'Longbow', weaponSkillId: 'heavy-bows', damageDice: '1d8', damageType: 'Piercing', range: '150/600', twoHanded: true },
+  { id: 'light-crossbow', name: 'Light Crossbow', weaponSkillId: 'specialty-bows', damageDice: '1d8', damageType: 'Piercing', range: '80/320', twoHanded: true },
+  { id: 'heavy-crossbow', name: 'Heavy Crossbow', weaponSkillId: 'specialty-bows', damageDice: '1d10', damageType: 'Piercing', range: '100/400', twoHanded: true },
+];
 
 /**
  * Solryn equipment — canonical v1.2. Armor feeds the DR formula (`dr`) and Speed
@@ -32,42 +75,7 @@ export const equipment: EquipmentDefinition = {
     { id: 'shield', name: 'Shield', dr: 2, cost: 10 },
     { id: 'tower-shield', name: 'Tower Shield', dr: 3, cost: 25, note: 'Disadvantage on attacks.' },
   ],
-  weapons: [
-    // Swords
-    { id: 'shortsword', name: 'Shortsword', weaponSkillId: 'light-swords', damageDice: '1d6', damageType: 'P' },
-    { id: 'rapier', name: 'Rapier', weaponSkillId: 'light-swords', damageDice: '1d8', damageType: 'P' },
-    { id: 'broadsword', name: 'Broadsword', weaponSkillId: 'heavy-swords', damageDice: '1d10', damageType: 'S' },
-    { id: 'greatsword', name: 'Greatsword', weaponSkillId: 'heavy-swords', damageDice: '2d6', damageType: 'S', twoHanded: true },
-    { id: 'scimitar', name: 'Scimitar', weaponSkillId: 'curved-swords', damageDice: '1d6', damageType: 'S' },
-    { id: 'sabre', name: 'Sabre', weaponSkillId: 'curved-swords', damageDice: '1d8', damageType: 'S' },
-    // Axes
-    { id: 'handaxe', name: 'Handaxe', weaponSkillId: 'hand-axes', damageDice: '1d6', damageType: 'S' },
-    { id: 'hatchet', name: 'Hatchet', weaponSkillId: 'hand-axes', damageDice: '1d4', damageType: 'S' },
-    { id: 'battleaxe', name: 'Battleaxe', weaponSkillId: 'battleaxes', damageDice: '1d8', damageType: 'S' },
-    { id: 'war-axe', name: 'War Axe', weaponSkillId: 'battleaxes', damageDice: '1d10', damageType: 'S' },
-    { id: 'greataxe', name: 'Greataxe', weaponSkillId: 'great-axes', damageDice: '1d12', damageType: 'S', twoHanded: true },
-    // Maces / Hammers
-    { id: 'mace', name: 'Mace', weaponSkillId: 'light-maces', damageDice: '1d6', damageType: 'B' },
-    { id: 'club', name: 'Club', weaponSkillId: 'light-maces', damageDice: '1d4', damageType: 'B' },
-    { id: 'warhammer', name: 'Warhammer', weaponSkillId: 'heavy-maces', damageDice: '1d8', damageType: 'B' },
-    { id: 'morningstar', name: 'Morningstar', weaponSkillId: 'heavy-maces', damageDice: '1d8', damageType: 'P' },
-    { id: 'maul', name: 'Maul', weaponSkillId: 'two-handed-maces', damageDice: '2d6', damageType: 'B', twoHanded: true },
-    { id: 'sledgehammer', name: 'Sledgehammer', weaponSkillId: 'two-handed-maces', damageDice: '1d12', damageType: 'B', twoHanded: true },
-    // Polearms & spears
-    { id: 'spear', name: 'Spear', weaponSkillId: 'spears', damageDice: '1d6', damageType: 'P' },
-    { id: 'javelin', name: 'Javelin', weaponSkillId: 'spears', damageDice: '1d6', damageType: 'P', range: '30/120' },
-    { id: 'halberd', name: 'Halberd', weaponSkillId: 'polearms', damageDice: '1d10', damageType: 'S', twoHanded: true },
-    { id: 'glaive', name: 'Glaive', weaponSkillId: 'polearms', damageDice: '1d10', damageType: 'S', twoHanded: true },
-    { id: 'pike', name: 'Pike', weaponSkillId: 'polearms', damageDice: '1d10', damageType: 'P', twoHanded: true },
-    { id: 'lance', name: 'Lance', weaponSkillId: 'polearms', damageDice: '1d12', damageType: 'P' },
-    // Daggers (added — see note)
-    { id: 'dagger', name: 'Dagger', weaponSkillId: 'daggers', damageDice: '1d4', damageType: 'P', range: '20/60' },
-    // Ranged
-    { id: 'shortbow', name: 'Shortbow', weaponSkillId: 'light-bows', damageDice: '1d6', damageType: 'P', range: '80/320', twoHanded: true },
-    { id: 'longbow', name: 'Longbow', weaponSkillId: 'heavy-bows', damageDice: '1d8', damageType: 'P', range: '150/600', twoHanded: true },
-    { id: 'light-crossbow', name: 'Light Crossbow', weaponSkillId: 'specialty-bows', damageDice: '1d8', damageType: 'P', range: '80/320', twoHanded: true },
-    { id: 'heavy-crossbow', name: 'Heavy Crossbow', weaponSkillId: 'specialty-bows', damageDice: '1d10', damageType: 'P', range: '100/400', twoHanded: true },
-  ],
+  weapons,
   startingKit: [
     { name: "Adventurer's toolset" },
     { name: 'Backpack' },

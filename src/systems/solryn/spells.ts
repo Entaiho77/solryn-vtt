@@ -1,4 +1,5 @@
 import type { Spell } from '../../engine/schema';
+import type { DamageType } from './damageTypes';
 
 /**
  * Solryn spells — canonical v1.2. All damage spells: base 1d4, auto-hit vs DR, base
@@ -11,7 +12,9 @@ import type { Spell } from '../../engine/schema';
  */
 const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
-const off = (name: string, range: 'touch' | 'ranged', damageType: string): Spell => ({
+// Canonical offensive spell — damageType is type-checked against the Solryn
+// DamageType set (the engine field stays `string`; this narrows the data).
+const off = (name: string, range: 'touch' | 'ranged', damageType: DamageType): Spell => ({
   id: slug(name),
   name,
   type: 'offensive',
@@ -21,6 +24,13 @@ const off = (name: string, range: 'touch' | 'ranged', damageType: string): Spell
   range: range === 'touch' ? 'Touch' : '20 ft',
   duration: 'Instant',
 });
+
+// Adaptive-combat spells whose "type" is a descriptive effect (e.g. "force
+// (jumps)", "random elemental") rather than a single canonical DamageType.
+// FLAGGED for Matthew: these can't be constrained to DamageType without a
+// ruleset decision on how the effect resolves; kept as free strings for now.
+const offSpecial = (name: string, range: 'touch' | 'ranged', damageType: string): Spell =>
+  ({ ...off(name, range, 'Force'), damageType });
 
 const util = (name: string, range: string, duration: string): Spell => ({
   id: slug(name),
@@ -34,49 +44,50 @@ const util = (name: string, range: string, duration: string): Spell => ({
 
 export const spells: Spell[] = [
   // Elemental
-  off('Ember Strike', 'touch', 'fire'),
-  off('Ignition Bolt', 'ranged', 'fire'),
-  off('Frostbite Surge', 'touch', 'cold'),
-  off('Glacial Spear', 'ranged', 'cold'),
-  off('Thunder Palm', 'touch', 'lightning'),
-  off('Arc Spark', 'ranged', 'lightning'),
-  off('Earthen Crush', 'touch', 'bludgeoning'),
-  off('Stone Shard', 'ranged', 'piercing'),
-  off('Gust Slash', 'touch', 'slashing'),
-  off('Cyclone Dart', 'ranged', 'force'),
+  off('Ember Strike', 'touch', 'Fire'),
+  off('Ignition Bolt', 'ranged', 'Fire'),
+  off('Frostbite Surge', 'touch', 'Cold'),
+  off('Glacial Spear', 'ranged', 'Cold'),
+  off('Thunder Palm', 'touch', 'Lightning'),
+  off('Arc Spark', 'ranged', 'Lightning'),
+  off('Earthen Crush', 'touch', 'Bludgeoning'),
+  off('Stone Shard', 'ranged', 'Piercing'),
+  off('Gust Slash', 'touch', 'Slashing'),
+  off('Cyclone Dart', 'ranged', 'Force'),
   // Arcane Energy
-  off('Arcane Jolt', 'touch', 'force'),
-  off('Void Lance', 'ranged', 'necrotic'),
-  off('Astral Spike', 'touch', 'psychic'),
-  off('Soul Rend', 'ranged', 'psychic'),
-  off('Echo Strike', 'touch', 'thunder'),
-  off('Resonance Beam', 'ranged', 'thunder'),
-  off('Mystic Shock', 'touch', 'radiant'),
-  off('Starfire Ray', 'ranged', 'radiant'),
-  off('Eldritch Claw', 'touch', 'necrotic'),
-  off('Shadow Dart', 'ranged', 'necrotic'),
+  off('Arcane Jolt', 'touch', 'Force'),
+  off('Void Lance', 'ranged', 'Necrotic'),
+  off('Astral Spike', 'touch', 'Psychic'),
+  off('Soul Rend', 'ranged', 'Psychic'),
+  off('Echo Strike', 'touch', 'Thunder'),
+  off('Resonance Beam', 'ranged', 'Thunder'),
+  off('Mystic Shock', 'touch', 'Radiant'),
+  off('Starfire Ray', 'ranged', 'Radiant'),
+  off('Eldritch Claw', 'touch', 'Necrotic'),
+  off('Shadow Dart', 'ranged', 'Necrotic'),
   // Poison & Corrupting
-  off('Venom Strike', 'touch', 'poison'),
-  off('Toxic Dart', 'ranged', 'poison'),
-  off('Rotting Grip', 'touch', 'necrotic'),
-  off('Decay Arrow', 'ranged', 'necrotic'),
-  off('Withering Touch', 'touch', 'necrotic'),
-  off('Blight Surge', 'ranged', 'necrotic'),
-  off('Acidic Claw', 'touch', 'acid'),
-  off('Corrosive Orb', 'ranged', 'acid'),
-  off('Ashen Grasp', 'touch', 'necrotic'),
-  off('Hallowed Rupture', 'ranged', 'radiant'),
-  // Adaptive Combat
-  off('Mirror Strike', 'touch', "mimics target's last type"),
-  off('Prismatic Sting', 'ranged', 'random elemental'),
-  off('Aether Burst', 'touch', 'force (ignores resistance)'),
-  off('Lethal Echo', 'ranged', 'psychic'),
-  off('Burning Rune', 'touch', 'fire (lingers)'),
-  off('Glacial Lash', 'ranged', 'cold (slows)'),
-  off('Thundering Claw', 'touch', 'thunder (shockwave)'),
-  off('Explosive Arc', 'ranged', 'force (jumps)'),
-  off('Void Pulse', 'touch', 'necrotic (disrupts magic)'),
-  off('Radiant Wave', 'touch', 'radiant (area)'),
+  off('Venom Strike', 'touch', 'Poison'),
+  off('Toxic Dart', 'ranged', 'Poison'),
+  off('Rotting Grip', 'touch', 'Necrotic'),
+  off('Decay Arrow', 'ranged', 'Necrotic'),
+  off('Withering Touch', 'touch', 'Necrotic'),
+  off('Blight Surge', 'ranged', 'Necrotic'),
+  off('Acidic Claw', 'touch', 'Acid'),
+  off('Corrosive Orb', 'ranged', 'Acid'),
+  off('Ashen Grasp', 'touch', 'Necrotic'),
+  off('Hallowed Rupture', 'ranged', 'Radiant'),
+  // Adaptive Combat (canonical type)
+  off('Lethal Echo', 'ranged', 'Psychic'),
+  // Adaptive Combat (descriptive effect — see offSpecial note)
+  offSpecial('Mirror Strike', 'touch', "mimics target's last type"),
+  offSpecial('Prismatic Sting', 'ranged', 'random elemental'),
+  offSpecial('Aether Burst', 'touch', 'force (ignores resistance)'),
+  offSpecial('Burning Rune', 'touch', 'fire (lingers)'),
+  offSpecial('Glacial Lash', 'ranged', 'cold (slows)'),
+  offSpecial('Thundering Claw', 'touch', 'thunder (shockwave)'),
+  offSpecial('Explosive Arc', 'ranged', 'force (jumps)'),
+  offSpecial('Void Pulse', 'touch', 'necrotic (disrupts magic)'),
+  offSpecial('Radiant Wave', 'touch', 'radiant (area)'),
   // Utility (non-damaging)
   util('Light', 'Object · 20 ft', '1 hour'),
   util('Mage Hand', '30 ft', '1 minute'),
