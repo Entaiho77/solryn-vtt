@@ -2,9 +2,10 @@ import { useState } from 'react';
 import type { SemanticColor, SystemDefinition } from '../../../engine/schema';
 import type { Character } from '../../../data/types';
 import { computeDerived } from '../../../engine/rules';
-import { setPoolCurrent } from '../../../data/characters';
+import { setCharacterImage, setPoolCurrent } from '../../../data/characters';
 import { Modal } from '../../../components/ui/Modal';
 import { Button } from '../../../components/ui/Button';
+import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import { ResourceTracker, type ResourceColor } from '../../sheet/ResourceTracker';
 import { AttacksSection } from '../../sheet/AttacksSection';
 import { SpellBookOverlay } from '../../sheet/SpellBookOverlay';
@@ -44,6 +45,14 @@ export function CharacterQuickView({
 
   return (
     <div className={s.section}>
+      <TokenArtUpload
+        scope={character.id}
+        imageUrl={character.imageUrl}
+        label="token"
+        onChange={(url) => void setCharacterImage(character.id, url)}
+        onClear={() => void setCharacterImage(character.id, null)}
+      />
+
       {canLevelUp && (
         <Button
           full

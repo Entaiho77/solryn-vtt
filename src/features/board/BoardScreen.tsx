@@ -9,6 +9,8 @@ import {
   setGridVisible,
   toggleFogSquare,
 } from '../../data/board';
+import { useCreatureArt, useMyCreatures } from '../../data/creatures';
+import { useGameCharacterArt } from '../../data/characters';
 import { gridDimensions } from './boardGeometry';
 import { isPartyScale } from './partyMode';
 import { BoardShell, type BarItem } from './BoardShell';
@@ -41,6 +43,24 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   const gameId = game.id;
   const tokens: Token[] = Object.values(game.tokens ?? {});
   const activeMap = game.activeMapId ? game.maps?.[game.activeMapId] : undefined;
+
+  // Token art resolution (by id, at render). Bestiary + saved-creature art is the GM's
+  // (read under the game owner); character art covers every player's character. A token's
+  // own imageUrl wins as a per-token override; art-less tokens resolve to nothing and the
+  // canvas keeps its colored-circle + letter fallback.
+  const creatureArt = useCreatureArt(game.createdBy);
+  const savedCreatures = useMyCreatures(game.createdBy);
+  const characterArt = useGameCharacterArt(gameId);
+  const artById: Record<string, string> = { ...creatureArt };
+  for (const c of savedCreatures) if (c.imageUrl) artById[c.id] = c.imageUrl;
+  const tokenImage = (t: Token): string | undefined =>
+    t.imageUrl ??
+    (t.creatureId ? artById[t.creatureId] : undefined) ??
+    (t.characterId ? characterArt[t.characterId] : undefined);
+  const boardTokens: Token[] = tokens.map((t) => {
+    const img = tokenImage(t);
+    return img && img !== t.imageUrl ? { ...t, imageUrl: img } : t;
+  });
   const initState = game.initiative;
   // A persisted initiative can be malformed: Firebase drops empty arrays, so a fully
   // cleared order comes back undefined. Only "active with a non-empty order" is real
@@ -142,6 +162,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               creatureId={selected.creatureId}
               token={selected}
               gameId={gameId}
+              uid={uid}
               onClose={() => setSelectedId(null)}
             />
           ),
@@ -168,7 +189,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     label: 'Initiative',
     short: 'Initiative',
     glyph: '⚔',
-    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} />,
+    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} />,
   };
 
   // Distance measuring is available to everyone — players measure their own movement/range.
@@ -285,7 +306,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         {activeMap ? (
           <BoardCanvas
             map={activeMap}
-            tokens={tokens}
+            tokens={boardTokens}
             role={role}
             uid={uid}
             tool={tool}

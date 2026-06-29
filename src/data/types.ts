@@ -178,6 +178,8 @@ export interface Character {
   buildComplete: boolean;
   definition: CharacterDefinition;
   play: CharacterPlayState;
+  /** Round token art (Firebase Storage URL or inline data URL). */
+  imageUrl?: string;
 }
 
 /** Lightweight game summary for the lobby list. */

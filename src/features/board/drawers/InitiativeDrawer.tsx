@@ -13,11 +13,13 @@ export function InitiativeDrawer({
   game,
   activeMap,
   system,
+  uid,
 }: {
   gameId: string;
   game: Game;
   activeMap?: MapDef;
   system: SystemDefinition;
+  uid?: string;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [card, setCard] = useState<{ name: string; creatureId?: string } | null>(null);
@@ -104,7 +106,7 @@ export function InitiativeDrawer({
         <button type="button" className={s.place} onClick={() => setCard(null)} style={{ alignSelf: 'flex-start' }}>
           ‹ Back
         </button>
-        <MonsterStatCard system={system} name={card.name} creatureId={card.creatureId} />
+        <MonsterStatCard system={system} name={card.name} creatureId={card.creatureId} uid={uid} />
       </div>
     );
   }

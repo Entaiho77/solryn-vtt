@@ -85,6 +85,55 @@ export function applyLevelUp(
   });
 }
 
+/** Set (or clear) a character's round token art. */
+export function setCharacterImage(
+  characterId: string,
+  imageUrl: string | null,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/imageUrl`, imageUrl);
+}
+
+/**
+ * Live characterId → art-URL map for every character in a game, so the board can resolve
+ * art for any player's token (not just the viewer's own). Subscribes to the game's
+ * character index, then to each character's `imageUrl`.
+ */
+export function useGameCharacterArt(gameId: string | null): Record<string, string> {
+  const [ids, setIds] = useState<string[]>([]);
+  const [art, setArt] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (!gameId || !firebaseConfigured) {
+      setIds([]);
+      return;
+    }
+    return subscribe<Record<string, string>>(`gameCharacters/${gameId}`, (val) =>
+      setIds(val ? Object.values(val) : []),
+    );
+  }, [gameId]);
+
+  useEffect(() => {
+    if (!firebaseConfigured || ids.length === 0) {
+      setArt({});
+      return;
+    }
+    const unsubs = ids.map((id) =>
+      subscribe<string>(`characters/${id}/imageUrl`, (url) =>
+        setArt((prev) => {
+          if (url) return { ...prev, [id]: url };
+          if (!(id in prev)) return prev;
+          const next = { ...prev };
+          delete next[id];
+          return next;
+        }),
+      ),
+    );
+    return () => unsubs.forEach((u) => u());
+  }, [ids.join(',')]);
+
+  return art;
+}
+
 /** Live "my character" for a game (or null if none yet). */
 export function useGameCharacter(
   gameId: string | null,

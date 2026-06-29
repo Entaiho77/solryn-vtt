@@ -35,6 +35,33 @@ export interface PreparedImage {
   stored: boolean;
 }
 
+const TOKEN_MAX = 4 * 1024 * 1024; // 4 MB — tokens are small, round-cropped art
+
+/**
+ * Token art handling — mirrors {@link prepareMapImage} with a smaller cap. `scope` is a
+ * storage path segment (e.g. a uid or creatureId) so uploads don't collide. Returns a URL
+ * (Storage download URL, or an inline data URL when Storage isn't configured).
+ */
+export async function prepareTokenImage(scope: string, file: File): Promise<string> {
+  if (!file.type.startsWith('image/')) {
+    throw new Error('Please choose an image file.');
+  }
+  const safeScope = scope.replace(/[^\w-]/g, '_');
+  if (storageAvailable) {
+    if (file.size > TOKEN_MAX) throw new Error('Image too large (max 4 MB).');
+    const safeName = file.name.replace(/[^\w.-]/g, '_');
+    const ref = storageRef(getStorageInstance(), `tokens/${safeScope}/${Date.now()}-${safeName}`);
+    await uploadBytes(ref, file);
+    return getDownloadURL(ref);
+  }
+  if (file.size > INLINE_MAX) {
+    throw new Error(
+      'Image too large for inline storage (max ~1.5 MB). Configure Firebase Storage for bigger art.',
+    );
+  }
+  return readDataUrl(file);
+}
+
 export async function prepareMapImage(
   gameId: string,
   file: File,

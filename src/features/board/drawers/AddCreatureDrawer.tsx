@@ -5,10 +5,12 @@ import { addToken } from '../../../data/board';
 import {
   deleteCreature,
   saveCreature,
+  setSavedCreatureImage,
   useMyCreatures,
 } from '../../../data/creatures';
 import { firstFreeCell, gridDimensions } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
+import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import s from './drawers.module.css';
 
 const CREATURE_COLOR = '#b05a5a';
@@ -141,22 +143,32 @@ export function AddCreatureDrawer({
             <p className={s.hint}>Nothing saved yet. Build one and tick “Save”.</p>
           )}
           {myCreatures.map((c) => (
-            <div key={c.id} className={s.item}>
-              <span className={s.itemMain}>
-                <span className={s.itemName}>{c.name}</span>
-                <span className={s.itemMeta}>{c.category}</span>
-              </span>
-              <button className={s.place} onClick={() => placeStatBlock(c.name, c.category, c.stats)}>
-                + Place
-              </button>
-              <button
-                className={s.place}
-                style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
-                onClick={() => void deleteCreature(uid, c.id)}
-                aria-label={`Delete ${c.name}`}
-              >
-                ×
-              </button>
+            <div key={c.id} className={s.section} style={{ gap: 'var(--space-2)' }}>
+              <div className={s.item}>
+                <span className={s.itemMain}>
+                  <span className={s.itemName}>{c.name}</span>
+                  <span className={s.itemMeta}>{c.category}</span>
+                </span>
+                <button className={s.place} onClick={() => placeStatBlock(c.name, c.category, c.stats, c.id)}>
+                  + Place
+                </button>
+                <button
+                  className={s.place}
+                  style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
+                  onClick={() => void deleteCreature(uid, c.id)}
+                  aria-label={`Delete ${c.name}`}
+                >
+                  ×
+                </button>
+              </div>
+              <TokenArtUpload
+                scope={uid}
+                imageUrl={c.imageUrl}
+                label="art"
+                size={44}
+                onChange={(url) => void setSavedCreatureImage(uid, c.id, url)}
+                onClear={() => void setSavedCreatureImage(uid, c.id, null)}
+              />
             </div>
           ))}
         </div>

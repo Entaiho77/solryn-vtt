@@ -2,7 +2,9 @@ import type { SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
 import { rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
+import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
 import { Button } from '../../../components/ui/Button';
+import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import { ResourceTracker } from '../../sheet/ResourceTracker';
 import { describeRoll, useRollLog } from '../../rolllog/rollLog';
 import s from './drawers.module.css';
@@ -47,6 +49,7 @@ export function MonsterStatCard({
   creatureId,
   token,
   gameId,
+  uid,
   onClose,
 }: {
   system: SystemDefinition;
@@ -54,9 +57,12 @@ export function MonsterStatCard({
   creatureId?: string;
   token?: Token;
   gameId?: string;
+  /** Present in GM context → enables the bestiary token-art upload (per-GM global). */
+  uid?: string;
   onClose?: () => void;
 }) {
   const { postRoll } = useRollLog();
+  const creatureArt = useCreatureArt(uid ?? null);
   const entry =
     (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
     system.bestiary.find((b) => b.name === name);
@@ -84,6 +90,22 @@ export function MonsterStatCard({
       )}
       <div style={statRow}><span className={s.itemMeta}>DR</span><span>{st.dr ?? '—'}</span></div>
       <div style={statRow}><span className={s.itemMeta}>Speed</span><span>{st.speed ?? '—'}</span></div>
+
+      {uid && (
+        <div>
+          <span className={s.label}>Token art</span>
+          <TokenArtUpload
+            scope={uid}
+            imageUrl={creatureArt[entry.id]}
+            label="art"
+            onChange={(url) => void setCreatureArt(uid, entry.id, url)}
+            onClear={() => void setCreatureArt(uid, entry.id, null)}
+          />
+          <p className={s.hint} style={{ marginTop: 'var(--space-1)' }}>
+            Applies to every {entry.name} token across your games.
+          </p>
+        </div>
+      )}
 
       {entry.attacks && entry.attacks.length > 0 && (
         <div>
