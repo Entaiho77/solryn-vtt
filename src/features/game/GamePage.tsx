@@ -128,6 +128,7 @@ export function GamePage() {
         game={game}
         role={role}
         currentUid={user.uid}
+        characterId={character?.id}
         onExit={() => navigate('/')}
       />
     </div>

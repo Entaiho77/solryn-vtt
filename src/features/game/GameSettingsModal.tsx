@@ -3,12 +3,13 @@ import type { Game, Role } from '../../data/types';
 import {
   deleteGame,
   grantLevelUp,
-  leaveGame,
+  quitGame,
   regenerateInviteCode,
   removeMember,
   updateGameName,
 } from '../../data/games';
 import { Modal } from '../../components/ui/Modal';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { Button } from '../../components/ui/Button';
 import { TextField } from '../../components/ui/TextField';
 import { Avatar } from '../../components/ui/Avatar';
@@ -21,7 +22,9 @@ interface GameSettingsModalProps {
   game: Game;
   role: Role;
   currentUid: string;
-  /** Called after the user leaves or the GM deletes — navigate back to the lobby. */
+  /** The current player's character for this game (so "Quit permanently" can delete it). */
+  characterId?: string;
+  /** Called after the user exits/quits or the GM deletes — navigate back to the lobby. */
   onExit: () => void;
 }
 
@@ -31,12 +34,14 @@ export function GameSettingsModal({
   game,
   role,
   currentUid,
+  characterId,
   onExit,
 }: GameSettingsModalProps) {
   const isGM = role === 'gm';
   const [name, setName] = useState(game.name);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [quitOpen, setQuitOpen] = useState(false);
 
   // Keep the editable name in sync if the live game updates elsewhere.
   useEffect(() => setName(game.name), [game.name]);
@@ -79,11 +84,19 @@ export function GameSettingsModal({
     }
   }
 
-  async function handleLeave() {
-    if (!confirm(`Leave "${game.name}"?`)) return;
+  // Soft exit — pure navigation, no writes. Membership, character, and the gameCharacters
+  // link all stay, so the game remains in the lobby and rejoining skips the wizard.
+  function handleExit() {
+    onClose();
+    onExit();
+  }
+
+  // Permanent quit — removes membership + character link + deletes this game's character.
+  async function handleQuit() {
     setBusy(true);
     try {
-      await leaveGame(game.id, currentUid);
+      await quitGame(game.id, currentUid, characterId);
+      setQuitOpen(false);
       onExit();
     } finally {
       setBusy(false);
@@ -216,19 +229,46 @@ export function GameSettingsModal({
           </ul>
         </section>
 
-        {/* Danger zone */}
-        <section className={styles.danger}>
+        {/* Leaving / danger zone */}
+        <section className={styles.danger} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', alignItems: 'flex-start' }}>
+          {/* Everyday action (prominent): return to the lobby, keeping everything. */}
+          <Button variant="secondary" onClick={handleExit} disabled={busy}>
+            Exit to lobby
+          </Button>
+          <p className={styles.hint} style={{ margin: 0 }}>
+            {isGM
+              ? 'Returns to the lobby; the game stays put.'
+              : 'Returns to the lobby. Your character and membership are kept — rejoin anytime.'}
+          </p>
+
+          {/* Destructive action (less prominent), role-specific. */}
           {isGM ? (
-            <Button variant="danger" onClick={() => void handleDelete()} disabled={busy}>
+            <Button variant="danger" size="sm" onClick={() => void handleDelete()} disabled={busy}>
               Delete this game
             </Button>
           ) : (
-            <Button variant="danger" onClick={() => void handleLeave()} disabled={busy}>
-              Leave game
-            </Button>
+            <button
+              type="button"
+              className={styles.remove}
+              onClick={() => setQuitOpen(true)}
+              disabled={busy}
+            >
+              Quit permanently…
+            </button>
           )}
         </section>
       </div>
+
+      <ConfirmDialog
+        open={quitOpen}
+        title="Quit permanently"
+        message={`Leave "${game.name}" for good? Your character for this game will be permanently deleted — this can't be undone. (To just step away and keep your character, use "Exit to lobby" instead.)`}
+        confirmLabel="Quit & delete character"
+        cancelLabel="Cancel"
+        destructive
+        onConfirm={() => void handleQuit()}
+        onCancel={() => setQuitOpen(false)}
+      />
     </Modal>
   );
 }
