@@ -219,7 +219,9 @@ export function AddCreatureDrawer({
                 <span className={s.itemMeta}>
                   {b.category === 'trap'
                     ? `DC ${b.stats.detectionDC ?? '—'}`
-                    : `HP ${b.stats.hp ?? '—'} · DR ${b.stats.dr ?? '—'}`}
+                    : b.stats.ac !== undefined
+                      ? `HP ${b.stats.hp ?? '—'} · AC ${b.stats.ac}` // 5e creatures have AC, not DR
+                      : `HP ${b.stats.hp ?? '—'} · DR ${b.stats.dr ?? '—'}`}
                 </span>
               </span>
               <button

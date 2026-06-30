@@ -190,3 +190,54 @@ describe('resolveCheck — d20 + modifier vs DC (5e saves / checks)', () => {
     expect(res.logText).toBe('Kobold — WIS save: 1d20-1 = 4 (dis) vs DC 10 — FAIL');
   });
 });
+
+describe('attackRollVsAc — crits & fumbles (raw natural d20)', () => {
+  const dnd = { modes: { combat: { id: 'attack-roll-vs-ac' } } } as unknown as SystemDefinition;
+  const resolver = getCombatResolver(dnd);
+
+  it('natural 20: auto-hit regardless of AC, doubled damage dice', () => {
+    // d20 → 20; crit damage rolls 2d6+2 → faces 3,4 → 3+4+2 = 9
+    const res = resolver.resolveAttack({
+      label: 'Goblin — Scimitar',
+      dice: '1d6+2',
+      damageType: 'Slashing',
+      attackBonus: 4,
+      targetAc: 99, // would never hit on the total
+      rng: seqRng([face(20, 20), face(3, 6), face(4, 6)]),
+    });
+    expect(res.hit).toBe(true);
+    expect(res.crit).toBe(true);
+    expect(res.rolls).toHaveLength(2); // dice doubled (2d6)
+    expect(res.damage).toBe(9);
+    expect(res.logText).toBe('Goblin — Scimitar: natural 20 — CRIT, 9 Slashing damage');
+  });
+
+  it('natural 1: auto-miss regardless of AC, no damage', () => {
+    const res = resolver.resolveAttack({
+      label: 'Goblin — Scimitar',
+      dice: '1d6+2',
+      attackBonus: 20,
+      targetAc: 5, // would always hit on the total
+      rng: seqRng([face(1, 20)]),
+    });
+    expect(res.hit).toBe(false);
+    expect(res.crit).toBeUndefined();
+    expect(res.damage).toBe(0);
+    expect(res.logText).toBe('Goblin — Scimitar: natural 1 — MISS');
+  });
+
+  it('a 20 discarded under disadvantage does NOT crit (kept die decides)', () => {
+    // rollLowest('d20',2): 20 then 5 → kept 5, not a crit
+    const res = resolver.resolveAttack({
+      label: 'Claw',
+      dice: '1d8',
+      attackBonus: 0,
+      targetAc: 10,
+      advantage: 'disadvantage',
+      rng: seqRng([face(20, 20), face(5, 20)]),
+    });
+    expect(res.crit).toBeFalsy();
+    expect(res.attackRoll).toBe(5);
+    expect(res.logText).toBe('Claw: 1d20 = 5 (dis) vs AC 10 — MISS');
+  });
+});

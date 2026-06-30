@@ -289,6 +289,17 @@ export interface AttackEntry {
   note?: string;
 }
 
+/** A save a creature's ability forces on its targets (5e: breath weapons, etc.). */
+export interface CreatureSave {
+  /** Matches the abilities[] entry this save belongs to (by leading name). */
+  name: string;
+  /** Save ability abbreviation, e.g. "DEX". */
+  ability: string;
+  dc: number;
+  /** 'half' = half damage on a successful save; 'none' = no effect on success. */
+  success: 'half' | 'none';
+}
+
 export interface BestiaryEntry {
   id: string;
   name: string;
@@ -297,6 +308,8 @@ export interface BestiaryEntry {
   /** Free-form values keyed by field id (kept generic per the schema philosophy). */
   stats: Record<string, number | string>;
   abilities?: string[];
+  /** Save-based abilities' structured DC/ability/success (5e), keyed to abilities by name. */
+  saves?: CreatureSave[];
   /** Structured, rollable attacks. The display string lives at stats.damage. */
   attacks?: AttackEntry[];
   /** Harvest/loot pool id (ties into the universal harvest mechanic). */

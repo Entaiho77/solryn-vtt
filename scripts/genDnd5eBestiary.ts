@@ -31,11 +31,17 @@ function effDamage(d: Damage): { dice: string; type: string } | null {
   if (!opt?.damage_dice) return null;
   return { dice: opt.damage_dice, type: opt.damage_type?.name ?? '' };
 }
+interface ActionDc {
+  dc_type?: { name?: string };
+  dc_value?: number;
+  success_type?: string;
+}
 interface Action {
   name: string;
   desc?: string;
   attack_bonus?: number;
   damage?: Damage[];
+  dc?: ActionDc;
 }
 interface Trait {
   name: string;
@@ -142,6 +148,16 @@ const entries = data.map((m) => {
     ...(m.legendary_actions ?? []).map((t) => traitStr(t, ' (Legendary)')),
   ];
 
+  // Structured save info (DC + ability + success) from actions that force a save.
+  const saves = actions
+    .filter((a) => a.dc?.dc_type?.name && typeof a.dc.dc_value === 'number')
+    .map((a) => ({
+      name: a.name,
+      ability: a.dc!.dc_type!.name as string,
+      dc: a.dc!.dc_value as number,
+      success: a.dc!.success_type === 'half' ? 'half' : 'none',
+    }));
+
   return {
     id: m.index,
     name: m.name,
@@ -163,6 +179,7 @@ const entries = data.map((m) => {
       saves: savesStr(m.proficiencies),
     },
     ...(abilities.length ? { abilities } : {}),
+    ...(saves.length ? { saves } : {}),
     ...(attacks.length ? { attacks } : {}),
   };
 });
