@@ -1,6 +1,5 @@
 import type {
   Ancestry,
-  BestiaryEntry,
   ConditionEntry,
   CoreStat,
   CreationConfig,
@@ -18,6 +17,7 @@ import type {
   SystemModes,
 } from '../../engine/schema';
 import { c } from '../../engine/schema';
+import { bestiary } from './bestiary';
 
 /**
  * D&D 5e (SRD) — Phase 2a: a MINIMAL but valid system so the registry/selection path works
@@ -128,7 +128,6 @@ const skills: Skill[] = [];
 const spells: Spell[] = [];
 const equipment: EquipmentDefinition = { armor: [], weapons: [], startingKit: [] };
 const conditions: ConditionEntry[] = [];
-const bestiary: BestiaryEntry[] = [];
 
 export const dnd5eSystem: SystemDefinition = {
   id: 'dnd5e',

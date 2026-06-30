@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
 import { getCombatResolver } from '../../../engine/rules';
@@ -63,6 +64,12 @@ export function MonsterStatCard({
 }) {
   const { postRoll } = useRollLog();
   const creatureArt = useCreatureArt(uid ?? null);
+  // Roll-to-hit systems (5e) need a defender AC; minimal targeting = an entered Target AC
+  // (+ optional advantage). Auto-hit systems ignore both. (Token-to-token targeting is a
+  // deliberate follow-up.)
+  const rollToHit = system.modes.combat.id === 'attack-roll-vs-ac';
+  const [targetAc, setTargetAc] = useState(13);
+  const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const entry =
     (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
     system.bestiary.find((b) => b.name === name);
@@ -70,9 +77,16 @@ export function MonsterStatCard({
 
   const st = entry.stats;
   const resolver = getCombatResolver(system);
-  const post = (label: string, diceExpr: string, type?: string) =>
+  const post = (label: string, diceExpr: string, type?: string, attackBonus?: number) =>
     postRoll(
-      resolver.resolveAttack({ label: `${entry.name} — ${label}`, dice: diceExpr, damageType: type }).logText,
+      resolver.resolveAttack({
+        label: `${entry.name} — ${label}`,
+        dice: diceExpr,
+        damageType: type,
+        attackBonus,
+        targetAc: rollToHit ? targetAc : undefined,
+        advantage: rollToHit ? advantage : undefined,
+      }).logText,
     );
   const gmControls = token && gameId;
 
@@ -91,7 +105,11 @@ export function MonsterStatCard({
       ) : (
         <div style={statRow}><span className={s.itemMeta}>HP</span><span>{st.hp ?? '—'}</span></div>
       )}
-      <div style={statRow}><span className={s.itemMeta}>DR</span><span>{st.dr ?? '—'}</span></div>
+      {st.ac !== undefined ? (
+        <div style={statRow}><span className={s.itemMeta}>AC</span><span>{st.ac}</span></div>
+      ) : (
+        <div style={statRow}><span className={s.itemMeta}>DR</span><span>{st.dr ?? '—'}</span></div>
+      )}
       <div style={statRow}><span className={s.itemMeta}>Speed</span><span>{st.speed ?? '—'}</span></div>
 
       {uid && (
@@ -110,6 +128,30 @@ export function MonsterStatCard({
         </div>
       )}
 
+      {rollToHit && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
+          <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+            Target AC
+            <input
+              type="number"
+              value={targetAc}
+              onChange={(e) => setTargetAc(Number(e.target.value) || 0)}
+              style={{ width: 56 }}
+            />
+          </label>
+          <select
+            className={s.itemMeta}
+            value={advantage ?? 'normal'}
+            onChange={(e) => setAdvantage(e.target.value === 'normal' ? undefined : (e.target.value as 'advantage' | 'disadvantage'))}
+            aria-label="Roll mode"
+          >
+            <option value="normal">Normal</option>
+            <option value="advantage">Advantage</option>
+            <option value="disadvantage">Disadvantage</option>
+          </select>
+        </div>
+      )}
+
       {entry.attacks && entry.attacks.length > 0 && (
         <div>
           <span className={s.label}>Attacks</span>
@@ -118,11 +160,12 @@ export function MonsterStatCard({
               <span style={nameCol}>
                 <span style={nameText}>{a.name}</span>
                 <span className={s.itemMeta}>
+                  {a.attackBonus !== undefined ? `${a.attackBonus >= 0 ? '+' : ''}${a.attackBonus} to hit · ` : ''}
                   {a.diceExpr} {a.damageType}
                   {a.note ? ` · ${a.note}` : ''}
                 </span>
               </span>
-              <Button onClick={() => post(a.name, a.diceExpr, a.damageType)}>Roll</Button>
+              <Button onClick={() => post(a.name, a.diceExpr, a.damageType, a.attackBonus)}>Roll</Button>
             </div>
           ))}
         </div>

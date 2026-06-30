@@ -284,6 +284,8 @@ export interface AttackEntry {
   name: string;
   diceExpr: string;
   damageType: string;
+  /** d20 to-hit bonus for roll-to-hit systems (5e). Omitted for auto-hit (Solryn). */
+  attackBonus?: number;
   note?: string;
 }
 
