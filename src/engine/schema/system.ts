@@ -114,6 +114,18 @@ export interface Ancestry {
   flavor?: string;
   /** Author flag: representative content pending the canonical ruleset. */
   provisional?: boolean;
+
+  // --- Class-and-level race fields (5e). Optional; Solryn ancestries omit them. ---
+  /** Base walking speed in feet (5e race trait). */
+  speed?: number;
+  /** Size category, e.g. "Medium" / "Small". */
+  size?: string;
+  /** Mechanical race traits as display strings (Darkvision, resistances, etc.). */
+  traits?: string[];
+  /** Proficiencies granted by the race (weapon/skill/tool ids). */
+  grantedProficiencies?: string[];
+  /** Subraces (minimal for now). */
+  subraces?: { id: string; name: string; description?: string }[];
 }
 
 // --- Skills -----------------------------------------------------------------
@@ -363,6 +375,80 @@ export interface CreationConfig {
   /** Armor weights a character may CHOOSE at creation; heavier armor stays play/loot only.
    * Unset = every weight is allowed at creation. */
   startingArmorWeights?: ArmorWeight[];
+  /** How ability scores are assigned at creation (5e: standard-array / point-buy). */
+  abilityScoreMethod?: AbilityScoreMethod;
+  /** The standard array values, when abilityScoreMethod === 'standard-array'. */
+  standardArray?: number[];
+  /** Point-buy budget, when abilityScoreMethod === 'point-buy'. */
+  pointBuyBudget?: number;
+}
+
+// --- Class-and-level systems (5e) -------------------------------------------
+// Parameter shapes for the 'class-and-level' progression mode. Generic to class-based d20
+// systems; Solryn (classless) leaves the SystemDefinition.classes/backgrounds slots unset.
+// Leveling is TABLE-DRIVEN (lookups per class level), not formula-driven — so no Expr math.
+
+export type AbilityScoreMethod = 'standard-array' | 'point-buy' | 'roll' | 'manual';
+
+/** One row of a class's 1–20 level table. Everything a level grants is a lookup here. */
+export interface ClassLevel {
+  level: number; // 1..20
+  /** Proficiency bonus at this level (5e: +2 … +6). */
+  proficiencyBonus: number;
+  /** Feature names gained AT this level (cumulative features = union of rows ≤ level). */
+  features: string[];
+  /** This level grants an Ability Score Improvement / feat choice. */
+  abilityScoreImprovement?: boolean;
+  /** Caster spell slots indexed by spell level (index 0 = slot level 1 …); omit for non-casters. */
+  spellSlots?: number[];
+  /** Cantrips known at this level (casters). */
+  cantripsKnown?: number;
+  /** Spells known at this level (known casters); prepared casters compute from level+mod. */
+  spellsKnown?: number;
+  /** Class scaling counters by name (e.g. { rages: 3, sneakAttack: "3d6", ki: 5 }). */
+  counters?: Record<string, number | string>;
+}
+
+/** A class in a class-and-level system. Expressive enough for all 12 SRD classes + casters. */
+export interface ClassDefinition {
+  id: string;
+  name: string;
+  description?: string;
+  /** Hit die, e.g. "d10". HP = die max + CON at L1, die average + CON per level after. */
+  hitDie: string;
+  /** Primary ability ids (recommendation / multiclass prereqs). */
+  primaryAbilities: string[];
+  /** Ability ids this class is proficient in for saving throws (5e: two). */
+  savingThrows: string[];
+  proficiencies: {
+    armor: string[]; // e.g. ['light','medium','heavy','shields']
+    weapons: string[]; // e.g. ['simple','martial']
+    tools: string[];
+  };
+  /** Skill proficiencies: choose N from a list (or 'any'). */
+  skillChoices: { choose: number; from: string[] | 'any' };
+  /** Starting equipment as display strings (structured grants are a later refinement). */
+  startingEquipment: string[];
+  /** Spellcasting model (casters only); the slots themselves live in the level table. */
+  spellcasting?: { ability: string; type: 'prepared' | 'known'; ritual?: boolean };
+  /** The 1–20 level table. */
+  levels: ClassLevel[];
+  /** Level the subclass is chosen at, and the (minimal for now) options. */
+  subclassLevel?: number;
+  subclasses?: { id: string; name: string; description?: string }[];
+}
+
+/** A background in a class-and-level system. Minimal for now. */
+export interface BackgroundDefinition {
+  id: string;
+  name: string;
+  description?: string;
+  skillProficiencies: string[];
+  toolProficiencies?: string[];
+  /** Count of free language choices. */
+  languages?: number;
+  equipment?: string[];
+  feature?: { name: string; description: string };
 }
 
 // --- The system definition --------------------------------------------------
@@ -399,4 +485,8 @@ export interface SystemDefinition {
   conditions: ConditionEntry[];
 
   creation: CreationConfig;
+
+  // --- Class-and-level systems (5e). Optional → classless systems (Solryn) omit them. ---
+  classes?: ClassDefinition[];
+  backgrounds?: BackgroundDefinition[];
 }
