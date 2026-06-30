@@ -568,7 +568,7 @@ export const generatedBestiary: BestiaryEntry[] = [
         "name": "Fire Breath",
         "ability": "DEX",
         "dc": 21,
-        "success": "none"
+        "success": "half"
       }
     ],
     "attacks": [
@@ -1351,7 +1351,7 @@ export const generatedBestiary: BestiaryEntry[] = [
         "name": "Cold Breath",
         "ability": "CON",
         "dc": 22,
-        "success": "none"
+        "success": "half"
       }
     ],
     "attacks": [
@@ -6073,7 +6073,7 @@ export const generatedBestiary: BestiaryEntry[] = [
         "name": "Poison Breath",
         "ability": "CON",
         "dc": 11,
-        "success": "none"
+        "success": "half"
       }
     ],
     "attacks": [
@@ -12440,7 +12440,7 @@ export const generatedBestiary: BestiaryEntry[] = [
         "name": "Cold Breath",
         "ability": "DEX",
         "dc": 12,
-        "success": "none"
+        "success": "half"
       }
     ],
     "attacks": [
