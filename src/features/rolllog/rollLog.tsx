@@ -1,7 +1,10 @@
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from 'react';
-import type { RollResult } from '../../engine/rules';
 import { clearRollLog, postRollEntry, trimRollLog, type RollEntry } from '../../data/rollLog';
 import s from '../board/drawers/drawers.module.css';
+
+// `describeRoll` now lives in the engine (so the combat resolver can produce it); re-exported
+// here for back-compat with existing importers.
+export { describeRoll } from '../../engine/rules';
 
 // Shared roll log: every roll source (character attacks, the free-form dice drawer, the
 // monster card) posts here, and it syncs table-wide via Firebase (games/{id}/rollLog).
@@ -71,24 +74,6 @@ export function useRollLog(): RollLogValue {
   const ctx = useContext(RollLogContext);
   if (!ctx) throw new Error('useRollLog must be used within a RollLogProvider');
   return ctx;
-}
-
-/**
- * Canonical damage-roll string — the format reused by weapon, spell, and monster
- * rolls so the log reads uniformly. (Mirrors the original AttacksSection.rollWeapon
- * string, with the dice modifier surfaced in the signed term.)
- */
-export function describeRoll(
-  label: string,
-  r: RollResult,
-  opts: { bonus?: number; type?: string } = {},
-): string {
-  const bonus = opts.bonus ?? 0;
-  const total = r.total + bonus;
-  const m = r.modifier + bonus;
-  const mStr = m ? ` ${m >= 0 ? '+' : '-'}${Math.abs(m)}` : '';
-  const type = opts.type ? `${opts.type} ` : '';
-  return `${label}: rolled ${r.rolls.join('+')}${mStr} = ${total} ${type}damage`;
 }
 
 /** The shared log window. Drop it anywhere inside a RollLogProvider. */

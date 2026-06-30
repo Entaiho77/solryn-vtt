@@ -1,12 +1,12 @@
 import type { SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
-import { rollDice } from '../../../engine/rules';
+import { getCombatResolver } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
 import { Button } from '../../../components/ui/Button';
 import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import { ResourceTracker } from '../../sheet/ResourceTracker';
-import { describeRoll, useRollLog } from '../../rolllog/rollLog';
+import { useRollLog } from '../../rolllog/rollLog';
 import s from './drawers.module.css';
 
 const statRow: React.CSSProperties = {
@@ -69,8 +69,11 @@ export function MonsterStatCard({
   if (!entry) return <p className={s.hint}>No stat block found for “{name}”.</p>;
 
   const st = entry.stats;
+  const resolver = getCombatResolver(system);
   const post = (label: string, diceExpr: string, type?: string) =>
-    postRoll(describeRoll(`${entry.name} — ${label}`, rollDice(diceExpr), { type }));
+    postRoll(
+      resolver.resolveAttack({ label: `${entry.name} — ${label}`, dice: diceExpr, damageType: type }).logText,
+    );
   const gmControls = token && gameId;
 
   return (
