@@ -57,3 +57,19 @@ export function rollHighest(
   const best = all.reduce((hi, r) => (r.total > hi.total ? r : hi), all[0]);
   return { best, all };
 }
+
+/**
+ * Roll the same notation several times and keep the LOWEST total (the disadvantage
+ * pattern: "roll two d20s and take the lowest"). Mirror of {@link rollHighest}.
+ */
+export function rollLowest(
+  notation: string,
+  times: number,
+  rng: Rng = defaultRng,
+): { worst: RollResult; all: RollResult[] } {
+  const all = Array.from({ length: Math.max(1, times) }, () =>
+    rollDice(notation, rng),
+  );
+  const worst = all.reduce((lo, r) => (r.total < lo.total ? r : lo), all[0]);
+  return { worst, all };
+}

@@ -12,10 +12,13 @@ export function computeModifier(score: number, rule: ModifierRule): number {
       const raw = steps * rule.bonusPerStep;
       return rule.cap === null ? raw : Math.min(raw, rule.cap);
     }
+    case 'ability-modifier':
+      // 5e: floor((score − 10) / 2). Math.floor handles negatives correctly (8 → −1).
+      return Math.floor((score - rule.baseline) / rule.pointsPerStep);
     default: {
-      // Exhaustiveness guard: a new ModifierRule.type must be handled here.
-      const _exhaustive: never = rule.type;
-      throw new Error(`Unsupported modifier rule: ${String(_exhaustive)}`);
+      // Exhaustiveness guard: a new ModifierRule variant must be handled above.
+      const _exhaustive: never = rule;
+      throw new Error(`Unsupported modifier rule: ${JSON.stringify(_exhaustive)}`);
     }
   }
 }

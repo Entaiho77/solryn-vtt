@@ -1,5 +1,6 @@
 import type { SystemDefinition } from '../engine/schema';
 import { solrynSystem } from './solryn';
+import { dnd5eSystem } from './dnd5e';
 
 /**
  * The system registry — the app's menu of available presets. Today it holds only Solryn.
@@ -9,6 +10,7 @@ import { solrynSystem } from './solryn';
  */
 const systems: Record<string, SystemDefinition> = {
   [solrynSystem.id]: solrynSystem,
+  [dnd5eSystem.id]: dnd5eSystem,
 };
 
 export interface SystemSummary {

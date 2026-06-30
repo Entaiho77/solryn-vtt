@@ -31,17 +31,27 @@ export interface CoreStat {
 
 /**
  * How a raw score maps to a modifier. A MODE-like choice expressed as parameters so the
- * engine stays generic. Solryn: "every 3 points = +1, no cap" → linear-step(3, +1).
+ * engine stays generic.
+ * - `linear-step` — Solryn: "every N points = +M from 0, optional cap" → floor(score/N)·M.
+ * - `ability-modifier` — D&D 5e: floor((score − baseline) / pointsPerStep), baseline 10, step 2.
  */
-export interface ModifierRule {
-  type: 'linear-step';
-  /** Points per +1 step (Solryn: 3). */
-  pointsPerStep: number;
-  /** Bonus granted per step (Solryn: 1). */
-  bonusPerStep: number;
-  /** Optional cap on the modifier; null = no cap (Solryn). */
-  cap: number | null;
-}
+export type ModifierRule =
+  | {
+      type: 'linear-step';
+      /** Points per +1 step (Solryn: 3). */
+      pointsPerStep: number;
+      /** Bonus granted per step (Solryn: 1). */
+      bonusPerStep: number;
+      /** Optional cap on the modifier; null = no cap (Solryn). */
+      cap: number | null;
+    }
+  | {
+      type: 'ability-modifier';
+      /** Score that yields a +0 modifier (5e: 10). */
+      baseline: number;
+      /** Points above/below baseline per ±1 (5e: 2). */
+      pointsPerStep: number;
+    };
 
 // --- Derived stats ----------------------------------------------------------
 
