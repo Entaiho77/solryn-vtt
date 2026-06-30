@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
-import { getCombatResolver } from '../../../engine/rules';
+import { describeRoll, getCombatResolver, rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
 import { Button } from '../../../components/ui/Button';
@@ -88,6 +88,10 @@ export function MonsterStatCard({
         advantage: rollToHit ? advantage : undefined,
       }).logText,
     );
+  // Abilities (breath weapons, traits) are NOT to-hit attacks — roll plain damage, never
+  // through the attack resolver, so 5e dice-bearing abilities don't misfire as hit/miss.
+  const postAbility = (label: string, diceExpr: string) =>
+    postRoll(describeRoll(`${entry.name} — ${label}`, rollDice(diceExpr)));
   const gmControls = token && gameId;
 
   return (
@@ -180,7 +184,7 @@ export function MonsterStatCard({
               <div key={i} style={abilityRow}>
                 <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>{ab}</span>
                 {dice && (
-                  <Button variant="secondary" onClick={() => post(ab.split(':')[0], dice)}>
+                  <Button variant="secondary" onClick={() => postAbility(ab.split(':')[0], dice)}>
                     Roll
                   </Button>
                 )}
