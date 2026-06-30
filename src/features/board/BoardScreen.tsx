@@ -28,6 +28,7 @@ import { RulesDrawer } from './drawers/RulesDrawer';
 import { ChatDrawer } from './drawers/ChatDrawer';
 import { NotesDrawer } from './drawers/NotesDrawer';
 import { CharacterQuickView } from './drawers/CharacterQuickView';
+import { Dnd5eSheet } from '../sheet5e/Dnd5eSheet';
 import { MonsterStatCard } from './drawers/MonsterStatCard';
 import { RollLog } from '../rolllog/rollLog';
 import { canSeeMonsterStats } from '../../permissions';
@@ -317,13 +318,17 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         label: 'Character',
         short: 'Character',
         glyph: '◈',
-        content: (
-          <CharacterQuickView
-            system={system}
-            character={character}
-            canLevelUp={character.play.level < (game.levelGrant ?? 1)}
-          />
-        ),
+        // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
+        content:
+          system.modes.progression.id === 'class-and-level' ? (
+            <Dnd5eSheet system={system} character={character} />
+          ) : (
+            <CharacterQuickView
+              system={system}
+              character={character}
+              canLevelUp={character.play.level < (game.levelGrant ?? 1)}
+            />
+          ),
       },
     ];
   }

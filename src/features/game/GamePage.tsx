@@ -10,6 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { RoleBadge } from '../../components/ui/Badge';
 import { GameSettingsModal } from './GameSettingsModal';
 import { CharacterBuilder } from '../builder/CharacterBuilder';
+import { Dnd5eCharacterBuilder } from '../builder5e/Dnd5eCharacterBuilder';
 import { BoardScreen } from '../board/BoardScreen';
 import { RollLogProvider } from '../rolllog/rollLog';
 import styles from './GamePage.module.css';
@@ -67,8 +68,11 @@ export function GamePage() {
   } else if (charLoading) {
     content = <p className={styles.muted}>Loading your character…</p>;
   } else if (building) {
+    // Class-and-level systems (5e) use their own builder on the shared shell; Solryn keeps its.
+    const Builder =
+      system.modes.progression.id === 'class-and-level' ? Dnd5eCharacterBuilder : CharacterBuilder;
     content = (
-      <CharacterBuilder
+      <Builder
         system={system}
         gameId={game.id}
         ownerUserId={user.uid}

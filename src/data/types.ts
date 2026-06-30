@@ -184,6 +184,8 @@ export interface CharacterDefinition {
   coreScores: Record<string, number>;
   chosenSkillIds: string[];
   knownSpellIds: string[];
+  /** Class id (class-and-level systems, 5e). Optional; classless systems (Solryn) omit it. */
+  classId?: string;
 }
 
 export interface CharacterPlayState {

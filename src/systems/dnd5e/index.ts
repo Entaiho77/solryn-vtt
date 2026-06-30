@@ -1,12 +1,10 @@
 import type {
-  Ancestry,
   BackgroundDefinition,
   ClassDefinition,
   ConditionEntry,
   CoreStat,
   CreationConfig,
   DerivedStat,
-  EquipmentDefinition,
   MapType,
   ModifierRule,
   QualityScale,
@@ -20,6 +18,8 @@ import { c } from '../../engine/schema';
 import { bestiary } from './bestiary';
 import { skills, skillCategories } from './skills';
 import { fighter } from './classes/fighter';
+import { ancestries } from './races';
+import { equipment } from './equipment';
 
 /**
  * D&D 5e (SRD) — Phase 2a: a MINIMAL but valid system so the registry/selection path works
@@ -133,9 +133,7 @@ const rulesReference: RulesCard[] = [
 ];
 
 // Empty content placeholders — real data arrives in later phases.
-const ancestries: Ancestry[] = [];
 const spells: Spell[] = [];
-const equipment: EquipmentDefinition = { armor: [], weapons: [], startingKit: [] };
 const conditions: ConditionEntry[] = [];
 
 export const dnd5eSystem: SystemDefinition = {

@@ -192,6 +192,11 @@ export interface ArmorItem {
   /** Price in gp. */
   cost?: number;
   provisional?: boolean;
+  // --- Class-and-level AC (5e). Optional; Solryn armor uses dr instead. ---
+  /** Base Armor Class (5e): e.g. chain mail 16, leather 11. */
+  baseAc?: number;
+  /** Max Dex bonus added to AC (5e): heavy = 0, medium = 2, light/unset = uncapped. */
+  maxDexBonus?: number | null;
 }
 
 export interface ShieldItem {
