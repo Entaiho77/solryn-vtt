@@ -29,14 +29,15 @@ const RENDER_LIMIT = 50;
 export function RollLogProvider({
   gameId,
   uid,
-  displayName,
+  byName,
   log,
   canClear,
   children,
 }: {
   gameId: string;
   uid: string;
-  displayName: string;
+  /** Attribution prefix for this roller's entries: character name for players, '' for the GM. */
+  byName: string;
   log?: Record<string, RollEntry>;
   canClear: boolean;
   children: ReactNode;
@@ -52,11 +53,11 @@ export function RollLogProvider({
 
   const postRoll = useCallback(
     (text: string) => {
-      void postRollEntry(gameId, { text, at: Date.now(), byUid: uid, by: displayName }).then(
+      void postRollEntry(gameId, { text, at: Date.now(), byUid: uid, by: byName }).then(
         () => trimRollLog(gameId, log),
       );
     },
-    [gameId, uid, displayName, log],
+    [gameId, uid, byName, log],
   );
 
   const clear = useCallback(() => {

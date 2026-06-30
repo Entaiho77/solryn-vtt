@@ -94,7 +94,13 @@ export function GamePage() {
     <RollLogProvider
       gameId={game.id}
       uid={user.uid}
-      displayName={game.members[user.uid]?.displayName ?? 'Someone'}
+      // Player rolls are attributed to their character; GM rolls (incl. monsters) get no
+      // prefix. Character-less player → account display name, never blank.
+      byName={
+        role === 'gm'
+          ? ''
+          : (character?.name ?? game.members[user.uid]?.displayName ?? 'Someone')
+      }
       log={game.rollLog}
       canClear={role === 'gm'}
     >
