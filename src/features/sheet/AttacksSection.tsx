@@ -1,9 +1,9 @@
 import type { Spell, SystemDefinition, WeaponItem } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { computeSkillState, rollDice } from '../../engine/rules';
+import { computeSkillState, getCombatResolver } from '../../engine/rules';
 import { setLoadedSpell, setPoolCurrent } from '../../data/characters';
 import { Button } from '../../components/ui/Button';
-import { describeRoll, useRollLog } from '../rolllog/rollLog';
+import { useRollLog } from '../rolllog/rollLog';
 import styles from './AttacksSection.module.css';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
@@ -17,6 +17,7 @@ export function AttacksSection({
 }) {
   const { postRoll } = useRollLog();
   const mode = system.modes.skill;
+  const resolver = getCombatResolver(system);
 
   const weapons = character.play.equippedWeaponIds
     .map((id) => system.equipment.weapons.find((w) => w.id === id))
@@ -45,15 +46,19 @@ export function AttacksSection({
   }
 
   function rollWeapon(w: WeaponItem) {
-    postRoll(describeRoll(w.name, rollDice(w.damageDice), { bonus: weaponBonus(w) }));
+    postRoll(
+      resolver.resolveAttack({ label: w.name, dice: w.damageDice, bonus: weaponBonus(w) }).logText,
+    );
   }
 
   function cast() {
     if (!loaded || !arcanaPoolId || arcanaCurrent < loaded.cost) return;
-    const r = loaded.damageDice ? rollDice(loaded.damageDice) : null;
+    const res = loaded.damageDice
+      ? resolver.resolveAttack({ label: loaded.name, dice: loaded.damageDice, damageType: loaded.damageType })
+      : null;
     void setPoolCurrent(character.id, arcanaPoolId, arcanaCurrent - loaded.cost);
     postRoll(
-      `${r ? describeRoll(loaded.name, r, { type: loaded.damageType }) : `${loaded.name}: cast`} (−${loaded.cost} Arcana)`,
+      `${res ? res.logText : `${loaded.name}: cast`} (−${loaded.cost} Arcana)`,
     );
   }
 

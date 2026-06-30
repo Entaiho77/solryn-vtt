@@ -91,7 +91,19 @@ export function GamePage() {
   }
 
   return (
-    <RollLogProvider>
+    <RollLogProvider
+      gameId={game.id}
+      uid={user.uid}
+      // Player rolls are attributed to their character; GM rolls (incl. monsters) get no
+      // prefix. Character-less player → account display name, never blank.
+      byName={
+        role === 'gm'
+          ? ''
+          : (character?.name ?? game.members[user.uid]?.displayName ?? 'Someone')
+      }
+      log={game.rollLog}
+      canClear={role === 'gm'}
+    >
     <div className={styles.page}>
       <header className={styles.header}>
         <button className={styles.back} onClick={() => navigate('/')} aria-label="Back to lobby">
@@ -122,6 +134,7 @@ export function GamePage() {
         game={game}
         role={role}
         currentUid={user.uid}
+        characterId={character?.id}
         onExit={() => navigate('/')}
       />
     </div>

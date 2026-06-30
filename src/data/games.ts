@@ -120,8 +120,29 @@ export async function removeMember(gameId: string, uid: string): Promise<void> {
   });
 }
 
-/** A player leaving is just removing their own membership. */
+/** A GM removing a member (or the legacy leave) — membership only, character preserved. */
 export const leaveGame = removeMember;
+
+/**
+ * Quit a game permanently (deliberate, destructive): remove the player's membership, their
+ * lobby index, their character link, AND delete their character for THIS game. All four are
+ * the player's own records, so the existing rules already permit it. The soft "exit to
+ * lobby" is just navigation — it writes nothing, so membership/character stay intact and
+ * rejoining drops straight back in.
+ */
+export async function quitGame(
+  gameId: string,
+  uid: string,
+  characterId?: string,
+): Promise<void> {
+  const updates: Record<string, unknown> = {
+    [`/games/${gameId}/members/${uid}`]: null,
+    [`/userGames/${uid}/${gameId}`]: null,
+    [`/gameCharacters/${gameId}/${uid}`]: null,
+  };
+  if (characterId) updates[`/characters/${characterId}`] = null;
+  await multiUpdate(updates);
+}
 
 export async function deleteGame(game: Game): Promise<void> {
   const updates: Record<string, unknown> = {

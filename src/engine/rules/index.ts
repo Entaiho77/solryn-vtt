@@ -11,3 +11,4 @@ export * from './progression';
 export * from './casting';
 export * from './harvest';
 export * from './dice';
+export * from './combat';

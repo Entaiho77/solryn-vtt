@@ -31,6 +31,22 @@ describe('computeModifier (linear-step, Solryn: every 3 pts = +1, no cap)', () =
   });
 });
 
+describe('computeModifier (ability-modifier, D&D 5e: floor((score−10)/2))', () => {
+  const rule: ModifierRule = { type: 'ability-modifier', baseline: 10, pointsPerStep: 2 };
+  it.each([
+    [1, -5],
+    [8, -1],
+    [9, -1],
+    [10, 0],
+    [11, 0],
+    [12, 1],
+    [14, 2],
+    [20, 5],
+  ])('score %i → modifier %i', (score, expected) => {
+    expect(computeModifier(score, rule)).toBe(expected);
+  });
+});
+
 describe('computeModifiers', () => {
   const system: Pick<SystemDefinition, 'coreStats' | 'modifierRule'> = {
     modifierRule: solrynRule,

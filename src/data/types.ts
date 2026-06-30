@@ -6,6 +6,8 @@
  * Realtime Database favors maps over arrays, so members/tokens/etc. are keyed objects.
  */
 
+import type { RollEntry } from './rollLog';
+
 export type Role = 'gm' | 'player';
 
 export interface UserProfile {
@@ -50,6 +52,8 @@ export interface Game {
   // --- Combat & social (Phase E) ---
   initiative?: InitiativeState;
   chat?: Record<string, unknown>;
+  /** Table-wide roll log, keyed by id (object map — never an array). */
+  rollLog?: Record<string, RollEntry>;
   /** Party level the GM has granted up to; a character can level while below it. */
   levelGrant?: number;
 }
