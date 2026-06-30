@@ -1,6 +1,6 @@
 import type { SystemDefinition } from '../schema';
 import type { CombatModeId } from '../schema';
-import { rollDice, rollHighest, rollLowest, type RollResult, type Rng } from './dice';
+import { parseDice, rollDice, rollHighest, rollLowest, type RollResult, type Rng } from './dice';
 
 /**
  * The combat-resolution seam. Every attack flows through a system-selected `CombatResolver`
@@ -48,6 +48,8 @@ export interface AttackInput {
 export interface AttackResolution {
   /** ABSENT for auto-hit (so the Solryn log line is unchanged); set by roll-to-hit modes. */
   hit?: boolean;
+  /** True on a natural-20 critical hit (doubled damage dice). */
+  crit?: boolean;
   /** The d20 to-hit total (incl. attackBonus) for roll-to-hit modes; absent for auto-hit. */
   attackRoll?: number;
   /** Damage dice faces (empty on a miss). */
@@ -82,39 +84,48 @@ function rollD20Face(advantage: AttackInput['advantage'], rng?: Rng): number {
   return rollDice('d20', rng).total;
 }
 
+/** Crit damage: double the DICE (count ×2), add the flat modifier once (standard 5e). */
+function rollCritDamage(dice: string, rng?: Rng): RollResult {
+  const p = parseDice(dice);
+  if (!p) return rollDice(dice, rng);
+  const doubled = `${p.count * 2}d${p.sides}${p.modifier ? sign(p.modifier) : ''}`;
+  return rollDice(doubled, rng);
+}
+
 /**
- * D&D 5e: roll d20 + attackBonus vs the target's AC. On a hit, roll damage; on a miss, no
- * damage. (Nat-20/nat-1 and crit damage are a deliberate follow-up — this is plain
- * total-vs-AC.) Solryn's autoHitVsDr is unaffected; the two resolvers are independent.
+ * D&D 5e: roll d20 + attackBonus vs the target's AC. The RAW natural die (the kept die under
+ * advantage/disadvantage) decides crits: natural 20 → auto-hit + doubled damage dice; natural
+ * 1 → auto-miss. Otherwise total ≥ AC hits. Solryn's autoHitVsDr is unaffected.
  */
 const attackRollVsAc: CombatResolver = {
   resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, rng }) {
-    const face = rollD20Face(advantage, rng);
+    const face = rollD20Face(advantage, rng); // raw natural value of the kept die
     const attackRoll = face + attackBonus;
     const advTag =
       advantage === 'advantage' ? ' (adv)' : advantage === 'disadvantage' ? ' (dis)' : '';
     const toHit = `1d20${sign(attackBonus)} = ${attackRoll}${advTag}`;
-    const hit = attackRoll >= targetAc;
+    const typeStr = damageType ? ` ${damageType}` : '';
+
+    // Natural 1 → automatic miss, regardless of AC.
+    if (face === 1) {
+      return { hit: false, attackRoll, rolls: [], modifier: 0, damage: 0, logText: `${label}: natural 1 — MISS` };
+    }
+    const crit = face === 20; // natural 20 → automatic hit + crit
+    const hit = crit || attackRoll >= targetAc;
 
     if (!hit) {
-      return {
-        hit: false,
-        attackRoll,
-        rolls: [],
-        modifier: 0,
-        damage: 0,
-        logText: `${label}: ${toHit} vs AC ${targetAc} — MISS`,
-      };
+      return { hit: false, attackRoll, rolls: [], modifier: 0, damage: 0, logText: `${label}: ${toHit} vs AC ${targetAc} — MISS` };
     }
-    const dmg = rollDice(dice, rng);
-    const typeStr = damageType ? ` ${damageType}` : '';
+    const dmg = crit ? rollCritDamage(dice, rng) : rollDice(dice, rng);
+    const head = crit ? 'natural 20 — CRIT' : `${toHit} vs AC ${targetAc} — HIT`;
     return {
       hit: true,
+      crit,
       attackRoll,
       rolls: dmg.rolls,
       modifier: dmg.modifier,
       damage: dmg.total,
-      logText: `${label}: ${toHit} vs AC ${targetAc} — HIT, ${dmg.total}${typeStr} damage`,
+      logText: `${label}: ${head}, ${dmg.total}${typeStr} damage`,
     };
   },
 };

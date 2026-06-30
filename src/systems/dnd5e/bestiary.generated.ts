@@ -35,6 +35,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Swipe (Legendary): The aboleth makes one tail attack.",
       "Psychic Drain (Costs 2 Actions) (Legendary): One creature charmed by the aboleth takes 10 (3d6) psychic damage, and the aboleth regains hit points equal to the damage the creature takes."
     ],
+    "saves": [
+      {
+        "name": "Tentacle",
+        "ability": "CON",
+        "dc": 14,
+        "success": "none"
+      },
+      {
+        "name": "Enslave",
+        "ability": "WIS",
+        "dc": 14,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Tentacle",
@@ -113,6 +127,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 16,
+        "success": "none"
+      },
+      {
+        "name": "Acid Breath",
+        "ability": "DEX",
+        "dc": 18,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -163,6 +191,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 20 Dexterity saving throw or take 14 (2d6 + 7) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 17,
+        "success": "none"
+      },
+      {
+        "name": "Lightning Breath",
+        "ability": "DEX",
+        "dc": 19,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -215,6 +257,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 16,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -266,6 +316,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 20 Dexterity saving throw or take 14 (2d6 + 7) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 17,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -315,6 +373,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 16,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -367,6 +433,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 21,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -417,6 +491,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 16,
+        "success": "none"
+      },
+      {
+        "name": "Poison Breath",
+        "ability": "CON",
+        "dc": 18,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -469,6 +557,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 19,
+        "success": "none"
+      },
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 21,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -520,6 +622,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 18,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -570,6 +680,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 10 ft. of the dragon must succeed on a DC 19 Dexterity saving throw or take 13 (2d6 + 6) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 14,
+        "success": "none"
+      },
+      {
+        "name": "Cold Breath",
+        "ability": "CON",
+        "dc": 19,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -657,6 +781,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 23 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 19,
+        "success": "none"
+      },
+      {
+        "name": "Acid Breath",
+        "ability": "DEX",
+        "dc": 22,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -707,6 +845,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 24 Dexterity saving throw or take 16 (2d6 + 9) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 20,
+        "success": "none"
+      },
+      {
+        "name": "Lightning Breath",
+        "ability": "DEX",
+        "dc": 23,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -760,6 +912,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 18,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -812,6 +972,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 24 Dexterity saving throw or take 16 (2d6 + 9) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 20,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -862,6 +1030,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 23 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 19,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -915,6 +1091,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 25 Dexterity saving throw or take 17 (2d6 + 10) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 24,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -966,6 +1150,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 23 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 19,
+        "success": "none"
+      },
+      {
+        "name": "Poison Breath",
+        "ability": "CON",
+        "dc": 22,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -1016,6 +1214,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 25 Dexterity saving throw or take 17 (2d6 + 10) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 21,
+        "success": "none"
+      },
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 24,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -1069,6 +1281,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 25 Dexterity saving throw or take 17 (2d6 + 10) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
     ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 21,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -1119,6 +1339,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Detect (Legendary): The dragon makes a Wisdom (Perception) check.",
       "Tail Attack (Legendary): The dragon makes a tail attack.",
       "Wing Attack (Costs 2 Actions) (Legendary): The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 16,
+        "success": "none"
+      },
+      {
+        "name": "Cold Breath",
+        "ability": "CON",
+        "dc": 22,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -1237,6 +1471,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Acid Spray: The ankheg spits acid in a line that is 30 ft. long and 5 ft. wide, provided that it has no creature grappled. Each creature in that line must make a DC 13 Dexterity saving throw, taking 10 (3d6) acid damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Acid Spray",
+        "ability": "DEX",
+        "dc": 13,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -1851,6 +2093,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Lightning Breath: The behir exhales a line of lightning that is 20 ft. long and 5 ft. wide. Each creature in that line must make a DC 16 Dexterity saving throw, taking 66 (12d10) lightning damage on a failed save, or half as much damage on a successful one.",
       "Swallow: The behir makes one bite attack against a Medium or smaller target it is grappling. If the attack hits, the target is also swallowed, and the grapple ends. While swallowed, the target is blinded and restrained, it has total cover against attacks and other effects outside the behir, and it takes 21 (6d6) acid damage at the start of each of the behir's turns. A behir can have only one creature swallowed at a time. If the behir takes 30 damage or more on a single turn from the swallowed creature, the behir must succeed on a DC 14 Constitution saving throw at the end of that turn or regurgitate the creature, which falls prone in a space within 10 ft. of the behir. If the behir dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 15 ft. of movement, exiting prone."
     ],
+    "saves": [
+      {
+        "name": "Lightning Breath",
+        "ability": "DEX",
+        "dc": 16,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -1961,6 +2211,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Amphibious: The dragon can breathe air and water.",
       "Acid Breath: The dragon exhales acid in a 15-foot line that is 5 feet wide. Each creature in that line must make a DC 11 Dexterity saving throw, taking 22 (5d8) acid damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Acid Breath",
+        "ability": "DEX",
+        "dc": 11,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -2095,6 +2353,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Lightning Breath: The dragon exhales lightning in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 12 Dexterity saving throw, taking 22 (4d10) lightning damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Lightning Breath",
+        "ability": "DEX",
+        "dc": 12,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -2521,6 +2787,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The chimera makes three attacks: one with its bite, one with its horns, and one with its claws. When its fire breath is available, it can use the breath in place of its bite or horns.",
       "Fire Breath: The dragon head exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 31 (7d8) fire damage on a failed save, or half as much damage on a successful one."
     ],
+    "saves": [
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 15,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -2567,6 +2841,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Sense Magic: The chuul senses magic within 120 feet of it at will. This trait otherwise works like the detect magic spell but isn't itself magical.",
       "Multiattack: The chuul makes two pincer attacks. If the chuul is grappling a creature, the chuul can also use its tentacles once.",
       "Tentacles: One creature grappled by the chuul must succeed on a DC 13 Constitution saving throw or be poisoned for 1 minute. Until this poison ends, the target is paralyzed. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+    ],
+    "saves": [
+      {
+        "name": "Tentacles",
+        "ability": "CON",
+        "dc": 13,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -2642,6 +2924,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The cloaker makes two attacks: one with its bite and one with its tail.",
       "Moan: Each creature within 60 feet of the cloaker that can hear its moan and that isn't an aberration must succeed on a DC 13 Wisdom saving throw or become frightened until the end of the cloaker's next turn. If a creature's saving throw is successful, the creature is immune to the cloaker's moan for the next 24 hours.",
       "Phantasms: The cloaker magically creates three illusory duplicates of itself if it isn't in bright light. The duplicates move with it and mimic its actions, shifting position so as to make it impossible to track which cloaker is the real one. If the cloaker is ever in an area of bright light, the duplicates disappear. Whenever any creature targets the cloaker with an attack or a harmful spell while a duplicate remains, that creature rolls randomly to determine whether it targets the cloaker or one of the duplicates. A creature is unaffected by this magical effect if it can't see or if it relies on senses other than sight. A duplicate has the cloaker's AC and uses its saving throws. If an attack hits a duplicate, or if a duplicate fails a saving throw against an effect that deals damage, the duplicate disappears."
+    ],
+    "saves": [
+      {
+        "name": "Moan",
+        "ability": "WIS",
+        "dc": 13,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -3227,6 +3517,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The djinni makes three scimitar attacks.",
       "Create Whirlwind: A 5-foot-radius, 30-foot-tall cylinder of swirling air magically forms on a point the djinni can see within 120 feet of it. The whirlwind lasts as long as the djinni maintains concentration (as if concentrating on a spell). Any creature but the djinni that enters the whirlwind must succeed on a DC 18 Strength saving throw or be restrained by it. The djinni can move the whirlwind up to 60 feet as an action, and creatures restrained by the whirlwind move with it. The whirlwind ends if the djinni loses sight of it. A creature can use its action to free a creature restrained by the whirlwind, including itself, by succeeding on a DC 18 Strength check. If the check succeeds, the creature is no longer restrained and moves to the nearest space outside the whirlwind."
     ],
+    "saves": [
+      {
+        "name": "Create Whirlwind",
+        "ability": "STR",
+        "dc": 18,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Scimitar",
@@ -3327,6 +3625,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The dragon turtle makes three attacks: one with its bite and two with its claws. It can make one tail attack in place of its two claw attacks.",
       "Steam Breath: The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a DC 18 Constitution saving throw, taking 52 (15d6) fire damage on a failed save, or half as much damage on a successful one. Being underwater doesn't grant resistance against this damage."
     ],
+    "saves": [
+      {
+        "name": "Steam Breath",
+        "ability": "CON",
+        "dc": 18,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -3371,6 +3677,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Multiattack: The dretch makes two attacks: one with its bite and one with its claws.",
       "Fetid Cloud: A 10-foot radius of disgusting green gas extends out from the dretch. The gas spreads around corners, and its area is lightly obscured. It lasts for 1 minute or until a strong wind disperses it. Any creature that starts its turn in that area must succeed on a DC 11 Constitution saving throw or be poisoned until the start of its next turn. While poisoned in this way, the target can take either an action or a bonus action on its turn, not both, and can't take reactions."
+    ],
+    "saves": [
+      {
+        "name": "Fetid Cloud",
+        "ability": "CON",
+        "dc": 11,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -3537,6 +3851,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tree Stride: Once on her turn, the dryad can use 10 ft. of her movement to step magically into one living tree within her reach and emerge from a second living tree within 60 ft. of the first tree, appearing in an unoccupied space within 5 ft. of the second tree. Both trees must be large or bigger.",
       "Fey Charm: The dryad targets one humanoid or beast that she can see within 30 feet of her. If the target can see the dryad, it must succeed on a DC 14 Wisdom saving throw or be magically charmed. The charmed creature regards the dryad as a trusted friend to be heeded and protected. Although the target isn't under the dryad's control, it takes the dryad's requests or actions in the most favorable way it can. Each time the dryad or its allies do anything harmful to the target, it can repeat the saving throw, ending the effect on itself on a success. Otherwise, the effect lasts 24 hours or until the dryad dies, is on a different plane of existence from the target, or ends the effect as a bonus action. If a target's saving throw is successful, the target is immune to the dryad's Fey Charm for the next 24 hours. The dryad can have no more than one humanoid and up to three beasts charmed at a time."
     ],
+    "saves": [
+      {
+        "name": "Fey Charm",
+        "ability": "WIS",
+        "dc": 14,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Club",
@@ -3611,6 +3933,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Death Burst: When the mephit dies, it explodes in a burst of dust. Each creature within 5 ft. of it must then succeed on a DC 10 Constitution saving throw or be blinded for 1 minute. A blinded creature can repeat the saving throw on each of its turns, ending the effect on itself on a success.",
       "Innate Spellcasting: The mephit can innately cast sleep, requiring no material components. Its innate spellcasting ability is Charisma.",
       "Blinding Breath: The mephit exhales a 15-foot cone of blinding dust. Each creature in that area must succeed on a DC 10 Dexterity saving throw or be blinded for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+    ],
+    "saves": [
+      {
+        "name": "Blinding Breath",
+        "ability": "DEX",
+        "dc": 10,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -4233,6 +4563,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Transparent: Even when the cube is in plain sight, it takes a successful DC 15 Wisdom (Perception) check to spot a cube that has neither moved nor attacked. A creature that tries to enter the cube's space while unaware of the cube is surprised by the cube.",
       "Engulf: The cube moves up to its speed. While doing so, it can enter Large or smaller creatures' spaces. Whenever the cube enters a creature's space, the creature must make a DC 12 Dexterity saving throw. On a successful save, the creature can choose to be pushed 5 feet back or to the side of the cube. A creature that chooses not to be pushed suffers the consequences of a failed saving throw. On a failed save, the cube enters the creature's space, and the creature takes 10 (3d6) acid damage and is engulfed. The engulfed creature can't breathe, is restrained, and takes 21 (6d6) acid damage at the start of each of the cube's turns. When the cube moves, the engulfed creature moves with it. An engulfed creature can try to escape by taking an action to make a DC 12 Strength check. On a success, the creature escapes and enters a space of its choice within 5 feet of the cube."
     ],
+    "saves": [
+      {
+        "name": "Engulf",
+        "ability": "DEX",
+        "dc": 12,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Pseudopod",
@@ -4307,6 +4645,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Etherealness: The ghost enters the Ethereal Plane from the Material Plane, or vice versa. It is visible on the Material Plane while it is in the Border Ethereal, and vice versa, yet it can't affect or be affected by anything on the other plane.",
       "Horrifying Visage: Each non-undead creature within 60 ft. of the ghost that can see it must succeed on a DC 13 Wisdom saving throw or be frightened for 1 minute. If the save fails by 5 or more, the target also ages 1d4 × 10 years. A frightened target can repeat the saving throw at the end of each of its turns, ending the frightened condition on itself on a success. If a target's saving throw is successful or the effect ends for it, the target is immune to this ghost's Horrifying Visage for the next 24 hours. The aging effect can be reversed with a greater restoration spell, but only within 24 hours of it occurring.",
       "Possession: One humanoid that the ghost can see within 5 ft. of it must succeed on a DC 13 Charisma saving throw or be possessed by the ghost; the ghost then disappears, and the target is incapacitated and loses control of its body. The ghost now controls the body but doesn't deprive the target of awareness. The ghost can't be targeted by any attack, spell, or other effect, except ones that turn undead, and it retains its alignment, Intelligence, Wisdom, Charisma, and immunity to being charmed and frightened. It otherwise uses the possessed target's statistics, but doesn't gain access to the target's knowledge, class features, or proficiencies. The possession lasts until the body drops to 0 hit points, the ghost ends it as a bonus action, or the ghost is turned or forced out by an effect like the dispel evil and good spell. When the possession ends, the ghost reappears in an unoccupied space within 5 ft. of the body. The target is immune to this ghost's Possession for 24 hours after succeeding on the saving throw or after the possession ends."
+    ],
+    "saves": [
+      {
+        "name": "Horrifying Visage",
+        "ability": "WIS",
+        "dc": 13,
+        "success": "none"
+      },
+      {
+        "name": "Possession",
+        "ability": "CHA",
+        "dc": 13,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -5365,6 +5717,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The gibbering mouther makes one bite attack and, if it can, uses its Blinding Spittle.",
       "Blinding Spittle: The mouther spits a chemical glob at a point it can see within 15 feet of it. The glob explodes in a blinding flash of light on impact. Each creature within 5 feet of the flash must succeed on a DC 13 Dexterity saving throw or be blinded until the end of the mouther's next turn."
     ],
+    "saves": [
+      {
+        "name": "Blinding Spittle",
+        "ability": "DEX",
+        "dc": 13,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Bites",
@@ -5626,6 +5986,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Trampling Charge: If the gorgon moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a DC 16 Strength saving throw or be knocked prone. If the target is prone, the gorgon can make one attack with its hooves against it as a bonus action.",
       "Petrifying Breath: The gorgon exhales petrifying gas in a 30-foot cone. Each creature in that area must succeed on a DC 13 Constitution saving throw. On a failed save, a target begins to turn to stone and is restrained. The restrained target must repeat the saving throw at the end of its next turn. On a success, the effect ends on the target. On a failure, the target is petrified until freed by the greater restoration spell or other magic."
     ],
+    "saves": [
+      {
+        "name": "Petrifying Breath",
+        "ability": "CON",
+        "dc": 13,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Gore",
@@ -5699,6 +6067,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Amphibious: The dragon can breathe air and water.",
       "Poison Breath: The dragon exhales poisonous gas in a 15-foot cone. Each creature in that area must make a DC 11 Constitution saving throw, taking 21 (6d6) poison damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Poison Breath",
+        "ability": "CON",
+        "dc": 11,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -5984,6 +6360,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The veteran makes two longsword attacks. If it has a shortsword drawn, it can also make a shortsword attack.",
       "Fire Breath: The veteran exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one."
     ],
+    "saves": [
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 15,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Longsword",
@@ -6100,6 +6484,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Keen Hearing and Smell: The hound has advantage on Wisdom (Perception) checks that rely on hearing or smell.",
       "Pack Tactics: The hound has advantage on an attack roll against a creature if at least one of the hound's allies is within 5 ft. of the creature and the ally isn't incapacitated.",
       "Fire Breath: The hound exhales fire in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 21 (6d6) fire damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 12,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -6521,6 +6913,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Innate Spellcasting: The mephit can innately cast fog cloud, requiring no material components. Its innate spellcasting ability is Charisma.",
       "Frost Breath: The mephit exhales a 15-foot cone of cold air. Each creature in that area must succeed on a DC 10 Dexterity saving throw, taking 5 (2d4) cold damage on a failed save, or half as much damage on a successful one."
     ],
+    "saves": [
+      {
+        "name": "Frost Breath",
+        "ability": "DEX",
+        "dc": 10,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Claws",
@@ -6627,6 +7027,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Magic Weapons: The golem's weapon attacks are magical.",
       "Multiattack: The golem makes two melee attacks.",
       "Poison Breath: The golem exhales poisonous gas in a 15-foot cone. Each creature in that area must make a DC 19 Constitution saving throw, taking 45 (10d8) poison damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Poison Breath",
+        "ability": "CON",
+        "dc": 19,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -6819,6 +7227,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Tentacle Attack or Fling (Legendary): The kraken makes one tentacle attack or uses its Fling.",
       "Lightning Storm (Costs 2 Actions) (Legendary): The kraken uses Lightning Storm.",
       "Ink Cloud (Costs 3 Actions) (Legendary): While underwater, the kraken expels an ink cloud in a 60-foot radius. The cloud spreads around corners, and that area is heavily obscured to creatures other than the kraken. Each creature other than the kraken that ends its turn there must succeed on a DC 23 Constitution saving throw, taking 16 (3d10) poison damage on a failed save, or half as much damage on a successful one. A strong current disperses the cloud, which otherwise disappears at the end of the kraken's next turn."
+    ],
+    "saves": [
+      {
+        "name": "Lightning Storm",
+        "ability": "DEX",
+        "dc": 23,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -7125,6 +7541,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "False Appearance: While the mephit remains motionless, it is indistinguishable from an ordinary mound of magma.",
       "Innate Spellcasting: The mephit can innately cast heat metal (spell save DC 10), requiring no material components. Its innate spellcasting ability is Charisma.",
       "Fire Breath: The mephit exhales a 15-foot cone of fire. Each creature in that area must make a DC 11 Dexterity saving throw, taking 7 (2d6) fire damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 11,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -7627,6 +8051,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The mummy can use its Dreadful Glare and makes one attack with its rotting fist.",
       "Dreadful Glare: The mummy targets one creature it can see within 60 ft. of it. If the target can see the mummy, it must succeed on a DC 11 Wisdom saving throw against this magic or become frightened until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also paralyzed for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies (but not mummy lords) for the next 24 hours."
     ],
+    "saves": [
+      {
+        "name": "Dreadful Glare",
+        "ability": "WIS",
+        "dc": 11,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Rotting Fist",
@@ -7669,6 +8101,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Channel Negative Energy (Costs 2 Actions) (Legendary): The mummy lord magically unleashes negative energy. Creatures within 60 feet of the mummy lord, including ones behind barriers and around corners, can't regain hit points until the end of the mummy lord's next turn.",
       "Whirlwind of Sand (Costs 2 Actions) (Legendary): The mummy lord magically transforms into a whirlwind of sand, moves up to 60 feet, and reverts to its normal form. While in whirlwind form, the mummy lord is immune to all damage, and it can't be grappled, petrified, knocked prone, restrained, or stunned. Equipment worn or carried by the mummy lord remain in its possession."
     ],
+    "saves": [
+      {
+        "name": "Dreadful Glare",
+        "ability": "WIS",
+        "dc": 16,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Rotting Fist",
@@ -7704,6 +8144,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The nalfeshnee uses Horror Nimbus if it can. It then makes three attacks: one with its bite and two with its claws.",
       "Horror Nimbus: The nalfeshnee magically emits scintillating, multicolored light. Each creature within 15 feet of the nalfeshnee that can see the light must succeed on a DC 15 Wisdom saving throw or be frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the nalfeshnee's Horror Nimbus for the next 24 hours.",
       "Teleport: The nalfeshnee magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+    ],
+    "saves": [
+      {
+        "name": "Horror Nimbus",
+        "ability": "WIS",
+        "dc": 15,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -8061,6 +8509,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Limited Telepathy: The otyugh can magically transmit simple messages and images to any creature within 120 ft. of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond.",
       "Multiattack: The otyugh makes three attacks: one with its bite and two with its tentacles.",
       "Tentacle Slam: The otyugh slams creatures grappled by it into each other or a solid surface. Each creature must succeed on a DC 14 Constitution saving throw or take 10 (2d6 + 3) bludgeoning damage and be stunned until the end of the otyugh's next turn. On a successful save, the target takes half the bludgeoning damage and isn't stunned."
+    ],
+    "saves": [
+      {
+        "name": "Tentacle Slam",
+        "ability": "CON",
+        "dc": 14,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -8611,6 +9067,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Scare: One creature of the quasit's choice within 20 ft. of it must succeed on a DC 10 Wisdom saving throw or be frightened for 1 minute. The target can repeat the saving throw at the end of each of its turns, with disadvantage if the quasit is within line of sight, ending the effect on itself on a success.",
       "Invisibility: The quasit magically turns invisible until it attacks or uses Scare, or until its concentration ends (as if concentrating on a spell). Any equipment the quasit wears or carries is invisible with it."
     ],
+    "saves": [
+      {
+        "name": "Scare",
+        "ability": "WIS",
+        "dc": 10,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Claw (Bite in Beast Form)",
@@ -8773,6 +9237,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     },
     "abilities": [
       "Fire Breath: The dragon exhales fire in a 15-foot cone. Each creature in that area must make a DC 13 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 13,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -9315,6 +9787,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Death Glare: The hag targets one frightened creature she can see within 30 ft. of her. If the target can see the hag, it must succeed on a DC 11 Wisdom saving throw against this magic or drop to 0 hit points.",
       "Illusory Appearance: The hag covers herself and anything she is wearing or carrying with a magical illusion that makes her look like an ugly creature of her general size and humanoid shape. The effect ends if the hag takes a bonus action to end it or if she dies. The changes wrought by this effect fail to hold up to physical inspection. For example, the hag could appear to have no claws, but someone touching her hand might feel the claws. Otherwise, a creature must take an action to visually inspect the illusion and succeed on a DC 16 Intelligence (Investigation) check to discern that the hag is disguised."
     ],
+    "saves": [
+      {
+        "name": "Death Glare",
+        "ability": "WIS",
+        "dc": 11,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Claws",
@@ -9715,6 +10195,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Heart Sight: The sprite touches a creature and magically knows the creature's current emotional state. If the target fails a DC 10 Charisma saving throw, the sprite also knows the creature's alignment. Celestials, fiends, and undead automatically fail the saving throw.",
       "Invisibility: The sprite magically turns invisible until it attacks or casts a spell, or until its concentration ends (as if concentrating on a spell). Any equipment the sprite wears or carries is invisible with it."
     ],
+    "saves": [
+      {
+        "name": "Heart Sight",
+        "ability": "CHA",
+        "dc": 10,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Longsword",
@@ -9794,6 +10282,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Death Burst: When the mephit dies, it explodes in a cloud of steam. Each creature within 5 ft. of the mephit must succeed on a DC 10 Dexterity saving throw or take 4 (1d8) fire damage.",
       "Innate Spellcasting: The mephit can innately cast blur, requiring no material components. Its innate spellcasting ability is Charisma.",
       "Steam Breath: The mephit exhales a 15-foot cone of scalding steam. Each creature in that area must succeed on a DC 10 Dexterity saving throw, taking 4 (1d8) fire damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Steam Breath",
+        "ability": "DEX",
+        "dc": 10,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -9900,6 +10396,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The golem makes two slam attacks.",
       "Slow: The golem targets one or more creatures it can see within 10 ft. of it. Each target must make a DC 17 Wisdom saving throw against this magic. On a failed save, a target can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the target can take either an action or a bonus action on its turn, not both. These effects last for 1 minute. A target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
     ],
+    "saves": [
+      {
+        "name": "Slow",
+        "ability": "WIS",
+        "dc": 17,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Slam",
@@ -9934,6 +10438,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Innate Spellcasting: The giant's innate spellcasting ability is Charisma (spell save DC 17). It can innately cast the following spells, requiring no material components: At will: detect magic, feather fall, levitate, light 3/day each: control weather, water breathing",
       "Multiattack: The giant makes two greatsword attacks.",
       "Lightning Strike: The giant hurls a magical lightning bolt at a point it can see within 500 feet of it. Each creature within 10 feet of that point must make a DC 17 Dexterity saving throw, taking 54 (12d8) lightning damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Lightning Strike",
+        "ability": "DEX",
+        "dc": 17,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -9976,6 +10488,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Charm: One humanoid the fiend can see within 30 feet of it must succeed on a DC 15 Wisdom saving throw or be magically charmed for 1 day. The charmed target obeys the fiend's verbal or telepathic commands. If the target suffers any harm or receives a suicidal command, it can repeat the saving throw, ending the effect on a success. If the target successfully saves against the effect, or if the effect on it ends, the target is immune to this fiend's Charm for the next 24 hours. The fiend can have only one target charmed at a time. If it charms another, the effect on the previous target ends.",
       "Draining Kiss: The fiend kisses a creature charmed by it or a willing creature. The target must make a DC 15 Constitution saving throw against this magic, taking 32 (5d10 + 5) psychic damage on a failed save, or half as much damage on a successful one. The target's hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.",
       "Etherealness: The fiend magically enters the Ethereal Plane from the Material Plane, or vice versa."
+    ],
+    "saves": [
+      {
+        "name": "Charm",
+        "ability": "WIS",
+        "dc": 15,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -10345,6 +10865,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Attack (Legendary): The tarrasque makes one claw attack or tail attack.",
       "Move (Legendary): The tarrasque moves up to half its speed.",
       "Chomp (Costs 2 Actions) (Legendary): The tarrasque makes one bite attack or uses its Swallow."
+    ],
+    "saves": [
+      {
+        "name": "Frightful Presence",
+        "ability": "WIS",
+        "dc": 17,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -10721,6 +11249,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Unarmed Strike (Legendary): The vampire makes one unarmed strike.",
       "Bite (Costs 2 Actions) (Legendary): The vampire makes one bite attack."
     ],
+    "saves": [
+      {
+        "name": "Charm",
+        "ability": "WIS",
+        "dc": 17,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Unarmed Strike",
@@ -10769,6 +11305,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Move (Legendary): The vampire moves up to its speed without provoking opportunity attacks.",
       "Unarmed Strike (Legendary): The vampire makes one unarmed strike.",
       "Bite (Costs 2 Actions) (Legendary): The vampire makes one bite attack."
+    ],
+    "saves": [
+      {
+        "name": "Charm",
+        "ability": "WIS",
+        "dc": 17,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -10957,6 +11501,20 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Spores: A 15-foot-radius cloud of toxic spores extends out from the vrock. The spores spread around corners. Each creature in that area must succeed on a DC 14 Constitution saving throw or become poisoned. While poisoned in this way, a target takes 5 (1d10) poison damage at the start of each of its turns. A target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. Emptying a vial of holy water on the target also ends the effect on it.",
       "Stunning Screech: The vrock emits a horrific screech. Each creature within 20 feet of it that can hear it and that isn't a demon must succeed on a DC 14 Constitution saving throw or be stunned until the end of the vrock's next turn ."
     ],
+    "saves": [
+      {
+        "name": "Spores",
+        "ability": "CON",
+        "dc": 14,
+        "success": "none"
+      },
+      {
+        "name": "Stunning Screech",
+        "ability": "CON",
+        "dc": 14,
+        "success": "none"
+      }
+    ],
     "attacks": [
       {
         "name": "Beak",
@@ -11091,6 +11649,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Freeze: If the elemental takes cold damage, it partially freezes; its speed is reduced by 20 ft. until the end of its next turn.",
       "Multiattack: The elemental makes two slam attacks.",
       "Whelm: Each creature in the elemental's space must make a DC 15 Strength saving throw. On a failure, a target takes 13 (2d8 + 4) bludgeoning damage. If it is Large or smaller, it is also grappled (escape DC 14). Until this grapple ends, the target is restrained and unable to breathe unless it can breathe water. If the saving throw is successful, the target is pushed out of the elemental's space. The elemental can grapple one Large creature or up to two Medium or smaller creatures at one time. At the start of each of the elemental's turns, each target grappled by it takes 13 (2d8 + 4) bludgeoning damage. A creature within 5 feet of the elemental can pull a creature or object out of it by taking an action to make a DC 14 Strength and succeeding."
+    ],
+    "saves": [
+      {
+        "name": "Whelm",
+        "ability": "STR",
+        "dc": 15,
+        "success": "none"
+      }
     ],
     "attacks": [
       {
@@ -11744,6 +12310,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Cold Breath: The dragon exhales an icy blast of hail in a 15-foot cone. Each creature in that area must make a DC 12 Constitution saving throw, taking 22 (5d8) cold damage on a failed save, or half as much damage on a successful one."
     ],
+    "saves": [
+      {
+        "name": "Cold Breath",
+        "ability": "CON",
+        "dc": 12,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -11860,6 +12434,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Pack Tactics: The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated.",
       "Snow Camouflage: The wolf has advantage on Dexterity (Stealth) checks made to hide in snowy terrain.",
       "Cold Breath: The wolf exhales a blast of freezing wind in a 15-foot cone. Each creature in that area must make a DC 12 Dexterity saving throw, taking 18 (4d8) cold damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Cold Breath",
+        "ability": "DEX",
+        "dc": 12,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -12079,6 +12661,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The dragon makes three attacks: one with its bite and two with its claws.",
       "Acid Breath: The dragon exhales acid in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 14 Dexterity saving throw, taking 49 (11d8) acid damage on a failed save, or half as much damage on a successful one."
     ],
+    "saves": [
+      {
+        "name": "Acid Breath",
+        "ability": "DEX",
+        "dc": 14,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -12118,6 +12708,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Multiattack: The dragon makes three attacks: one with its bite and two with its claws.",
       "Lightning Breath: The dragon exhales lightning in a 60-foot line that is 5 feet wide. Each creature in that line must make a DC 16 Dexterity saving throw, taking 55 (10d10) lightning damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Lightning Breath",
+        "ability": "DEX",
+        "dc": 16,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -12318,6 +12916,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Multiattack: The dragon makes three attacks: one with its bite and two with its claws.",
       "Poison Breath: The dragon exhales poisonous gas in a 30-foot cone. Each creature in that area must make a DC 14 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much damage on a successful one."
     ],
+    "saves": [
+      {
+        "name": "Poison Breath",
+        "ability": "CON",
+        "dc": 14,
+        "success": "half"
+      }
+    ],
     "attacks": [
       {
         "name": "Bite",
@@ -12357,6 +12963,14 @@ export const generatedBestiary: BestiaryEntry[] = [
     "abilities": [
       "Multiattack: The dragon makes three attacks: one with its bite and two with its claws.",
       "Fire Breath: The dragon exhales fire in a 30-foot cone. Each creature in that area must make a DC 17 Dexterity saving throw, taking 56 (16d6) fire damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Fire Breath",
+        "ability": "DEX",
+        "dc": 17,
+        "success": "half"
+      }
     ],
     "attacks": [
       {
@@ -12437,6 +13051,14 @@ export const generatedBestiary: BestiaryEntry[] = [
       "Ice Walk: The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, difficult terrain composed of ice or snow doesn't cost it extra movement.",
       "Multiattack: The dragon makes three attacks: one with its bite and two with its claws.",
       "Cold Breath: The dragon exhales an icy blast in a 30-foot cone. Each creature in that area must make a DC 15 Constitution saving throw, taking 45 (10d8) cold damage on a failed save, or half as much damage on a successful one."
+    ],
+    "saves": [
+      {
+        "name": "Cold Breath",
+        "ability": "CON",
+        "dc": 15,
+        "success": "half"
+      }
     ],
     "attacks": [
       {

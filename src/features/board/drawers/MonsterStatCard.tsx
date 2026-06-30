@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import type { SystemDefinition } from '../../../engine/schema';
+import { useEffect, useState } from 'react';
+import type { CreatureSave, SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
 import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
@@ -99,6 +99,17 @@ export function MonsterStatCard({
   const entry =
     (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
     system.bestiary.find((b) => b.name === name);
+
+  // Prefill the save panel from the creature's first save-based ability (e.g. a breath
+  // weapon's DC + ability), so the GM doesn't retype it. Still editable afterward.
+  const firstSave = entry?.saves?.[0];
+  useEffect(() => {
+    if (firstSave) {
+      setSaveDc(firstSave.dc);
+      setSaveAbility(firstSave.ability.toLowerCase() as AbilityId);
+    }
+  }, [entry?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (!entry) return <p className={s.hint}>No stat block found for “{name}”.</p>;
 
   const st = entry.stats;
@@ -116,8 +127,19 @@ export function MonsterStatCard({
     );
   // Abilities (breath weapons, traits) are NOT to-hit attacks — roll plain damage, never
   // through the attack resolver, so 5e dice-bearing abilities don't misfire as hit/miss.
-  const postAbility = (label: string, diceExpr: string) =>
-    postRoll(describeRoll(`${entry.name} — ${label}`, rollDice(diceExpr)));
+  const saveByName = new Map((entry.saves ?? []).map((sv) => [sv.name, sv] as const));
+  // Abilities roll plain damage (never the attack resolver). If the ability forces a save,
+  // annotate the line: half-on-success shows the halved number, so the GM applies the right
+  // amount once the target rolls its save (in the save panel).
+  const postAbility = (label: string, diceExpr: string, sv?: CreatureSave) => {
+    const r = rollDice(diceExpr);
+    let line = describeRoll(`${entry.name} — ${label}`, r);
+    if (sv) {
+      line += ` · DC ${sv.dc} ${sv.ability} save`;
+      line += sv.success === 'half' ? ` for half (${Math.floor(r.total / 2)})` : ' (none on success)';
+    }
+    postRoll(line);
+  };
   const postCheck = () => {
     const modifier = abilityMod(st, saveAbility, system.modifierRule, checkMode);
     const label = `${entry.name} — ${saveAbility.toUpperCase()} ${checkMode}`;
@@ -248,11 +270,20 @@ export function MonsterStatCard({
           <span className={s.label}>Abilities</span>
           {entry.abilities.map((ab, i) => {
             const dice = abilityDice(ab);
+            const label = ab.split(':')[0];
+            const sv = saveByName.get(label.replace(' (Legendary)', '').trim());
             return (
               <div key={i} style={abilityRow}>
-                <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>{ab}</span>
+                <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>
+                  {ab}
+                  {sv && (
+                    <span className={s.itemMeta}>
+                      {' '}· DC {sv.dc} {sv.ability} save{sv.success === 'half' ? ' (half on success)' : ''}
+                    </span>
+                  )}
+                </span>
                 {dice && (
-                  <Button variant="secondary" onClick={() => postAbility(ab.split(':')[0], dice)}>
+                  <Button variant="secondary" onClick={() => postAbility(label, dice, sv)}>
                     Roll
                   </Button>
                 )}
