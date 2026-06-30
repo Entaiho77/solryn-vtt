@@ -119,6 +119,53 @@ const attackRollVsAc: CombatResolver = {
   },
 };
 
+// --- Roll-vs-DC (saving throws & ability/skill checks) ----------------------
+// The sibling of attackRollVsAc: d20 + modifier vs a Difficulty Class → success/failure.
+// One primitive for both saves and checks (they differ only in the label). Universal —
+// not tied to a combat mode — so it's a plain function, not part of CombatResolver. 5e-only
+// in practice (Solryn has no saves); Solryn never calls it.
+
+export interface CheckInput {
+  /** Fully-built label, e.g. "Adult Red Dragon — DEX save" or "Goblin — Stealth check". */
+  label: string;
+  /** Save/check bonus added to the d20. */
+  modifier?: number;
+  /** Difficulty Class to meet or beat. */
+  dc?: number;
+  advantage?: 'advantage' | 'disadvantage';
+  rng?: Rng;
+}
+
+export interface CheckResolution {
+  success: boolean;
+  /** d20 + modifier total. */
+  roll: number;
+  modifier: number;
+  dc: number;
+  logText: string;
+}
+
+export function resolveCheck({
+  label,
+  modifier = 0,
+  dc = 10,
+  advantage,
+  rng,
+}: CheckInput): CheckResolution {
+  const face = rollD20Face(advantage, rng);
+  const roll = face + modifier;
+  const advTag =
+    advantage === 'advantage' ? ' (adv)' : advantage === 'disadvantage' ? ' (dis)' : '';
+  const success = roll >= dc;
+  return {
+    success,
+    roll,
+    modifier,
+    dc,
+    logText: `${label}: 1d20${sign(modifier)} = ${roll}${advTag} vs DC ${dc} — ${success ? 'SUCCESS' : 'FAIL'}`,
+  };
+}
+
 const resolvers: Partial<Record<CombatModeId, CombatResolver>> = {
   'auto-hit-vs-dr': autoHitVsDr,
   'attack-roll-vs-ac': attackRollVsAc,

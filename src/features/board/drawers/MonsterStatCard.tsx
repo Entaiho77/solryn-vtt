@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
-import { describeRoll, getCombatResolver, rollDice } from '../../../engine/rules';
+import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
 import { Button } from '../../../components/ui/Button';
@@ -40,6 +40,28 @@ function abilityDice(text: string): string | null {
   return m ? m[1].replace(/\s+/g, '') : null;
 }
 
+const ABILITIES = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
+type AbilityId = (typeof ABILITIES)[number];
+
+/**
+ * A creature's d20 modifier for a save or ability check on `ability`.
+ * - check → the ability modifier from the raw score (system modifier rule).
+ * - save  → the trained save bonus from stats.saves (e.g. "DEX +6") when present, else the
+ *   ability modifier (an untrained save is just the ability mod).
+ */
+function abilityMod(
+  stats: Record<string, number | string>,
+  ability: AbilityId,
+  rule: SystemDefinition['modifierRule'],
+  mode: 'save' | 'check',
+): number {
+  if (mode === 'save') {
+    const m = String(stats.saves ?? '').match(new RegExp(`${ability.toUpperCase()}\\s*([+-]\\d+)`));
+    if (m) return parseInt(m[1], 10);
+  }
+  return computeModifier(Number(stats[ability]) || 10, rule);
+}
+
 // The merged creature card: read-only stats + tappable attacks (off the Phase-1
 // attacks[]), plus GM token controls. Looked up by id (fallback name). Rendered in a
 // proper side panel (BoardShell.rightPanel) — its own title/close come from the drawer
@@ -70,6 +92,10 @@ export function MonsterStatCard({
   const rollToHit = system.modes.combat.id === 'attack-roll-vs-ac';
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
+  // Roll-vs-DC controls (5e saves / ability checks): the defender rolls vs an entered DC.
+  const [saveAbility, setSaveAbility] = useState<AbilityId>('dex');
+  const [saveDc, setSaveDc] = useState(13);
+  const [checkMode, setCheckMode] = useState<'save' | 'check'>('save');
   const entry =
     (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
     system.bestiary.find((b) => b.name === name);
@@ -92,6 +118,11 @@ export function MonsterStatCard({
   // through the attack resolver, so 5e dice-bearing abilities don't misfire as hit/miss.
   const postAbility = (label: string, diceExpr: string) =>
     postRoll(describeRoll(`${entry.name} — ${label}`, rollDice(diceExpr)));
+  const postCheck = () => {
+    const modifier = abilityMod(st, saveAbility, system.modifierRule, checkMode);
+    const label = `${entry.name} — ${saveAbility.toUpperCase()} ${checkMode}`;
+    postRoll(resolveCheck({ label, modifier, dc: saveDc, advantage }).logText);
+  };
   const gmControls = token && gameId;
 
   return (
@@ -153,6 +184,43 @@ export function MonsterStatCard({
             <option value="advantage">Advantage</option>
             <option value="disadvantage">Disadvantage</option>
           </select>
+        </div>
+      )}
+
+      {/* Roll-vs-DC: this creature (the defender) rolls a save / check vs an entered DC. */}
+      {rollToHit && (
+        <div>
+          <span className={s.label}>Saving throw / check</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+            <select
+              className={s.itemMeta}
+              value={saveAbility}
+              onChange={(e) => setSaveAbility(e.target.value as AbilityId)}
+              aria-label="Ability"
+            >
+              {ABILITIES.map((a) => (
+                <option key={a} value={a}>{a.toUpperCase()}</option>
+              ))}
+            </select>
+            <select
+              className={s.itemMeta}
+              value={checkMode}
+              onChange={(e) => setCheckMode(e.target.value as 'save' | 'check')}
+              aria-label="Save or check"
+            >
+              <option value="save">save</option>
+              <option value="check">check</option>
+            </select>
+            <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+              DC
+              <input type="number" value={saveDc} onChange={(e) => setSaveDc(Number(e.target.value) || 0)} style={{ width: 56 }} />
+            </label>
+            <Button size="sm" onClick={postCheck}>Roll</Button>
+          </div>
+          <p className={s.hint} style={{ marginTop: 'var(--space-1)' }}>
+            Uses the Roll-mode (adv/dis) above. Save-based abilities (e.g. breath weapons) show
+            their DC in the ability text.
+          </p>
         </div>
       )}
 

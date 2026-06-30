@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type { SystemDefinition } from '../../schema';
-import { describeRoll, getCombatResolver } from '../combat';
+import { describeRoll, getCombatResolver, resolveCheck } from '../combat';
 import { rollDice, type Rng } from '../dice';
 
 /** Deterministic RNG cycling through provided [0,1) values. */
@@ -156,5 +156,37 @@ describe('autoHitVsDr — identical Solryn log lines', () => {
     const expected = describeRoll('Shortsword', rollDice('1d6', seqRng([face(4, 6)])), { bonus: 2 });
     const res = resolver.resolveAttack({ label: 'Shortsword', dice: '1d6', bonus: 2, rng: seqRng([face(4, 6)]) });
     expect(res.logText).toBe(expected);
+  });
+});
+
+describe('resolveCheck — d20 + modifier vs DC (5e saves / checks)', () => {
+  it('pass: roll meets DC', () => {
+    // d20 → 12 (face(12,20)); +2 → 14 ≥ DC 14
+    const res = resolveCheck({ label: 'Goblin — DEX save', modifier: 2, dc: 14, rng: seqRng([face(12, 20)]) });
+    expect(res.success).toBe(true);
+    expect(res.roll).toBe(14);
+    expect(res.logText).toBe('Goblin — DEX save: 1d20+2 = 14 vs DC 14 — SUCCESS');
+  });
+
+  it('fail: roll under DC', () => {
+    const res = resolveCheck({ label: 'Goblin — DEX save', modifier: 2, dc: 15, rng: seqRng([face(12, 20)]) });
+    expect(res.success).toBe(false);
+    expect(res.roll).toBe(14);
+    expect(res.logText).toBe('Goblin — DEX save: 1d20+2 = 14 vs DC 15 — FAIL');
+  });
+
+  it('advantage: takes the higher of two d20s', () => {
+    // rollHighest('d20',2): 5 then 14 → 14; +3 = 17 ≥ DC 12
+    const res = resolveCheck({ label: 'Orc — STR check', modifier: 3, dc: 12, advantage: 'advantage', rng: seqRng([face(5, 20), face(14, 20)]) });
+    expect(res.roll).toBe(17);
+    expect(res.logText).toBe('Orc — STR check: 1d20+3 = 17 (adv) vs DC 12 — SUCCESS');
+  });
+
+  it('disadvantage: takes the lower of two d20s', () => {
+    // rollLowest('d20',2): 14 then 5 → 5; -1 = 4 < DC 10
+    const res = resolveCheck({ label: 'Kobold — WIS save', modifier: -1, dc: 10, advantage: 'disadvantage', rng: seqRng([face(14, 20), face(5, 20)]) });
+    expect(res.roll).toBe(4);
+    expect(res.success).toBe(false);
+    expect(res.logText).toBe('Kobold — WIS save: 1d20-1 = 4 (dis) vs DC 10 — FAIL');
   });
 });
