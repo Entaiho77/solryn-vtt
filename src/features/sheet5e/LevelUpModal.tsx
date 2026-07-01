@@ -75,8 +75,8 @@ export function LevelUpModal({
     max: number,
     filterable = false,
   ) => {
-    // Level-filter tabs (leveled picker only): only the levels actually available appear.
-    // Filtering is display-only — `picked` is the full selection, so it persists across tabs.
+    // Level filter (leveled picker only): only the levels actually available appear. Filtering is
+    // display-only — `picked` is the full selection, so it persists across changes.
     const levels = filterable ? [...new Set(options.map((sp) => sp.level))].sort((a, b) => a - b) : [];
     const shown = filterable && spellLevelFilter !== 'all' ? options.filter((sp) => sp.level === spellLevelFilter) : options;
     return (
@@ -84,17 +84,18 @@ export function LevelUpModal({
     <div style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)' }}>
       <p className={s.label}>{label} ({picked.length}/{max})</p>
       {filterable && levels.length > 1 && (
-        // Sticky filter bar so it stays visible above the scrolling list below it.
-        <div className={s.tabs} style={{ position: 'sticky', top: 0, zIndex: 1, background: 'var(--surface-bar)' }}>
-          <button className={`${s.tab} ${spellLevelFilter === 'all' ? s.tabActive : ''}`} onClick={() => setSpellLevelFilter('all')}>
-            All
-          </button>
+        <select
+          className={s.input}
+          style={{ marginBottom: 'var(--space-2)' }}
+          value={spellLevelFilter === 'all' ? '' : String(spellLevelFilter)}
+          onChange={(e) => setSpellLevelFilter(e.target.value === '' ? 'all' : Number(e.target.value))}
+          aria-label="Filter by spell level"
+        >
+          <option value="">All levels</option>
           {levels.map((l) => (
-            <button key={l} className={`${s.tab} ${spellLevelFilter === l ? s.tabActive : ''}`} onClick={() => setSpellLevelFilter(l)}>
-              L{l}
-            </button>
+            <option key={l} value={l}>{l === 0 ? 'Cantrips' : `Level ${l}`}</option>
           ))}
-        </div>
+        </select>
       )}
       {/* overflow-y makes the box scroll INTERNALLY instead of overflowing over the tabs/next section. */}
       <div className={s.list} style={{ maxHeight: 180, overflowY: 'auto' }}>
