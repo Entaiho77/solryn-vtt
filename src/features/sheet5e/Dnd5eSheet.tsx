@@ -6,6 +6,7 @@ import { restoreSpellSlots, setPoolCurrent, setSpellSlot } from '../../data/char
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
+import { LevelUpModal } from './LevelUpModal';
 import { Button } from '../../components/ui/Button';
 import { ResourceTracker } from '../sheet/ResourceTracker';
 import { useRollLog } from '../rolllog/rollLog';
@@ -46,6 +47,7 @@ export function Dnd5eSheet({
   const hpCurrent = character.play.pools?.hp?.current ?? d.maxHp;
 
   const [tab, setTab] = useState<'combat' | 'spellbook'>('combat');
+  const [levelUpOpen, setLevelUpOpen] = useState(false);
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
@@ -157,6 +159,19 @@ export function Dnd5eSheet({
         <span className={s.itemMeta}>
           {d.subraceName ? `${d.subraceName} · ` : ''}{d.raceName} · {d.speed} ft speed
         </span>
+      )}
+
+      {/* Milestone level-up granted by the GM — clear, obvious, opens the guided flow. */}
+      {character.play.levelUpPending && (
+        <div
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)', background: 'var(--surface-raised)', border: '1px solid var(--accent-amber)' }}
+        >
+          <span><strong>Level up available!</strong> You reached a milestone.</span>
+          <Button size="sm" onClick={() => setLevelUpOpen(true)}>Level up</Button>
+        </div>
+      )}
+      {levelUpOpen && character.play.levelUpPending && (
+        <LevelUpModal system={system} character={character} onDone={() => setLevelUpOpen(false)} />
       )}
 
       {/* Tabs (casters only). Non-casters see the plain combat sheet, no tabs. */}

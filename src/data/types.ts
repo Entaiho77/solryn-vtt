@@ -203,6 +203,8 @@ export interface CharacterPlayState {
   spellSlots?: Record<number, number>;
   /** 5e prepared casters' spells prepared for the day (changes daily). Empty until G3's prep UI. */
   preparedSpellIds?: string[];
+  /** 5e milestone level-up: set true by the GM to grant, cleared when the player applies it. */
+  levelUpPending?: boolean;
   /** Skill points granted (by level-up) but not yet placed. */
   unspentSkillPoints?: number;
   equippedArmorId?: string;

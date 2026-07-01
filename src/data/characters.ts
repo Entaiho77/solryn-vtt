@@ -45,6 +45,40 @@ export function setPoolCurrent(
   return writeValue(`characters/${characterId}/play/pools/${poolId}/current`, current);
 }
 
+/** GM grants (or clears) a milestone level-up for a character. Writes only the flag leaf so the
+ *  GM security rule for characters/{id}/play/levelUpPending applies. */
+export function setLevelUpPending(characterId: string, pending: boolean): Promise<void> {
+  return writeValue(`characters/${characterId}/play/levelUpPending`, pending);
+}
+
+/**
+ * Apply a completed 5e level-up atomically: new level, bumped HP, ASI'd scores, spell gains, and
+ * refreshed slots — and clear the pending flag — in one multi-path update on characters/{id}.
+ * (Solryn's classless level-up ceremony is the separate applyLevelUp below.)
+ */
+export function applyLevelUp5e(
+  characterId: string,
+  result: {
+    level: number;
+    hpCurrent: number;
+    coreScores: Record<string, number>;
+    knownSpellIds: string[];
+    spellbookSpellIds?: string[];
+    spellSlots?: Record<number, number>;
+  },
+): Promise<void> {
+  const paths: Record<string, unknown> = {
+    [`/characters/${characterId}/play/level`]: result.level,
+    [`/characters/${characterId}/play/levelUpPending`]: false,
+    [`/characters/${characterId}/play/pools/hp/current`]: result.hpCurrent,
+    [`/characters/${characterId}/definition/coreScores`]: result.coreScores,
+    [`/characters/${characterId}/definition/knownSpellIds`]: result.knownSpellIds,
+  };
+  if (result.spellbookSpellIds) paths[`/characters/${characterId}/definition/spellbookSpellIds`] = result.spellbookSpellIds;
+  if (result.spellSlots) paths[`/characters/${characterId}/play/spellSlots`] = result.spellSlots;
+  return multiUpdate(paths);
+}
+
 /** Set the remaining slot count for one spell level (5e). Object-keyed under play.spellSlots. */
 export function setSpellSlot(
   characterId: string,
@@ -187,4 +221,44 @@ export function useGameCharacter(
   }, [charId]);
 
   return { character, loading: charId === undefined || charLoading };
+}
+
+/** Live list of every character in a game (via the gameCharacters index) — GM tools (e.g. the
+ *  level-up grant panel) enumerate players' characters with this. */
+export function useGameCharacters(gameId: string | null): Character[] {
+  const [index, setIndex] = useState<Record<string, string>>({}); // uid → characterId
+  const [chars, setChars] = useState<Record<string, Character>>({}); // characterId → Character
+
+  useEffect(() => {
+    if (!gameId || !firebaseConfigured) {
+      setIndex({});
+      return;
+    }
+    return subscribe<Record<string, string>>(`gameCharacters/${gameId}`, (v) => setIndex(v ?? {}));
+  }, [gameId]);
+
+  const ids = Object.values(index);
+  const idsKey = [...ids].sort().join(',');
+  useEffect(() => {
+    if (!firebaseConfigured || ids.length === 0) {
+      setChars({});
+      return;
+    }
+    const unsubs = ids.map((id) =>
+      subscribe<Character>(`characters/${id}`, (c) =>
+        setChars((prev) => {
+          if (!c) {
+            const next = { ...prev };
+            delete next[id];
+            return next;
+          }
+          return { ...prev, [id]: c };
+        }),
+      ),
+    );
+    return () => unsubs.forEach((u) => u());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idsKey]);
+
+  return Object.values(chars);
 }
