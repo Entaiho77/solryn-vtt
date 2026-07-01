@@ -11,6 +11,7 @@ import {
   pcDerived,
   type AbilityId,
 } from '../../systems/dnd5e/character';
+import { getSpellsForClass, spells as spellList } from '../../systems/dnd5e/spells';
 import s from '../builder/steps/steps.module.css';
 
 /**
@@ -30,9 +31,17 @@ interface Draft {
   raceSkillIds: string[];
   classId?: string;
   chosenSkillIds: string[];
+  /** Cantrips picked (level-0 spells). */
+  cantripIds: string[];
+  /** Leveled spells picked (known casters' known list / Wizard's starting spellbook). */
+  spellIds: string[];
 }
 
+type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'spells' | 'finish';
+
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
+/** SRD: a Wizard starts with six 1st-level spells in their spellbook. */
+const WIZARD_START_SPELLS = 6;
 
 export function Dnd5eCharacterBuilder({
   system,
@@ -51,6 +60,8 @@ export function Dnd5eCharacterBuilder({
     ancestryChoices: {},
     raceSkillIds: [],
     chosenSkillIds: [],
+    cantripIds: [],
+    spellIds: [],
   });
   const [step, setStep] = useState(0);
   const [finishing, setFinishing] = useState(false);
@@ -78,15 +89,31 @@ export function Dnd5eCharacterBuilder({
   const usedValues = Object.values(draft.abilities);
   const assignedAll = ABILITY_IDS.every((id) => draft.abilities[id] !== undefined);
 
-  const steps = ['abilities', 'race', 'class', 'skills', 'finish'] as const;
-  const meta = {
+  // Spellcasting (caster classes only): a spell step slots in before 'finish'. Counts come
+  // from the class's level-1 table; leveled picks are the known list / Wizard starting book.
+  const selectedClass = (system.classes ?? []).find((c) => c.id === draft.classId);
+  const casterModel = selectedClass?.spellcasting?.type; // undefined for martials
+  const isCaster = !!casterModel;
+  const lvl1 = selectedClass?.levels.find((l) => l.level === 1);
+  const cantripCount = lvl1?.cantripsKnown ?? 0;
+  const leveledCount =
+    casterModel === 'known' ? (lvl1?.spellsKnown ?? 0) : casterModel === 'spellbook' ? WIZARD_START_SPELLS : 0;
+  const classSpells = selectedClass ? getSpellsForClass(selectedClass.id, spellList) : [];
+  const cantripOptions = classSpells.filter((sp) => sp.level === 0);
+  const leveledOptions = classSpells.filter((sp) => sp.level === 1);
+
+  const steps: StepKind[] = isCaster
+    ? ['abilities', 'race', 'class', 'skills', 'spells', 'finish']
+    : ['abilities', 'race', 'class', 'skills', 'finish'];
+  const meta: Record<StepKind, { title: string; instruction: string }> = {
     abilities: { title: 'Assign ability scores', instruction: 'Place the standard array (15/14/13/12/10/8) — each value once.' },
     race: { title: 'Choose a race', instruction: 'Pick your race. Its bonuses apply to your scores right away.' },
     class: { title: 'Choose a class', instruction: 'Pick your class. It sets your hit die, proficiencies, and features.' },
     skills: { title: 'Choose skills', instruction: `Pick ${skillChoose} skill proficiencies from your class list.` },
+    spells: { title: 'Choose spells', instruction: 'Pick your cantrips and starting spells.' },
     finish: { title: 'Name & finish', instruction: 'Name your character. Starter gear is equipped automatically.' },
-  } as const;
-  const kind = steps[step];
+  };
+  const kind = steps[Math.min(step, steps.length - 1)];
 
   const canNext = (() => {
     switch (kind) {
@@ -103,6 +130,8 @@ export function Dnd5eCharacterBuilder({
         return !!draft.classId;
       case 'skills':
         return draft.chosenSkillIds.length === skillChoose;
+      case 'spells':
+        return draft.cantripIds.length === cantripCount && draft.spellIds.length === leveledCount;
       case 'finish':
         return draft.name.trim().length > 0;
     }
@@ -135,6 +164,11 @@ export function Dnd5eCharacterBuilder({
     setFinishing(true);
     setError('');
     const scores = effectiveScores(draft.abilities as Record<string, number>, race, subrace, draft.ancestryChoices);
+    // Wizard's leveled picks seed the spellbook; every other caster's picks are "known".
+    // Cantrips are always known. Slots start full (max for the class/level).
+    const knownSpellIds = casterModel === 'spellbook' ? draft.cantripIds : [...draft.cantripIds, ...draft.spellIds];
+    const spellbookSpellIds = casterModel === 'spellbook' ? draft.spellIds : undefined;
+    const maxSlots = preview.spell?.maxSlots ?? {};
     const base: Omit<Character, 'id'> = {
       gameId,
       ownerUserId,
@@ -148,7 +182,8 @@ export function Dnd5eCharacterBuilder({
         classId: draft.classId,
         coreScores: scores,
         chosenSkillIds: allChosenSkills,
-        knownSpellIds: [],
+        knownSpellIds,
+        ...(spellbookSpellIds?.length ? { spellbookSpellIds } : {}),
       },
       play: {
         level: 1,
@@ -157,6 +192,7 @@ export function Dnd5eCharacterBuilder({
         skills: {},
         equippedWeaponIds: kit.weaponIds,
         ...(kit.armorId ? { equippedArmorId: kit.armorId } : {}),
+        ...(isCaster && Object.keys(maxSlots).length ? { spellSlots: maxSlots } : {}),
       },
     };
     try {
@@ -314,16 +350,17 @@ export function Dnd5eCharacterBuilder({
       {kind === 'class' && (
         <div className={s.statList}>
           {(system.classes ?? []).map((cl) => {
-            const casterPending = !!cl.spellcasting; // spells aren't implemented yet
+            const caster = cl.spellcasting;
             return (
               <button
                 key={cl.id}
                 className={[s.statRow, draft.classId === cl.id ? s.active : ''].filter(Boolean).join(' ')}
-                onClick={() => setDraft((d) => ({ ...d, classId: cl.id }))}
+                // Switching class clears spell picks (a different list applies).
+                onClick={() => setDraft((d) => ({ ...d, classId: cl.id, cantripIds: [], spellIds: [] }))}
               >
                 <span className={s.statName}>
                   {cl.name}
-                  {casterPending && <span className={s.statMod}> (spells coming soon)</span>}
+                  {caster && <span className={s.statMod}> ({caster.type} caster)</span>}
                 </span>
                 <span className={s.statMod}>Hit die {cl.hitDie} · saves {cl.savingThrows.join('/')}</span>
               </button>
@@ -356,6 +393,67 @@ export function Dnd5eCharacterBuilder({
               </label>
             );
           })}
+        </div>
+      )}
+
+      {kind === 'spells' && (
+        <div className={s.statList}>
+          {cantripCount > 0 && (
+            <>
+              <p className={s.teachText}>Cantrips ({draft.cantripIds.length}/{cantripCount}):</p>
+              {cantripOptions.map((sp) => {
+                const checked = draft.cantripIds.includes(sp.id);
+                const full = draft.cantripIds.length >= cantripCount;
+                return (
+                  <label key={sp.id} className={[s.statRow, checked ? s.active : ''].filter(Boolean).join(' ')}>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      disabled={!checked && full}
+                      onChange={() =>
+                        setDraft((d) => ({ ...d, cantripIds: checked ? d.cantripIds.filter((x) => x !== sp.id) : [...d.cantripIds, sp.id] }))
+                      }
+                    />
+                    <span className={s.statName}>{sp.name}</span>
+                    <span className={s.statMod}>{sp.school}</span>
+                  </label>
+                );
+              })}
+            </>
+          )}
+          {leveledCount > 0 && (
+            <>
+              <p className={s.teachText}>
+                {casterModel === 'spellbook' ? `Spellbook — pick ${leveledCount} 1st-level spells` : `Spells known — pick ${leveledCount}`} ({draft.spellIds.length}/{leveledCount}):
+              </p>
+              {leveledOptions.map((sp) => {
+                const checked = draft.spellIds.includes(sp.id);
+                const full = draft.spellIds.length >= leveledCount;
+                return (
+                  <label key={sp.id} className={[s.statRow, checked ? s.active : ''].filter(Boolean).join(' ')}>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      disabled={!checked && full}
+                      onChange={() =>
+                        setDraft((d) => ({ ...d, spellIds: checked ? d.spellIds.filter((x) => x !== sp.id) : [...d.spellIds, sp.id] }))
+                      }
+                    />
+                    <span className={s.statName}>{sp.name}</span>
+                    <span className={s.statMod}>{sp.school}{sp.concentration ? ' · conc' : ''}</span>
+                  </label>
+                );
+              })}
+            </>
+          )}
+          {casterModel === 'prepared' && (
+            <p className={s.teachText}>
+              As a prepared caster you don't lock in leveled spells now — you prepare them each day from the full {selectedClass?.name} spell list (daily prep arrives with casting).
+            </p>
+          )}
+          {cantripCount === 0 && leveledCount === 0 && (
+            <p className={s.teachText}>You gain spellcasting at a later level — nothing to choose yet.</p>
+          )}
         </div>
       )}
 

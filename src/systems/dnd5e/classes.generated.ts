@@ -356,6 +356,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Spellcasting: Bard",
           "Bardic Inspiration (d6)"
         ],
+        "spellSlots": [
+          2
+        ],
+        "cantripsKnown": 2,
+        "spellsKnown": 4,
         "counters": {
           "bardic_inspiration_die": 6
         }
@@ -367,6 +372,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Jack of All Trades",
           "Song of Rest (d6)"
         ],
+        "spellSlots": [
+          3
+        ],
+        "cantripsKnown": 2,
+        "spellsKnown": 5,
         "counters": {
           "bardic_inspiration_die": 6,
           "song_of_rest_die": 6
@@ -379,6 +389,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Expertise",
           "Bard College"
         ],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "cantripsKnown": 2,
+        "spellsKnown": 6,
         "counters": {
           "bardic_inspiration_die": 6,
           "song_of_rest_die": 6
@@ -391,6 +407,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 7,
         "counters": {
           "bardic_inspiration_die": 6,
           "song_of_rest_die": 6
@@ -403,6 +425,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Bardic Inspiration (d8)",
           "Font of Inspiration"
         ],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 8,
         "counters": {
           "bardic_inspiration_die": 8,
           "song_of_rest_die": 6
@@ -415,6 +444,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Countercharm",
           "Bard College feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 9,
         "counters": {
           "bardic_inspiration_die": 8,
           "song_of_rest_die": 6
@@ -424,6 +460,14 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 7,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 10,
         "counters": {
           "bardic_inspiration_die": 8,
           "song_of_rest_die": 6
@@ -436,6 +480,14 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 11,
         "counters": {
           "bardic_inspiration_die": 8,
           "song_of_rest_die": 6
@@ -447,6 +499,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Song of Rest (d8)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 12,
         "counters": {
           "bardic_inspiration_die": 8,
           "song_of_rest_die": 8
@@ -460,6 +521,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Bardic Inspiration (d10)",
           "Magical Secrets"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 14,
         "counters": {
           "bardic_inspiration_die": 10,
           "song_of_rest_die": 8,
@@ -470,6 +540,16 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 11,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 15,
         "counters": {
           "bardic_inspiration_die": 10,
           "song_of_rest_die": 8,
@@ -483,6 +563,16 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 15,
         "counters": {
           "bardic_inspiration_die": 10,
           "song_of_rest_die": 8,
@@ -495,6 +585,17 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Song of Rest (d10)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 16,
         "counters": {
           "bardic_inspiration_die": 10,
           "song_of_rest_die": 10,
@@ -508,6 +609,17 @@ export const generatedClasses: ClassDefinition[] = [
           "Magical Secrets",
           "Bard College feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 18,
         "counters": {
           "bardic_inspiration_die": 10,
           "song_of_rest_die": 10,
@@ -521,6 +633,18 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Bardic Inspiration (d12)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 19,
         "counters": {
           "bardic_inspiration_die": 12,
           "song_of_rest_die": 10,
@@ -535,6 +659,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 19,
         "counters": {
           "bardic_inspiration_die": 12,
           "song_of_rest_die": 10,
@@ -548,6 +684,19 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Song of Rest (d12)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 20,
         "counters": {
           "bardic_inspiration_die": 12,
           "song_of_rest_die": 12,
@@ -561,6 +710,19 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Magical Secrets"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 22,
         "counters": {
           "bardic_inspiration_die": 12,
           "song_of_rest_die": 12,
@@ -576,6 +738,19 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 22,
         "counters": {
           "bardic_inspiration_die": 12,
           "song_of_rest_die": 12,
@@ -590,6 +765,19 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Superior Inspiration"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 22,
         "counters": {
           "bardic_inspiration_die": 12,
           "song_of_rest_die": 12,
@@ -655,7 +843,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Spellcasting: Cleric",
           "Divine Domain",
           "Domain Spells"
-        ]
+        ],
+        "spellSlots": [
+          2
+        ],
+        "cantripsKnown": 3
       },
       {
         "level": 2,
@@ -665,6 +857,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Channel Divinity: Turn Undead",
           "Divine Domain feature"
         ],
+        "spellSlots": [
+          3
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "channel_divinity_charges": 1
         }
@@ -675,6 +871,11 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Domain Spells"
         ],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "channel_divinity_charges": 1
         }
@@ -686,6 +887,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "channel_divinity_charges": 1
         }
@@ -697,6 +903,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Domain Spells",
           "Destroy Undead (CR 1/2 or below)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "channel_divinity_charges": 1,
           "destroy_undead_cr": 0.5
@@ -709,6 +921,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Channel Divinity (2/rest)",
           "Divine Domain feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 0.5
@@ -720,6 +938,13 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Domain Spells"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 0.5
@@ -734,6 +959,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Divine Domain feature"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 1
@@ -745,6 +977,14 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Domain Spells"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 1
@@ -756,6 +996,14 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Divine Intervention"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 1
@@ -767,6 +1015,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Destroy Undead (CR 2 or below)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 2
@@ -779,6 +1036,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 2
@@ -788,6 +1054,16 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 13,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 2
@@ -799,6 +1075,16 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Destroy Undead (CR 3 or below)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 3
@@ -808,6 +1094,17 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 15,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 3
@@ -820,6 +1117,17 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 3
@@ -832,6 +1140,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Destroy Undead (CR 4 or below)",
           "Divine Domain feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 2,
           "destroy_undead_cr": 4
@@ -843,6 +1163,18 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Channel Divinity (3/rest)"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 3,
           "destroy_undead_cr": 4
@@ -855,6 +1187,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 3,
           "destroy_undead_cr": 4
@@ -866,6 +1210,18 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Divine Intervention Improvement"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "channel_divinity_charges": 3,
           "destroy_undead_cr": 4
@@ -942,7 +1298,11 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Spellcasting: Druid",
           "Druidic"
-        ]
+        ],
+        "spellSlots": [
+          2
+        ],
+        "cantripsKnown": 2
       },
       {
         "level": 2,
@@ -951,6 +1311,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Wild Shape (CR 1/4 or below, no flying or swim speed)",
           "Druid Circle"
         ],
+        "spellSlots": [
+          3
+        ],
+        "cantripsKnown": 2,
         "counters": {
           "wild_shape_max_cr": 0.25
         }
@@ -959,6 +1323,11 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 3,
         "proficiencyBonus": 2,
         "features": [],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "cantripsKnown": 2,
         "counters": {
           "wild_shape_max_cr": 0.25
         }
@@ -971,6 +1340,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "wild_shape_max_cr": 0.5
         }
@@ -979,6 +1353,12 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 5,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "wild_shape_max_cr": 0.5
         }
@@ -989,6 +1369,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Druid Circle feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "wild_shape_max_cr": 0.5
         }
@@ -997,6 +1383,13 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 7,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1009,6 +1402,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1017,6 +1417,14 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 9,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1027,6 +1435,14 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Druid Circle feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1035,6 +1451,15 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 11,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1046,6 +1471,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1054,6 +1488,16 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 13,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1064,6 +1508,16 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Druid Circle feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1072,6 +1526,17 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 15,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1083,6 +1548,17 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1091,6 +1567,18 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 17,
         "proficiencyBonus": 6,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1102,6 +1590,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Timeless Body",
           "Beast Spells"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1113,6 +1613,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1123,6 +1635,18 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Archdruid"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "wild_shape_max_cr": 1
         }
@@ -1776,6 +2300,9 @@ export const generatedClasses: ClassDefinition[] = [
           "Fighting Style",
           "Spellcasting: Paladin",
           "Divine Smite"
+        ],
+        "spellSlots": [
+          2
         ]
       },
       {
@@ -1786,6 +2313,9 @@ export const generatedClasses: ClassDefinition[] = [
           "Sacred Oath",
           "Oath Spells",
           "Channel Divinity"
+        ],
+        "spellSlots": [
+          3
         ]
       },
       {
@@ -1794,13 +2324,20 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Ability Score Improvement"
         ],
-        "abilityScoreImprovement": true
+        "abilityScoreImprovement": true,
+        "spellSlots": [
+          3
+        ]
       },
       {
         "level": 5,
         "proficiencyBonus": 3,
         "features": [
           "Extra Attack"
+        ],
+        "spellSlots": [
+          4,
+          2
         ]
       },
       {
@@ -1808,6 +2345,10 @@ export const generatedClasses: ClassDefinition[] = [
         "proficiencyBonus": 3,
         "features": [
           "Aura of Protection"
+        ],
+        "spellSlots": [
+          4,
+          2
         ],
         "counters": {
           "aura_range": 10
@@ -1818,6 +2359,10 @@ export const generatedClasses: ClassDefinition[] = [
         "proficiencyBonus": 3,
         "features": [
           "Sacred Oath feature"
+        ],
+        "spellSlots": [
+          4,
+          3
         ],
         "counters": {
           "aura_range": 10
@@ -1830,6 +2375,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1838,6 +2387,11 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 9,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1848,6 +2402,11 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Aura of Courage"
         ],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1857,6 +2416,11 @@ export const generatedClasses: ClassDefinition[] = [
         "proficiencyBonus": 4,
         "features": [
           "Improved Divine Smite"
+        ],
+        "spellSlots": [
+          4,
+          3,
+          3
         ],
         "counters": {
           "aura_range": 10
@@ -1869,6 +2433,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1877,6 +2446,12 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 13,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1887,6 +2462,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Cleansing Touch"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1896,6 +2477,12 @@ export const generatedClasses: ClassDefinition[] = [
         "proficiencyBonus": 5,
         "features": [
           "Sacred Oath feature"
+        ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
         ],
         "counters": {
           "aura_range": 10
@@ -1908,6 +2495,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1916,6 +2509,13 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 17,
         "proficiencyBonus": 6,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
         "counters": {
           "aura_range": 10
         }
@@ -1925,6 +2525,13 @@ export const generatedClasses: ClassDefinition[] = [
         "proficiencyBonus": 6,
         "features": [
           "Aura improvements"
+        ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
         ],
         "counters": {
           "aura_range": 30
@@ -1937,6 +2544,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
         "counters": {
           "aura_range": 30
         }
@@ -1946,6 +2560,13 @@ export const generatedClasses: ClassDefinition[] = [
         "proficiencyBonus": 6,
         "features": [
           "Sacred Oath feature"
+        ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
         ],
         "counters": {
           "aura_range": 30
@@ -2026,6 +2647,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Fighting Style",
           "Spellcasting: Ranger"
         ],
+        "spellSlots": [
+          2
+        ],
+        "spellsKnown": 2,
         "counters": {
           "favored_enemies": 1,
           "favored_terrain": 1
@@ -2038,6 +2663,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Ranger Archetype",
           "Primeval Awareness"
         ],
+        "spellSlots": [
+          3
+        ],
+        "spellsKnown": 3,
         "counters": {
           "favored_enemies": 1,
           "favored_terrain": 1
@@ -2050,6 +2679,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          3
+        ],
+        "spellsKnown": 3,
         "counters": {
           "favored_enemies": 1,
           "favored_terrain": 1
@@ -2061,6 +2694,11 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Extra Attack"
         ],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "spellsKnown": 4,
         "counters": {
           "favored_enemies": 1,
           "favored_terrain": 1
@@ -2073,6 +2711,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Favored Enemy (2 types)",
           "Natural Explorer (2 terrain types)"
         ],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "spellsKnown": 4,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 2
@@ -2084,6 +2727,11 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Ranger Archetype feature"
         ],
+        "spellSlots": [
+          4,
+          3
+        ],
+        "spellsKnown": 5,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 2
@@ -2097,6 +2745,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Land's Stride"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
+        "spellsKnown": 5,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 2
@@ -2106,6 +2759,12 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 9,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "spellsKnown": 6,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 2
@@ -2118,6 +2777,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Natural Explorer (3 terrain types)",
           "Hide in Plain Sight"
         ],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "spellsKnown": 6,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 3
@@ -2129,6 +2794,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Ranger Archetype feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "spellsKnown": 7,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 3
@@ -2141,6 +2812,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "spellsKnown": 7,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 3
@@ -2150,6 +2827,13 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 13,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "spellsKnown": 8,
         "counters": {
           "favored_enemies": 2,
           "favored_terrain": 3
@@ -2162,6 +2846,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Favored Enemy (3 enemies)",
           "Vanish"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "spellsKnown": 8,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2173,6 +2864,13 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Ranger Archetype feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "spellsKnown": 9,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2185,6 +2883,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "spellsKnown": 9,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2194,6 +2899,14 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 17,
         "proficiencyBonus": 6,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "spellsKnown": 10,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2205,6 +2918,14 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Feral Senses"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "spellsKnown": 10,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2217,6 +2938,14 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "spellsKnown": 11,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2228,6 +2957,14 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Foe Slayer"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "spellsKnown": 11,
         "counters": {
           "favored_enemies": 3,
           "favored_terrain": 3
@@ -2558,7 +3295,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Spellcasting: Sorcerer",
           "Sorcerous Origin"
-        ]
+        ],
+        "spellSlots": [
+          2
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 2
       },
       {
         "level": 2,
@@ -2568,6 +3310,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Flexible Casting: Creating Spell Slots",
           "Flexible Casting: Converting Spell Slot"
         ],
+        "spellSlots": [
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 3,
         "counters": {
           "sorcery_points": 2
         }
@@ -2578,6 +3325,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Metamagic"
         ],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 4,
         "counters": {
           "sorcery_points": 3,
           "metamagic_known": 2
@@ -2590,6 +3343,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
+        "cantripsKnown": 5,
+        "spellsKnown": 5,
         "counters": {
           "sorcery_points": 4,
           "metamagic_known": 2
@@ -2599,6 +3358,13 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 5,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "cantripsKnown": 5,
+        "spellsKnown": 6,
         "counters": {
           "sorcery_points": 5,
           "metamagic_known": 2
@@ -2610,6 +3376,13 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Sorcerous Origin feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "cantripsKnown": 5,
+        "spellsKnown": 7,
         "counters": {
           "sorcery_points": 6,
           "metamagic_known": 2
@@ -2619,6 +3392,14 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 7,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 5,
+        "spellsKnown": 8,
         "counters": {
           "sorcery_points": 7,
           "metamagic_known": 2
@@ -2631,6 +3412,14 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 5,
+        "spellsKnown": 9,
         "counters": {
           "sorcery_points": 8,
           "metamagic_known": 2
@@ -2640,6 +3429,15 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 9,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 5,
+        "spellsKnown": 10,
         "counters": {
           "sorcery_points": 9,
           "metamagic_known": 2
@@ -2651,6 +3449,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Metamagic"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 11,
         "counters": {
           "sorcery_points": 10,
           "metamagic_known": 3
@@ -2660,6 +3467,16 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 11,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 12,
         "counters": {
           "sorcery_points": 11,
           "metamagic_known": 3
@@ -2672,6 +3489,16 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 12,
         "counters": {
           "sorcery_points": 12,
           "metamagic_known": 3
@@ -2681,6 +3508,17 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 13,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 13,
         "counters": {
           "sorcery_points": 13,
           "metamagic_known": 3
@@ -2692,6 +3530,17 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Sorcerous Origin feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 13,
         "counters": {
           "sorcery_points": 14,
           "metamagic_known": 3
@@ -2701,6 +3550,18 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 15,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 14,
         "counters": {
           "sorcery_points": 15,
           "metamagic_known": 3
@@ -2713,6 +3574,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 14,
         "counters": {
           "sorcery_points": 16,
           "metamagic_known": 4
@@ -2724,6 +3597,19 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Metamagic"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 15,
         "counters": {
           "sorcery_points": 17,
           "metamagic_known": 4
@@ -2735,6 +3621,19 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Sorcerous Origin feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 15,
         "counters": {
           "sorcery_points": 18,
           "metamagic_known": 4
@@ -2747,6 +3646,19 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 15,
         "counters": {
           "sorcery_points": 19,
           "metamagic_known": 4
@@ -2758,6 +3670,19 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Sorcerous Restoration"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 6,
+        "spellsKnown": 15,
         "counters": {
           "sorcery_points": 20,
           "metamagic_known": 4
@@ -2820,7 +3745,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Otherworldly Patron",
           "Pact Magic"
-        ]
+        ],
+        "spellSlots": [
+          1
+        ],
+        "cantripsKnown": 2,
+        "spellsKnown": 2
       },
       {
         "level": 2,
@@ -2828,6 +3758,11 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Eldritch Invocations"
         ],
+        "spellSlots": [
+          2
+        ],
+        "cantripsKnown": 2,
+        "spellsKnown": 3,
         "counters": {
           "invocations_known": 2
         }
@@ -2838,6 +3773,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Pact Boon"
         ],
+        "spellSlots": [
+          0,
+          2
+        ],
+        "cantripsKnown": 2,
+        "spellsKnown": 4,
         "counters": {
           "invocations_known": 2
         }
@@ -2849,6 +3790,12 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          0,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 5,
         "counters": {
           "invocations_known": 3
         }
@@ -2857,6 +3804,13 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 5,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          0,
+          0,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 6,
         "counters": {
           "invocations_known": 3
         }
@@ -2867,6 +3821,13 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Otherworldly Patron feature"
         ],
+        "spellSlots": [
+          0,
+          0,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 7,
         "counters": {
           "invocations_known": 4
         }
@@ -2875,6 +3836,14 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 7,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 8,
         "counters": {
           "invocations_known": 4
         }
@@ -2886,6 +3855,14 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          0,
+          0,
+          0,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 9,
         "counters": {
           "invocations_known": 4
         }
@@ -2894,6 +3871,15 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 9,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "cantripsKnown": 3,
+        "spellsKnown": 10,
         "counters": {
           "invocations_known": 5
         }
@@ -2904,6 +3890,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Otherworldly Patron feature"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 10,
         "counters": {
           "invocations_known": 5
         }
@@ -2914,6 +3909,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Mystic Arcanum (6th level)"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 11,
         "counters": {
           "invocations_known": 5,
           "mystic_arcanum_level_6": 1
@@ -2926,6 +3930,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 11,
         "counters": {
           "invocations_known": 6,
           "mystic_arcanum_level_6": 1
@@ -2937,6 +3950,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Mystic Arcanum (7th level)"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 12,
         "counters": {
           "invocations_known": 6,
           "mystic_arcanum_level_6": 1,
@@ -2949,6 +3971,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Otherworldly Patron feature"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 12,
         "counters": {
           "invocations_known": 6,
           "mystic_arcanum_level_6": 1,
@@ -2961,6 +3992,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Mystic Arcanum (8th level)"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 13,
         "counters": {
           "invocations_known": 7,
           "mystic_arcanum_level_6": 1,
@@ -2975,6 +4015,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 13,
         "counters": {
           "invocations_known": 7,
           "mystic_arcanum_level_6": 1,
@@ -2988,6 +4037,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Mystic Arcanum (9th level)"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          4
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 14,
         "counters": {
           "invocations_known": 7,
           "mystic_arcanum_level_6": 1,
@@ -3000,6 +4058,15 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 18,
         "proficiencyBonus": 6,
         "features": [],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          4
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 14,
         "counters": {
           "invocations_known": 8,
           "mystic_arcanum_level_6": 1,
@@ -3015,6 +4082,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          4
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 15,
         "counters": {
           "invocations_known": 8,
           "mystic_arcanum_level_6": 1,
@@ -3029,6 +4105,15 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Eldritch Master"
         ],
+        "spellSlots": [
+          0,
+          0,
+          0,
+          0,
+          4
+        ],
+        "cantripsKnown": 4,
+        "spellsKnown": 15,
         "counters": {
           "invocations_known": 8,
           "mystic_arcanum_level_6": 1,
@@ -3095,6 +4180,10 @@ export const generatedClasses: ClassDefinition[] = [
           "Spellcasting: Wizard",
           "Arcane Recovery"
         ],
+        "spellSlots": [
+          2
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "arcane_recovery_levels": 1
         }
@@ -3105,6 +4194,10 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Arcane Tradition"
         ],
+        "spellSlots": [
+          3
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "arcane_recovery_levels": 1
         }
@@ -3113,6 +4206,11 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 3,
         "proficiencyBonus": 2,
         "features": [],
+        "spellSlots": [
+          4,
+          2
+        ],
+        "cantripsKnown": 3,
         "counters": {
           "arcane_recovery_levels": 2
         }
@@ -3124,6 +4222,11 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "arcane_recovery_levels": 2
         }
@@ -3132,6 +4235,12 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 5,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          2
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "arcane_recovery_levels": 3
         }
@@ -3142,6 +4251,12 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Arcane Tradition feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "arcane_recovery_levels": 3
         }
@@ -3150,6 +4265,13 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 7,
         "proficiencyBonus": 3,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "arcane_recovery_levels": 4
         }
@@ -3161,6 +4283,13 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "arcane_recovery_levels": 4
         }
@@ -3169,6 +4298,14 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 9,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        "cantripsKnown": 4,
         "counters": {
           "arcane_recovery_levels": 5
         }
@@ -3179,6 +4316,14 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Arcane Tradition feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 5
         }
@@ -3187,6 +4332,15 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 11,
         "proficiencyBonus": 4,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 6
         }
@@ -3198,6 +4352,15 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 6
         }
@@ -3206,6 +4369,16 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 13,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 7
         }
@@ -3216,6 +4389,16 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Arcane Tradition feature"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 7
         }
@@ -3224,6 +4407,17 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 15,
         "proficiencyBonus": 5,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 8
         }
@@ -3235,6 +4429,17 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 8
         }
@@ -3243,6 +4448,18 @@ export const generatedClasses: ClassDefinition[] = [
         "level": 17,
         "proficiencyBonus": 6,
         "features": [],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 9
         }
@@ -3253,6 +4470,18 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Spell Mastery"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 9
         }
@@ -3264,6 +4493,18 @@ export const generatedClasses: ClassDefinition[] = [
           "Ability Score Improvement"
         ],
         "abilityScoreImprovement": true,
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 10
         }
@@ -3274,6 +4515,18 @@ export const generatedClasses: ClassDefinition[] = [
         "features": [
           "Signature Spell"
         ],
+        "spellSlots": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "cantripsKnown": 5,
         "counters": {
           "arcane_recovery_levels": 10
         }
@@ -3289,7 +4542,7 @@ export const generatedClasses: ClassDefinition[] = [
     },
     "spellcasting": {
       "ability": "INT",
-      "type": "prepared"
+      "type": "spellbook"
     }
   }
 ];

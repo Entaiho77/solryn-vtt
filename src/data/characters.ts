@@ -45,6 +45,23 @@ export function setPoolCurrent(
   return writeValue(`characters/${characterId}/play/pools/${poolId}/current`, current);
 }
 
+/** Set the remaining slot count for one spell level (5e). Object-keyed under play.spellSlots. */
+export function setSpellSlot(
+  characterId: string,
+  slotLevel: number,
+  current: number,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/spellSlots/${slotLevel}`, current);
+}
+
+/** Recover all slots to their maxima (long rest). Writes the whole object at once. */
+export function restoreSpellSlots(
+  characterId: string,
+  maxSlots: Record<number, number>,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/spellSlots`, maxSlots);
+}
+
 export function setSkillState(
   characterId: string,
   skillId: string,

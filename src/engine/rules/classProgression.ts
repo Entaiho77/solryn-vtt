@@ -22,6 +22,21 @@ export function proficiencyBonus(cls: ClassDefinition, level: number): number {
   return classLevel(cls, level).proficiencyBonus;
 }
 
+/**
+ * Spell slots at a level, as { slotLevel → count } for non-zero slots only. Empty for
+ * non-casters and martials. Read straight from the class table (SRD). NOTE: Warlock's rows
+ * carry its Pact Magic slot counts (fewer, higher-level) — correct counts, but this phase
+ * still recovers them on a long rest like everyone else; Pact Magic short-rest recovery is G4.
+ */
+export function spellSlots(cls: ClassDefinition, level: number): Record<number, number> {
+  const arr = classLevel(cls, level).spellSlots ?? [];
+  const out: Record<number, number> = {};
+  arr.forEach((count, i) => {
+    if (count > 0) out[i + 1] = count; // index 0 = slot level 1
+  });
+  return out;
+}
+
 /** All features gained from level 1 through `level` (cumulative). */
 export function cumulativeFeatures(cls: ClassDefinition, level: number): string[] {
   const L = clampLevel(level);

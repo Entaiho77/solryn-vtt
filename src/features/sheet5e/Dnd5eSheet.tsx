@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { setPoolCurrent } from '../../data/characters';
+import { restoreSpellSlots, setPoolCurrent, setSpellSlot } from '../../data/characters';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { Button } from '../../components/ui/Button';
 import { ResourceTracker } from '../sheet/ResourceTracker';
@@ -157,6 +157,50 @@ export function Dnd5eSheet({
           <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
         </div>
       ))}
+
+      {/* Spell slots — resource display only (no Cast button yet; casting is G3). Max comes from
+          the class table; current lives on the character (persists via Firebase). */}
+      {d.spell && (
+        <>
+          <span className={s.label}>Spellcasting</span>
+          <div style={row}>
+            <span className={s.itemMeta}>
+              {d.spell.ability} · Save DC {d.spell.saveDc} · Attack {sign(d.spell.attackBonus)}
+            </span>
+            <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
+              Long Rest
+            </Button>
+          </div>
+          {Object.keys(d.spell.maxSlots).length === 0 ? (
+            <p className={s.hint}>No spell slots at this level yet.</p>
+          ) : (
+            Object.entries(d.spell.maxSlots).map(([lvl, max]) => {
+              const level = Number(lvl);
+              const current = character.play.spellSlots?.[level] ?? max;
+              return (
+                <div key={lvl} style={row}>
+                  <span className={s.itemMeta}>Level {lvl} slots</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                    <Button size="sm" variant="ghost" onClick={() => void setSpellSlot(character.id, level, Math.max(0, current - 1))}>
+                      −
+                    </Button>
+                    <strong>{current}/{max}</strong>
+                    <Button size="sm" variant="ghost" onClick={() => void setSpellSlot(character.id, level, Math.min(max, current + 1))}>
+                      +
+                    </Button>
+                  </span>
+                </div>
+              );
+            })
+          )}
+          {d.cls?.id === 'warlock' && (
+            <p className={s.hint}>
+              Warlock uses Pact Magic slot counts, but slot recovery here is a placeholder (Long
+              Rest). Short-rest recovery arrives with Pact Magic.
+            </p>
+          )}
+        </>
+      )}
 
       {/* Racial traits that affect play: resistances, breath weapon (rollable), Lucky toggle,
           and text notes for passive/flavor traits. */}

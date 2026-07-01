@@ -9,10 +9,12 @@ import type { Character } from '../../data/types';
 import {
   armorClass,
   attackBonus,
+  classLevel,
   computeModifier,
   maxHitPoints,
   proficiencyBonus,
   saveModifier,
+  spellSlots,
 } from '../../engine/rules';
 
 /** The six 5e abilities, in display order (matches the 5e coreStats ids). */
@@ -76,6 +78,22 @@ export interface PcDerived {
   breath?: RacialBreath & { dice: string; dc: number };
   /** Halfling Lucky — drives a manual reroll toggle on the sheet. */
   lucky: boolean;
+  /** Spellcasting block — present only for caster classes; absent for martials. */
+  spell?: {
+    ability: string;
+    model: 'known' | 'prepared' | 'spellbook';
+    /** Max slots by slot level (1–9) at this level; current lives on play.spellSlots. */
+    maxSlots: Record<number, number>;
+    cantripsKnown: number;
+    /** Spells known at this level (known casters); 0 for prepared/spellbook. */
+    spellsKnown: number;
+    /** Spells preparable per day (prepared/spellbook): ability mod + level, min 1. */
+    preparedCount: number;
+    /** Spell save DC = 8 + proficiency + ability mod. */
+    saveDc: number;
+    /** Spell attack bonus = proficiency + ability mod. */
+    attackBonus: number;
+  };
 }
 
 /**
@@ -149,6 +167,22 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   // Rogue Sneak Attack dice at this level (from the class table counters; SRD key snake_case).
   const sneakAttackDice = cls?.levels.find((l) => l.level === level)?.counters?.sneak_attack;
 
+  // Spellcasting (caster classes only). Save DC / attack use the class's casting ability.
+  const sc = cls?.spellcasting;
+  const spell =
+    sc && cls
+      ? {
+          ability: sc.ability,
+          model: sc.type,
+          maxSlots: spellSlots(cls, level),
+          cantripsKnown: classLevel(cls, level).cantripsKnown ?? 0,
+          spellsKnown: classLevel(cls, level).spellsKnown ?? 0,
+          preparedCount: Math.max(1, (mods[sc.ability] ?? 0) + level),
+          saveDc: 8 + pb + (mods[sc.ability] ?? 0),
+          attackBonus: pb + (mods[sc.ability] ?? 0),
+        }
+      : undefined;
+
   const raceTraits = [...(ancestry?.traits ?? []), ...(subrace?.traits ?? [])];
   const resistances = [...(ancestry?.resistances ?? []), ...(subrace?.resistances ?? [])];
   // Breath weapon (subrace/draconic color wins). DC = 8 + CON mod + proficiency (SRD).
@@ -175,6 +209,7 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     resistances,
     ...(breath ? { breath } : {}),
     lucky: !!ancestry?.lucky,
+    ...(spell ? { spell } : {}),
   };
 }
 

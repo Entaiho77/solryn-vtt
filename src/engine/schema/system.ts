@@ -515,8 +515,11 @@ export interface ClassDefinition {
   skillChoices: { choose: number; from: string[] | 'any' };
   /** Starting equipment as display strings (structured grants are a later refinement). */
   startingEquipment: string[];
-  /** Spellcasting model (casters only); the slots themselves live in the level table. */
-  spellcasting?: { ability: string; type: 'prepared' | 'known'; ritual?: boolean };
+  /** Spellcasting model (casters only); the slots themselves live in the level table.
+   *  known = fixed list chosen at build (Sorcerer/Bard/Warlock/Ranger); prepared = access the
+   *  full class list, prepare daily (Cleric/Druid/Paladin); spellbook = Wizard (learn into a
+   *  book, prepare a subset). */
+  spellcasting?: { ability: string; type: 'prepared' | 'known' | 'spellbook'; ritual?: boolean };
   /** Unarmored Defense (Barbarian/Monk): when no armor is worn, AC = 10 + DEX + this ability's mod. */
   unarmoredDefense?: { ability: string };
   /** Thematic starting kit (equipped at creation): weapon ids + optional armor id. */

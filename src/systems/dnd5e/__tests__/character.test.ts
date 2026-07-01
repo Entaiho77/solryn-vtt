@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Character } from '../../../data/types';
 import { dnd5eSystem } from '../index';
+import { spellSlots } from '../../../engine/rules';
 import { effectiveScores, pcDerived, pcTokenStats } from '../character';
 
 // A standard-array Human Fighter: STR15 DEX13 CON14 INT10 WIS12 CHA8 (+1 all from Human).
@@ -169,6 +170,51 @@ describe('5e races', () => {
 function computeWis(scores: Record<string, number>): number {
   return Math.floor((scores.WIS - 10) / 2);
 }
+
+const cls = (id: string) => dnd5eSystem.classes!.find((c) => c.id === id)!;
+function classChar(classId: string, scores: Record<string, number>, level = 1): Character {
+  return {
+    id: 'pc', gameId: 'g', ownerUserId: 'u', systemId: 'dnd5e', name: 'X', buildComplete: true,
+    definition: { ancestryId: 'human', classId, coreScores: scores, chosenSkillIds: [], knownSpellIds: [] },
+    play: { level, reputation: 'Unaligned', pools: {}, skills: {}, equippedWeaponIds: [] },
+  };
+}
+
+describe('5e spell slots + caster model', () => {
+  it('Wizard L1: 2 first-level slots (spellbook model)', () => {
+    expect(spellSlots(cls('wizard'), 1)).toEqual({ 1: 2 });
+    expect(cls('wizard').spellcasting?.type).toBe('spellbook');
+  });
+
+  it('Cleric L3: 4×1st + 2×2nd (prepared model)', () => {
+    expect(spellSlots(cls('cleric'), 3)).toEqual({ 1: 4, 2: 2 });
+    expect(cls('cleric').spellcasting?.type).toBe('prepared');
+  });
+
+  it('Paladin (half-caster): no slots at L1, 2×1st at L2', () => {
+    expect(spellSlots(cls('paladin'), 1)).toEqual({});
+    expect(spellSlots(cls('paladin'), 2)).toEqual({ 1: 2 });
+  });
+
+  it('Fighter (non-caster): empty slots and no spell block on the sheet', () => {
+    expect(spellSlots(cls('fighter'), 5)).toEqual({});
+    const d = pcDerived(dnd5eSystem, classChar('fighter', { STR: 16, DEX: 14, CON: 15, INT: 10, WIS: 12, CHA: 8 }, 5));
+    expect(d.spell).toBeUndefined();
+  });
+
+  it('Cleric prepared count = WIS mod + level (min 1); DC = 8 + prof + WIS', () => {
+    // Cleric L3, WIS 16 (+3), prof +2 → prepared 3 + 3 = 6, save DC 8 + 2 + 3 = 13.
+    const d = pcDerived(dnd5eSystem, classChar('cleric', { STR: 10, DEX: 12, CON: 12, INT: 10, WIS: 16, CHA: 10 }, 3));
+    expect(d.spell?.model).toBe('prepared');
+    expect(d.spell?.preparedCount).toBe(6);
+    expect(d.spell?.saveDc).toBe(13);
+    expect(d.spell?.maxSlots).toEqual({ 1: 4, 2: 2 });
+  });
+
+  it('Warlock L5: Pact Magic counts (2 third-level slots) surfaced as standard slots', () => {
+    expect(spellSlots(cls('warlock'), 5)).toEqual({ 3: 2 });
+  });
+});
 
 describe('pcTokenStats — AC stamped onto the PC token for click-to-target', () => {
   it('exposes the same AC + max HP as the sheet (Human Fighter in chain mail)', () => {
