@@ -4,22 +4,38 @@ import { removeToken } from '../../data/board';
 import styles from './TokenContextMenu.module.css';
 
 /**
- * GM right-click menu for board tokens. Positioned at the cursor; dismisses on click-away
- * (the backdrop) or Escape. Only offers token-level cleanup — "Remove token" deletes the
- * board token alone (games/{gameId}/tokens/{tokenId}); a player's character, membership, and
- * game link are untouched, so they can rejoin. Rendered by BoardScreen for the GM only.
+ * Right-click menu for board tokens. Positioned at the cursor; dismisses on click-away (the
+ * backdrop) or Escape. It sets the attack target and (for the GM) removes tokens — both
+ * WITHOUT changing selection, so the attacker's card stays open while you target a defender.
+ *
+ * - "Set as target" (5e only, character/creature) points attacks at this token; its AC is read
+ *   from the stat block. Toggling clears it.
+ * - "Remove token" (GM only) deletes just games/{gameId}/tokens/{tokenId}; a player's
+ *   character, membership, and game link are untouched, so they can rejoin.
  */
 export function TokenContextMenu({
   token,
   x,
   y,
   gameId,
+  is5e,
+  isTarget,
+  onSetTarget,
+  canRemove,
   onClose,
 }: {
   token: Token;
   x: number;
   y: number;
   gameId: string;
+  /** 5e game → offer targeting for attackable tokens. Solryn passes false (no targeting). */
+  is5e: boolean;
+  /** Whether this token is already the current target (toggles the label to "Clear target"). */
+  isTarget: boolean;
+  /** Set/clear this token as the attack target (does not change selection). */
+  onSetTarget: () => void;
+  /** GM → offer "Remove token". */
+  canRemove: boolean;
   onClose: () => void;
 }) {
   useEffect(() => {
@@ -30,6 +46,13 @@ export function TokenContextMenu({
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
+  // Only attackable tokens can be targeted (traps/party have no AC to hit).
+  const canTarget = is5e && (token.kind === 'character' || token.kind === 'creature');
+
+  const setTarget = () => {
+    onSetTarget();
+    onClose();
+  };
   const remove = () => {
     void removeToken(gameId, token.id);
     onClose();
@@ -51,12 +74,19 @@ export function TokenContextMenu({
       />
       <div className={styles.menu} style={{ left, top }} role="menu">
         <div className={styles.header}>{token.name}</div>
-        <button className={styles.item} role="menuitem" onClick={remove}>
-          Remove token
-        </button>
-        {token.kind === 'character' && (
+        {canTarget && (
+          <button className={styles.item} role="menuitem" onClick={setTarget}>
+            {isTarget ? 'Clear target' : 'Set as target'}
+          </button>
+        )}
+        {canRemove && (
+          <button className={styles.item} role="menuitem" onClick={remove}>
+            Remove token
+          </button>
+        )}
+        {canRemove && token.kind === 'character' && (
           <p className={styles.hint}>
-            Removes the token only — the player keeps their character and can rejoin.
+            Remove takes the token only — the player keeps their character and can rejoin.
           </p>
         )}
       </div>

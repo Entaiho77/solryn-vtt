@@ -101,8 +101,8 @@ export function Dnd5eSheet({
         </>
       )}
 
-      {/* Attacks — through attackRollVsAc. AC comes from the clicked target when one is set
-          (tap a creature on the board); otherwise the typed Target AC is the fallback. */}
+      {/* Attacks — through attackRollVsAc. AC comes from the current target when one is set
+          (right-click a creature on the board); otherwise the typed Target AC is the fallback. */}
       <span className={s.label}>Attacks</span>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
         {usingTarget ? (
@@ -132,6 +132,9 @@ export function Dnd5eSheet({
           </label>
         )}
       </div>
+      {!usingTarget && (
+        <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
+      )}
       {d.attacks.map((atk) => (
         <div key={atk.name} style={row}>
           <span className={s.itemMeta}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>

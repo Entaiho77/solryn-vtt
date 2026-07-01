@@ -74,8 +74,6 @@ export function MonsterStatCard({
   gameId,
   uid,
   target,
-  isTarget,
-  onToggleTarget,
   onClose,
 }: {
   system: SystemDefinition;
@@ -85,12 +83,9 @@ export function MonsterStatCard({
   gameId?: string;
   /** Present in GM context → enables the bestiary token-art upload (per-GM global). */
   uid?: string;
-  /** Current click-to-target token (5e). Attacks read its AC when set; else manual Target AC. */
+  /** Current click-to-target token (5e), set via the board right-click menu. Attacks read its
+   *  AC when set; otherwise the manual Target AC below is the fallback. */
   target?: { id: string; name: string; ac?: number };
-  /** Whether this creature's own token is the current target (shows the button as active). */
-  isTarget?: boolean;
-  /** 5e only: toggle this creature's token as the current target. Absent → no Target button. */
-  onToggleTarget?: () => void;
   onClose?: () => void;
 }) {
   const { postRoll } = useRollLog();
@@ -197,12 +192,6 @@ export function MonsterStatCard({
         </div>
       )}
 
-      {rollToHit && onToggleTarget && (
-        <Button variant={isTarget ? 'primary' : 'ghost'} size="sm" onClick={onToggleTarget}>
-          {isTarget ? '◎ Targeted' : '◎ Target this creature'}
-        </Button>
-      )}
-
       {rollToHit && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
           {usingTarget ? (
@@ -231,6 +220,9 @@ export function MonsterStatCard({
             <option value="disadvantage">Disadvantage</option>
           </select>
         </div>
+      )}
+      {rollToHit && !usingTarget && (
+        <p className={s.hint}>Right-click a token on the board to attack its AC automatically.</p>
       )}
 
       {/* Roll-vs-DC: this creature (the defender) rolls a save / check vs an entered DC. */}

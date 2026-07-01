@@ -198,8 +198,6 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               gameId={gameId}
               uid={uid}
               target={target}
-              isTarget={is5e && selected.id === targetId}
-              onToggleTarget={is5e ? () => onSetTarget(selected.id) : undefined}
               onClose={() => setSelectedId(null)}
             />
           ),
@@ -395,12 +393,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
             }
             onSelectToken={(t) => setSelectedId(t?.id ?? null)}
-            // GM-only token context menu. The shared party token is excluded (it's re-seeded).
-            onContextToken={
-              role === 'gm'
-                ? (token, x, y) => token.kind !== 'party' && setCtxMenu({ token, x, y })
-                : undefined
-            }
+            // Right-click token menu: set the attack target (5e, without changing selection) and,
+            // for the GM, remove tokens. Only opened when there's an action; party is excluded.
+            onContextToken={(token, x, y) => {
+              if (token.kind === 'party') return;
+              const canTarget = is5e && (token.kind === 'character' || token.kind === 'creature');
+              if (canTarget || role === 'gm') setCtxMenu({ token, x, y });
+            }}
             onGrabParty={(id) => void grabPartyToken(gameId, id, uid)}
             onReleaseParty={(id) => void releasePartyToken(gameId, id)}
           />
@@ -422,8 +421,6 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             uid={uid}
             gameId={gameId}
             viewerCharacter={character}
-            isTarget={is5e && selected.id === targetId}
-            onToggleTarget={is5e ? () => onSetTarget(selected.id) : undefined}
             onClose={() => setSelectedId(null)}
           />
         )}
@@ -434,6 +431,10 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             x={ctxMenu.x}
             y={ctxMenu.y}
             gameId={gameId}
+            is5e={is5e}
+            isTarget={ctxMenu.token.id === targetId}
+            onSetTarget={() => onSetTarget(ctxMenu.token.id)}
+            canRemove={role === 'gm'}
             onClose={() => setCtxMenu(null)}
           />
         )}
