@@ -1,4 +1,10 @@
-import type { Ancestry, ClassDefinition, SystemDefinition } from '../../engine/schema';
+import type {
+  Ancestry,
+  ClassDefinition,
+  RacialBreath,
+  Subrace,
+  SystemDefinition,
+} from '../../engine/schema';
 import type { Character } from '../../data/types';
 import {
   armorClass,
@@ -20,16 +26,30 @@ const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 /** Damage notation with an ability modifier folded in (no "+0"). */
 const diceWithMod = (dice: string, mod: number) => (mod === 0 ? dice : `${dice}${signed(mod)}`);
 
-/** Assigned scores + a race's fixed ability bonuses (the live effective scores). */
+/**
+ * Assigned scores + racial ability bonuses (the live effective scores). Applies the base race's
+ * and the subrace's fixed bonuses, plus any player-chosen flexible bonuses (Half-Elf's +1 to two
+ * abilities), passed as a stat→amount map.
+ */
 export function effectiveScores(
   assigned: Record<string, number>,
   ancestry?: Ancestry,
+  subrace?: Subrace,
+  choices?: Record<string, number>,
 ): Record<string, number> {
   const out: Record<string, number> = { ...assigned };
-  for (const b of ancestry?.bonuses ?? []) {
+  for (const b of [...(ancestry?.bonuses ?? []), ...(subrace?.bonuses ?? [])]) {
     if (b.kind === 'fixed') out[b.stat] = (out[b.stat] ?? 0) + b.amount;
   }
+  for (const [stat, amount] of Object.entries(choices ?? {})) {
+    out[stat] = (out[stat] ?? 0) + amount;
+  }
   return out;
+}
+
+/** Dragonborn breath dice by character level (SRD: 2d6 → 5d6 at 6/11/16). */
+function breathDice(level: number): string {
+  return level >= 16 ? '5d6' : level >= 11 ? '4d6' : level >= 6 ? '3d6' : '2d6';
 }
 
 export interface PcDerived {
@@ -44,6 +64,18 @@ export interface PcDerived {
   attacks: { name: string; dice: string; damageType: string; attackBonus: number }[];
   /** Rogue Sneak Attack dice at the character's level (e.g. "1d6"), if the class has it. */
   sneakAttackDice?: string;
+  // --- Race (5e) ---
+  raceName?: string;
+  subraceName?: string;
+  speed: number;
+  /** Mechanical race/subrace trait strings for the sheet. */
+  raceTraits: string[];
+  /** Damage resistances (Dwarf poison, Dragonborn/Tiefling elemental). */
+  resistances: string[];
+  /** Dragonborn breath weapon, resolved for this level (dice + save DC). */
+  breath?: RacialBreath & { dice: string; dc: number };
+  /** Halfling Lucky — drives a manual reroll toggle on the sheet. */
+  lucky: boolean;
 }
 
 /**
@@ -54,6 +86,8 @@ export interface PcDerived {
 export function pcDerived(system: SystemDefinition, character: Character): PcDerived {
   const rule = system.modifierRule;
   const cls = system.classes?.find((c) => c.id === character.definition.classId);
+  const ancestry = system.ancestries.find((a) => a.id === character.definition.ancestryId);
+  const subrace = ancestry?.subraces?.find((sr) => sr.id === character.definition.subraceId);
   const level = character.play.level;
   const scores = character.definition.coreScores;
 
@@ -80,7 +114,19 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     mod: cls ? saveModifier(cls, id, mods[id], pb) : mods[id],
   }));
 
-  const skills = character.definition.chosenSkillIds.map((sid) => {
+  // Proficient skills: the player's chosen skills plus any the race grants outright (e.g. Elf
+  // Perception, Half-Orc Intimidation — the skill-typed entries in grantedProficiencies).
+  const grantedProficiencies = [
+    ...(ancestry?.grantedProficiencies ?? []),
+    ...(subrace?.grantedProficiencies ?? []),
+  ];
+  const racialSkillIds = grantedProficiencies.filter((pid) =>
+    system.skills.some((s) => s.id === pid),
+  );
+  const proficientSkillIds = [
+    ...new Set([...character.definition.chosenSkillIds, ...racialSkillIds]),
+  ];
+  const skills = proficientSkillIds.map((sid) => {
     const sk = system.skills.find((s) => s.id === sid);
     const aMod = sk?.attribute ? (mods[sk.attribute] ?? 0) : 0;
     return { id: sid, name: sk?.name ?? sid, ability: sk?.attribute, mod: aMod + pb };
@@ -103,6 +149,14 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   // Rogue Sneak Attack dice at this level (from the class table counters; SRD key snake_case).
   const sneakAttackDice = cls?.levels.find((l) => l.level === level)?.counters?.sneak_attack;
 
+  const raceTraits = [...(ancestry?.traits ?? []), ...(subrace?.traits ?? [])];
+  const resistances = [...(ancestry?.resistances ?? []), ...(subrace?.resistances ?? [])];
+  // Breath weapon (subrace/draconic color wins). DC = 8 + CON mod + proficiency (SRD).
+  const breathBase = subrace?.breath ?? ancestry?.breath;
+  const breath = breathBase
+    ? { ...breathBase, dice: breathDice(level), dc: 8 + mods.CON + pb }
+    : undefined;
+
   return {
     cls,
     scores,
@@ -114,6 +168,13 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     skills,
     attacks,
     ...(typeof sneakAttackDice === 'string' ? { sneakAttackDice } : {}),
+    ...(ancestry ? { raceName: ancestry.name } : {}),
+    ...(subrace ? { subraceName: subrace.name } : {}),
+    speed: ancestry?.speed ?? 30,
+    raceTraits,
+    resistances,
+    ...(breath ? { breath } : {}),
+    lucky: !!ancestry?.lucky,
   };
 }
 

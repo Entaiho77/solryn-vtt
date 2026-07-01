@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { getCombatResolver } from '../../engine/rules';
+import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
 import { setPoolCurrent } from '../../data/characters';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { Button } from '../../components/ui/Button';
@@ -35,6 +35,17 @@ export function Dnd5eSheet({
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
+  const [lucky, setLucky] = useState(false);
+
+  // Dragonborn breath weapon — plain damage roll + save note, via the same path as monster
+  // abilities (postAbility): never through the attack resolver, so it isn't a to-hit roll.
+  const rollBreath = () => {
+    if (!d.breath) return;
+    const r = rollDice(d.breath.dice);
+    const shape = d.breath.shape === 'cone' ? `${d.breath.size} ft cone` : `${d.breath.size} ft line`;
+    const line = `${describeRoll(`${character.name} — Breath Weapon`, r, { type: d.breath.damageType })} · ${shape} · DC ${d.breath.dc} DEX save for half (${Math.floor(r.total / 2)})`;
+    postRoll(line);
+  };
 
   // A targeted token with a known AC drives the roll (AC read from its stat block, name shown
   // in the log); otherwise fall back to the typed Target AC.
@@ -59,6 +70,11 @@ export function Dnd5eSheet({
   return (
     <div className={s.section}>
       <span className={s.label}>{character.name} · {d.cls?.name ?? 'Adventurer'} {character.play.level}</span>
+      {d.raceName && (
+        <span className={s.itemMeta}>
+          {d.subraceName ? `${d.subraceName} · ` : ''}{d.raceName} · {d.speed} ft speed
+        </span>
+      )}
 
       {/* Ability scores + modifiers */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
@@ -141,6 +157,41 @@ export function Dnd5eSheet({
           <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
         </div>
       ))}
+
+      {/* Racial traits that affect play: resistances, breath weapon (rollable), Lucky toggle,
+          and text notes for passive/flavor traits. */}
+      {(d.resistances.length > 0 || d.breath || d.lucky || d.raceTraits.length > 0) && (
+        <>
+          <span className={s.label}>Racial traits</span>
+          {d.resistances.length > 0 && (
+            <div style={row}>
+              <span className={s.itemMeta}>Damage resistance</span>
+              <strong>{d.resistances.join(', ')}</strong>
+            </div>
+          )}
+          {d.breath && (
+            <div style={row}>
+              <span className={s.itemMeta}>
+                Breath Weapon: {d.breath.dice} {d.breath.damageType}, {d.breath.shape === 'cone' ? `${d.breath.size} ft cone` : `${d.breath.size} ft line`} · DC {d.breath.dc} DEX
+              </span>
+              <Button size="sm" onClick={rollBreath}>Roll</Button>
+            </div>
+          )}
+          {d.lucky && (
+            <label
+              className={s.itemMeta}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}
+              title="Halfling Lucky: when you roll a natural 1 on an attack, check, or save, reroll and use the new roll."
+            >
+              <input type="checkbox" checked={lucky} onChange={(e) => setLucky(e.target.checked)} />
+              Lucky (reroll natural 1s)
+            </label>
+          )}
+          {d.raceTraits.map((t, i) => (
+            <p key={i} className={s.hint}>{t}</p>
+          ))}
+        </>
+      )}
     </div>
   );
 }

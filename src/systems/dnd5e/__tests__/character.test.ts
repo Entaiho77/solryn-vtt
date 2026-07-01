@@ -101,6 +101,75 @@ describe('martial distinctions', () => {
   });
 });
 
+// A level-1 Fighter of a given race; coreScores are the effective scores (as locked at build).
+function raceChar(
+  ancestryId: string,
+  coreScores: Record<string, number>,
+  extra: { subraceId?: string; ancestryChoices?: Record<string, number>; chosenSkillIds?: string[] } = {},
+  level = 1,
+): Character {
+  return {
+    id: 'pc', gameId: 'g', ownerUserId: 'u', systemId: 'dnd5e', name: 'X', buildComplete: true,
+    definition: { ancestryId, classId: 'fighter', coreScores, chosenSkillIds: [], knownSpellIds: [], ...extra },
+    play: { level, reputation: 'Unaligned', pools: {}, skills: {}, equippedWeaponIds: ['longsword'], equippedArmorId: 'chain-mail' },
+  };
+}
+const BASE = { STR: 14, DEX: 12, CON: 13, INT: 10, WIS: 11, CHA: 8 };
+const race = (id: string) => dnd5eSystem.ancestries.find((a) => a.id === id);
+
+describe('5e races', () => {
+  it('Dwarf: +2 CON and poison resistance; Hill Dwarf adds +1 WIS', () => {
+    const scores = effectiveScores(BASE, race('dwarf'), race('dwarf')?.subraces?.[0]);
+    expect(scores.CON).toBe(15); // 13 + 2
+    expect(scores.WIS).toBe(12); // 11 + 1 (Hill Dwarf)
+    const d = pcDerived(dnd5eSystem, raceChar('dwarf', scores, { subraceId: 'hill-dwarf' }));
+    expect(d.resistances).toContain('Poison');
+    expect(d.raceName).toBe('Dwarf');
+    expect(d.subraceName).toBe('Hill Dwarf');
+  });
+
+  it('Elf: Keen Senses grants Perception proficiency automatically', () => {
+    const scores = effectiveScores(BASE, race('elf'));
+    const d = pcDerived(dnd5eSystem, raceChar('elf', scores)); // no chosen skills
+    const perception = d.skills.find((sk) => sk.id === 'perception');
+    expect(perception).toBeDefined();
+    expect(perception?.mod).toBe(computeWis(scores) + d.proficiencyBonus);
+  });
+
+  it('Half-Elf: +2 CHA fixed and +1 to two chosen abilities', () => {
+    const scores = effectiveScores(BASE, race('half-elf'), undefined, { STR: 1, DEX: 1 });
+    expect(scores.CHA).toBe(10); // 8 + 2 fixed
+    expect(scores.STR).toBe(15); // 14 + 1 chosen
+    expect(scores.DEX).toBe(13); // 12 + 1 chosen
+    expect(scores.CON).toBe(13); // unchanged
+  });
+
+  it('Half-Elf: two chosen skills become proficient', () => {
+    const scores = effectiveScores(BASE, race('half-elf'), undefined, { STR: 1, CON: 1 });
+    const d = pcDerived(dnd5eSystem, raceChar('half-elf', scores, { chosenSkillIds: ['persuasion', 'insight'] }));
+    expect(d.skills.map((sk) => sk.id).sort()).toEqual(['insight', 'persuasion']);
+  });
+
+  it('Dragonborn: breath weapon damage type, area, and DC = 8 + CON + prof', () => {
+    // Red draconic ancestry → Fire, 15 ft cone. CON 13 (+1), prof +2 → DC 11.
+    const scores = effectiveScores(BASE, race('dragonborn')); // +2 STR, +1 CHA (CON unchanged 13)
+    const d = pcDerived(dnd5eSystem, raceChar('dragonborn', scores, { subraceId: 'red' }));
+    expect(d.breath).toMatchObject({ damageType: 'Fire', shape: 'cone', size: 15, dice: '2d6', dc: 11 });
+    expect(d.resistances).toContain('Fire');
+  });
+
+  it('Dragonborn breath dice scale with level (4d6 at 11th)', () => {
+    const scores = effectiveScores(BASE, race('dragonborn'));
+    const d = pcDerived(dnd5eSystem, raceChar('dragonborn', scores, { subraceId: 'blue' }, 11));
+    expect(d.breath?.dice).toBe('4d6');
+    expect(d.breath).toMatchObject({ damageType: 'Lightning', shape: 'line', size: 30 });
+  });
+});
+
+function computeWis(scores: Record<string, number>): number {
+  return Math.floor((scores.WIS - 10) / 2);
+}
+
 describe('pcTokenStats — AC stamped onto the PC token for click-to-target', () => {
   it('exposes the same AC + max HP as the sheet (Human Fighter in chain mail)', () => {
     const c = humanFighter();

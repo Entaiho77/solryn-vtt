@@ -178,6 +178,8 @@ export interface CharacterSkillState {
 
 export interface CharacterDefinition {
   ancestryId: string;
+  /** Chosen subrace / draconic-color id (5e races with subraces). */
+  subraceId?: string;
   /** Stat bonuses chosen for flexible-bonus ancestries (stat id → amount). */
   ancestryChoices?: Record<string, number>;
   /** Rolled core scores, locked at creation (one-way gate). */

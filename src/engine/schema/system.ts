@@ -97,6 +97,34 @@ export type StatBonus =
       distinct?: boolean;
     };
 
+/** A rollable racial breath weapon (Dragonborn). Dice scale by level; DC = 8 + CON + prof. */
+export interface RacialBreath {
+  /** Damage type, e.g. "Fire" / "Cold" / "Acid" (set by draconic ancestry). */
+  damageType: string;
+  /** Area shape — cone (15 ft) or line (30 ft). */
+  shape: 'cone' | 'line';
+  /** Area size in feet. */
+  size: number;
+}
+
+/** A subrace option (5e). Carries its own ability bonuses, traits, and grants on top of the
+ *  base race. Solryn ancestries never use these. */
+export interface Subrace {
+  id: string;
+  name: string;
+  description?: string;
+  /** Additional ability bonuses (stacked onto the base race's). */
+  bonuses?: StatBonus[];
+  /** Extra mechanical trait strings shown on the sheet. */
+  traits?: string[];
+  /** Extra granted proficiency ids (skill/tool/weapon). */
+  grantedProficiencies?: string[];
+  /** Extra damage resistances. */
+  resistances?: string[];
+  /** A breath weapon granted by this option (Dragonborn draconic ancestry). */
+  breath?: RacialBreath;
+}
+
 export interface Ancestry {
   id: string;
   name: string;
@@ -124,8 +152,16 @@ export interface Ancestry {
   traits?: string[];
   /** Proficiencies granted by the race (weapon/skill/tool ids). */
   grantedProficiencies?: string[];
-  /** Subraces (minimal for now). */
-  subraces?: { id: string; name: string; description?: string }[];
+  /** Machine-readable damage resistances (surfaced distinctly on the sheet, not just text). */
+  resistances?: string[];
+  /** A rollable breath weapon on the base race (Dragonborn; usually set via subrace/color). */
+  breath?: RacialBreath;
+  /** Race grants a choice of skill proficiencies chosen at build (Half-Elf: choose 2). */
+  raceSkillChoices?: { choose: number; from: 'any' | string[] };
+  /** Halfling Lucky — surfaced as a manual reroll toggle/note on the sheet. */
+  lucky?: boolean;
+  /** Subraces / ancestry-color choices (Dwarf, Elf, Halfling, Gnome, Dragonborn). */
+  subraces?: Subrace[];
 }
 
 // --- Skills -----------------------------------------------------------------
