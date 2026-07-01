@@ -82,6 +82,8 @@ interface BoardCanvasProps {
   onMoveToken: (tokenId: string, col: number, row: number) => void;
   onToggleFog: (col: number, row: number, fogged: boolean) => void;
   onSelectToken: (token: Token | null) => void;
+  /** Right-click a token → raise a context menu at (clientX, clientY). Absent → no menu. */
+  onContextToken?: (token: Token, x: number, y: number) => void;
   /** Party-token soft-lock: grab on drag start, release on drop. */
   onGrabParty: (tokenId: string) => void;
   onReleaseParty: (tokenId: string) => void;
@@ -155,6 +157,7 @@ export function BoardCanvas({
   onMoveToken,
   onToggleFog,
   onSelectToken,
+  onContextToken,
   onGrabParty,
   onReleaseParty,
 }: BoardCanvasProps) {
@@ -633,12 +636,26 @@ export function BoardCanvas({
     setGhost(null);
   }
 
-  // Right-click clears an active measuring line instead of starting a new one.
+  // Right-click: while measuring, clear the line. Otherwise raise a token context menu for the
+  // topmost visible token under the cursor (hit-tested by cell, like a fresh left-click).
   function handleContextMenu(e: MouseEvent<HTMLCanvasElement>) {
     if (tool === 'measure') {
       e.preventDefault();
       measuringRef.current = false;
       setMeasure(null);
+      return;
+    }
+    if (!onContextToken) return;
+    const { col, row } = eventCell(e);
+    const stack = tokensAtCell(
+      onMap.filter((t) => tokenVisibility(t, uid, role) !== 'hidden'),
+      col,
+      row,
+    );
+    const hit = stack[stack.length - 1];
+    if (hit) {
+      e.preventDefault();
+      onContextToken(hit, e.clientX, e.clientY);
     }
   }
 

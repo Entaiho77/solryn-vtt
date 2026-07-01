@@ -17,6 +17,7 @@ import { isPartyScale } from './partyMode';
 import { BoardShell, type BarItem } from './BoardShell';
 import { BoardCanvas, type BoardTool, type ShapeDraft } from './BoardCanvas';
 import { TokenCard } from './TokenCard';
+import { TokenContextMenu } from './TokenContextMenu';
 import { InitiativeTracker } from './InitiativeTracker';
 import { InitiativeDrawer } from './drawers/InitiativeDrawer';
 import { ShapesDrawer } from './drawers/ShapesDrawer';
@@ -85,6 +86,8 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   // the token's stat block when an attack resolves — no typed AC. Solryn has no targeting.
   const is5e = isClassAndLevel(system);
   const [targetId, setTargetId] = useState<string | null>(null);
+  // GM right-click token menu (board cleanup): the token + cursor position, null when closed.
+  const [ctxMenu, setCtxMenu] = useState<{ token: Token; x: number; y: number } | null>(null);
   const [measuring, setMeasuring] = useState(false);
   // Armed shape from the Shapes drawer (drives the 'shape' canvas tool); null when none.
   const [shapeDraft, setShapeDraft] = useState<ShapeDraft | null>(null);
@@ -392,6 +395,12 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
             }
             onSelectToken={(t) => setSelectedId(t?.id ?? null)}
+            // GM-only token context menu. The shared party token is excluded (it's re-seeded).
+            onContextToken={
+              role === 'gm'
+                ? (token, x, y) => token.kind !== 'party' && setCtxMenu({ token, x, y })
+                : undefined
+            }
             onGrabParty={(id) => void grabPartyToken(gameId, id, uid)}
             onReleaseParty={(id) => void releasePartyToken(gameId, id)}
           />
@@ -416,6 +425,16 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             isTarget={is5e && selected.id === targetId}
             onToggleTarget={is5e ? () => onSetTarget(selected.id) : undefined}
             onClose={() => setSelectedId(null)}
+          />
+        )}
+
+        {ctxMenu && (
+          <TokenContextMenu
+            token={ctxMenu.token}
+            x={ctxMenu.x}
+            y={ctxMenu.y}
+            gameId={gameId}
+            onClose={() => setCtxMenu(null)}
           />
         )}
 
