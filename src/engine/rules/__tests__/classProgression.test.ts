@@ -9,7 +9,10 @@ import {
   proficiencyBonus,
   saveModifier,
 } from '../classProgression';
-import { fighter } from '../../../systems/dnd5e/classes/fighter';
+import { generatedClasses } from '../../../systems/dnd5e/classes.generated';
+
+const fighter = generatedClasses.find((c) => c.id === 'fighter')!;
+const barbarian = generatedClasses.find((c) => c.id === 'barbarian')!;
 
 describe('class progression — Fighter (proof the shapes hold)', () => {
   it('proficiency bonus by level', () => {
@@ -65,5 +68,34 @@ describe('class progression — Fighter (proof the shapes hold)', () => {
   it('full 1–20 table is present and well-formed', () => {
     expect(fighter.levels).toHaveLength(20);
     expect(fighter.levels.map((l) => l.level)).toEqual(Array.from({ length: 20 }, (_, i) => i + 1));
+  });
+});
+
+describe('class progression — all 12 classes generated + Barbarian (new martial)', () => {
+  it('all 12 SRD classes present with full 20-level tables', () => {
+    expect(generatedClasses).toHaveLength(12);
+    for (const c of generatedClasses) {
+      expect(c.levels).toHaveLength(20);
+      expect(c.levels.map((l) => l.level)).toEqual(Array.from({ length: 20 }, (_, i) => i + 1));
+    }
+  });
+
+  it('Barbarian: hit die, saves, prof bonus, Rage@1 / Extra Attack@5, ASI levels', () => {
+    expect(barbarian.hitDie).toBe('d12');
+    expect(barbarian.savingThrows).toEqual(['STR', 'CON']);
+    expect(proficiencyBonus(barbarian, 1)).toBe(2);
+    expect(proficiencyBonus(barbarian, 5)).toBe(3);
+    expect(cumulativeFeatures(barbarian, 1)).toContain('Rage');
+    expect(cumulativeFeatures(barbarian, 4)).not.toContain('Extra Attack');
+    expect(cumulativeFeatures(barbarian, 5)).toContain('Extra Attack');
+    expect(asiLevels(barbarian)).toEqual([4, 8, 12, 16, 19]); // no Fighter-style extras
+  });
+
+  it('Barbarian level-1 combat numbers (d12 HP; feeds the resolver like any class)', () => {
+    // STR +3, CON +2: HP = 12 + 2 = 14; attack = STR mod + prof; STR save proficient
+    expect(maxHitPoints(barbarian, 1, 2)).toBe(14);
+    expect(attackBonus(3, proficiencyBonus(barbarian, 1))).toBe(5);
+    expect(saveModifier(barbarian, 'STR', 3, 2)).toBe(5);
+    expect(saveModifier(barbarian, 'DEX', 2, 2)).toBe(2); // not proficient
   });
 });

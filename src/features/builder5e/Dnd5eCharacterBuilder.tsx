@@ -197,16 +197,22 @@ export function Dnd5eCharacterBuilder({
 
       {kind === 'class' && (
         <div className={s.statList}>
-          {(system.classes ?? []).map((cl) => (
-            <button
-              key={cl.id}
-              className={[s.statRow, draft.classId === cl.id ? s.active : ''].filter(Boolean).join(' ')}
-              onClick={() => setDraft((d) => ({ ...d, classId: cl.id }))}
-            >
-              <span className={s.statName}>{cl.name}</span>
-              <span className={s.statMod}>Hit die {cl.hitDie} · saves {cl.savingThrows.join('/')}</span>
-            </button>
-          ))}
+          {(system.classes ?? []).map((cl) => {
+            const casterPending = !!cl.spellcasting; // spells aren't implemented yet
+            return (
+              <button
+                key={cl.id}
+                className={[s.statRow, draft.classId === cl.id ? s.active : ''].filter(Boolean).join(' ')}
+                onClick={() => setDraft((d) => ({ ...d, classId: cl.id }))}
+              >
+                <span className={s.statName}>
+                  {cl.name}
+                  {casterPending && <span className={s.statMod}> (spells coming soon)</span>}
+                </span>
+                <span className={s.statMod}>Hit die {cl.hitDie} · saves {cl.savingThrows.join('/')}</span>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -247,6 +253,12 @@ export function Dnd5eCharacterBuilder({
                 <div key={a.name}>{a.name}: {sign(a.attackBonus)} to hit, {a.dice} {a.damageType}</div>
               ))}
               <div>Gear: Longsword, Chain Mail (equipped)</div>
+              {preview.cls?.spellcasting && (
+                <div style={{ color: 'var(--accent-amber)' }}>
+                  Spellcasting isn't implemented yet — this class is playable for martial combat;
+                  its spells arrive in a later phase.
+                </div>
+              )}
             </div>
           )}
           {error && <p style={{ color: 'var(--accent-red)' }}>{error}</p>}
