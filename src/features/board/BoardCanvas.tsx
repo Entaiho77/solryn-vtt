@@ -72,6 +72,8 @@ interface BoardCanvasProps {
   selectedTokenId?: string;
   /** Current-turn combatant's token, drawn with a glow. */
   highlightTokenId?: string;
+  /** The viewer's current attack target (5e), drawn with a distinct ring. */
+  targetTokenId?: string;
   /** Persisted AoE/measurement shapes to draw (already filtered to this map + visibility). */
   shapes?: BoardShape[];
   /** Armed shape from the Shapes drawer (tool === 'shape'); null when none armed. */
@@ -146,6 +148,7 @@ export function BoardCanvas({
   measureScale,
   selectedTokenId,
   highlightTokenId,
+  targetTokenId,
   shapes,
   shapeDraft,
   onCommitShape,
@@ -378,6 +381,18 @@ export function BoardCanvas({
         ctx.stroke();
       }
 
+      // Attack-target reticle: a distinct dashed amber ring (5e click-to-target).
+      if (token.id === targetTokenId) {
+        ctx.save();
+        ctx.strokeStyle = COLORS.amber;
+        ctx.lineWidth = 3 / cam.zoom;
+        ctx.setLineDash([5 / cam.zoom, 4 / cam.zoom]);
+        ctx.beginPath();
+        ctx.arc(x, y, radius + 4, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
       const selected = token.id === selectedTokenId;
       const sprung = token.kind === 'trap' && token.trapState === 'sprung';
       // Red ring while the drag ghost is over a cell it can't legally land on.
@@ -451,6 +466,7 @@ export function BoardCanvas({
     uid,
     selectedTokenId,
     highlightTokenId,
+    targetTokenId,
     ghost,
     measure,
     shapes,

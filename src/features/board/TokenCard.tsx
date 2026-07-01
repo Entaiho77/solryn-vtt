@@ -18,6 +18,8 @@ export function TokenCard({
   uid,
   gameId,
   viewerCharacter,
+  isTarget,
+  onToggleTarget,
   onClose,
 }: {
   token: Token;
@@ -26,6 +28,10 @@ export function TokenCard({
   uid: string;
   gameId: string;
   viewerCharacter?: Character;
+  /** Whether this token is the current attack target (5e). */
+  isTarget?: boolean;
+  /** 5e only: toggle this token as the current target. Absent → no Target button (Solryn). */
+  onToggleTarget?: () => void;
   onClose: () => void;
 }) {
   const view = tokenVisibility(token, uid, role);
@@ -150,6 +156,20 @@ export function TokenCard({
         </button>
       </div>
       {body()}
+      {/* Click-to-target (5e): mark this creature/character as the current attack target so
+          attacks read its AC from the stat block. Not shown for traps/party or in Solryn. */}
+      {onToggleTarget && (token.kind === 'character' || token.kind === 'creature') && (
+        <div className={styles.actions}>
+          <Button
+            full
+            size="sm"
+            variant={isTarget ? 'primary' : 'ghost'}
+            onClick={onToggleTarget}
+          >
+            {isTarget ? '◎ Targeted' : '◎ Target'}
+          </Button>
+        </div>
+      )}
       {canLoot && (
         <div className={styles.loot}>
           <Button full size="sm" onClick={() => setHarvestOpen(true)}>
