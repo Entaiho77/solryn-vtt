@@ -32,6 +32,8 @@ export function LevelUpModal({
   const [newCantripIds, setNewCantripIds] = useState<string[]>([]);
   const [newSpellIds, setNewSpellIds] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  // UI-only: which spell level the leveled picker shows ('all' or a specific level).
+  const [spellLevelFilter, setSpellLevelFilter] = useState<number | 'all'>('all');
 
   // Spells the player could add: class list, not already known/booked, within castable level.
   const classSpells = summary.model ? getSpellsForClass(character.definition.classId ?? '', allSpells) : [];
@@ -71,11 +73,29 @@ export function LevelUpModal({
     picked: string[],
     setPicked: (ids: string[]) => void,
     max: number,
-  ) => (
+    filterable = false,
+  ) => {
+    // Level-filter tabs (leveled picker only): only the levels actually available appear.
+    // Filtering is display-only — `picked` is the full selection, so it persists across tabs.
+    const levels = filterable ? [...new Set(options.map((sp) => sp.level))].sort((a, b) => a - b) : [];
+    const shown = filterable && spellLevelFilter !== 'all' ? options.filter((sp) => sp.level === spellLevelFilter) : options;
+    return (
     <>
       <p className={s.label}>{label} ({picked.length}/{max})</p>
+      {filterable && levels.length > 1 && (
+        <div className={s.tabs}>
+          <button className={`${s.tab} ${spellLevelFilter === 'all' ? s.tabActive : ''}`} onClick={() => setSpellLevelFilter('all')}>
+            All
+          </button>
+          {levels.map((l) => (
+            <button key={l} className={`${s.tab} ${spellLevelFilter === l ? s.tabActive : ''}`} onClick={() => setSpellLevelFilter(l)}>
+              L{l}
+            </button>
+          ))}
+        </div>
+      )}
       <div className={s.list} style={{ maxHeight: 180 }}>
-        {options.map((sp) => {
+        {shown.map((sp) => {
           const checked = picked.includes(sp.id);
           const full = picked.length >= max;
           return (
@@ -95,10 +115,22 @@ export function LevelUpModal({
         })}
       </div>
     </>
-  );
+    );
+  };
 
   return (
-    <Modal open onClose={() => {}} title={`Level up — ${character.name}`} width={520}>
+    <Modal
+      open
+      onClose={() => {}}
+      title={`Level up — ${character.name}`}
+      width={520}
+      // Anchored footer (outside the scrollable body) so the confirm button never overlaps the list.
+      footer={
+        <Button onClick={() => void finish()} disabled={!canFinish}>
+          {busy ? 'Applying…' : `Become level ${summary.toLevel}`}
+        </Button>
+      }
+    >
       <div className={s.section}>
         <p className={s.label} style={{ fontSize: 'var(--text-lg)' }}>
           You are now level {summary.toLevel} {summary.className}!
@@ -168,6 +200,7 @@ export function LevelUpModal({
             newSpellIds,
             setNewSpellIds,
             summary.spellsGain,
+            true,
           )}
         {summary.model === 'prepared' && summary.newPreparedCount !== undefined && (
           <p className={s.hint}>
@@ -181,12 +214,6 @@ export function LevelUpModal({
             Spell slots (refreshed): {Object.entries(summary.newMaxSlots).map(([lvl, n]) => `${n}×L${lvl}`).join(', ')}
           </p>
         )}
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: 'var(--space-3)' }}>
-        <Button onClick={() => void finish()} disabled={!canFinish}>
-          {busy ? 'Applying…' : `Become level ${summary.toLevel}`}
-        </Button>
       </div>
     </Modal>
   );
