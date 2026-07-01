@@ -32,6 +32,7 @@ import { Dnd5eSheet } from '../sheet5e/Dnd5eSheet';
 import { MonsterStatCard } from './drawers/MonsterStatCard';
 import { RollLog } from '../rolllog/rollLog';
 import { canSeeMonsterStats } from '../../permissions';
+import { isClassAndLevel } from '../../systems/registry';
 import styles from './BoardScreen.module.css';
 
 interface BoardScreenProps {
@@ -320,7 +321,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         glyph: '◈',
         // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
         content:
-          system.modes.progression.id === 'class-and-level' ? (
+          isClassAndLevel(system) ? (
             <Dnd5eSheet system={system} character={character} />
           ) : (
             <CharacterQuickView

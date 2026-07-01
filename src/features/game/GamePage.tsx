@@ -5,7 +5,7 @@ import { useValue } from '../../data/realtime';
 import { createCharacter, useGameCharacter } from '../../data/characters';
 import type { Game } from '../../data/types';
 import { roleOf } from '../../permissions';
-import { getSystem } from '../../systems/registry';
+import { getSystem, isClassAndLevel } from '../../systems/registry';
 import { Button } from '../../components/ui/Button';
 import { RoleBadge } from '../../components/ui/Badge';
 import { GameSettingsModal } from './GameSettingsModal';
@@ -69,8 +69,7 @@ export function GamePage() {
     content = <p className={styles.muted}>Loading your character…</p>;
   } else if (building) {
     // Class-and-level systems (5e) use their own builder on the shared shell; Solryn keeps its.
-    const Builder =
-      system.modes.progression.id === 'class-and-level' ? Dnd5eCharacterBuilder : CharacterBuilder;
+    const Builder = isClassAndLevel(system) ? Dnd5eCharacterBuilder : CharacterBuilder;
     content = (
       <Builder
         system={system}
