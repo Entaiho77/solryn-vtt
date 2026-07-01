@@ -17,6 +17,7 @@ import { isPartyScale } from './partyMode';
 import { BoardShell, type BarItem } from './BoardShell';
 import { BoardCanvas, type BoardTool, type ShapeDraft } from './BoardCanvas';
 import { TokenCard } from './TokenCard';
+import { TokenContextMenu } from './TokenContextMenu';
 import { InitiativeTracker } from './InitiativeTracker';
 import { InitiativeDrawer } from './drawers/InitiativeDrawer';
 import { ShapesDrawer } from './drawers/ShapesDrawer';
@@ -33,6 +34,7 @@ import { MonsterStatCard } from './drawers/MonsterStatCard';
 import { RollLog } from '../rolllog/rollLog';
 import { canSeeMonsterStats } from '../../permissions';
 import { isClassAndLevel } from '../../systems/registry';
+import { pcTokenStats } from '../../systems/dnd5e/character';
 import styles from './BoardScreen.module.css';
 
 interface BoardScreenProps {
@@ -80,6 +82,12 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     role === 'player' ? 'character' : null,
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Click-to-target combat (5e only): a per-user, local current target. Its AC is read from
+  // the token's stat block when an attack resolves — no typed AC. Solryn has no targeting.
+  const is5e = isClassAndLevel(system);
+  const [targetId, setTargetId] = useState<string | null>(null);
+  // GM right-click token menu (board cleanup): the token + cursor position, null when closed.
+  const [ctxMenu, setCtxMenu] = useState<{ token: Token; x: number; y: number } | null>(null);
   const [measuring, setMeasuring] = useState(false);
   // Armed shape from the Shapes drawer (drives the 'shape' canvas tool); null when none.
   const [shapeDraft, setShapeDraft] = useState<ShapeDraft | null>(null);
@@ -125,8 +133,11 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
       visible: true,
       ownerUserId: uid,
       characterId: character.id,
+      // 5e: stamp the PC's derived AC (+max HP) onto the token so a GM attacking this player
+      // reads the AC straight from the stat block — no typed number. Solryn tokens carry none.
+      ...(isClassAndLevel(system) ? { stats: pcTokenStats(system, character) } : {}),
     });
-  }, [role, character, activeMap, partyScale, tokens, gameId, uid]);
+  }, [role, character, activeMap, partyScale, tokens, gameId, uid, system]);
 
   // On a travel-scale map the party shares one token. The GM's client seeds it (single
   // authority → no duplicate race); any player can then drag it. Once per such map.
@@ -157,6 +168,20 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
   const selected = selectedId ? (tokens.find((t) => t.id === selectedId) ?? null) : null;
 
+  // The current attack target (5e). We resolve its name + AC straight from the token's stats
+  // (monsters carry AC from the bestiary; PC tokens are stamped with pcTokenStats). Using the
+  // live token here also self-clears the target if it's removed from the board.
+  const targetToken = is5e && targetId ? (tokens.find((t) => t.id === targetId) ?? null) : null;
+  const target = targetToken
+    ? {
+        id: targetToken.id,
+        name: targetToken.name,
+        ...(typeof targetToken.stats?.ac === 'number' ? { ac: targetToken.stats.ac } : {}),
+      }
+    : undefined;
+  // Toggle a token as the current target (click the same one again to clear).
+  const onSetTarget = (id: string) => setTargetId((cur) => (cur === id ? null : id));
+
   // GM-selected creature → the merged stat card in a proper right-side slide-out panel
   // (same chrome/width as the Add-creature drawer). Other tokens keep the floating TokenCard.
   const showMonsterPanel = !!selected && selected.kind === 'creature' && canSeeMonsterStats(role);
@@ -172,6 +197,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               token={selected}
               gameId={gameId}
               uid={uid}
+              target={target}
               onClose={() => setSelectedId(null)}
             />
           ),
@@ -322,7 +348,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
         content:
           isClassAndLevel(system) ? (
-            <Dnd5eSheet system={system} character={character} />
+            <Dnd5eSheet system={system} character={character} target={target} />
           ) : (
             <CharacterQuickView
               system={system}
@@ -356,6 +382,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             measureScale={measureScale}
             selectedTokenId={selected?.id}
             highlightTokenId={highlightTokenId}
+            targetTokenId={target?.id}
             shapes={visibleShapes}
             shapeDraft={shapeDraft}
             onCommitShape={(shape) =>
@@ -366,6 +393,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
             }
             onSelectToken={(t) => setSelectedId(t?.id ?? null)}
+            // Right-click token menu: set the attack target (5e, without changing selection) and,
+            // for the GM, remove tokens. Only opened when there's an action; party is excluded.
+            onContextToken={(token, x, y) => {
+              if (token.kind === 'party') return;
+              const canTarget = is5e && (token.kind === 'character' || token.kind === 'creature');
+              if (canTarget || role === 'gm') setCtxMenu({ token, x, y });
+            }}
             onGrabParty={(id) => void grabPartyToken(gameId, id, uid)}
             onReleaseParty={(id) => void releasePartyToken(gameId, id)}
           />
@@ -388,6 +422,20 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             gameId={gameId}
             viewerCharacter={character}
             onClose={() => setSelectedId(null)}
+          />
+        )}
+
+        {ctxMenu && (
+          <TokenContextMenu
+            token={ctxMenu.token}
+            x={ctxMenu.x}
+            y={ctxMenu.y}
+            gameId={gameId}
+            is5e={is5e}
+            isTarget={ctxMenu.token.id === targetId}
+            onSetTarget={() => onSetTarget(ctxMenu.token.id)}
+            canRemove={role === 'gm'}
+            onClose={() => setCtxMenu(null)}
           />
         )}
 

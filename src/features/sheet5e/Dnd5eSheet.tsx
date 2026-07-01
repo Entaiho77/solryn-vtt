@@ -17,7 +17,16 @@ const row: React.CSSProperties = { display: 'flex', alignItems: 'center', justif
  * Solryn CharacterQuickView is untouched. Attacks route through the system's combat resolver
  * (attackRollVsAc) exactly like monsters: d20 + attack bonus vs an entered target AC.
  */
-export function Dnd5eSheet({ system, character }: { system: SystemDefinition; character: Character }) {
+export function Dnd5eSheet({
+  system,
+  character,
+  target,
+}: {
+  system: SystemDefinition;
+  character: Character;
+  /** The current click-to-target token (its AC is used when present); undefined → manual AC. */
+  target?: { id: string; name: string; ac?: number };
+}) {
   const { postRoll } = useRollLog();
   const resolver = getCombatResolver(system);
   const d = pcDerived(system, character);
@@ -27,14 +36,20 @@ export function Dnd5eSheet({ system, character }: { system: SystemDefinition; ch
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
 
+  // A targeted token with a known AC drives the roll (AC read from its stat block, name shown
+  // in the log); otherwise fall back to the typed Target AC.
+  const usingTarget = target != null && typeof target.ac === 'number';
+
   const rollAttack = (atk: (typeof d.attacks)[number]) =>
     postRoll(
       resolver.resolveAttack({
-        label: `${character.name} — ${atk.name}`,
+        label: usingTarget
+          ? `${character.name} → ${target!.name} — ${atk.name}`
+          : `${character.name} — ${atk.name}`,
         dice: atk.dice,
         damageType: atk.damageType,
         attackBonus: atk.attackBonus,
-        targetAc,
+        targetAc: usingTarget ? target!.ac : targetAc,
         advantage,
         // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
         ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
@@ -86,13 +101,20 @@ export function Dnd5eSheet({ system, character }: { system: SystemDefinition; ch
         </>
       )}
 
-      {/* Attacks — through attackRollVsAc, with a target AC + adv/dis (minimal targeting). */}
+      {/* Attacks — through attackRollVsAc. AC comes from the current target when one is set
+          (right-click a creature on the board); otherwise the typed Target AC is the fallback. */}
       <span className={s.label}>Attacks</span>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-        <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
-          Target AC
-          <input type="number" value={targetAc} onChange={(e) => setTargetAc(Number(e.target.value) || 0)} style={{ width: 56 }} />
-        </label>
+        {usingTarget ? (
+          <span className={s.itemMeta}>
+            Target: <strong>{target!.name}</strong> (AC {target!.ac})
+          </span>
+        ) : (
+          <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+            {target ? `${target.name} (no AC) — ` : ''}Target AC
+            <input type="number" value={targetAc} onChange={(e) => setTargetAc(Number(e.target.value) || 0)} style={{ width: 56 }} />
+          </label>
+        )}
         <select
           className={s.itemMeta}
           value={advantage ?? 'normal'}
@@ -110,6 +132,9 @@ export function Dnd5eSheet({ system, character }: { system: SystemDefinition; ch
           </label>
         )}
       </div>
+      {!usingTarget && (
+        <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
+      )}
       {d.attacks.map((atk) => (
         <div key={atk.name} style={row}>
           <span className={s.itemMeta}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>

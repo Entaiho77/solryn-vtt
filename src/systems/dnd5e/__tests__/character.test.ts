@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Character } from '../../../data/types';
 import { dnd5eSystem } from '../index';
-import { effectiveScores, pcDerived } from '../character';
+import { effectiveScores, pcDerived, pcTokenStats } from '../character';
 
 // A standard-array Human Fighter: STR15 DEX13 CON14 INT10 WIS12 CHA8 (+1 all from Human).
 const ASSIGNED = { STR: 15, DEX: 13, CON: 14, INT: 10, WIS: 12, CHA: 8 };
@@ -98,5 +98,19 @@ describe('martial distinctions', () => {
     const d = pcDerived(dnd5eSystem, pc('fighter', { STR: 16, DEX: 14, CON: 15, INT: 11, WIS: 13, CHA: 9 }, ['longsword'], 'chain-mail'));
     expect(d.ac).toBe(16);
     expect(d.attacks[0]).toMatchObject({ name: 'Longsword', dice: '1d8+3', attackBonus: 5 });
+  });
+});
+
+describe('pcTokenStats — AC stamped onto the PC token for click-to-target', () => {
+  it('exposes the same AC + max HP as the sheet (Human Fighter in chain mail)', () => {
+    const c = humanFighter();
+    const d = pcDerived(dnd5eSystem, c);
+    expect(pcTokenStats(dnd5eSystem, c)).toEqual({ ac: d.ac, maxHp: d.maxHp });
+    expect(pcTokenStats(dnd5eSystem, c).ac).toBe(16); // a GM attacking this PC reads AC 16
+  });
+
+  it('tracks Unarmored Defense (Barbarian AC 14, no armor)', () => {
+    const barb = pc('barbarian', { STR: 16, DEX: 14, CON: 15, INT: 10, WIS: 12, CHA: 10 }, ['greataxe']);
+    expect(pcTokenStats(dnd5eSystem, barb).ac).toBe(14);
   });
 });

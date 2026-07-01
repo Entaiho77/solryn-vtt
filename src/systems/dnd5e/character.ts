@@ -116,3 +116,12 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     ...(typeof sneakAttackDice === 'string' ? { sneakAttackDice } : {}),
   };
 }
+
+/**
+ * The combat numbers to stamp onto a 5e PC's token so other users (the GM) can target it —
+ * its AC (read when a monster attacks the PC) and max HP. Uses the same derivation as the sheet.
+ */
+export function pcTokenStats(system: SystemDefinition, character: Character): { ac: number; maxHp: number } {
+  const d = pcDerived(system, character);
+  return { ac: d.ac, maxHp: d.maxHp };
+}

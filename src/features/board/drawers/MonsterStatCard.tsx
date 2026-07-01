@@ -73,6 +73,7 @@ export function MonsterStatCard({
   token,
   gameId,
   uid,
+  target,
   onClose,
 }: {
   system: SystemDefinition;
@@ -82,6 +83,9 @@ export function MonsterStatCard({
   gameId?: string;
   /** Present in GM context → enables the bestiary token-art upload (per-GM global). */
   uid?: string;
+  /** Current click-to-target token (5e), set via the board right-click menu. Attacks read its
+   *  AC when set; otherwise the manual Target AC below is the fallback. */
+  target?: { id: string; name: string; ac?: number };
   onClose?: () => void;
 }) {
   const { postRoll } = useRollLog();
@@ -114,14 +118,17 @@ export function MonsterStatCard({
 
   const st = entry.stats;
   const resolver = getCombatResolver(system);
+  // Resolve against the clicked target's AC when one is set (and it isn't this creature's own
+  // token — a creature never attacks itself); otherwise fall back to the typed Target AC.
+  const usingTarget = rollToHit && target != null && typeof target.ac === 'number' && target.id !== token?.id;
   const post = (label: string, diceExpr: string, type?: string, attackBonus?: number) =>
     postRoll(
       resolver.resolveAttack({
-        label: `${entry.name} — ${label}`,
+        label: usingTarget ? `${entry.name} → ${target!.name} — ${label}` : `${entry.name} — ${label}`,
         dice: diceExpr,
         damageType: type,
         attackBonus,
-        targetAc: rollToHit ? targetAc : undefined,
+        targetAc: rollToHit ? (usingTarget ? target!.ac : targetAc) : undefined,
         advantage: rollToHit ? advantage : undefined,
       }).logText,
     );
@@ -187,15 +194,21 @@ export function MonsterStatCard({
 
       {rollToHit && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-          <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
-            Target AC
-            <input
-              type="number"
-              value={targetAc}
-              onChange={(e) => setTargetAc(Number(e.target.value) || 0)}
-              style={{ width: 56 }}
-            />
-          </label>
+          {usingTarget ? (
+            <span className={s.itemMeta}>
+              Attacking <strong>{target!.name}</strong> (AC {target!.ac})
+            </span>
+          ) : (
+            <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+              {target && target.id !== token?.id ? `${target.name} (no AC) — ` : ''}Target AC
+              <input
+                type="number"
+                value={targetAc}
+                onChange={(e) => setTargetAc(Number(e.target.value) || 0)}
+                style={{ width: 56 }}
+              />
+            </label>
+          )}
           <select
             className={s.itemMeta}
             value={advantage ?? 'normal'}
@@ -207,6 +220,9 @@ export function MonsterStatCard({
             <option value="disadvantage">Disadvantage</option>
           </select>
         </div>
+      )}
+      {rollToHit && !usingTarget && (
+        <p className={s.hint}>Right-click a token on the board to attack its AC automatically.</p>
       )}
 
       {/* Roll-vs-DC: this creature (the defender) rolls a save / check vs an entered DC. */}

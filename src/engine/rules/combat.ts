@@ -124,9 +124,16 @@ const attackRollVsAc: CombatResolver = {
     const bonus = bonusDamage ? (crit ? rollCritDamage(bonusDamage.dice, rng) : rollDice(bonusDamage.dice, rng)) : null;
     const total = dmg.total + (bonus?.total ?? 0);
     const head = crit ? 'natural 20 — CRIT' : `${toHit} vs AC ${targetAc} — HIT`;
-    const dmgText = bonus
-      ? `${dmg.total}${typeStr} + ${bonus.total} ${bonusDamage!.label} = ${total} damage`
-      : `${total}${typeStr} damage`;
+    // Individual dice + modifier, e.g. [3,4] +2 → "3+4+2" (empty modifier for 0), matching the
+    // describeRoll breakdown style. Only crits show this; a normal hit stays total-only.
+    const breakdown = (r: RollResult) => `${r.rolls.join('+')}${sign(r.modifier)}`;
+    const dmgText = crit
+      ? bonus
+        ? `${breakdown(dmg)}${typeStr} + ${breakdown(bonus)} ${bonusDamage!.label} = ${total} damage`
+        : `${breakdown(dmg)} = ${total}${typeStr} damage`
+      : bonus
+        ? `${dmg.total}${typeStr} + ${bonus.total} ${bonusDamage!.label} = ${total} damage`
+        : `${total}${typeStr} damage`;
     return {
       hit: true,
       crit,

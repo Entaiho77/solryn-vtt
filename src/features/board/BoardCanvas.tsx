@@ -72,6 +72,8 @@ interface BoardCanvasProps {
   selectedTokenId?: string;
   /** Current-turn combatant's token, drawn with a glow. */
   highlightTokenId?: string;
+  /** The viewer's current attack target (5e), drawn with a distinct ring. */
+  targetTokenId?: string;
   /** Persisted AoE/measurement shapes to draw (already filtered to this map + visibility). */
   shapes?: BoardShape[];
   /** Armed shape from the Shapes drawer (tool === 'shape'); null when none armed. */
@@ -80,6 +82,8 @@ interface BoardCanvasProps {
   onMoveToken: (tokenId: string, col: number, row: number) => void;
   onToggleFog: (col: number, row: number, fogged: boolean) => void;
   onSelectToken: (token: Token | null) => void;
+  /** Right-click a token → raise a context menu at (clientX, clientY). Absent → no menu. */
+  onContextToken?: (token: Token, x: number, y: number) => void;
   /** Party-token soft-lock: grab on drag start, release on drop. */
   onGrabParty: (tokenId: string) => void;
   onReleaseParty: (tokenId: string) => void;
@@ -146,12 +150,14 @@ export function BoardCanvas({
   measureScale,
   selectedTokenId,
   highlightTokenId,
+  targetTokenId,
   shapes,
   shapeDraft,
   onCommitShape,
   onMoveToken,
   onToggleFog,
   onSelectToken,
+  onContextToken,
   onGrabParty,
   onReleaseParty,
 }: BoardCanvasProps) {
@@ -378,6 +384,18 @@ export function BoardCanvas({
         ctx.stroke();
       }
 
+      // Attack-target reticle: a distinct dashed amber ring (5e click-to-target).
+      if (token.id === targetTokenId) {
+        ctx.save();
+        ctx.strokeStyle = COLORS.amber;
+        ctx.lineWidth = 3 / cam.zoom;
+        ctx.setLineDash([5 / cam.zoom, 4 / cam.zoom]);
+        ctx.beginPath();
+        ctx.arc(x, y, radius + 4, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
       const selected = token.id === selectedTokenId;
       const sprung = token.kind === 'trap' && token.trapState === 'sprung';
       // Red ring while the drag ghost is over a cell it can't legally land on.
@@ -451,6 +469,7 @@ export function BoardCanvas({
     uid,
     selectedTokenId,
     highlightTokenId,
+    targetTokenId,
     ghost,
     measure,
     shapes,
@@ -617,12 +636,26 @@ export function BoardCanvas({
     setGhost(null);
   }
 
-  // Right-click clears an active measuring line instead of starting a new one.
+  // Right-click: while measuring, clear the line. Otherwise raise a token context menu for the
+  // topmost visible token under the cursor (hit-tested by cell, like a fresh left-click).
   function handleContextMenu(e: MouseEvent<HTMLCanvasElement>) {
     if (tool === 'measure') {
       e.preventDefault();
       measuringRef.current = false;
       setMeasure(null);
+      return;
+    }
+    if (!onContextToken) return;
+    const { col, row } = eventCell(e);
+    const stack = tokensAtCell(
+      onMap.filter((t) => tokenVisibility(t, uid, role) !== 'hidden'),
+      col,
+      row,
+    );
+    const hit = stack[stack.length - 1];
+    if (hit) {
+      e.preventDefault();
+      onContextToken(hit, e.clientX, e.clientY);
     }
   }
 
