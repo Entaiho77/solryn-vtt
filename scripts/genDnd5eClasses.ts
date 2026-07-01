@@ -26,6 +26,18 @@ const SUBCLASS_LEVEL: Record<string, number> = {
   barbarian: 3, bard: 3, cleric: 1, druid: 2, fighter: 3, monk: 3, paladin: 3, ranger: 3,
   rogue: 3, sorcerer: 1, warlock: 1, wizard: 2,
 };
+// Unarmored Defense: 10 + DEX + this ability's mod (when no armor is worn).
+const UNARMORED_DEFENSE: Record<string, string> = { barbarian: 'CON', monk: 'WIS' };
+// Thematic starting kit (weapon ids + optional armor id) — ids must exist in dnd5e equipment.
+const STARTER_KIT: Record<string, { weaponIds: string[]; armorId?: string }> = {
+  fighter: { weaponIds: ['longsword'], armorId: 'chain-mail' },
+  barbarian: { weaponIds: ['greataxe'] }, // no armor → Unarmored Defense
+  rogue: { weaponIds: ['rapier', 'shortbow'], armorId: 'leather-armor' },
+  monk: { weaponIds: ['quarterstaff'] }, // no armor → Unarmored Defense
+  paladin: { weaponIds: ['longsword'], armorId: 'chain-mail' },
+  ranger: { weaponIds: ['shortsword', 'shortbow'], armorId: 'leather-armor' },
+};
+const DEFAULT_KIT = { weaponIds: ['dagger'], armorId: 'leather-armor' }; // casters (pending)
 
 const up = (s: string) => s.toUpperCase();
 
@@ -106,6 +118,8 @@ const classes = classesSrc.map((c: any) => {
     levels,
     subclassLevel: SUBCLASS_LEVEL[c.index],
     subclasses: [],
+    starterKit: STARTER_KIT[c.index] ?? DEFAULT_KIT,
+    ...(UNARMORED_DEFENSE[c.index] ? { unarmoredDefense: { ability: UNARMORED_DEFENSE[c.index] } } : {}),
   };
   if (c.spellcasting) {
     cls.spellcasting = {

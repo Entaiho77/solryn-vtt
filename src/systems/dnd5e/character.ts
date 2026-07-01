@@ -42,6 +42,8 @@ export interface PcDerived {
   saves: { id: AbilityId; mod: number; proficient: boolean }[];
   skills: { id: string; name: string; ability?: string; mod: number }[];
   attacks: { name: string; dice: string; damageType: string; attackBonus: number }[];
+  /** Rogue Sneak Attack dice at the character's level (e.g. "1d6"), if the class has it. */
+  sneakAttackDice?: string;
 }
 
 /**
@@ -61,10 +63,14 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   const pb = cls ? proficiencyBonus(cls, level) : 2;
 
   const armor = system.equipment.armor.find((a) => a.id === character.play.equippedArmorId);
+  // AC: worn armor wins; else Unarmored Defense (Barbarian/Monk) = 10 + DEX + class ability;
+  // else plain 10 + DEX. Armored classes (Fighter) are unaffected.
   const ac =
     armor?.baseAc != null
       ? armorClass(mods.DEX, { baseAc: armor.baseAc, maxDexBonus: armor.maxDexBonus })
-      : armorClass(mods.DEX);
+      : cls?.unarmoredDefense
+        ? 10 + mods.DEX + (mods[cls.unarmoredDefense.ability] ?? 0)
+        : armorClass(mods.DEX);
 
   const maxHp = cls ? maxHitPoints(cls, level, mods.CON) : 0;
 
@@ -84,14 +90,29 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     .map((wid) => system.equipment.weapons.find((w) => w.id === wid))
     .filter((w): w is NonNullable<typeof w> => !!w)
     .map((w) => {
-      const aMod = w.range ? mods.DEX : mods.STR; // ranged = Dex, melee = Str (no finesse yet)
+      // Finesse → best of STR/DEX; pure ranged → DEX; melee → STR.
+      const aMod = w.finesse ? Math.max(mods.STR, mods.DEX) : w.range ? mods.DEX : mods.STR;
       return {
         name: w.name,
         dice: diceWithMod(w.damageDice, aMod),
         damageType: w.damageType ?? '',
-        attackBonus: attackBonus(aMod, pb), // Fighter is proficient with all its weapons
+        attackBonus: attackBonus(aMod, pb), // proficient with class weapons
       };
     });
 
-  return { cls, scores, mods, proficiencyBonus: pb, ac, maxHp, saves, skills, attacks };
+  // Rogue Sneak Attack dice at this level (from the class table counters; SRD key snake_case).
+  const sneakAttackDice = cls?.levels.find((l) => l.level === level)?.counters?.sneak_attack;
+
+  return {
+    cls,
+    scores,
+    mods,
+    proficiencyBonus: pb,
+    ac,
+    maxHp,
+    saves,
+    skills,
+    attacks,
+    ...(typeof sneakAttackDice === 'string' ? { sneakAttackDice } : {}),
+  };
 }

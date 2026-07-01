@@ -287,7 +287,15 @@ export const generatedClasses: ClassDefinition[] = [
       }
     ],
     "subclassLevel": 3,
-    "subclasses": []
+    "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "greataxe"
+      ]
+    },
+    "unarmoredDefense": {
+      "ability": "CON"
+    }
   },
   {
     "id": "bard",
@@ -593,6 +601,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 3,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "dagger"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "CHA",
       "type": "known"
@@ -860,6 +874,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 1,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "dagger"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "WIS",
       "type": "prepared"
@@ -1110,6 +1130,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 2,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "dagger"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "WIS",
       "type": "prepared"
@@ -1389,7 +1415,13 @@ export const generatedClasses: ClassDefinition[] = [
       }
     ],
     "subclassLevel": 3,
-    "subclasses": []
+    "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "longsword"
+      ],
+      "armorId": "chain-mail"
+    }
   },
   {
     "id": "monk",
@@ -1681,7 +1713,15 @@ export const generatedClasses: ClassDefinition[] = [
       }
     ],
     "subclassLevel": 3,
-    "subclasses": []
+    "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "quarterstaff"
+      ]
+    },
+    "unarmoredDefense": {
+      "ability": "WIS"
+    }
   },
   {
     "id": "paladin",
@@ -1914,6 +1954,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 3,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "longsword"
+      ],
+      "armorId": "chain-mail"
+    },
     "spellcasting": {
       "ability": "CHA",
       "type": "prepared"
@@ -2190,6 +2236,13 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 3,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "shortsword",
+        "shortbow"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "WIS",
       "type": "known"
@@ -2453,7 +2506,14 @@ export const generatedClasses: ClassDefinition[] = [
       }
     ],
     "subclassLevel": 3,
-    "subclasses": []
+    "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "rapier",
+        "shortbow"
+      ],
+      "armorId": "leather-armor"
+    }
   },
   {
     "id": "sorcerer",
@@ -2706,6 +2766,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 1,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "dagger"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "CHA",
       "type": "known"
@@ -2974,6 +3040,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 1,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "dagger"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "CHA",
       "type": "known"
@@ -3209,6 +3281,12 @@ export const generatedClasses: ClassDefinition[] = [
     ],
     "subclassLevel": 2,
     "subclasses": [],
+    "starterKit": {
+      "weaponIds": [
+        "dagger"
+      ],
+      "armorId": "leather-armor"
+    },
     "spellcasting": {
       "ability": "INT",
       "type": "prepared"

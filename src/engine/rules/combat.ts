@@ -41,6 +41,9 @@ export interface AttackInput {
   targetAc?: number;
   /** Roll the d20 with advantage/disadvantage (attack-roll-vs-ac only). */
   advantage?: 'advantage' | 'disadvantage';
+  /** Extra damage dice added on a hit (e.g. Rogue Sneak Attack); doubled on a crit like the
+   *  weapon dice. Rolled and shown separately. */
+  bonusDamage?: { dice: string; label: string };
   /** Injectable RNG for deterministic tests. */
   rng?: Rng;
 }
@@ -98,7 +101,7 @@ function rollCritDamage(dice: string, rng?: Rng): RollResult {
  * 1 → auto-miss. Otherwise total ≥ AC hits. Solryn's autoHitVsDr is unaffected.
  */
 const attackRollVsAc: CombatResolver = {
-  resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, rng }) {
+  resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, bonusDamage, rng }) {
     const face = rollD20Face(advantage, rng); // raw natural value of the kept die
     const attackRoll = face + attackBonus;
     const advTag =
@@ -117,15 +120,21 @@ const attackRollVsAc: CombatResolver = {
       return { hit: false, attackRoll, rolls: [], modifier: 0, damage: 0, logText: `${label}: ${toHit} vs AC ${targetAc} — MISS` };
     }
     const dmg = crit ? rollCritDamage(dice, rng) : rollDice(dice, rng);
+    // Bonus damage dice (Sneak Attack) also double on a crit, per 5e.
+    const bonus = bonusDamage ? (crit ? rollCritDamage(bonusDamage.dice, rng) : rollDice(bonusDamage.dice, rng)) : null;
+    const total = dmg.total + (bonus?.total ?? 0);
     const head = crit ? 'natural 20 — CRIT' : `${toHit} vs AC ${targetAc} — HIT`;
+    const dmgText = bonus
+      ? `${dmg.total}${typeStr} + ${bonus.total} ${bonusDamage!.label} = ${total} damage`
+      : `${total}${typeStr} damage`;
     return {
       hit: true,
       crit,
       attackRoll,
       rolls: dmg.rolls,
       modifier: dmg.modifier,
-      damage: dmg.total,
-      logText: `${label}: ${head}, ${dmg.total}${typeStr} damage`,
+      damage: total,
+      logText: `${label}: ${head}, ${dmgText}`,
     };
   },
 };

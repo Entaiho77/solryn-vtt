@@ -62,3 +62,41 @@ describe('5e Human Fighter (level 1) derivation', () => {
     expect(ath?.mod).toBe(5); // STR 3 + prof 2
   });
 });
+
+function pc(classId: string, scores: Record<string, number>, weaponIds: string[], armorId?: string): Character {
+  return {
+    id: 'pc', gameId: 'g', ownerUserId: 'u', systemId: 'dnd5e', name: 'X', buildComplete: true,
+    definition: { ancestryId: 'human', classId, coreScores: scores, chosenSkillIds: [], knownSpellIds: [] },
+    play: { level: 1, reputation: 'Unaligned', pools: {}, skills: {}, equippedWeaponIds: weaponIds, ...(armorId ? { equippedArmorId: armorId } : {}) },
+  };
+}
+
+describe('martial distinctions', () => {
+  it('Barbarian Unarmored Defense: AC 10 + DEX + CON with no armor', () => {
+    // DEX 14 (+2), CON 15 (+2) → 10 + 2 + 2 = 14; greataxe (STR) attack
+    const d = pcDerived(dnd5eSystem, pc('barbarian', { STR: 16, DEX: 14, CON: 15, INT: 10, WIS: 12, CHA: 10 }, ['greataxe']));
+    expect(d.ac).toBe(14);
+    expect(d.maxHp).toBe(14); // d12 + CON 2
+    expect(d.attacks[0]).toMatchObject({ name: 'Greataxe', dice: '1d12+3', attackBonus: 5 });
+  });
+
+  it('Monk Unarmored Defense uses WIS', () => {
+    const d = pcDerived(dnd5eSystem, pc('monk', { STR: 12, DEX: 16, CON: 12, INT: 10, WIS: 14, CHA: 10 }, ['quarterstaff']));
+    expect(d.ac).toBe(10 + 3 + 2); // DEX +3, WIS +2 = 15
+  });
+
+  it('Rogue finesse: rapier uses DEX when higher, and exposes Sneak Attack dice', () => {
+    // STR 10 (0), DEX 16 (+3) → finesse picks DEX; leather AC 11 + DEX 3 = 14
+    const d = pcDerived(dnd5eSystem, pc('rogue', { STR: 10, DEX: 16, CON: 12, INT: 13, WIS: 10, CHA: 10 }, ['rapier', 'shortbow'], 'leather-armor'));
+    expect(d.ac).toBe(14);
+    const rapier = d.attacks.find((a) => a.name === 'Rapier');
+    expect(rapier).toMatchObject({ dice: '1d8+3', attackBonus: 5 }); // DEX +3 + prof 2
+    expect(d.sneakAttackDice).toBe('1d6');
+  });
+
+  it('Fighter regression: armored AC 16 and STR longsword unchanged', () => {
+    const d = pcDerived(dnd5eSystem, pc('fighter', { STR: 16, DEX: 14, CON: 15, INT: 11, WIS: 13, CHA: 9 }, ['longsword'], 'chain-mail'));
+    expect(d.ac).toBe(16);
+    expect(d.attacks[0]).toMatchObject({ name: 'Longsword', dice: '1d8+3', attackBonus: 5 });
+  });
+});
