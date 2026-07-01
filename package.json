@@ -15,7 +15,8 @@
     "seed:export": "vite-node scripts/exportSeed.ts",
     "seed:push": "firebase database:set /systems ./seed/systems.json",
     "gen:bestiary": "vite-node scripts/genBestiary.ts",
-    "gen:bestiary5e": "vite-node scripts/genDnd5eBestiary.ts"
+    "gen:bestiary5e": "vite-node scripts/genDnd5eBestiary.ts",
+    "gen:classes5e": "vite-node scripts/genDnd5eClasses.ts"
   },
   "dependencies": {
     "firebase": "^12.15.0",

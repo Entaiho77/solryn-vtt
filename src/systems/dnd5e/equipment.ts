@@ -12,7 +12,12 @@ export const equipment: EquipmentDefinition = {
   ],
   weapons: [
     { id: 'longsword', name: 'Longsword', weaponSkillId: 'martial', damageDice: '1d8', damageType: 'Slashing' },
-    { id: 'shortbow', name: 'Shortbow', weaponSkillId: 'martial', damageDice: '1d6', damageType: 'Piercing', range: '80/320' },
+    { id: 'greataxe', name: 'Greataxe', weaponSkillId: 'martial', damageDice: '1d12', damageType: 'Slashing', twoHanded: true },
+    { id: 'rapier', name: 'Rapier', weaponSkillId: 'martial', damageDice: '1d8', damageType: 'Piercing', finesse: true },
+    { id: 'shortsword', name: 'Shortsword', weaponSkillId: 'martial', damageDice: '1d6', damageType: 'Piercing', finesse: true },
+    { id: 'dagger', name: 'Dagger', weaponSkillId: 'simple', damageDice: '1d4', damageType: 'Piercing', finesse: true, range: '20/60' },
+    { id: 'quarterstaff', name: 'Quarterstaff', weaponSkillId: 'simple', damageDice: '1d6', damageType: 'Bludgeoning' },
+    { id: 'shortbow', name: 'Shortbow', weaponSkillId: 'simple', damageDice: '1d6', damageType: 'Piercing', range: '80/320' },
   ],
   startingKit: [{ name: "Explorer's pack" }],
 };

@@ -220,6 +220,8 @@ export interface WeaponItem {
   twoHanded?: boolean;
   cost?: number;
   provisional?: boolean;
+  /** 5e finesse weapon: may use DEX instead of STR for attack & damage. */
+  finesse?: boolean;
 }
 
 export interface StartingKitItem {
@@ -436,6 +438,10 @@ export interface ClassDefinition {
   startingEquipment: string[];
   /** Spellcasting model (casters only); the slots themselves live in the level table. */
   spellcasting?: { ability: string; type: 'prepared' | 'known'; ritual?: boolean };
+  /** Unarmored Defense (Barbarian/Monk): when no armor is worn, AC = 10 + DEX + this ability's mod. */
+  unarmoredDefense?: { ability: string };
+  /** Thematic starting kit (equipped at creation): weapon ids + optional armor id. */
+  starterKit?: { weaponIds: string[]; armorId?: string };
   /** The 1–20 level table. */
   levels: ClassLevel[];
   /** Level the subclass is chosen at, and the (minimal for now) options. */

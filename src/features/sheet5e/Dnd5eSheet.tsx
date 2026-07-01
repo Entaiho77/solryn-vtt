@@ -25,6 +25,7 @@ export function Dnd5eSheet({ system, character }: { system: SystemDefinition; ch
 
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
+  const [sneak, setSneak] = useState(false);
 
   const rollAttack = (atk: (typeof d.attacks)[number]) =>
     postRoll(
@@ -35,6 +36,8 @@ export function Dnd5eSheet({ system, character }: { system: SystemDefinition; ch
         attackBonus: atk.attackBonus,
         targetAc,
         advantage,
+        // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
+        ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
       }).logText,
     );
 
@@ -100,6 +103,12 @@ export function Dnd5eSheet({ system, character }: { system: SystemDefinition; ch
           <option value="advantage">Advantage</option>
           <option value="disadvantage">Disadvantage</option>
         </select>
+        {d.sneakAttackDice && (
+          <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }} title="Adds Sneak Attack dice on a hit — enable when it applies (advantage or an ally adjacent).">
+            <input type="checkbox" checked={sneak} onChange={(e) => setSneak(e.target.checked)} />
+            Sneak Attack ({d.sneakAttackDice})
+          </label>
+        )}
       </div>
       {d.attacks.map((atk) => (
         <div key={atk.name} style={row}>

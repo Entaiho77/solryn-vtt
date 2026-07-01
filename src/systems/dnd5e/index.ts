@@ -17,7 +17,7 @@ import type {
 import { c } from '../../engine/schema';
 import { bestiary } from './bestiary';
 import { skills, skillCategories } from './skills';
-import { fighter } from './classes/fighter';
+import { generatedClasses } from './classes.generated';
 import { ancestries } from './races';
 import { equipment } from './equipment';
 
@@ -91,9 +91,9 @@ const creation: CreationConfig = {
   },
 };
 
-// Class-and-level content. Phase A populates Fighter only as proof the shapes hold; other
-// classes and backgrounds are defined-but-minimal (filled in Phase C onward).
-const classes: ClassDefinition[] = [fighter];
+// All 12 SRD classes (generated 1–20 tables). Martials/half-casters are fully playable;
+// full-casters are chassis-only until the spellcasting subsystem. Backgrounds minimal.
+const classes: ClassDefinition[] = generatedClasses;
 const backgrounds: BackgroundDefinition[] = [];
 
 // 5e uses a 5 ft tactical grid; region/world are travel-scale. Enough for maps to work.

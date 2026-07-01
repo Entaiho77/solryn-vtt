@@ -241,3 +241,48 @@ describe('attackRollVsAc — crits & fumbles (raw natural d20)', () => {
     expect(res.logText).toBe('Claw: 1d20 = 5 (dis) vs AC 10 — MISS');
   });
 });
+
+describe('attackRollVsAc — bonus damage (Rogue Sneak Attack)', () => {
+  const dnd = { modes: { combat: { id: 'attack-roll-vs-ac' } } } as unknown as SystemDefinition;
+  const resolver = getCombatResolver(dnd);
+
+  it('hit: adds bonus dice, shown separately in the log', () => {
+    // d20 14 → hit; weapon 1d8+3 → d8=5 → 8; Sneak 1d6 → 4
+    const res = resolver.resolveAttack({
+      label: 'Aria — Rapier',
+      dice: '1d8+3',
+      damageType: 'Piercing',
+      attackBonus: 5,
+      targetAc: 10,
+      bonusDamage: { dice: '1d6', label: 'Sneak Attack' },
+      rng: seqRng([face(14, 20), face(5, 8), face(4, 6)]),
+    });
+    expect(res.hit).toBe(true);
+    expect(res.damage).toBe(12); // 8 + 4
+    expect(res.logText).toBe('Aria — Rapier: 1d20+5 = 19 vs AC 10 — HIT, 8 Piercing + 4 Sneak Attack = 12 damage');
+  });
+
+  it('crit: bonus dice double too (2d8+3 weapon, 2d6 sneak)', () => {
+    // d20 20 → crit; weapon crit 2d8+3 → 5,6 → 14; sneak crit 2d6 → 4,3 → 7
+    const res = resolver.resolveAttack({
+      label: 'Aria — Rapier',
+      dice: '1d8+3',
+      damageType: 'Piercing',
+      attackBonus: 5,
+      targetAc: 99,
+      bonusDamage: { dice: '1d6', label: 'Sneak Attack' },
+      rng: seqRng([face(20, 20), face(5, 8), face(6, 8), face(4, 6), face(3, 6)]),
+    });
+    expect(res.crit).toBe(true);
+    expect(res.damage).toBe(21); // 14 + 7
+    expect(res.logText).toBe('Aria — Rapier: natural 20 — CRIT, 14 Piercing + 7 Sneak Attack = 21 damage');
+  });
+
+  it('no bonusDamage → log format unchanged (regression)', () => {
+    const res = resolver.resolveAttack({
+      label: 'Goblin — Scimitar', dice: '1d6+2', damageType: 'Slashing', attackBonus: 4, targetAc: 15,
+      rng: seqRng([face(14, 20), face(3, 6)]),
+    });
+    expect(res.logText).toBe('Goblin — Scimitar: 1d20+4 = 18 vs AC 15 — HIT, 5 Slashing damage');
+  });
+});

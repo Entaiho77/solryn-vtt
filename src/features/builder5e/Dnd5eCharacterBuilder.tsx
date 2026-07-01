@@ -81,6 +81,11 @@ export function Dnd5eCharacterBuilder({
     }
   })();
 
+  // The chosen class's thematic starting kit (falls back to a longsword if a class lacks one).
+  const kit = (system.classes ?? []).find((c) => c.id === draft.classId)?.starterKit ?? {
+    weaponIds: ['longsword'],
+  };
+
   // Live preview of the finished combat numbers (built once enough is chosen).
   const preview = useMemo(() => {
     if (!assignedAll || !draft.classId) return null;
@@ -93,10 +98,10 @@ export function Dnd5eCharacterBuilder({
       name: draft.name,
       buildComplete: false,
       definition: { ancestryId: draft.raceId ?? '', classId: draft.classId, coreScores: scores, chosenSkillIds: draft.chosenSkillIds, knownSpellIds: [] },
-      play: { level: 1, reputation: system.creation.startingReputation, pools: {}, skills: {}, equippedWeaponIds: ['longsword'], equippedArmorId: 'chain-mail' },
+      play: { level: 1, reputation: system.creation.startingReputation, pools: {}, skills: {}, equippedWeaponIds: kit.weaponIds, ...(kit.armorId ? { equippedArmorId: kit.armorId } : {}) },
     } as Character;
     return pcDerived(system, character);
-  }, [assignedAll, draft, human, system, gameId, ownerUserId]);
+  }, [assignedAll, draft, human, system, gameId, ownerUserId, kit]);
 
   async function finish() {
     if (!preview) return;
@@ -121,8 +126,8 @@ export function Dnd5eCharacterBuilder({
         reputation: system.creation.startingReputation,
         pools: { hp: { current: preview.maxHp } },
         skills: {},
-        equippedWeaponIds: ['longsword'],
-        equippedArmorId: 'chain-mail',
+        equippedWeaponIds: kit.weaponIds,
+        ...(kit.armorId ? { equippedArmorId: kit.armorId } : {}),
       },
     };
     try {
@@ -197,16 +202,22 @@ export function Dnd5eCharacterBuilder({
 
       {kind === 'class' && (
         <div className={s.statList}>
-          {(system.classes ?? []).map((cl) => (
-            <button
-              key={cl.id}
-              className={[s.statRow, draft.classId === cl.id ? s.active : ''].filter(Boolean).join(' ')}
-              onClick={() => setDraft((d) => ({ ...d, classId: cl.id }))}
-            >
-              <span className={s.statName}>{cl.name}</span>
-              <span className={s.statMod}>Hit die {cl.hitDie} · saves {cl.savingThrows.join('/')}</span>
-            </button>
-          ))}
+          {(system.classes ?? []).map((cl) => {
+            const casterPending = !!cl.spellcasting; // spells aren't implemented yet
+            return (
+              <button
+                key={cl.id}
+                className={[s.statRow, draft.classId === cl.id ? s.active : ''].filter(Boolean).join(' ')}
+                onClick={() => setDraft((d) => ({ ...d, classId: cl.id }))}
+              >
+                <span className={s.statName}>
+                  {cl.name}
+                  {casterPending && <span className={s.statMod}> (spells coming soon)</span>}
+                </span>
+                <span className={s.statMod}>Hit die {cl.hitDie} · saves {cl.savingThrows.join('/')}</span>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -246,7 +257,20 @@ export function Dnd5eCharacterBuilder({
               {preview.attacks.map((a) => (
                 <div key={a.name}>{a.name}: {sign(a.attackBonus)} to hit, {a.dice} {a.damageType}</div>
               ))}
-              <div>Gear: Longsword, Chain Mail (equipped)</div>
+              <div>
+                Gear:{' '}
+                {[
+                  ...kit.weaponIds.map((id) => system.equipment.weapons.find((w) => w.id === id)?.name ?? id),
+                  kit.armorId ? (system.equipment.armor.find((a) => a.id === kit.armorId)?.name ?? kit.armorId) : 'no armor',
+                ].join(', ')}{' '}
+                (equipped)
+              </div>
+              {preview.cls?.spellcasting && (
+                <div style={{ color: 'var(--accent-amber)' }}>
+                  Spellcasting isn't implemented yet — this class is playable for martial combat;
+                  its spells arrive in a later phase.
+                </div>
+              )}
             </div>
           )}
           {error && <p style={{ color: 'var(--accent-red)' }}>{error}</p>}
