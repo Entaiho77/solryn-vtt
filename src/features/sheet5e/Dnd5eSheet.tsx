@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import type { SystemDefinition } from '../../engine/schema';
+import { useMemo, useState } from 'react';
+import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { getCombatResolver } from '../../engine/rules';
-import { setPoolCurrent } from '../../data/characters';
+import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
+import { restoreSpellSlots, setPoolCurrent, setSpellSlot } from '../../data/characters';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
+import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
+import { spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
+import { LevelUpModal } from './LevelUpModal';
 import { Button } from '../../components/ui/Button';
 import { ResourceTracker } from '../sheet/ResourceTracker';
 import { useRollLog } from '../rolllog/rollLog';
@@ -12,10 +15,21 @@ import s from '../board/drawers/drawers.module.css';
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 const row: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' };
 
+const spellById = (id: string): Dnd5eSpell | undefined => allSpells.find((sp) => sp.id === id);
+const levelLabel = (lvl: number) => (lvl === 0 ? 'Cantrips' : `Level ${lvl}`);
+
+/** Group spells by level, ascending (cantrips first). */
+function byLevel(list: Dnd5eSpell[]): [number, Dnd5eSpell[]][] {
+  const m = new Map<number, Dnd5eSpell[]>();
+  for (const sp of list) (m.get(sp.level) ?? m.set(sp.level, []).get(sp.level)!).push(sp);
+  return [...m.entries()].sort((a, b) => a[0] - b[0]);
+}
+
 /**
  * The 5e play sheet (in-game drawer) — selected by system for class-and-level characters; the
- * Solryn CharacterQuickView is untouched. Attacks route through the system's combat resolver
- * (attackRollVsAc) exactly like monsters: d20 + attack bonus vs an entered target AC.
+ * Solryn CharacterQuickView is untouched. Casters get two tabs (Combat / Spellbook); non-casters
+ * see the single combat sheet with no tabs and no spell section. Attacks and attack spells route
+ * through the shared attackRollVsAc resolver; save/utility spells post via the ability-roll path.
  */
 export function Dnd5eSheet({
   system,
@@ -32,20 +46,27 @@ export function Dnd5eSheet({
   const d = pcDerived(system, character);
   const hpCurrent = character.play.pools?.hp?.current ?? d.maxHp;
 
+  const [tab, setTab] = useState<'combat' | 'spellbook'>('combat');
+  const [levelUpOpen, setLevelUpOpen] = useState(false);
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
+  const [lucky, setLucky] = useState(false);
+  // Per-spell chosen slot level for upcasting (defaults to the spell's own level).
+  const [slotChoice, setSlotChoice] = useState<Record<string, number>>({});
+  const [spellQuery, setSpellQuery] = useState('');
+  const [schoolFilter, setSchoolFilter] = useState('');
 
   // A targeted token with a known AC drives the roll (AC read from its stat block, name shown
   // in the log); otherwise fall back to the typed Target AC.
   const usingTarget = target != null && typeof target.ac === 'number';
+  const attackLabel = (name: string) =>
+    usingTarget ? `${character.name} → ${target!.name} — ${name}` : `${character.name} — ${name}`;
 
   const rollAttack = (atk: (typeof d.attacks)[number]) =>
     postRoll(
       resolver.resolveAttack({
-        label: usingTarget
-          ? `${character.name} → ${target!.name} — ${atk.name}`
-          : `${character.name} — ${atk.name}`,
+        label: attackLabel(atk.name),
         dice: atk.dice,
         damageType: atk.damageType,
         attackBonus: atk.attackBonus,
@@ -56,91 +77,371 @@ export function Dnd5eSheet({
       }).logText,
     );
 
+  // Dragonborn breath weapon — plain damage roll + save note, via the same path as monster
+  // abilities: never through the attack resolver, so it isn't a to-hit roll.
+  const rollBreath = () => {
+    if (!d.breath) return;
+    const r = rollDice(d.breath.dice);
+    const shape = d.breath.shape === 'cone' ? `${d.breath.size} ft cone` : `${d.breath.size} ft line`;
+    const line = `${describeRoll(`${character.name} — Breath Weapon`, r, { type: d.breath.damageType })} · ${shape} · DC ${d.breath.dc} DEX save for half (${Math.floor(r.total / 2)})`;
+    postRoll(line);
+  };
+
+  // --- Spellcasting (caster only) -------------------------------------------
+  const known = character.definition.knownSpellIds ?? [];
+  const book = character.definition.spellbookSpellIds ?? [];
+  const prepared = character.play.preparedSpellIds ?? [];
+  const model = d.spell?.model;
+
+  const damageAt = (sp: Dnd5eSpell, slotLevel: number) => spellDamage(sp, slotLevel, character.play.level);
+  const currentSlots = (level: number) => character.play.spellSlots?.[level] ?? d.spell?.maxSlots[level] ?? 0;
+
+  const castSpell = (sp: Dnd5eSpell, slotLevel: number) => {
+    // Build the log line via the shared resolvers (attack / save / utility), then spend a slot.
+    postRoll(
+      spellCastLog(sp, {
+        casterName: character.name,
+        ...(usingTarget && sp.attackType ? { targetName: target!.name } : {}),
+        targetAc: usingTarget ? target!.ac : targetAc,
+        advantage,
+        saveDc: d.spell!.saveDc,
+        attackBonus: d.spell!.attackBonus,
+        dice: damageAt(sp, slotLevel),
+        resolver,
+      }),
+    );
+    // Spend a slot for leveled spells (cantrips are at-will). Persists to Firebase.
+    if (sp.level > 0) {
+      void setSpellSlot(character.id, slotLevel, Math.max(0, currentSlots(slotLevel) - 1));
+    }
+  };
+
+  // Combat-tab castable list: cantrips (always known) + the leveled list for the model. Prepared
+  // casters have no daily-prep UI yet (G2), so fall back to the full preparable source.
+  const combatSpells = useMemo(() => {
+    if (!d.spell) return [] as Dnd5eSpell[];
+    const cantripIds = known.filter((id) => spellById(id)?.level === 0);
+    let leveledIds: string[];
+    if (model === 'known') leveledIds = known.filter((id) => (spellById(id)?.level ?? 0) > 0);
+    else if (model === 'spellbook') leveledIds = prepared.length ? prepared : book;
+    else
+      leveledIds = prepared.length
+        ? prepared
+        : getSpellsForClass(d.cls?.id ?? '', allSpells).filter((sp) => sp.level > 0).map((sp) => sp.id);
+    return [...new Set([...cantripIds, ...leveledIds])]
+      .map(spellById)
+      .filter((x): x is Dnd5eSpell => !!x);
+  }, [d.spell, model, known, book, prepared, d.cls?.id]);
+
+  // Spellbook-tab reference list (read-only): the full source of spells for the model.
+  const spellbookSpells = useMemo(() => {
+    if (!d.spell) return [] as Dnd5eSpell[];
+    if (model === 'prepared') return getSpellsForClass(d.cls?.id ?? '', allSpells);
+    const ids = model === 'spellbook' ? [...new Set([...book, ...known.filter((id) => spellById(id)?.level === 0)])] : known;
+    return ids.map(spellById).filter((x): x is Dnd5eSpell => !!x);
+  }, [d.spell, model, known, book, d.cls?.id]);
+
+  const schools = useMemo(
+    () => [...new Set(spellbookSpells.map((sp) => sp.school))].sort(),
+    [spellbookSpells],
+  );
+  const q = spellQuery.trim().toLowerCase();
+  const filteredBook = spellbookSpells.filter(
+    (sp) => (!q || sp.name.toLowerCase().includes(q)) && (!schoolFilter || sp.school === schoolFilter),
+  );
+
+  const showCombat = !d.spell || tab === 'combat';
+
   return (
     <div className={s.section}>
       <span className={s.label}>{character.name} · {d.cls?.name ?? 'Adventurer'} {character.play.level}</span>
+      {d.raceName && (
+        <span className={s.itemMeta}>
+          {d.subraceName ? `${d.subraceName} · ` : ''}{d.raceName} · {d.speed} ft speed
+        </span>
+      )}
 
-      {/* Ability scores + modifiers */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-        {ABILITY_IDS.map((id) => (
-          <span key={id} className={s.preview} title={id}>
-            <strong>{id}</strong> {d.scores[id] ?? 10} ({sign(d.mods[id] ?? 0)})
-          </span>
-        ))}
-      </div>
+      {/* Milestone level-up granted by the GM — clear, obvious, opens the guided flow. */}
+      {character.play.levelUpPending && (
+        <div
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)', background: 'var(--surface-raised)', border: '1px solid var(--accent-amber)' }}
+        >
+          <span><strong>Level up available!</strong> You reached a milestone.</span>
+          <Button size="sm" onClick={() => setLevelUpOpen(true)}>Level up</Button>
+        </div>
+      )}
+      {levelUpOpen && character.play.levelUpPending && (
+        <LevelUpModal system={system} character={character} onDone={() => setLevelUpOpen(false)} />
+      )}
 
-      {/* Core combat numbers */}
-      <div style={row}><span className={s.itemMeta}>Armor Class</span><strong>{d.ac}</strong></div>
-      <div style={row}><span className={s.itemMeta}>Proficiency</span><span>{sign(d.proficiencyBonus)}</span></div>
-      <ResourceTracker
-        label="HP"
-        current={hpCurrent}
-        max={d.maxHp}
-        onChange={(n) => void setPoolCurrent(character.id, 'hp', n)}
-      />
+      {/* Tabs (casters only). Non-casters see the plain combat sheet, no tabs. */}
+      {d.spell && (
+        <div className={s.tabs}>
+          <button className={`${s.tab} ${tab === 'combat' ? s.tabActive : ''}`} onClick={() => setTab('combat')}>
+            Combat
+          </button>
+          <button className={`${s.tab} ${tab === 'spellbook' ? s.tabActive : ''}`} onClick={() => setTab('spellbook')}>
+            Spellbook
+          </button>
+        </div>
+      )}
 
-      {/* Saving throws */}
-      <span className={s.label}>Saving throws</span>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-        {d.saves.map((sv) => (
-          <span key={sv.id} className={s.preview} title={sv.proficient ? 'proficient' : undefined}>
-            {sv.id} {sign(sv.mod)}{sv.proficient ? ' ●' : ''}
-          </span>
-        ))}
-      </div>
-
-      {/* Skills (proficient) */}
-      {d.skills.length > 0 && (
+      {showCombat && (
         <>
-          <span className={s.label}>Skills</span>
+          {/* Ability scores + modifiers */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-            {d.skills.map((sk) => (
-              <span key={sk.id} className={s.preview}>{sk.name} {sign(sk.mod)}</span>
+            {ABILITY_IDS.map((id) => (
+              <span key={id} className={s.preview} title={id}>
+                <strong>{id}</strong> {d.scores[id] ?? 10} ({sign(d.mods[id] ?? 0)})
+              </span>
             ))}
           </div>
+
+          {/* Core combat numbers */}
+          <div style={row}><span className={s.itemMeta}>Armor Class</span><strong>{d.ac}</strong></div>
+          <div style={row}><span className={s.itemMeta}>Proficiency</span><span>{sign(d.proficiencyBonus)}</span></div>
+          <ResourceTracker
+            label="HP"
+            current={hpCurrent}
+            max={d.maxHp}
+            onChange={(n) => void setPoolCurrent(character.id, 'hp', n)}
+          />
+
+          {/* Saving throws */}
+          <span className={s.label}>Saving throws</span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+            {d.saves.map((sv) => (
+              <span key={sv.id} className={s.preview} title={sv.proficient ? 'proficient' : undefined}>
+                {sv.id} {sign(sv.mod)}{sv.proficient ? ' ●' : ''}
+              </span>
+            ))}
+          </div>
+
+          {/* Skills (proficient) */}
+          {d.skills.length > 0 && (
+            <>
+              <span className={s.label}>Skills</span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                {d.skills.map((sk) => (
+                  <span key={sk.id} className={s.preview}>{sk.name} {sign(sk.mod)}</span>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Attacks — through attackRollVsAc. AC comes from the current target when one is set
+              (right-click a creature on the board); otherwise the typed Target AC is the fallback. */}
+          <span className={s.label}>Attacks</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+            {usingTarget ? (
+              <span className={s.itemMeta}>
+                Target: <strong>{target!.name}</strong> (AC {target!.ac})
+              </span>
+            ) : (
+              <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                {target ? `${target.name} (no AC) — ` : ''}Target AC
+                <input type="number" value={targetAc} onChange={(e) => setTargetAc(Number(e.target.value) || 0)} style={{ width: 56 }} />
+              </label>
+            )}
+            <select
+              className={s.itemMeta}
+              value={advantage ?? 'normal'}
+              onChange={(e) => setAdvantage(e.target.value === 'normal' ? undefined : (e.target.value as 'advantage' | 'disadvantage'))}
+              aria-label="Roll mode"
+            >
+              <option value="normal">Normal</option>
+              <option value="advantage">Advantage</option>
+              <option value="disadvantage">Disadvantage</option>
+            </select>
+            {d.sneakAttackDice && (
+              <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }} title="Adds Sneak Attack dice on a hit — enable when it applies (advantage or an ally adjacent).">
+                <input type="checkbox" checked={sneak} onChange={(e) => setSneak(e.target.checked)} />
+                Sneak Attack ({d.sneakAttackDice})
+              </label>
+            )}
+          </div>
+          {!usingTarget && (
+            <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
+          )}
+          {d.attacks.map((atk) => (
+            <div key={atk.name} style={row}>
+              <span className={s.itemMeta}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
+              <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
+            </div>
+          ))}
+
+          {/* Spells — cast alongside weapons, grouped by level (cantrips first). */}
+          {d.spell && combatSpells.length > 0 && (
+            <>
+              <span className={s.label}>Spells</span>
+              {byLevel(combatSpells).map(([lvl, list]) => (
+                <div key={lvl}>
+                  <p className={s.hint} style={{ marginBottom: 2 }}>{levelLabel(lvl)}{lvl > 0 ? ' (1 slot)' : ' · at-will'}</p>
+                  {list.map((sp) => {
+                    const chosen = lvl === 0 ? 0 : (slotChoice[sp.id] ?? lvl);
+                    // Upcast options: slot levels ≥ the spell's level that the class has.
+                    const upcasts = lvl === 0 ? [] : Object.keys(d.spell!.maxSlots).map(Number).filter((L) => L >= lvl);
+                    const noSlot = lvl > 0 && currentSlots(chosen) <= 0;
+                    const dmg = damageAt(sp, chosen);
+                    return (
+                      <div key={sp.id} style={row}>
+                        <span style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+                          <span className={s.itemMeta} style={{ overflowWrap: 'anywhere' }}>
+                            {sp.name}
+                            {sp.concentration ? ' (concentration)' : ''}
+                            {dmg ? ` — ${dmg} ${sp.damageType ?? ''}` : ''}
+                            {sp.attackType ? ' · spell attack' : sp.save ? ` · ${sp.save} save` : ''}
+                          </span>
+                          <span className={s.itemMeta}>{sp.school} · {sp.castingTime} · {sp.range}</span>
+                        </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                          {upcasts.length > 1 && (
+                            <select
+                              className={s.itemMeta}
+                              value={chosen}
+                              onChange={(e) => setSlotChoice((c) => ({ ...c, [sp.id]: Number(e.target.value) }))}
+                              aria-label="Slot level"
+                              title="Cast using a higher-level slot (upcast)"
+                            >
+                              {upcasts.map((L) => (
+                                <option key={L} value={L} disabled={currentSlots(L) <= 0}>
+                                  Lv{L} ({currentSlots(L)})
+                                </option>
+                              ))}
+                            </select>
+                          )}
+                          <Button size="sm" disabled={noSlot} onClick={() => castSpell(sp, chosen)}>
+                            {noSlot ? 'No slot' : 'Cast'}
+                          </Button>
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </>
+          )}
+
+          {/* Spell slots — max from the class table; current persists on the character. */}
+          {d.spell && (
+            <>
+              <span className={s.label}>Spellcasting</span>
+              <div style={row}>
+                <span className={s.itemMeta}>
+                  {d.spell.ability} · Save DC {d.spell.saveDc} · Attack {sign(d.spell.attackBonus)}
+                </span>
+                <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
+                  Long Rest
+                </Button>
+              </div>
+              {Object.keys(d.spell.maxSlots).length === 0 ? (
+                <p className={s.hint}>No spell slots at this level yet.</p>
+              ) : (
+                Object.entries(d.spell.maxSlots).map(([lvl, max]) => {
+                  const level = Number(lvl);
+                  const current = character.play.spellSlots?.[level] ?? max;
+                  return (
+                    <div key={lvl} style={row}>
+                      <span className={s.itemMeta}>Level {lvl} slots</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                        <Button size="sm" variant="ghost" onClick={() => void setSpellSlot(character.id, level, Math.max(0, current - 1))}>
+                          −
+                        </Button>
+                        <strong>{current}/{max}</strong>
+                        <Button size="sm" variant="ghost" onClick={() => void setSpellSlot(character.id, level, Math.min(max, current + 1))}>
+                          +
+                        </Button>
+                      </span>
+                    </div>
+                  );
+                })
+              )}
+              {d.cls?.id === 'warlock' && (
+                <p className={s.hint}>
+                  Warlock uses Pact Magic slot counts, but slot recovery here is a placeholder (Long
+                  Rest). Short-rest recovery arrives with Pact Magic.
+                </p>
+              )}
+            </>
+          )}
+
+          {/* Racial traits that affect play: resistances, breath weapon (rollable), Lucky toggle,
+              and text notes for passive/flavor traits. */}
+          {(d.resistances.length > 0 || d.breath || d.lucky || d.raceTraits.length > 0) && (
+            <>
+              <span className={s.label}>Racial traits</span>
+              {d.resistances.length > 0 && (
+                <div style={row}>
+                  <span className={s.itemMeta}>Damage resistance</span>
+                  <strong>{d.resistances.join(', ')}</strong>
+                </div>
+              )}
+              {d.breath && (
+                <div style={row}>
+                  <span className={s.itemMeta}>
+                    Breath Weapon: {d.breath.dice} {d.breath.damageType}, {d.breath.shape === 'cone' ? `${d.breath.size} ft cone` : `${d.breath.size} ft line`} · DC {d.breath.dc} DEX
+                  </span>
+                  <Button size="sm" onClick={rollBreath}>Roll</Button>
+                </div>
+              )}
+              {d.lucky && (
+                <label
+                  className={s.itemMeta}
+                  style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}
+                  title="Halfling Lucky: when you roll a natural 1 on an attack, check, or save, reroll and use the new roll."
+                >
+                  <input type="checkbox" checked={lucky} onChange={(e) => setLucky(e.target.checked)} />
+                  Lucky (reroll natural 1s)
+                </label>
+              )}
+              {d.raceTraits.map((t, i) => (
+                <p key={i} className={s.hint}>{t}</p>
+              ))}
+            </>
+          )}
         </>
       )}
 
-      {/* Attacks — through attackRollVsAc. AC comes from the current target when one is set
-          (right-click a creature on the board); otherwise the typed Target AC is the fallback. */}
-      <span className={s.label}>Attacks</span>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-        {usingTarget ? (
-          <span className={s.itemMeta}>
-            Target: <strong>{target!.name}</strong> (AC {target!.ac})
-          </span>
-        ) : (
-          <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
-            {target ? `${target.name} (no AC) — ` : ''}Target AC
-            <input type="number" value={targetAc} onChange={(e) => setTargetAc(Number(e.target.value) || 0)} style={{ width: 56 }} />
-          </label>
-        )}
-        <select
-          className={s.itemMeta}
-          value={advantage ?? 'normal'}
-          onChange={(e) => setAdvantage(e.target.value === 'normal' ? undefined : (e.target.value as 'advantage' | 'disadvantage'))}
-          aria-label="Roll mode"
-        >
-          <option value="normal">Normal</option>
-          <option value="advantage">Advantage</option>
-          <option value="disadvantage">Disadvantage</option>
-        </select>
-        {d.sneakAttackDice && (
-          <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }} title="Adds Sneak Attack dice on a hit — enable when it applies (advantage or an ally adjacent).">
-            <input type="checkbox" checked={sneak} onChange={(e) => setSneak(e.target.checked)} />
-            Sneak Attack ({d.sneakAttackDice})
-          </label>
-        )}
-      </div>
-      {!usingTarget && (
-        <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
+      {/* Spellbook tab — read-only reference: full list, searchable + filterable, with details. */}
+      {d.spell && tab === 'spellbook' && (
+        <>
+          <input
+            className={s.input}
+            placeholder="Search spells…"
+            value={spellQuery}
+            onChange={(e) => setSpellQuery(e.target.value)}
+          />
+          <select className={s.input} value={schoolFilter} onChange={(e) => setSchoolFilter(e.target.value)} aria-label="School">
+            <option value="">All schools</option>
+            {schools.map((sch) => (
+              <option key={sch} value={sch}>{sch}</option>
+            ))}
+          </select>
+          {filteredBook.length === 0 && <p className={s.hint}>No spells match.</p>}
+          {byLevel(filteredBook).map(([lvl, list]) => (
+            <div key={lvl}>
+              <span className={s.label}>{levelLabel(lvl)}</span>
+              {list.map((sp) => {
+                const comps = [sp.components.v && 'V', sp.components.s && 'S', sp.components.m && 'M'].filter(Boolean).join(', ');
+                return (
+                  <div key={sp.id} style={{ paddingBlock: 'var(--space-1)' }}>
+                    <div style={{ fontWeight: 600 }}>
+                      {sp.name} <span className={s.itemMeta}>· {sp.school}{sp.concentration ? ' · concentration' : ''}{sp.ritual ? ' · ritual' : ''}</span>
+                    </div>
+                    <div className={s.itemMeta}>
+                      {sp.castingTime} · {sp.range} · {comps || '—'} · {sp.duration}
+                    </div>
+                    <p className={s.hint} style={{ whiteSpace: 'pre-line' }}>{sp.description}</p>
+                    {sp.higherLevel && (
+                      <p className={s.hint} style={{ whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {sp.higherLevel}</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </>
       )}
-      {d.attacks.map((atk) => (
-        <div key={atk.name} style={row}>
-          <span className={s.itemMeta}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
-          <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
-        </div>
-      ))}
     </div>
   );
 }

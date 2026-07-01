@@ -95,11 +95,20 @@ const classes = classesSrc.map((c: any) => {
     const isAsi = cum > prevAsi;
     prevAsi = cum;
     const ctr = counters(r.class_specific);
+    // Spell slots: SRD encodes spell_slots_level_1..9. Store as number[] indexed by (slot
+    // level − 1), trimmed of trailing zeros. Warlock's rows carry its Pact Magic counts.
+    const sc = r.spellcasting ?? {};
+    const slotArr: number[] = [];
+    for (let i = 1; i <= 9; i++) slotArr.push(sc[`spell_slots_level_${i}`] ?? 0);
+    while (slotArr.length && slotArr[slotArr.length - 1] === 0) slotArr.pop();
     return {
       level: r.level,
       proficiencyBonus: r.prof_bonus,
       features: (r.features ?? []).map((f: any) => f.name ?? f.index),
       ...(isAsi ? { abilityScoreImprovement: true } : {}),
+      ...(slotArr.length ? { spellSlots: slotArr } : {}),
+      ...(sc.cantrips_known ? { cantripsKnown: sc.cantrips_known } : {}),
+      ...(sc.spells_known ? { spellsKnown: sc.spells_known } : {}),
       ...(Object.keys(ctr).length ? { counters: ctr } : {}),
     };
   });
@@ -124,7 +133,8 @@ const classes = classesSrc.map((c: any) => {
   if (c.spellcasting) {
     cls.spellcasting = {
       ability: up(c.spellcasting.spellcasting_ability?.index ?? 'int'),
-      type: PREPARED.has(c.index) ? 'prepared' : 'known',
+      // Wizard = spellbook; the SRD's other prepared casters = prepared; the rest = known.
+      type: c.index === 'wizard' ? 'spellbook' : PREPARED.has(c.index) ? 'prepared' : 'known',
     };
   }
   return cls;

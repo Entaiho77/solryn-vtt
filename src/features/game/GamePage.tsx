@@ -138,6 +138,7 @@ export function GamePage() {
         role={role}
         currentUid={user.uid}
         characterId={character?.id}
+        is5e={!!system && isClassAndLevel(system)}
         onExit={() => navigate('/')}
       />
     </div>

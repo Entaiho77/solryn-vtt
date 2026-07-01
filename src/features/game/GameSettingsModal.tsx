@@ -8,6 +8,7 @@ import {
   removeMember,
   updateGameName,
 } from '../../data/games';
+import { setLevelUpPending, useGameCharacters } from '../../data/characters';
 import { Modal } from '../../components/ui/Modal';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { Button } from '../../components/ui/Button';
@@ -24,6 +25,8 @@ interface GameSettingsModalProps {
   currentUid: string;
   /** The current player's character for this game (so "Quit permanently" can delete it). */
   characterId?: string;
+  /** True for class-and-level (5e) games → per-player milestone level-up grants. */
+  is5e?: boolean;
   /** Called after the user exits/quits or the GM deletes — navigate back to the lobby. */
   onExit: () => void;
 }
@@ -35,9 +38,11 @@ export function GameSettingsModal({
   role,
   currentUid,
   characterId,
+  is5e,
   onExit,
 }: GameSettingsModalProps) {
   const isGM = role === 'gm';
+  const gameCharacters = useGameCharacters(isGM && is5e ? game.id : null);
   const [name, setName] = useState(game.name);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -172,18 +177,52 @@ export function GameSettingsModal({
           </section>
         )}
 
-        {/* Party level-up (GM) */}
-        {isGM && (
+        {/* Party level-up (GM). 5e uses per-character milestone grants; Solryn levels together. */}
+        {isGM && is5e && (
+          <section className={styles.section}>
+            <span className={styles.label}>Level up (milestone)</span>
+            {gameCharacters.length === 0 && <p className={styles.hint}>No player characters yet.</p>}
+            {gameCharacters.map((ch) => {
+              const atMax = ch.play.level >= 20;
+              return (
+                <div key={ch.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
+                  <span>
+                    {game.members[ch.ownerUserId]?.displayName ?? 'Player'} — Level {ch.play.level}
+                    {ch.play.levelUpPending ? ' · pending' : ''}
+                  </span>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    disabled={atMax || !!ch.play.levelUpPending}
+                    onClick={() => void setLevelUpPending(ch.id, true)}
+                  >
+                    {atMax ? 'Max level' : 'Grant level up'}
+                  </Button>
+                </div>
+              );
+            })}
+            {gameCharacters.some((ch) => ch.play.level < 20 && !ch.play.levelUpPending) && (
+              <Button
+                size="sm"
+                onClick={() =>
+                  gameCharacters
+                    .filter((ch) => ch.play.level < 20 && !ch.play.levelUpPending)
+                    .forEach((ch) => void setLevelUpPending(ch.id, true))
+                }
+              >
+                Level up party
+              </Button>
+            )}
+            <p className={styles.hint}>
+              Grants a milestone level-up. Each player then applies it (features, HP, ASI, spells)
+              from their character sheet.
+            </p>
+          </section>
+        )}
+        {isGM && !is5e && (
           <section className={styles.section}>
             <span className={styles.label}>Party</span>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 'var(--space-3)',
-              }}
-            >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
               <span>Levels granted: up to {game.levelGrant ?? 1}</span>
               <Button
                 variant="secondary"

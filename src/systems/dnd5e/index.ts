@@ -9,13 +9,13 @@ import type {
   ModifierRule,
   QualityScale,
   RulesCard,
-  Spell,
   StatBlockShape,
   SystemDefinition,
   SystemModes,
 } from '../../engine/schema';
 import { c } from '../../engine/schema';
 import { bestiary } from './bestiary';
+import { spells } from './spells';
 import { skills, skillCategories } from './skills';
 import { generatedClasses } from './classes.generated';
 import { ancestries } from './races';
@@ -133,7 +133,6 @@ const rulesReference: RulesCard[] = [
 ];
 
 // Empty content placeholders — real data arrives in later phases.
-const spells: Spell[] = [];
 const conditions: ConditionEntry[] = [];
 
 export const dnd5eSystem: SystemDefinition = {

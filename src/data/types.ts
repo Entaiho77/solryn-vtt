@@ -178,12 +178,17 @@ export interface CharacterSkillState {
 
 export interface CharacterDefinition {
   ancestryId: string;
+  /** Chosen subrace / draconic-color id (5e races with subraces). */
+  subraceId?: string;
   /** Stat bonuses chosen for flexible-bonus ancestries (stat id → amount). */
   ancestryChoices?: Record<string, number>;
   /** Rolled core scores, locked at creation (one-way gate). */
   coreScores: Record<string, number>;
   chosenSkillIds: string[];
+  /** Spells known permanently: known casters' chosen list + every caster's cantrips (5e). */
   knownSpellIds: string[];
+  /** Wizard spellbook: leveled spells learned into the book (superset of the day's prepared). */
+  spellbookSpellIds?: string[];
   /** Class id (class-and-level systems, 5e). Optional; classless systems (Solryn) omit it. */
   classId?: string;
 }
@@ -193,6 +198,13 @@ export interface CharacterPlayState {
   reputation: string;
   /** Resource pools by derived-stat id (e.g. hp, arcanaPoints, luckPoints). */
   pools: Record<string, { current: number }>;
+  /** 5e spell slots remaining, keyed by slot level (1–9). Max is derived from class+level;
+   *  only the current count is stored here (like pools/HP). Expended on cast, recovered on rest. */
+  spellSlots?: Record<number, number>;
+  /** 5e prepared casters' spells prepared for the day (changes daily). Empty until G3's prep UI. */
+  preparedSpellIds?: string[];
+  /** 5e milestone level-up: set true by the GM to grant, cleared when the player applies it. */
+  levelUpPending?: boolean;
   /** Skill points granted (by level-up) but not yet placed. */
   unspentSkillPoints?: number;
   equippedArmorId?: string;
