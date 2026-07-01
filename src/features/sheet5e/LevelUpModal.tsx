@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
+import type { SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { applyLevelUp5e } from '../../data/characters';
 import { ABILITY_IDS } from '../../systems/dnd5e/character';
@@ -67,58 +67,62 @@ export function LevelUpModal({
     }
   }
 
-  const pickList = (
-    label: string,
-    options: Dnd5eSpell[],
-    picked: string[],
-    setPicked: (ids: string[]) => void,
-    max: number,
-    filterable = false,
-  ) => {
-    // Level filter (leveled picker only): only the levels actually available appear. Filtering is
-    // display-only — `picked` is the full selection, so it persists across changes.
-    const levels = filterable ? [...new Set(options.map((sp) => sp.level))].sort((a, b) => a - b) : [];
-    const shown = filterable && spellLevelFilter !== 'all' ? options.filter((sp) => sp.level === spellLevelFilter) : options;
+  // One unified picker for all new spells (cantrips = level 0 in the same list), filterable by
+  // level. Cantrips and leveled spells keep SEPARATE selection buckets + limits (they persist to
+  // different places), but read as a single list; each row routes to the right bucket by level.
+  const spellPicker = () => {
+    const options = [...cantripChoices, ...spellChoices].sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+    const levels = [...new Set(options.map((sp) => sp.level))].sort((a, b) => a - b);
+    const shown = spellLevelFilter !== 'all' ? options.filter((sp) => sp.level === spellLevelFilter) : options;
+    const bookLabel = summary.model === 'spellbook' ? 'spellbook' : 'known';
     return (
-    // Distinct section block: a top divider + spacing separates the cantrip and spell pickers.
-    <div style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)' }}>
-      <p className={s.label}>{label} ({picked.length}/{max})</p>
-      {filterable && levels.length > 1 && (
-        <select
-          className={s.input}
-          style={{ marginBottom: 'var(--space-2)' }}
-          value={spellLevelFilter === 'all' ? '' : String(spellLevelFilter)}
-          onChange={(e) => setSpellLevelFilter(e.target.value === '' ? 'all' : Number(e.target.value))}
-          aria-label="Filter by spell level"
-        >
-          <option value="">All levels</option>
-          {levels.map((l) => (
-            <option key={l} value={l}>{l === 0 ? 'Cantrips' : `Level ${l}`}</option>
-          ))}
-        </select>
-      )}
-      {/* overflow-y makes the box scroll INTERNALLY instead of overflowing over the tabs/next section. */}
-      <div className={s.list} style={{ maxHeight: 180, overflowY: 'auto' }}>
-        {shown.map((sp) => {
-          const checked = picked.includes(sp.id);
-          const full = picked.length >= max;
-          return (
-            <label key={sp.id} className={`${s.item} ${checked ? s.itemActive ?? '' : ''}`} style={row}>
-              <span>
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  disabled={!checked && full}
-                  onChange={() => setPicked(checked ? picked.filter((x) => x !== sp.id) : [...picked, sp.id])}
-                />{' '}
-                {sp.name}
-              </span>
-              <span className={s.itemMeta}>{sp.school}{sp.level > 0 ? ` · L${sp.level}` : ''}</span>
-            </label>
-          );
-        })}
+      <div style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)' }}>
+        <p className={s.label}>New spells</p>
+        <p className={s.hint} style={{ marginTop: 0 }}>
+          {summary.cantripsGain > 0 && `Cantrips ${newCantripIds.length}/${summary.cantripsGain}`}
+          {summary.cantripsGain > 0 && summary.spellsGain > 0 && ' · '}
+          {summary.spellsGain > 0 && `${bookLabel} ${newSpellIds.length}/${summary.spellsGain}`}
+        </p>
+        {levels.length > 1 && (
+          <select
+            className={s.input}
+            style={{ marginBottom: 'var(--space-2)' }}
+            value={spellLevelFilter === 'all' ? '' : String(spellLevelFilter)}
+            onChange={(e) => setSpellLevelFilter(e.target.value === '' ? 'all' : Number(e.target.value))}
+            aria-label="Filter by spell level"
+          >
+            <option value="">All levels</option>
+            {levels.map((l) => (
+              <option key={l} value={l}>{l === 0 ? 'Cantrips' : `Level ${l}`}</option>
+            ))}
+          </select>
+        )}
+        {/* overflow-y makes the box scroll INTERNALLY instead of overflowing over the filter/next section. */}
+        <div className={s.list} style={{ maxHeight: 220, overflowY: 'auto' }}>
+          {shown.map((sp) => {
+            const isCantrip = sp.level === 0;
+            const bucket = isCantrip ? newCantripIds : newSpellIds;
+            const setBucket = isCantrip ? setNewCantripIds : setNewSpellIds;
+            const limit = isCantrip ? summary.cantripsGain : summary.spellsGain;
+            const checked = bucket.includes(sp.id);
+            const full = bucket.length >= limit;
+            return (
+              <label key={sp.id} className={`${s.item} ${checked ? s.itemActive ?? '' : ''}`} style={row}>
+                <span>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    disabled={!checked && full}
+                    onChange={() => setBucket(checked ? bucket.filter((x) => x !== sp.id) : [...bucket, sp.id])}
+                  />{' '}
+                  {sp.name}
+                </span>
+                <span className={s.itemMeta}>{sp.school}{isCantrip ? ' · Cantrip' : ` · L${sp.level}`}</span>
+              </label>
+            );
+          })}
+        </div>
       </div>
-    </div>
     );
   };
 
@@ -195,17 +199,8 @@ export function LevelUpModal({
           </>
         )}
 
-        {/* Spells */}
-        {summary.cantripsGain > 0 && pickList('New cantrips', cantripChoices, newCantripIds, setNewCantripIds, summary.cantripsGain)}
-        {summary.spellsGain > 0 &&
-          pickList(
-            summary.model === 'spellbook' ? 'Add to spellbook' : 'New spells known',
-            spellChoices,
-            newSpellIds,
-            setNewSpellIds,
-            summary.spellsGain,
-            true,
-          )}
+        {/* Spells — one unified list (cantrips + leveled), filterable by level. */}
+        {(summary.cantripsGain > 0 || summary.spellsGain > 0) && spellPicker()}
         {summary.model === 'prepared' && summary.newPreparedCount !== undefined && (
           <p className={s.hint}>
             As a prepared caster you now prepare {summary.newPreparedCount} spells per day from your full class list — no selection needed here.
