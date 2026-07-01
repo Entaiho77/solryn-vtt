@@ -213,6 +213,49 @@ export interface Spell {
   provisional?: boolean;
 }
 
+/** 5e spell damage scaling: base dice keyed by slot level (leveled spells) or by the caster's
+ *  character level (cantrips). Exactly one map is present on a damage spell. */
+export interface SpellScaling {
+  /** e.g. { "3": "8d6", "4": "9d6", … } — dice when cast with a slot of that level. */
+  bySlotLevel?: Record<string, string>;
+  /** e.g. { "1": "1d10", "5": "2d10", … } — cantrip dice at that character level. */
+  byCharacterLevel?: Record<string, string>;
+}
+
+/**
+ * A 5e spell. Extends the engine Spell so the full SRD list can populate
+ * SystemDefinition.spells with no change to Solryn (whose own Spell data is untouched). The
+ * inherited fields carry sensible 5e values — `type` derived from whether it deals damage,
+ * `damageDice` the base-level dice, `cost` 0 (5e uses slots, tracked later in G3). Everything
+ * below is the additive 5e data that the casting UI (G2), sheet (G3), and upcasting (G4) read.
+ */
+export interface Dnd5eSpell extends Spell {
+  /** 0 = cantrip, 1–9 = spell level. */
+  level: number;
+  school: string;
+  castingTime: string;
+  /** Verbal / Somatic / Material component flags. */
+  components: { v: boolean; s: boolean; m: boolean };
+  /** Material component text, when the spell has one. */
+  material?: string;
+  concentration: boolean;
+  ritual: boolean;
+  /** Class ids whose spell list includes this spell (e.g. ['wizard', 'sorcerer']). */
+  classes: string[];
+  /** Full rules text (joined paragraphs). */
+  description: string;
+  /** Higher-level / upcasting text; absent for spells that don't scale. */
+  higherLevel?: string;
+  /** Saving-throw ability the target rolls (e.g. 'DEX'); absent = no save. */
+  save?: string;
+  /** Outcome on a successful save ('half' | 'none' | …). */
+  saveSuccess?: string;
+  /** Attack-roll type for attack-roll spells; absent = no attack roll. */
+  attackType?: 'ranged' | 'melee';
+  /** Base-damage scaling table; absent for non-damage spells. */
+  scaling?: SpellScaling;
+}
+
 // --- Equipment --------------------------------------------------------------
 
 export type ArmorWeight = 'light' | 'medium' | 'heavy';
