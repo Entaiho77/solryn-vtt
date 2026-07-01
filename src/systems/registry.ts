@@ -45,3 +45,12 @@ export function listSystems(): SystemSummary[] {
 }
 
 export const DEFAULT_SYSTEM_ID = solrynSystem.id;
+
+/**
+ * Whether a system uses the class-and-level model (5e) — the single source of truth for
+ * picking the 5e builder/sheet vs. Solryn's. Both GamePage (builder) and BoardScreen (sheet)
+ * route through this so the selection can't drift between call sites.
+ */
+export function isClassAndLevel(system: SystemDefinition): boolean {
+  return system.modes.progression.id === 'class-and-level';
+}

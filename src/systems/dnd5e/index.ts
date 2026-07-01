@@ -1,16 +1,14 @@
 import type {
-  Ancestry,
+  BackgroundDefinition,
+  ClassDefinition,
   ConditionEntry,
   CoreStat,
   CreationConfig,
   DerivedStat,
-  EquipmentDefinition,
   MapType,
   ModifierRule,
   QualityScale,
   RulesCard,
-  Skill,
-  SkillCategory,
   Spell,
   StatBlockShape,
   SystemDefinition,
@@ -18,6 +16,10 @@ import type {
 } from '../../engine/schema';
 import { c } from '../../engine/schema';
 import { bestiary } from './bestiary';
+import { skills, skillCategories } from './skills';
+import { fighter } from './classes/fighter';
+import { ancestries } from './races';
+import { equipment } from './equipment';
 
 /**
  * D&D 5e (SRD) — Phase 2a: a MINIMAL but valid system so the registry/selection path works
@@ -74,6 +76,10 @@ const creation: CreationConfig = {
   allowReroll: false,
   allowRearrange: false,
   startingReputation: 'Unaligned',
+  // 5e default ability-score assignment (the builder that uses this lands in Phase B/C).
+  abilityScoreMethod: 'standard-array',
+  standardArray: [15, 14, 13, 12, 10, 8],
+  pointBuyBudget: 27,
   // No auto-granted spells yet (casting content is a later phase).
   spellAccess: {
     modStatId: 'INT',
@@ -84,6 +90,11 @@ const creation: CreationConfig = {
     ancestryBonus: 0,
   },
 };
+
+// Class-and-level content. Phase A populates Fighter only as proof the shapes hold; other
+// classes and backgrounds are defined-but-minimal (filled in Phase C onward).
+const classes: ClassDefinition[] = [fighter];
+const backgrounds: BackgroundDefinition[] = [];
 
 // 5e uses a 5 ft tactical grid; region/world are travel-scale. Enough for maps to work.
 const mapTypes: MapType[] = [
@@ -122,11 +133,7 @@ const rulesReference: RulesCard[] = [
 ];
 
 // Empty content placeholders — real data arrives in later phases.
-const ancestries: Ancestry[] = [];
-const skillCategories: SkillCategory[] = [];
-const skills: Skill[] = [];
 const spells: Spell[] = [];
-const equipment: EquipmentDefinition = { armor: [], weapons: [], startingKit: [] };
 const conditions: ConditionEntry[] = [];
 
 export const dnd5eSystem: SystemDefinition = {
@@ -159,4 +166,7 @@ export const dnd5eSystem: SystemDefinition = {
   conditions,
 
   creation,
+
+  classes,
+  backgrounds,
 };
