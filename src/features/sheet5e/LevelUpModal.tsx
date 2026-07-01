@@ -80,10 +80,12 @@ export function LevelUpModal({
     const levels = filterable ? [...new Set(options.map((sp) => sp.level))].sort((a, b) => a - b) : [];
     const shown = filterable && spellLevelFilter !== 'all' ? options.filter((sp) => sp.level === spellLevelFilter) : options;
     return (
-    <>
+    // Distinct section block: a top divider + spacing separates the cantrip and spell pickers.
+    <div style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)' }}>
       <p className={s.label}>{label} ({picked.length}/{max})</p>
       {filterable && levels.length > 1 && (
-        <div className={s.tabs}>
+        // Sticky filter bar so it stays visible above the scrolling list below it.
+        <div className={s.tabs} style={{ position: 'sticky', top: 0, zIndex: 1, background: 'var(--surface-bar)' }}>
           <button className={`${s.tab} ${spellLevelFilter === 'all' ? s.tabActive : ''}`} onClick={() => setSpellLevelFilter('all')}>
             All
           </button>
@@ -94,7 +96,8 @@ export function LevelUpModal({
           ))}
         </div>
       )}
-      <div className={s.list} style={{ maxHeight: 180 }}>
+      {/* overflow-y makes the box scroll INTERNALLY instead of overflowing over the tabs/next section. */}
+      <div className={s.list} style={{ maxHeight: 180, overflowY: 'auto' }}>
         {shown.map((sp) => {
           const checked = picked.includes(sp.id);
           const full = picked.length >= max;
@@ -114,7 +117,7 @@ export function LevelUpModal({
           );
         })}
       </div>
-    </>
+    </div>
     );
   };
 
