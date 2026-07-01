@@ -209,7 +209,23 @@ describe('attackRollVsAc — crits & fumbles (raw natural d20)', () => {
     expect(res.crit).toBe(true);
     expect(res.rolls).toHaveLength(2); // dice doubled (2d6)
     expect(res.damage).toBe(9);
-    expect(res.logText).toBe('Goblin — Scimitar: natural 20 — CRIT, 9 Slashing damage');
+    // Crit shows the full breakdown of doubled dice + modifier (3+4+2 = 9).
+    expect(res.logText).toBe('Goblin — Scimitar: natural 20 — CRIT, 3+4+2 = 9 Slashing damage');
+  });
+
+  it('crit with no damage modifier: breakdown omits "+0"', () => {
+    // d20 → 20; crit damage 2d6 (no mod) → faces 5,3 → "5+3 = 8"
+    const res = resolver.resolveAttack({
+      label: 'Ogre — Club',
+      dice: '1d6',
+      damageType: 'Bludgeoning',
+      attackBonus: 2,
+      targetAc: 99,
+      rng: seqRng([face(20, 20), face(5, 6), face(3, 6)]),
+    });
+    expect(res.crit).toBe(true);
+    expect(res.damage).toBe(8);
+    expect(res.logText).toBe('Ogre — Club: natural 20 — CRIT, 5+3 = 8 Bludgeoning damage');
   });
 
   it('natural 1: auto-miss regardless of AC, no damage', () => {
@@ -275,7 +291,8 @@ describe('attackRollVsAc — bonus damage (Rogue Sneak Attack)', () => {
     });
     expect(res.crit).toBe(true);
     expect(res.damage).toBe(21); // 14 + 7
-    expect(res.logText).toBe('Aria — Rapier: natural 20 — CRIT, 14 Piercing + 7 Sneak Attack = 21 damage');
+    // Both weapon (5+6+3) and Sneak Attack (4+3) show their own doubled-dice breakdowns.
+    expect(res.logText).toBe('Aria — Rapier: natural 20 — CRIT, 5+6+3 Piercing + 4+3 Sneak Attack = 21 damage');
   });
 
   it('no bonusDamage → log format unchanged (regression)', () => {
