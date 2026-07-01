@@ -1,0 +1,73 @@
+import type { Dnd5eSpell } from '../../engine/schema';
+import { describeRoll, rollDice, type CombatResolver, type Rng } from '../../engine/rules';
+
+/**
+ * Damage dice for a spell cast at a given slot level. Cantrips scale by the caster's level
+ * (byCharacterLevel — highest keyed level ≤ caster level); leveled spells scale by the slot
+ * used (bySlotLevel — upcasting). Falls back to the base dice; null for non-damage spells.
+ */
+export function spellDamage(sp: Dnd5eSpell, slotLevel: number, casterLevel: number): string | null {
+  if (sp.level === 0) {
+    const map = sp.scaling?.byCharacterLevel;
+    if (!map) return sp.damageDice;
+    const keys = Object.keys(map).map(Number).sort((a, b) => a - b);
+    const best = keys.filter((k) => k <= casterLevel).pop() ?? keys[0];
+    return map[String(best)] ?? sp.damageDice;
+  }
+  return sp.scaling?.bySlotLevel?.[String(slotLevel)] ?? sp.damageDice;
+}
+
+export interface CastContext {
+  casterName: string;
+  /** Target name (attack spells with a set target) → shown as "Caster → Target — Spell". */
+  targetName?: string;
+  /** Resolved defender AC (from the target token or the manual field). */
+  targetAc?: number;
+  advantage?: 'advantage' | 'disadvantage';
+  /** The caster's spell save DC (8 + prof + ability). */
+  saveDc: number;
+  /** The caster's spell attack bonus (prof + ability). */
+  attackBonus: number;
+  /** Damage dice already resolved for the chosen slot/level (null = non-damage spell). */
+  dice: string | null;
+  resolver: CombatResolver;
+  /** Injectable RNG for deterministic tests. */
+  rng?: Rng;
+}
+
+/**
+ * The roll-log line for casting a spell, reusing the shared resolvers (no new combat math):
+ * - attack spell (attackType + dice) → attackRollVsAc, exactly like a weapon attack;
+ * - save / plain-damage spell (dice) → roll damage + a "DC X ABILITY save" note (target rolls it);
+ * - utility / buff (no dice) → announce "Caster casts Spell.".
+ * Pure — the slot spend (Firebase) is the caller's responsibility.
+ */
+export function spellCastLog(sp: Dnd5eSpell, ctx: CastContext): string {
+  const label = ctx.targetName
+    ? `${ctx.casterName} → ${ctx.targetName} — ${sp.name}`
+    : `${ctx.casterName} — ${sp.name}`;
+
+  if (sp.attackType && ctx.dice) {
+    return ctx.resolver.resolveAttack({
+      label,
+      dice: ctx.dice,
+      damageType: sp.damageType,
+      attackBonus: ctx.attackBonus,
+      targetAc: ctx.targetAc,
+      advantage: ctx.advantage,
+      rng: ctx.rng,
+    }).logText;
+  }
+
+  if (ctx.dice) {
+    const r = rollDice(ctx.dice, ctx.rng);
+    let line = describeRoll(`${ctx.casterName} — ${sp.name}`, r, { type: sp.damageType });
+    if (sp.save) {
+      line += ` · DC ${ctx.saveDc} ${sp.save} save`;
+      if (sp.saveSuccess === 'half') line += ` for half (${Math.floor(r.total / 2)})`;
+    }
+    return line;
+  }
+
+  return `${ctx.casterName} casts ${sp.name}.`;
+}
