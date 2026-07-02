@@ -39,6 +39,16 @@ const STARTER_KIT: Record<string, { weaponIds: string[]; armorId?: string }> = {
 };
 const DEFAULT_KIT = { weaponIds: ['dagger'], armorId: 'leather-armor' }; // casters (pending)
 
+// Skill-proficiency choices per SRD 5.2.1 (the committed 2014 source differs for these classes).
+// Overrides the value derived from the 2014 proficiency_choices. Other classes keep the derived
+// list. 'any' = choose from the full 18-skill list (Bard).
+const SKILL_CHOICES: Record<string, { choose: number; from: string[] | 'any' }> = {
+  bard: { choose: 3, from: 'any' },
+  fighter: { choose: 2, from: ['acrobatics', 'animal-handling', 'athletics', 'history', 'insight', 'intimidation', 'persuasion', 'perception', 'survival'] },
+  paladin: { choose: 2, from: ['athletics', 'insight', 'intimidation', 'medicine', 'persuasion', 'religion'] },
+  ranger: { choose: 3, from: ['animal-handling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival'] },
+};
+
 const up = (s: string) => s.toUpperCase();
 
 function proficiencies(list: { index: string }[]) {
@@ -120,7 +130,7 @@ const classes = classesSrc.map((c: any) => {
     primaryAbilities: PRIMARY[c.index] ?? [],
     savingThrows: (c.saving_throws ?? []).map((s: any) => up(s.index)),
     proficiencies: proficiencies(c.proficiencies ?? []),
-    skillChoices: skillChoices(c),
+    skillChoices: SKILL_CHOICES[c.index] ?? skillChoices(c),
     startingEquipment: (c.starting_equipment ?? []).map(
       (e: any) => `${e.quantity > 1 ? `${e.quantity}× ` : ''}${e.equipment?.name ?? ''}`.trim(),
     ),

@@ -225,6 +225,32 @@ describe('5e spell slots + caster model', () => {
   });
 });
 
+describe('class skill choices (SRD 5.2.1)', () => {
+  it('Bard: any 3 skills', () => {
+    expect(cls('bard').skillChoices).toEqual({ choose: 3, from: 'any' });
+  });
+  it('Fighter: choose 2, list includes Persuasion', () => {
+    expect(cls('fighter').skillChoices.choose).toBe(2);
+    expect(cls('fighter').skillChoices.from).toContain('persuasion');
+  });
+  it('Paladin: choose 2 from the six-skill list', () => {
+    expect(cls('paladin').skillChoices).toEqual({
+      choose: 2,
+      from: ['athletics', 'insight', 'intimidation', 'medicine', 'persuasion', 'religion'],
+    });
+  });
+  it('Ranger: choose 3', () => {
+    expect(cls('ranger').skillChoices.choose).toBe(3);
+    expect(cls('ranger').skillChoices.from).toEqual(
+      ['animal-handling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival'],
+    );
+  });
+  it('Barbarian (unchanged): still choose 2 from its own list', () => {
+    expect(cls('barbarian').skillChoices.choose).toBe(2);
+    expect(cls('barbarian').skillChoices.from).not.toBe('any');
+  });
+});
+
 describe('pcTokenStats — AC stamped onto the PC token for click-to-target', () => {
   it('exposes the same AC + max HP as the sheet (Human Fighter in chain mail)', () => {
     const c = humanFighter();

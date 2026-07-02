@@ -68,8 +68,6 @@ export function Dnd5eCharacterBuilder({
   const [error, setError] = useState('');
 
   const rule = system.modifierRule;
-  const fighter = system.classes?.[0];
-  const skillChoose = fighter?.skillChoices.choose ?? 2;
 
   // Selected race + its sub-choices (subrace, Half-Elf flexible bonus, Half-Elf skills).
   const race = system.ancestries.find((a) => a.id === draft.raceId);
@@ -82,9 +80,6 @@ export function Dnd5eCharacterBuilder({
   // All proficient skills at finish = class picks + Half-Elf race picks (racial fixed grants
   // like Elf Perception are added automatically by pcDerived).
   const allChosenSkills = [...new Set([...draft.chosenSkillIds, ...draft.raceSkillIds])];
-  const skillFrom = (fighter?.skillChoices.from === 'any'
-    ? system.skills.map((s) => s.id)
-    : fighter?.skillChoices.from) ?? [];
 
   const usedValues = Object.values(draft.abilities);
   const assignedAll = ABILITY_IDS.every((id) => draft.abilities[id] !== undefined);
@@ -92,6 +87,12 @@ export function Dnd5eCharacterBuilder({
   // Spellcasting (caster classes only): a spell step slots in before 'finish'. Counts come
   // from the class's level-1 table; leveled picks are the known list / Wizard starting book.
   const selectedClass = (system.classes ?? []).find((c) => c.id === draft.classId);
+  // Skill step reads the SELECTED class's list (not a fixed class) — 'any' expands to all skills.
+  const skillChoose = selectedClass?.skillChoices.choose ?? 2;
+  const skillFrom =
+    selectedClass?.skillChoices.from === 'any'
+      ? system.skills.map((sk) => sk.id)
+      : (selectedClass?.skillChoices.from ?? []);
   const casterModel = selectedClass?.spellcasting?.type; // undefined for martials
   const isCaster = !!casterModel;
   const lvl1 = selectedClass?.levels.find((l) => l.level === 1);
@@ -355,8 +356,8 @@ export function Dnd5eCharacterBuilder({
               <button
                 key={cl.id}
                 className={[s.statRow, draft.classId === cl.id ? s.active : ''].filter(Boolean).join(' ')}
-                // Switching class clears spell picks (a different list applies).
-                onClick={() => setDraft((d) => ({ ...d, classId: cl.id, cantripIds: [], spellIds: [] }))}
+                // Switching class clears skill + spell picks (a different list applies).
+                onClick={() => setDraft((d) => ({ ...d, classId: cl.id, chosenSkillIds: [], cantripIds: [], spellIds: [] }))}
               >
                 <span className={s.statName}>
                   {cl.name}
