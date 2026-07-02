@@ -15,6 +15,11 @@ import s from '../board/drawers/drawers.module.css';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 const row: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' };
+// The app's standard body text (stat panel / roll log): full-size, primary color, sans. Used to
+// override the smaller/darker .hint/.itemMeta classes for spell text without touching shared CSS.
+const bodyText: React.CSSProperties = { fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', color: 'var(--text-primary)' };
+// Secondary metadata (school tags, casting line): same body size, muted color.
+const metaBase: React.CSSProperties = { fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', color: 'var(--text-muted)' };
 
 const spellById = (id: string): Dnd5eSpell | undefined => allSpells.find((sp) => sp.id === id);
 const levelLabel = (lvl: number) => (lvl === 0 ? 'Cantrips' : `Level ${lvl}`);
@@ -267,7 +272,7 @@ export function Dnd5eSheet({
           )}
           {d.attacks.map((atk) => (
             <div key={atk.name} style={row}>
-              <span className={s.itemMeta}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
+              <span className={s.itemMeta} style={bodyText}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
               <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
             </div>
           ))}
@@ -288,13 +293,13 @@ export function Dnd5eSheet({
                     return (
                       <div key={sp.id} style={row}>
                         <span style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
-                          <span className={s.itemMeta} style={{ overflowWrap: 'anywhere' }}>
+                          <span className={s.itemMeta} style={{ ...bodyText, overflowWrap: 'anywhere' }}>
                             {sp.name}
                             {sp.concentration ? ' (concentration)' : ''}
                             {dmg ? ` — ${dmg} ${sp.damageType ?? ''}` : ''}
                             {sp.attackType ? ' · spell attack' : sp.save ? ` · ${sp.save} save` : ''}
                           </span>
-                          <span className={s.itemMeta}>{sp.school} · {sp.castingTime} · {sp.range}</span>
+                          <span className={s.itemMeta} style={metaBase}>{sp.school} · {sp.castingTime} · {sp.range}</span>
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
                           {upcasts.length > 1 && (
@@ -425,9 +430,9 @@ export function Dnd5eSheet({
             <div key={lvl}>
               <span className={s.label}>{levelLabel(lvl)}</span>
               {list.map((sp) => (
-                <button key={sp.id} style={{ ...row, cursor: 'pointer', background: 'transparent', border: 'none', padding: 'var(--space-1) 0', textAlign: 'left', width: '100%' }} onClick={() => setDetailSpell(sp)}>
+                <button key={sp.id} style={{ ...row, ...bodyText, cursor: 'pointer', background: 'transparent', border: 'none', padding: 'var(--space-1) 0', textAlign: 'left', width: '100%' }} onClick={() => setDetailSpell(sp)}>
                   <span style={{ fontWeight: 600 }}>{sp.name}</span>
-                  <span className={s.itemMeta}>{sp.school}{sp.concentration ? ' · conc' : ''}</span>
+                  <span style={metaBase}>{sp.school}{sp.concentration ? ' · conc' : ''}</span>
                 </button>
               ))}
             </div>
@@ -439,18 +444,18 @@ export function Dnd5eSheet({
       {detailSpell && (
         <Modal open onClose={() => setDetailSpell(null)} title={detailSpell.name} width={440}>
           <div className={s.section}>
-            <span className={s.itemMeta}>
+            <span className={s.itemMeta} style={bodyText}>
               {levelLabel(detailSpell.level) === 'Cantrips' ? 'Cantrip' : `Level ${detailSpell.level}`} · {detailSpell.school}
               {detailSpell.concentration ? ' · concentration' : ''}{detailSpell.ritual ? ' · ritual' : ''}
             </span>
-            <div className={s.itemMeta}>
+            <div className={s.itemMeta} style={bodyText}>
               {detailSpell.castingTime} · {detailSpell.range} ·{' '}
               {[detailSpell.components.v && 'V', detailSpell.components.s && 'S', detailSpell.components.m && 'M'].filter(Boolean).join(', ') || '—'}
               {' '}· {detailSpell.duration}
             </div>
-            <p className={s.hint} style={{ whiteSpace: 'pre-line' }}>{detailSpell.description}</p>
+            <p className={s.hint} style={{ ...bodyText, whiteSpace: 'pre-line' }}>{detailSpell.description}</p>
             {detailSpell.higherLevel && (
-              <p className={s.hint} style={{ whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {detailSpell.higherLevel}</p>
+              <p className={s.hint} style={{ ...bodyText, whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {detailSpell.higherLevel}</p>
             )}
           </div>
         </Modal>
