@@ -404,6 +404,20 @@ export function Dnd5eSheet({
             </>
           )}
 
+          {/* Background — name + its narrative feature. Its skill proficiencies already appear
+              in the Skills list above (via pcDerived). */}
+          {d.backgroundName && (
+            <>
+              <span className={s.label}>Background</span>
+              <div style={row}><span style={bodyText}><strong>{d.backgroundName}</strong></span></div>
+              {d.backgroundFeature && (
+                <p className={s.hint} style={{ margin: 0 }}>
+                  <strong>{d.backgroundFeature.name}:</strong> {d.backgroundFeature.description}
+                </p>
+              )}
+            </>
+          )}
+
           {/* Racial traits that affect play: resistances, breath weapon (rollable), Lucky toggle,
               and text notes for passive/flavor traits. */}
           {(d.resistances.length > 0 || d.breath || d.lucky || d.raceTraits.length > 0) && (

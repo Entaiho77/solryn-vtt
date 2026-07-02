@@ -30,6 +30,7 @@ interface Draft {
   /** Half-Elf's Skill Versatility picks (separate from the class skill step). */
   raceSkillIds: string[];
   classId?: string;
+  backgroundId?: string;
   chosenSkillIds: string[];
   /** Cantrips picked (level-0 spells). */
   cantripIds: string[];
@@ -37,7 +38,7 @@ interface Draft {
   spellIds: string[];
 }
 
-type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'spells' | 'finish';
+type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'background' | 'spells' | 'finish';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 // Long option lists (skills, abilities, spells) laid out 3-across so everything's visible at once.
@@ -106,13 +107,14 @@ export function Dnd5eCharacterBuilder({
   const leveledOptions = classSpells.filter((sp) => sp.level === 1);
 
   const steps: StepKind[] = isCaster
-    ? ['abilities', 'race', 'class', 'skills', 'spells', 'finish']
-    : ['abilities', 'race', 'class', 'skills', 'finish'];
+    ? ['abilities', 'race', 'class', 'skills', 'background', 'spells', 'finish']
+    : ['abilities', 'race', 'class', 'skills', 'background', 'finish'];
   const meta: Record<StepKind, { title: string; instruction: string }> = {
     abilities: { title: 'Assign ability scores', instruction: 'Place the standard array (15/14/13/12/10/8) — each value once.' },
     race: { title: 'Choose a race', instruction: 'Pick your race. Its bonuses apply to your scores right away.' },
     class: { title: 'Choose a class', instruction: 'Pick your class. It sets your hit die, proficiencies, and features.' },
     skills: { title: 'Choose skills', instruction: `Pick ${skillChoose} skill proficiencies from your class list.` },
+    background: { title: 'Choose a background', instruction: 'Your background grants two more skill proficiencies, tools, and a feature.' },
     spells: { title: 'Choose spells', instruction: 'Pick your cantrips and starting spells.' },
     finish: { title: 'Name & finish', instruction: 'Name your character. Starter gear is equipped automatically.' },
   };
@@ -133,6 +135,8 @@ export function Dnd5eCharacterBuilder({
         return !!draft.classId;
       case 'skills':
         return draft.chosenSkillIds.length === skillChoose;
+      case 'background':
+        return !!draft.backgroundId;
       case 'spells':
         return draft.cantripIds.length === cantripCount && draft.spellIds.length === leveledCount;
       case 'finish':
@@ -156,7 +160,7 @@ export function Dnd5eCharacterBuilder({
       systemId: system.id,
       name: draft.name,
       buildComplete: false,
-      definition: { ancestryId: draft.raceId ?? '', subraceId: draft.subraceId, ancestryChoices: draft.ancestryChoices, classId: draft.classId, coreScores: scores, chosenSkillIds: allChosenSkills, knownSpellIds: [] },
+      definition: { ancestryId: draft.raceId ?? '', subraceId: draft.subraceId, ancestryChoices: draft.ancestryChoices, classId: draft.classId, backgroundId: draft.backgroundId, coreScores: scores, chosenSkillIds: allChosenSkills, knownSpellIds: [] },
       play: { level: 1, reputation: system.creation.startingReputation, pools: {}, skills: {}, equippedWeaponIds: kit.weaponIds, ...(kit.armorId ? { equippedArmorId: kit.armorId } : {}) },
     } as Character;
     return pcDerived(system, character);
@@ -183,6 +187,7 @@ export function Dnd5eCharacterBuilder({
         ...(draft.subraceId ? { subraceId: draft.subraceId } : {}),
         ...(Object.keys(draft.ancestryChoices).length ? { ancestryChoices: draft.ancestryChoices } : {}),
         classId: draft.classId,
+        ...(draft.backgroundId ? { backgroundId: draft.backgroundId } : {}),
         coreScores: scores,
         chosenSkillIds: allChosenSkills,
         knownSpellIds,
@@ -398,6 +403,32 @@ export function Dnd5eCharacterBuilder({
                 <span className={s.statName}>{sk?.name ?? sid}</span>
                 <span className={s.statMod}>{sk?.attribute}</span>
               </label>
+            );
+          })}
+        </div>
+      )}
+
+      {kind === 'background' && (
+        <div className={s.statList}>
+          {(system.backgrounds ?? []).map((bg) => {
+            const skills = bg.skillProficiencies.map((sid) => system.skills.find((s2) => s2.id === sid)?.name ?? sid).join(', ');
+            const tools = [...(bg.toolProficiencies ?? []), ...(bg.languages ? [`${bg.languages} language${bg.languages > 1 ? 's' : ''}`] : [])].join(', ');
+            const selected = draft.backgroundId === bg.id;
+            return (
+              <button
+                key={bg.id}
+                className={[s.statRow, selected ? s.active : ''].filter(Boolean).join(' ')}
+                style={{ flexDirection: 'column', alignItems: 'stretch', gap: 2 }}
+                onClick={() => setDraft((d) => ({ ...d, backgroundId: bg.id }))}
+              >
+                <span className={s.statName}>{bg.name}</span>
+                <span className={s.statMod}>Skills: {skills}{tools ? ` · ${tools}` : ''}</span>
+                {selected && bg.feature && (
+                  <span className={s.statMod} style={{ marginTop: 4 }}>
+                    <strong>{bg.feature.name}:</strong> {bg.feature.description}
+                  </span>
+                )}
+              </button>
             );
           })}
         </div>

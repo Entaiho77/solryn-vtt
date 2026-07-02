@@ -191,6 +191,8 @@ export interface CharacterDefinition {
   spellbookSpellIds?: string[];
   /** Class id (class-and-level systems, 5e). Optional; classless systems (Solryn) omit it. */
   classId?: string;
+  /** Background id (5e). Grants fixed skill/tool proficiencies + a narrative feature. */
+  backgroundId?: string;
 }
 
 export interface CharacterPlayState {

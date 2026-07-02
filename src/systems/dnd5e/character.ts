@@ -66,6 +66,9 @@ export interface PcDerived {
   attacks: { name: string; dice: string; damageType: string; attackBonus: number }[];
   /** Rogue Sneak Attack dice at the character's level (e.g. "1d6"), if the class has it. */
   sneakAttackDice?: string;
+  // --- Background (5e) ---
+  backgroundName?: string;
+  backgroundFeature?: { name: string; description: string };
   // --- Race (5e) ---
   raceName?: string;
   subraceName?: string;
@@ -106,6 +109,7 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   const cls = system.classes?.find((c) => c.id === character.definition.classId);
   const ancestry = system.ancestries.find((a) => a.id === character.definition.ancestryId);
   const subrace = ancestry?.subraces?.find((sr) => sr.id === character.definition.subraceId);
+  const background = system.backgrounds?.find((b) => b.id === character.definition.backgroundId);
   const level = character.play.level;
   const scores = character.definition.coreScores;
 
@@ -141,8 +145,14 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   const racialSkillIds = grantedProficiencies.filter((pid) =>
     system.skills.some((s) => s.id === pid),
   );
+  // Background skills are always proficient too; the Set dedupes an overlap with a class/race
+  // pick so a skill is only counted once (proficiency applied once).
   const proficientSkillIds = [
-    ...new Set([...character.definition.chosenSkillIds, ...racialSkillIds]),
+    ...new Set([
+      ...character.definition.chosenSkillIds,
+      ...racialSkillIds,
+      ...(background?.skillProficiencies ?? []),
+    ]),
   ];
   const skills = proficientSkillIds.map((sid) => {
     const sk = system.skills.find((s) => s.id === sid);
@@ -202,6 +212,8 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     skills,
     attacks,
     ...(typeof sneakAttackDice === 'string' ? { sneakAttackDice } : {}),
+    ...(background ? { backgroundName: background.name } : {}),
+    ...(background?.feature ? { backgroundFeature: background.feature } : {}),
     ...(ancestry ? { raceName: ancestry.name } : {}),
     ...(subrace ? { subraceName: subrace.name } : {}),
     speed: ancestry?.speed ?? 30,

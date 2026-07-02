@@ -225,6 +225,41 @@ describe('5e spell slots + caster model', () => {
   });
 });
 
+describe('5e backgrounds (SRD 2014)', () => {
+  it('all 12 backgrounds are present', () => {
+    expect(dnd5eSystem.backgrounds?.length).toBe(12);
+  });
+
+  it('Sage grants Arcana + History (fixed skills)', () => {
+    const sage = dnd5eSystem.backgrounds?.find((b) => b.id === 'sage');
+    expect(sage?.skillProficiencies).toEqual(['arcana', 'history']);
+    expect(sage?.feature?.name).toBe('Researcher');
+  });
+
+  it('background skill proficiencies are added to pcDerived, alongside class picks', () => {
+    // Fighter with a chosen class skill (athletics) + Sage background (arcana, history).
+    const c = classChar('fighter', { STR: 16, DEX: 14, CON: 15, INT: 12, WIS: 12, CHA: 8 }, 1);
+    c.definition.chosenSkillIds = ['athletics'];
+    c.definition.backgroundId = 'sage';
+    const d = pcDerived(dnd5eSystem, c);
+    const ids = d.skills.map((sk) => sk.id).sort();
+    expect(ids).toEqual(['arcana', 'athletics', 'history']);
+    expect(d.backgroundName).toBe('Sage');
+    expect(d.backgroundFeature?.name).toBe('Researcher');
+  });
+
+  it('a background skill overlapping a class pick is counted once', () => {
+    // Rogue picks Stealth from its list; Criminal background also grants Stealth.
+    const c = classChar('rogue', { STR: 10, DEX: 16, CON: 12, INT: 12, WIS: 10, CHA: 12 }, 1);
+    c.definition.chosenSkillIds = ['stealth'];
+    c.definition.backgroundId = 'criminal';
+    const d = pcDerived(dnd5eSystem, c);
+    // stealth appears once (deception from Criminal + stealth once).
+    expect(d.skills.filter((sk) => sk.id === 'stealth')).toHaveLength(1);
+    expect(d.skills.map((sk) => sk.id).sort()).toEqual(['deception', 'stealth']);
+  });
+});
+
 describe('class skill choices (SRD 5.2.1)', () => {
   it('Bard: any 3 skills', () => {
     expect(cls('bard').skillChoices).toEqual({ choose: 3, from: 'any' });
