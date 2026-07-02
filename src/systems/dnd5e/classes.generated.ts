@@ -323,26 +323,7 @@ export const generatedClasses: ClassDefinition[] = [
     },
     "skillChoices": {
       "choose": 3,
-      "from": [
-        "acrobatics",
-        "animal-handling",
-        "arcana",
-        "athletics",
-        "deception",
-        "history",
-        "insight",
-        "intimidation",
-        "investigation",
-        "medicine",
-        "nature",
-        "perception",
-        "performance",
-        "persuasion",
-        "religion",
-        "sleight-of-hand",
-        "stealth",
-        "survival"
-      ]
+      "from": "any"
     },
     "startingEquipment": [
       "Leather Armor",
@@ -1697,6 +1678,7 @@ export const generatedClasses: ClassDefinition[] = [
         "history",
         "insight",
         "intimidation",
+        "persuasion",
         "perception",
         "survival"
       ]

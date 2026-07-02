@@ -1,5 +1,4 @@
 import type {
-  BackgroundDefinition,
   ClassDefinition,
   ConditionEntry,
   CoreStat,
@@ -18,6 +17,9 @@ import { bestiary } from './bestiary';
 import { spells } from './spells';
 import { skills, skillCategories } from './skills';
 import { generatedClasses } from './classes.generated';
+import { subclasses } from './subclasses';
+import { feats } from './feats';
+import { backgrounds } from './backgrounds';
 import { ancestries } from './races';
 import { equipment } from './equipment';
 
@@ -92,9 +94,8 @@ const creation: CreationConfig = {
 };
 
 // All 12 SRD classes (generated 1–20 tables). Martials/half-casters are fully playable;
-// full-casters are chassis-only until the spellcasting subsystem. Backgrounds minimal.
+// full-casters are chassis-only until the spellcasting subsystem. Backgrounds: all 12 SRD 2014.
 const classes: ClassDefinition[] = generatedClasses;
-const backgrounds: BackgroundDefinition[] = [];
 
 // 5e uses a 5 ft tactical grid; region/world are travel-scale. Enough for maps to work.
 const mapTypes: MapType[] = [
@@ -167,5 +168,7 @@ export const dnd5eSystem: SystemDefinition = {
   creation,
 
   classes,
+  subclasses,
+  feats,
   backgrounds,
 };

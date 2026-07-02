@@ -69,6 +69,10 @@
   flex-direction: column;
   min-height: 0;
 }
+/* Opt-in wider drawer (5e character sheet only) — ~50% wider; board stays visible. */
+.drawerWide {
+  width: 420px;
+}
 .leftDrawer {
   border-right: 1px solid var(--border-hairline);
 }

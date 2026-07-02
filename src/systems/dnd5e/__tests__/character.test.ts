@@ -211,8 +211,78 @@ describe('5e spell slots + caster model', () => {
     expect(d.spell?.maxSlots).toEqual({ 1: 4, 2: 2 });
   });
 
-  it('Warlock L5: Pact Magic counts (2 third-level slots) surfaced as standard slots', () => {
+  it('Warlock Pact Magic: all slots at a single (rising) level, 1–4 by character level', () => {
+    // Single-level record at every level: L1 1×1st, L2 2×1st, L5 2×3rd, L11 3×5th, L17 4×5th.
+    expect(spellSlots(cls('warlock'), 1)).toEqual({ 1: 1 });
+    expect(spellSlots(cls('warlock'), 2)).toEqual({ 1: 2 });
     expect(spellSlots(cls('warlock'), 5)).toEqual({ 3: 2 });
+    expect(spellSlots(cls('warlock'), 11)).toEqual({ 5: 3 });
+    expect(spellSlots(cls('warlock'), 17)).toEqual({ 5: 4 });
+    // Exactly one slot level at any level (the pact level).
+    for (const lvl of [1, 3, 7, 15, 20]) {
+      expect(Object.keys(spellSlots(cls('warlock'), lvl))).toHaveLength(1);
+    }
+  });
+});
+
+describe('5e backgrounds (SRD 2014)', () => {
+  it('all 12 backgrounds are present', () => {
+    expect(dnd5eSystem.backgrounds?.length).toBe(12);
+  });
+
+  it('Sage grants Arcana + History (fixed skills)', () => {
+    const sage = dnd5eSystem.backgrounds?.find((b) => b.id === 'sage');
+    expect(sage?.skillProficiencies).toEqual(['arcana', 'history']);
+    expect(sage?.feature?.name).toBe('Researcher');
+  });
+
+  it('background skill proficiencies are added to pcDerived, alongside class picks', () => {
+    // Fighter with a chosen class skill (athletics) + Sage background (arcana, history).
+    const c = classChar('fighter', { STR: 16, DEX: 14, CON: 15, INT: 12, WIS: 12, CHA: 8 }, 1);
+    c.definition.chosenSkillIds = ['athletics'];
+    c.definition.backgroundId = 'sage';
+    const d = pcDerived(dnd5eSystem, c);
+    const ids = d.skills.map((sk) => sk.id).sort();
+    expect(ids).toEqual(['arcana', 'athletics', 'history']);
+    expect(d.backgroundName).toBe('Sage');
+    expect(d.backgroundFeature?.name).toBe('Researcher');
+  });
+
+  it('a background skill overlapping a class pick is counted once', () => {
+    // Rogue picks Stealth from its list; Criminal background also grants Stealth.
+    const c = classChar('rogue', { STR: 10, DEX: 16, CON: 12, INT: 12, WIS: 10, CHA: 12 }, 1);
+    c.definition.chosenSkillIds = ['stealth'];
+    c.definition.backgroundId = 'criminal';
+    const d = pcDerived(dnd5eSystem, c);
+    // stealth appears once (deception from Criminal + stealth once).
+    expect(d.skills.filter((sk) => sk.id === 'stealth')).toHaveLength(1);
+    expect(d.skills.map((sk) => sk.id).sort()).toEqual(['deception', 'stealth']);
+  });
+});
+
+describe('class skill choices (SRD 5.2.1)', () => {
+  it('Bard: any 3 skills', () => {
+    expect(cls('bard').skillChoices).toEqual({ choose: 3, from: 'any' });
+  });
+  it('Fighter: choose 2, list includes Persuasion', () => {
+    expect(cls('fighter').skillChoices.choose).toBe(2);
+    expect(cls('fighter').skillChoices.from).toContain('persuasion');
+  });
+  it('Paladin: choose 2 from the six-skill list', () => {
+    expect(cls('paladin').skillChoices).toEqual({
+      choose: 2,
+      from: ['athletics', 'insight', 'intimidation', 'medicine', 'persuasion', 'religion'],
+    });
+  });
+  it('Ranger: choose 3', () => {
+    expect(cls('ranger').skillChoices.choose).toBe(3);
+    expect(cls('ranger').skillChoices.from).toEqual(
+      ['animal-handling', 'athletics', 'insight', 'investigation', 'nature', 'perception', 'stealth', 'survival'],
+    );
+  });
+  it('Barbarian (unchanged): still choose 2 from its own list', () => {
+    expect(cls('barbarian').skillChoices.choose).toBe(2);
+    expect(cls('barbarian').skillChoices.from).not.toBe('any');
   });
 });
 

@@ -2,11 +2,13 @@ import { useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { restoreSpellSlots, setPoolCurrent, setSpellSlot } from '../../data/characters';
+import { restoreSpellSlots, setConcentrating, setFeatResource, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
+import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
-import { spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
+import { concentrationOnCast, spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
 import { LevelUpModal } from './LevelUpModal';
+import { Modal } from '../../components/ui/Modal';
 import { Button } from '../../components/ui/Button';
 import { ResourceTracker } from '../sheet/ResourceTracker';
 import { useRollLog } from '../rolllog/rollLog';
@@ -14,9 +16,23 @@ import s from '../board/drawers/drawers.module.css';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 const row: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' };
+// The app's standard body text (stat panel / roll log): full-size, primary color, sans. Used to
+// override the smaller/darker .hint/.itemMeta classes for spell text without touching shared CSS.
+const bodyText: React.CSSProperties = { fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', color: 'var(--text-primary)' };
+// Secondary metadata (school tags, casting line): same body size, muted color.
+const metaBase: React.CSSProperties = { fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', color: 'var(--text-muted)' };
 
 const spellById = (id: string): Dnd5eSpell | undefined => allSpells.find((sp) => sp.id === id);
 const levelLabel = (lvl: number) => (lvl === 0 ? 'Cantrips' : `Level ${lvl}`);
+
+/** Fold a flat damage add into a dice string's modifier (GWM/Sharpshooter +10). "1d8+3" → "1d8+13".
+ *  Kept in the modifier (not a bonus die) so it correctly does NOT double on a crit. */
+function addFlatDamage(dice: string, add: number): string {
+  const m = dice.match(/^(\d*d\d+)\s*([+-]\d+)?$/i);
+  if (!m) return dice;
+  const base = (m[2] ? parseInt(m[2], 10) : 0) + add;
+  return base === 0 ? m[1] : `${m[1]}${base > 0 ? '+' : ''}${base}`;
+}
 
 /** Group spells by level, ascending (cantrips first). */
 function byLevel(list: Dnd5eSpell[]): [number, Dnd5eSpell[]][] {
@@ -45,12 +61,16 @@ export function Dnd5eSheet({
   const resolver = getCombatResolver(system);
   const d = pcDerived(system, character);
   const hpCurrent = character.play.pools?.hp?.current ?? d.maxHp;
+  const xp = character.play.xp ?? 0;
+  const xpProg = xpProgress(xp, character.play.level);
 
   const [tab, setTab] = useState<'combat' | 'spellbook'>('combat');
   const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const [detailSpell, setDetailSpell] = useState<Dnd5eSpell | null>(null);
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
+  const [powerAttack, setPowerAttack] = useState(false);
   const [lucky, setLucky] = useState(false);
   // Per-spell chosen slot level for upcasting (defaults to the spell's own level).
   const [slotChoice, setSlotChoice] = useState<Record<string, number>>({});
@@ -63,15 +83,18 @@ export function Dnd5eSheet({
   const attackLabel = (name: string) =>
     usingTarget ? `${character.name} → ${target!.name} — ${name}` : `${character.name} — ${name}`;
 
+  // Great Weapon Master / Sharpshooter: −5 to hit, +10 damage when the toggle is on.
+  const pa = powerAttack && d.powerAttack ? d.powerAttack : undefined;
   const rollAttack = (atk: (typeof d.attacks)[number]) =>
     postRoll(
       resolver.resolveAttack({
         label: attackLabel(atk.name),
-        dice: atk.dice,
+        dice: pa ? addFlatDamage(atk.dice, pa.damage) : atk.dice,
         damageType: atk.damageType,
-        attackBonus: atk.attackBonus,
+        attackBonus: atk.attackBonus + (pa?.toHit ?? 0),
         targetAc: usingTarget ? target!.ac : targetAc,
         advantage,
+        critThreshold: d.critThreshold, // Champion's Improved/Superior Critical (weapon attacks only)
         // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
         ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
       }).logText,
@@ -93,6 +116,11 @@ export function Dnd5eSheet({
   const prepared = character.play.preparedSpellIds ?? [];
   const model = d.spell?.model;
 
+  // Warlock Pact Magic: all slots are a single level (the pact level); casting always spends one
+  // of those, and there's no upcast choice. maxSlots is already a single {pactLevel: count} record.
+  const isWarlock = d.cls?.id === 'warlock';
+  const pactLevel = isWarlock ? Number(Object.keys(d.spell?.maxSlots ?? {})[0]) : undefined;
+
   const damageAt = (sp: Dnd5eSpell, slotLevel: number) => spellDamage(sp, slotLevel, character.play.level);
   const currentSlots = (level: number) => character.play.spellSlots?.[level] ?? d.spell?.maxSlots[level] ?? 0;
 
@@ -110,11 +138,19 @@ export function Dnd5eSheet({
         resolver,
       }),
     );
+    // Concentration: casting a concentration spell breaks any previous one (logged) and becomes
+    // the active one. Non-concentration spells leave play.concentrating alone.
+    const conc = concentrationOnCast(character.play.concentrating, sp, character.name);
+    if (conc) {
+      if (conc.breakLog) postRoll(conc.breakLog);
+      void setConcentrating(character.id, conc.concentrating);
+    }
     // Spend a slot for leveled spells (cantrips are at-will). Persists to Firebase.
     if (sp.level > 0) {
       void setSpellSlot(character.id, slotLevel, Math.max(0, currentSlots(slotLevel) - 1));
     }
   };
+  const endConcentration = () => void setConcentrating(character.id, null);
 
   // Combat-tab castable list: cantrips (always known) + the leveled list for the model. Prepared
   // casters have no daily-prep UI yet (G2), so fall back to the full preparable source.
@@ -207,6 +243,20 @@ export function Dnd5eSheet({
             onChange={(n) => void setPoolCurrent(character.id, 'hp', n)}
           />
 
+          {/* Experience — progress toward the next level; "Level Up!" appears at the threshold. */}
+          <div style={row}>
+            <span className={s.itemMeta}>Experience</span>
+            <span>{xp.toLocaleString()}{xpProg.atMax ? ' · Level 20 (max)' : ` / ${xpProg.nextThreshold.toLocaleString()} XP`}</span>
+          </div>
+          {!xpProg.atMax && (
+            <div style={{ height: 6, background: 'var(--surface-raised)', borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ width: `${Math.round(xpProg.fraction * 100)}%`, height: '100%', background: 'var(--accent-teal)' }} />
+            </div>
+          )}
+          {xpProg.canLevelUp && !character.play.levelUpPending && (
+            <Button size="sm" onClick={() => void setLevelUpPending(character.id, true)}>Level Up!</Button>
+          )}
+
           {/* Saving throws */}
           <span className={s.label}>Saving throws</span>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
@@ -259,16 +309,34 @@ export function Dnd5eSheet({
                 Sneak Attack ({d.sneakAttackDice})
               </label>
             )}
+            {d.powerAttack && (
+              <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }} title="Great Weapon Master / Sharpshooter: take −5 to hit for +10 damage (heavy/ranged weapons).">
+                <input type="checkbox" checked={powerAttack} onChange={(e) => setPowerAttack(e.target.checked)} />
+                Power Attack ({sign(d.powerAttack.toHit)}/{sign(d.powerAttack.damage)})
+              </label>
+            )}
           </div>
           {!usingTarget && (
             <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
           )}
           {d.attacks.map((atk) => (
             <div key={atk.name} style={row}>
-              <span className={s.itemMeta}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
+              <span className={s.itemMeta} style={bodyText}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
               <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
             </div>
           ))}
+
+          {/* Concentration banner — the one active concentration spell + a manual End + the
+              damage-triggered CON-save reminder (the save itself is rolled manually). */}
+          {d.spell && character.play.concentrating && (
+            <div style={{ padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)', background: 'var(--surface-raised)', border: '1px solid var(--accent-teal)' }}>
+              <div style={row}>
+                <span style={bodyText}>Concentrating: <strong>{character.play.concentrating.spellName}</strong></span>
+                <Button size="sm" variant="ghost" onClick={endConcentration}>End</Button>
+              </div>
+              <p className={s.hint} style={{ margin: 0 }}>Take damage? Roll a CON save to maintain concentration.</p>
+            </div>
+          )}
 
           {/* Spells — cast alongside weapons, grouped by level (cantrips first). */}
           {d.spell && combatSpells.length > 0 && (
@@ -278,21 +346,23 @@ export function Dnd5eSheet({
                 <div key={lvl}>
                   <p className={s.hint} style={{ marginBottom: 2 }}>{levelLabel(lvl)}{lvl > 0 ? ' (1 slot)' : ' · at-will'}</p>
                   {list.map((sp) => {
-                    const chosen = lvl === 0 ? 0 : (slotChoice[sp.id] ?? lvl);
-                    // Upcast options: slot levels ≥ the spell's level that the class has.
-                    const upcasts = lvl === 0 ? [] : Object.keys(d.spell!.maxSlots).map(Number).filter((L) => L >= lvl);
+                    // Warlock always casts leveled spells with a pact slot (its single level); no
+                    // upcast choice. Other casters pick the slot (default = the spell's own level).
+                    const chosen = lvl === 0 ? 0 : isWarlock ? pactLevel! : (slotChoice[sp.id] ?? lvl);
+                    // Upcast options: slot levels ≥ the spell's level that the class has (none for Warlock).
+                    const upcasts = lvl === 0 || isWarlock ? [] : Object.keys(d.spell!.maxSlots).map(Number).filter((L) => L >= lvl);
                     const noSlot = lvl > 0 && currentSlots(chosen) <= 0;
                     const dmg = damageAt(sp, chosen);
                     return (
                       <div key={sp.id} style={row}>
                         <span style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
-                          <span className={s.itemMeta} style={{ overflowWrap: 'anywhere' }}>
+                          <span className={s.itemMeta} style={{ ...bodyText, overflowWrap: 'anywhere' }}>
                             {sp.name}
                             {sp.concentration ? ' (concentration)' : ''}
                             {dmg ? ` — ${dmg} ${sp.damageType ?? ''}` : ''}
                             {sp.attackType ? ' · spell attack' : sp.save ? ` · ${sp.save} save` : ''}
                           </span>
-                          <span className={s.itemMeta}>{sp.school} · {sp.castingTime} · {sp.range}</span>
+                          <span className={s.itemMeta} style={metaBase}>{sp.school} · {sp.castingTime} · {sp.range}</span>
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
                           {upcasts.length > 1 && (
@@ -330,9 +400,16 @@ export function Dnd5eSheet({
                 <span className={s.itemMeta}>
                   {d.spell.ability} · Save DC {d.spell.saveDc} · Attack {sign(d.spell.attackBonus)}
                 </span>
-                <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
-                  Long Rest
-                </Button>
+                <span style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                  {isWarlock && (
+                    <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
+                      Short Rest
+                    </Button>
+                  )}
+                  <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
+                    Long Rest
+                  </Button>
+                </span>
               </div>
               {Object.keys(d.spell.maxSlots).length === 0 ? (
                 <p className={s.hint}>No spell slots at this level yet.</p>
@@ -342,7 +419,8 @@ export function Dnd5eSheet({
                   const current = character.play.spellSlots?.[level] ?? max;
                   return (
                     <div key={lvl} style={row}>
-                      <span className={s.itemMeta}>Level {lvl} slots</span>
+                      {/* Warlock: a single Pact Magic row (all slots at the pact level). */}
+                      <span className={s.itemMeta}>{isWarlock ? `Pact Magic · Level ${lvl} slots` : `Level ${lvl} slots`}</span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
                         <Button size="sm" variant="ghost" onClick={() => void setSpellSlot(character.id, level, Math.max(0, current - 1))}>
                           −
@@ -356,12 +434,85 @@ export function Dnd5eSheet({
                   );
                 })
               )}
-              {d.cls?.id === 'warlock' && (
-                <p className={s.hint}>
-                  Warlock uses Pact Magic slot counts, but slot recovery here is a placeholder (Long
-                  Rest). Short-rest recovery arrives with Pact Magic.
+              {isWarlock && (
+                <p className={s.hint}>Pact Magic: all slots are the same level and recover on a short (or long) rest.</p>
+              )}
+            </>
+          )}
+
+          {/* Subclass — its features (merged into pcDerived), or a picker when the character has
+              reached its subclass level but hasn't chosen (covers L1/L2 classes the level-up flow
+              never prompts). */}
+          {d.subclassName ? (
+            <>
+              <span className={s.label}>{d.subclassName}</span>
+              {d.subclassFeatures.map((f) => (
+                <p key={f} className={s.hint} style={{ margin: 0 }}>• {f}</p>
+              ))}
+            </>
+          ) : (
+            d.cls?.subclassLevel != null &&
+            character.play.level >= d.cls.subclassLevel &&
+            (system.subclasses ?? []).some((su) => su.classId === d.cls!.id) && (
+              <>
+                <span className={s.label}>Choose your subclass</span>
+                {(system.subclasses ?? [])
+                  .filter((su) => su.classId === d.cls!.id)
+                  .map((su) => (
+                    <div key={su.id} style={row}>
+                      <span style={bodyText}>{su.name}</span>
+                      <Button size="sm" onClick={() => void setSubclass(character.id, su.id)}>Choose</Button>
+                    </div>
+                  ))}
+              </>
+            )
+          )}
+
+          {/* Background — name + its narrative feature. Its skill proficiencies already appear
+              in the Skills list above (via pcDerived). */}
+          {d.backgroundName && (
+            <>
+              <span className={s.label}>Background</span>
+              <div style={row}><span style={bodyText}><strong>{d.backgroundName}</strong></span></div>
+              {d.backgroundFeature && (
+                <p className={s.hint} style={{ margin: 0 }}>
+                  <strong>{d.backgroundFeature.name}:</strong> {d.backgroundFeature.description}
                 </p>
               )}
+            </>
+          )}
+
+          {/* Feats — passive effects are already folded into the numbers above (AC/HP/scores/speed);
+              this lists them for reference, with active trackers for resource feats (Lucky, Healer). */}
+          {d.feats.length > 0 && (
+            <>
+              <span className={s.label}>Feats</span>
+              {d.feats.map((f) => (
+                <div key={f.id}>
+                  <div style={row}>
+                    <span style={bodyText}><strong>{f.name}</strong></span>
+                  </div>
+                  <p className={s.hint} style={{ margin: 0 }}>{f.description}</p>
+                  {f.note && <p className={s.hint} style={{ margin: 0, fontStyle: 'italic' }}>{f.note}</p>}
+                </div>
+              ))}
+              {d.featResources.map((r) => (
+                <div key={r.id} style={row}>
+                  <span className={s.itemMeta}>{r.name}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                    <Button size="sm" variant="ghost" onClick={() => void setFeatResource(character.id, r.id, Math.max(0, r.current - 1))}>
+                      −
+                    </Button>
+                    <strong>{r.current}/{r.max}</strong>
+                    <Button size="sm" variant="ghost" onClick={() => void setFeatResource(character.id, r.id, Math.min(r.max, r.current + 1))}>
+                      +
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => void setFeatResource(character.id, r.id, r.max)} title="Restore on a long rest">
+                      Rest
+                    </Button>
+                  </span>
+                </div>
+              ))}
             </>
           )}
 
@@ -418,29 +569,40 @@ export function Dnd5eSheet({
             ))}
           </select>
           {filteredBook.length === 0 && <p className={s.hint}>No spells match.</p>}
+          {/* Compact, scannable rows: name + school tag. Click a spell to see full details. */}
           {byLevel(filteredBook).map(([lvl, list]) => (
             <div key={lvl}>
               <span className={s.label}>{levelLabel(lvl)}</span>
-              {list.map((sp) => {
-                const comps = [sp.components.v && 'V', sp.components.s && 'S', sp.components.m && 'M'].filter(Boolean).join(', ');
-                return (
-                  <div key={sp.id} style={{ paddingBlock: 'var(--space-1)' }}>
-                    <div style={{ fontWeight: 600 }}>
-                      {sp.name} <span className={s.itemMeta}>· {sp.school}{sp.concentration ? ' · concentration' : ''}{sp.ritual ? ' · ritual' : ''}</span>
-                    </div>
-                    <div className={s.itemMeta}>
-                      {sp.castingTime} · {sp.range} · {comps || '—'} · {sp.duration}
-                    </div>
-                    <p className={s.hint} style={{ whiteSpace: 'pre-line' }}>{sp.description}</p>
-                    {sp.higherLevel && (
-                      <p className={s.hint} style={{ whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {sp.higherLevel}</p>
-                    )}
-                  </div>
-                );
-              })}
+              {list.map((sp) => (
+                <button key={sp.id} style={{ ...row, ...bodyText, cursor: 'pointer', background: 'transparent', border: 'none', padding: 'var(--space-1) 0', textAlign: 'left', width: '100%' }} onClick={() => setDetailSpell(sp)}>
+                  <span style={{ fontWeight: 600 }}>{sp.name}</span>
+                  <span style={metaBase}>{sp.school}{sp.concentration ? ' · conc' : ''}</span>
+                </button>
+              ))}
             </div>
           ))}
         </>
+      )}
+
+      {/* Spell detail popup (Spellbook tab) — dismisses on click-away or Escape (Modal behavior). */}
+      {detailSpell && (
+        <Modal open onClose={() => setDetailSpell(null)} title={detailSpell.name} width={440}>
+          <div className={s.section}>
+            <span className={s.itemMeta} style={bodyText}>
+              {levelLabel(detailSpell.level) === 'Cantrips' ? 'Cantrip' : `Level ${detailSpell.level}`} · {detailSpell.school}
+              {detailSpell.concentration ? ' · concentration' : ''}{detailSpell.ritual ? ' · ritual' : ''}
+            </span>
+            <div className={s.itemMeta} style={bodyText}>
+              {detailSpell.castingTime} · {detailSpell.range} ·{' '}
+              {[detailSpell.components.v && 'V', detailSpell.components.s && 'S', detailSpell.components.m && 'M'].filter(Boolean).join(', ') || '—'}
+              {' '}· {detailSpell.duration}
+            </div>
+            <p className={s.hint} style={{ ...bodyText, whiteSpace: 'pre-line' }}>{detailSpell.description}</p>
+            {detailSpell.higherLevel && (
+              <p className={s.hint} style={{ ...bodyText, whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {detailSpell.higherLevel}</p>
+            )}
+          </div>
+        </Modal>
       )}
     </div>
   );

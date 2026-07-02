@@ -44,6 +44,8 @@ export interface AttackInput {
   /** Extra damage dice added on a hit (e.g. Rogue Sneak Attack); doubled on a crit like the
    *  weapon dice. Rolled and shown separately. */
   bonusDamage?: { dice: string; label: string };
+  /** Lowest natural d20 that scores a crit (default 20; Champion 19 at L3, 18 at L15). */
+  critThreshold?: number;
   /** Injectable RNG for deterministic tests. */
   rng?: Rng;
 }
@@ -101,7 +103,7 @@ function rollCritDamage(dice: string, rng?: Rng): RollResult {
  * 1 → auto-miss. Otherwise total ≥ AC hits. Solryn's autoHitVsDr is unaffected.
  */
 const attackRollVsAc: CombatResolver = {
-  resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, bonusDamage, rng }) {
+  resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, bonusDamage, critThreshold = 20, rng }) {
     const face = rollD20Face(advantage, rng); // raw natural value of the kept die
     const attackRoll = face + attackBonus;
     const advTag =
@@ -113,7 +115,8 @@ const attackRollVsAc: CombatResolver = {
     if (face === 1) {
       return { hit: false, attackRoll, rolls: [], modifier: 0, damage: 0, logText: `${label}: natural 1 — MISS` };
     }
-    const crit = face === 20; // natural 20 → automatic hit + crit
+    // A natural roll at/above the threshold crits (and auto-hits, like a natural 20).
+    const crit = face >= critThreshold;
     const hit = crit || attackRoll >= targetAc;
 
     if (!hit) {
@@ -123,7 +126,7 @@ const attackRollVsAc: CombatResolver = {
     // Bonus damage dice (Sneak Attack) also double on a crit, per 5e.
     const bonus = bonusDamage ? (crit ? rollCritDamage(bonusDamage.dice, rng) : rollDice(bonusDamage.dice, rng)) : null;
     const total = dmg.total + (bonus?.total ?? 0);
-    const head = crit ? 'natural 20 — CRIT' : `${toHit} vs AC ${targetAc} — HIT`;
+    const head = crit ? `natural ${face} — CRIT` : `${toHit} vs AC ${targetAc} — HIT`;
     // Individual dice + modifier, e.g. [3,4] +2 → "3+4+2" (empty modifier for 0), matching the
     // describeRoll breakdown style. Only crits show this; a normal hit stays total-only.
     const breakdown = (r: RollResult) => `${r.rolls.join('+')}${sign(r.modifier)}`;

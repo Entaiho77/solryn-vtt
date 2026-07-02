@@ -10,7 +10,7 @@ import styles from './BoardShell.module.css';
 // `label` is the full descriptive name (used for title/aria); `short` is the concise
 // 1-word caption shown under the glyph. Falls back to `label` when omitted.
 export type BarItem =
-  | { kind: 'drawer'; id: string; label: string; short?: string; glyph: string; content: ReactNode }
+  | { kind: 'drawer'; id: string; label: string; short?: string; glyph: string; content: ReactNode; wide?: boolean }
   | {
       kind: 'action';
       id: string;
@@ -71,7 +71,7 @@ export function BoardShell({
         </aside>
       ) : (
         rightOpen && (
-          <aside className={`${styles.drawer} ${styles.rightDrawer}`}>
+          <aside className={`${styles.drawer} ${styles.rightDrawer} ${rightOpen.wide ? styles.drawerWide : ''}`}>
             <DrawerHeader title={rightOpen.label} onClose={() => onToggle('right', rightOpen.id)} />
             <div className={styles.drawerBody}>{rightOpen.content}</div>
           </aside>

@@ -191,6 +191,10 @@ export interface CharacterDefinition {
   spellbookSpellIds?: string[];
   /** Class id (class-and-level systems, 5e). Optional; classless systems (Solryn) omit it. */
   classId?: string;
+  /** Background id (5e). Grants fixed skill/tool proficiencies + a narrative feature. */
+  backgroundId?: string;
+  /** How ability scores were generated (5e), kept for display reference. */
+  abilityScoreMethod?: 'standard' | 'pointbuy' | 'roll';
 }
 
 export interface CharacterPlayState {
@@ -203,8 +207,20 @@ export interface CharacterPlayState {
   spellSlots?: Record<number, number>;
   /** 5e prepared casters' spells prepared for the day (changes daily). Empty until G3's prep UI. */
   preparedSpellIds?: string[];
+  /** 5e concentration: the currently-sustained concentration spell (only one at a time). */
+  concentrating?: { spellId: string; spellName: string };
   /** 5e milestone level-up: set true by the GM to grant, cleared when the player applies it. */
   levelUpPending?: boolean;
+  /** 5e experience points (cumulative total). GM-awarded; drives the XP-based level-up. */
+  xp?: number;
+  /** 5e subclass id, chosen at the class's subclass level. */
+  subclassId?: string;
+  /** 5e feats taken (in place of ASIs at ASI levels). */
+  featIds?: string[];
+  /** Ability chosen for a feat's flexible +1 (featId → ability id), applied by pcDerived. */
+  featChoices?: Record<string, string>;
+  /** Feat resource pools remaining (resource id → current), e.g. Lucky luck points. */
+  featResources?: Record<string, number>;
   /** Skill points granted (by level-up) but not yet placed. */
   unspentSkillPoints?: number;
   equippedArmorId?: string;

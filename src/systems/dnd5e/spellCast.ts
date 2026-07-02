@@ -17,6 +17,25 @@ export function spellDamage(sp: Dnd5eSpell, slotLevel: number, casterLevel: numb
   return sp.scaling?.bySlotLevel?.[String(slotLevel)] ?? sp.damageDice;
 }
 
+/**
+ * Concentration bookkeeping for a cast. Returns null when the spell isn't a concentration spell
+ * (leave play.concentrating untouched). Otherwise returns the new concentration target and, if a
+ * DIFFERENT concentration spell was already active, a log line noting it was broken (5e: you can
+ * only concentrate on one spell — casting another breaks the first). Pure — no Firebase.
+ */
+export function concentrationOnCast(
+  prev: { spellId: string; spellName: string } | undefined,
+  sp: Dnd5eSpell,
+  casterName: string,
+): { concentrating: { spellId: string; spellName: string }; breakLog?: string } | null {
+  if (!sp.concentration) return null;
+  const out: { concentrating: { spellId: string; spellName: string }; breakLog?: string } = {
+    concentrating: { spellId: sp.id, spellName: sp.name },
+  };
+  if (prev && prev.spellId !== sp.id) out.breakLog = `${casterName}: Concentration on ${prev.spellName} broken.`;
+  return out;
+}
+
 export interface CastContext {
   casterName: string;
   /** Target name (attack spells with a set target) → shown as "Caster → Target — Spell". */

@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { applyLevelUp5e } from '../../data/characters';
-import { ABILITY_IDS } from '../../systems/dnd5e/character';
+import { ABILITY_IDS, pcDerived } from '../../systems/dnd5e/character';
+import { feats as allFeats, meetsFeatPrerequisite } from '../../systems/dnd5e/feats';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { computeLevelUp, levelUpSummary, type LevelUpChoices } from '../../systems/dnd5e/levelUp';
 import { Modal } from '../../components/ui/Modal';
@@ -31,7 +32,26 @@ export function LevelUpModal({
   const [asiB, setAsiB] = useState<string>('');
   const [newCantripIds, setNewCantripIds] = useState<string[]>([]);
   const [newSpellIds, setNewSpellIds] = useState<string[]>([]);
+  const [subclassId, setSubclassId] = useState<string>('');
+  // ASI levels let the player take the ASI OR a feat.
+  const [asiOrFeat, setAsiOrFeat] = useState<'asi' | 'feat'>('asi');
+  const [featId, setFeatId] = useState<string>('');
+  const [featAbility, setFeatAbility] = useState<string>('');
   const [busy, setBusy] = useState(false);
+
+  // Feats the character is eligible for (prerequisites met, not already taken).
+  const derived = useMemo(() => pcDerived(system, character), [system, character]);
+  const owned = new Set(character.play.featIds ?? []);
+  const eligibleFeats = allFeats.filter(
+    (f) => !owned.has(f.id) && meetsFeatPrerequisite(f, derived.scores, !!derived.spell),
+  );
+  const pickedFeat = allFeats.find((f) => f.id === featId);
+  const featNeedsAbility = !!pickedFeat?.effects?.abilityChoice;
+
+  // Subclass options (this class's subclasses) when this level is the subclass level.
+  const subclassOptions = summary.subclassPending
+    ? (system.subclasses ?? []).filter((sub) => sub.classId === character.definition.classId)
+    : [];
   // UI-only: which spell level the leveled picker shows ('all' or a specific level).
   const [spellLevelFilter, setSpellLevelFilter] = useState<number | 'all'>('all');
 
@@ -50,14 +70,26 @@ export function LevelUpModal({
         ? { [asiA]: 1, [asiB]: 1 }
         : {};
 
-  const asiComplete = !summary.isAsi || Object.keys(asi).length === (asiMode === 'one' ? 1 : 2);
+  // The ASI level is satisfied by either a complete ASI or a valid feat pick.
+  const asiPart = Object.keys(asi).length === (asiMode === 'one' ? 1 : 2);
+  const featPart = !!featId && (!featNeedsAbility || !!featAbility);
+  const asiComplete = !summary.isAsi || (asiOrFeat === 'asi' ? asiPart : featPart);
   const cantripsComplete = newCantripIds.length === summary.cantripsGain;
   const spellsComplete = newSpellIds.length === summary.spellsGain;
-  const canFinish = asiComplete && cantripsComplete && spellsComplete && !busy && !summary.atMax;
+  const subclassComplete = !summary.subclassPending || subclassOptions.length === 0 || !!subclassId;
+  const canFinish = asiComplete && cantripsComplete && spellsComplete && subclassComplete && !busy && !summary.atMax;
+
+  const takingFeat = summary.isAsi && asiOrFeat === 'feat';
 
   async function finish() {
     setBusy(true);
-    const choices: LevelUpChoices = { asi, newCantripIds, newSpellIds };
+    const choices: LevelUpChoices = {
+      asi: takingFeat ? {} : asi,
+      newCantripIds,
+      newSpellIds,
+      ...(subclassId ? { subclassId } : {}),
+      ...(takingFeat && featId ? { featId, ...(featAbility ? { featAbility } : {}) } : {}),
+    };
     const result = computeLevelUp(system, character, summary, choices);
     try {
       await applyLevelUp5e(character.id, result);
@@ -153,8 +185,18 @@ export function LevelUpModal({
             ))}
           </>
         )}
-        {summary.subclassPending && (
-          <p className={s.hint}>Your subclass unlocks at this level — subclass selection coming soon.</p>
+        {summary.subclassPending && subclassOptions.length > 0 && (
+          <>
+            <span className={s.label}>Choose your subclass</span>
+            {subclassOptions.map((sub) => (
+              <label key={sub.id} className={`${s.item} ${subclassId === sub.id ? s.itemActive ?? '' : ''}`} style={{ ...row, alignItems: 'flex-start' }}>
+                <span>
+                  <input type="radio" checked={subclassId === sub.id} onChange={() => setSubclassId(sub.id)} /> <strong>{sub.name}</strong>
+                  {sub.description && <span className={s.itemMeta}> — {sub.description}</span>}
+                </span>
+              </label>
+            ))}
+          </>
         )}
 
         {/* HP */}
@@ -171,31 +213,76 @@ export function LevelUpModal({
           </div>
         ))}
 
-        {/* ASI */}
+        {/* ASI — or, at the player's choice, a feat. */}
         {summary.isAsi && (
           <>
             <span className={s.label}>Ability Score Improvement</span>
             <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
               <label className={s.itemMeta}>
-                <input type="radio" checked={asiMode === 'one'} onChange={() => { setAsiMode('one'); setAsiB(''); }} /> +2 to one
+                <input type="radio" checked={asiOrFeat === 'asi'} onChange={() => setAsiOrFeat('asi')} /> Ability Score Improvement
               </label>
               <label className={s.itemMeta}>
-                <input type="radio" checked={asiMode === 'two'} onChange={() => setAsiMode('two')} /> +1 to two
+                <input type="radio" checked={asiOrFeat === 'feat'} onChange={() => setAsiOrFeat('feat')} /> Take a feat
               </label>
             </div>
-            <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-              <select className={s.input} value={asiA} onChange={(e) => setAsiA(e.target.value)} aria-label="Ability">
-                <option value="">—</option>
-                {ABILITY_IDS.map((id) => <option key={id} value={id}>{id}</option>)}
-              </select>
-              {asiMode === 'two' && (
-                <select className={s.input} value={asiB} onChange={(e) => setAsiB(e.target.value)} aria-label="Second ability">
-                  <option value="">—</option>
-                  {ABILITY_IDS.filter((id) => id !== asiA).map((id) => <option key={id} value={id}>{id}</option>)}
+
+            {asiOrFeat === 'asi' ? (
+              <>
+                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                  <label className={s.itemMeta}>
+                    <input type="radio" checked={asiMode === 'one'} onChange={() => { setAsiMode('one'); setAsiB(''); }} /> +2 to one
+                  </label>
+                  <label className={s.itemMeta}>
+                    <input type="radio" checked={asiMode === 'two'} onChange={() => setAsiMode('two')} /> +1 to two
+                  </label>
+                </div>
+                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                  <select className={s.input} value={asiA} onChange={(e) => setAsiA(e.target.value)} aria-label="Ability">
+                    <option value="">—</option>
+                    {ABILITY_IDS.map((id) => <option key={id} value={id}>{id}</option>)}
+                  </select>
+                  {asiMode === 'two' && (
+                    <select className={s.input} value={asiB} onChange={(e) => setAsiB(e.target.value)} aria-label="Second ability">
+                      <option value="">—</option>
+                      {ABILITY_IDS.filter((id) => id !== asiA).map((id) => <option key={id} value={id}>{id}</option>)}
+                    </select>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <select
+                  className={s.input}
+                  value={featId}
+                  onChange={(e) => { setFeatId(e.target.value); setFeatAbility(''); }}
+                  aria-label="Feat"
+                >
+                  <option value="">— Choose a feat —</option>
+                  {eligibleFeats.map((f) => (
+                    <option key={f.id} value={f.id}>{f.name}</option>
+                  ))}
                 </select>
-              )}
-            </div>
-            <p className={s.hint}>Feat support coming soon — for now an ASI is applied.</p>
+                {pickedFeat && (
+                  <p className={s.hint} style={{ marginTop: 'var(--space-1)' }}>
+                    {pickedFeat.description}
+                    {pickedFeat.note && <><br />— {pickedFeat.note}</>}
+                  </p>
+                )}
+                {featNeedsAbility && pickedFeat?.effects?.abilityChoice && (
+                  <select
+                    className={s.input}
+                    value={featAbility}
+                    onChange={(e) => setFeatAbility(e.target.value)}
+                    aria-label="Feat ability increase"
+                  >
+                    <option value="">— +1 to which ability? —</option>
+                    {pickedFeat.effects.abilityChoice.from.map((id) => (
+                      <option key={id} value={id}>{id}</option>
+                    ))}
+                  </select>
+                )}
+              </>
+            )}
           </>
         )}
 

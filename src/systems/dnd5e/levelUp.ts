@@ -114,6 +114,12 @@ export interface LevelUpChoices {
   newCantripIds: string[];
   /** New leveled spells picked (known casters) or added to the spellbook (Wizard). */
   newSpellIds: string[];
+  /** Subclass chosen at this level (only when summary.subclassPending). */
+  subclassId?: string;
+  /** Feat taken instead of the ASI at an ASI level (asi should be empty then). */
+  featId?: string;
+  /** The ability chosen for a feat's flexible +1 (when featId's feat has an abilityChoice). */
+  featAbility?: string;
 }
 
 export interface LevelUpResult {
@@ -125,6 +131,12 @@ export interface LevelUpResult {
   spellbookSpellIds?: string[];
   /** Refresh slots to the new maxima (level-up happens on a rest). Absent for non-casters. */
   spellSlots?: Record<number, number>;
+  /** Subclass chosen at this level, if any. */
+  subclassId?: string;
+  /** Full feat list after this level-up (if a feat was taken). */
+  featIds?: string[];
+  /** Full feat ability-choice map after this level-up. */
+  featChoices?: Record<string, string>;
 }
 
 /** Fold the player's choices into the concrete values to persist. Pure — no Firebase. */
@@ -142,6 +154,16 @@ export function computeLevelUp(
     coreScores[stat] = (coreScores[stat] ?? 10) + delta;
   }
 
+  // A feat taken in place of the ASI: append to featIds and record any ability choice. The feat's
+  // ability bonus isn't baked into coreScores — pcDerived applies it from featIds/featChoices.
+  const featIds = choices.featId
+    ? [...new Set([...(character.play.featIds ?? []), choices.featId])]
+    : undefined;
+  const featChoices =
+    choices.featId && choices.featAbility
+      ? { ...(character.play.featChoices ?? {}), [choices.featId]: choices.featAbility }
+      : undefined;
+
   const known = character.definition.knownSpellIds ?? [];
   const book = character.definition.spellbookSpellIds ?? [];
   // Cantrips are always "known"; leveled picks go to the spellbook (Wizard) or the known list.
@@ -155,5 +177,8 @@ export function computeLevelUp(
     knownSpellIds,
     ...(spellbookSpellIds ? { spellbookSpellIds } : {}),
     ...(summary.model ? { spellSlots: summary.newMaxSlots } : {}),
+    ...(choices.subclassId ? { subclassId: choices.subclassId } : {}),
+    ...(featIds ? { featIds } : {}),
+    ...(featChoices ? { featChoices } : {}),
   };
 }
