@@ -350,7 +350,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
         content:
           isClassAndLevel(system) ? (
-            <Dnd5eSheet system={system} character={character} target={target} />
+            <Dnd5eSheet system={system} character={character} target={target} startingLevel={game.startingLevel} />
           ) : (
             <CharacterQuickView
               system={system}

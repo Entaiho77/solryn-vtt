@@ -99,6 +99,11 @@ export function grantLevelUp(gameId: string, currentGrant: number): Promise<void
   return writeValue(`games/${gameId}/levelGrant`, currentGrant + 1);
 }
 
+/** GM sets the level newly-built characters start at (5e). Clamped to 1–20. */
+export function setStartingLevel(gameId: string, level: number): Promise<void> {
+  return writeValue(`games/${gameId}/startingLevel`, Math.max(1, Math.min(20, Math.round(level))));
+}
+
 /** Regenerate the invite code, invalidating the old one (for leaks / to stop joins). */
 export async function regenerateInviteCode(
   gameId: string,

@@ -7,6 +7,7 @@ import {
   quitGame,
   regenerateInviteCode,
   removeMember,
+  setStartingLevel,
   updateGameName,
 } from '../../data/games';
 import { setLevelUpPending, setXp, useGameCharacters } from '../../data/characters';
@@ -79,12 +80,20 @@ export function GameSettingsModal({
     setXpInputs((x) => ({ ...x, [charId]: '' }));
   };
   const [name, setName] = useState(game.name);
+  const [startLevel, setStartLevel] = useState(game.startingLevel ?? 1);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
   const [quitOpen, setQuitOpen] = useState(false);
 
   // Keep the editable name in sync if the live game updates elsewhere.
   useEffect(() => setName(game.name), [game.name]);
+  useEffect(() => setStartLevel(game.startingLevel ?? 1), [game.startingLevel]);
+
+  const saveStartLevel = (n: number) => {
+    const clamped = Math.max(1, Math.min(20, Math.round(n) || 1));
+    setStartLevel(clamped);
+    if (clamped !== (game.startingLevel ?? 1)) void setStartingLevel(game.id, clamped);
+  };
 
   const members = Object.entries(game.members ?? {});
 
@@ -208,6 +217,50 @@ export function GameSettingsModal({
             <p className={styles.hint}>
               Regenerating invalidates the old code — useful if it leaks or to stop
               new players from joining.
+            </p>
+          </section>
+        )}
+
+        {/* Starting level (GM, 5e). New characters build at level 1, then chain the level-up flow
+            up to this level right after finishing — for players joining an existing party, or a
+            replacement character after a death. */}
+        {isGM && is5e && (
+          <section className={styles.section}>
+            <span className={styles.label}>Starting level (new characters)</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={startLevel <= 1}
+                onClick={() => saveStartLevel(startLevel - 1)}
+                aria-label="Decrease starting level"
+              >
+                −
+              </Button>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={startLevel}
+                onChange={(e) => setStartLevel(Number(e.target.value))}
+                onBlur={(e) => saveStartLevel(Number(e.target.value))}
+                style={{ width: 64, textAlign: 'center' }}
+                aria-label="Starting level"
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={startLevel >= 20}
+                onClick={() => saveStartLevel(startLevel + 1)}
+                aria-label="Increase starting level"
+              >
+                +
+              </Button>
+            </div>
+            <p className={styles.hint}>
+              {startLevel <= 1
+                ? 'New characters start at level 1 (default).'
+                : `New characters finish the level-1 builder, then immediately level up to ${startLevel} — making the same choices (subclass, ASI/feat, spells) back-to-back. Existing characters are unaffected.`}
             </p>
           </section>
         )}

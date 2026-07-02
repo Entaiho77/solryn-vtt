@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthProvider';
 import { useValue } from '../../data/realtime';
-import { createCharacter, useGameCharacter } from '../../data/characters';
+import { createCharacter, setLevelUpPending, useGameCharacter } from '../../data/characters';
 import type { Game } from '../../data/types';
 import { roleOf } from '../../permissions';
 import { getSystem, isClassAndLevel } from '../../systems/registry';
@@ -76,7 +76,10 @@ export function GamePage() {
         gameId={game.id}
         ownerUserId={user.uid}
         onFinish={async (c) => {
-          await createCharacter(c);
+          const created = await createCharacter(c);
+          // Start-above-1: flag a level-up so the sheet chains the level-up flow up to the
+          // game's starting level (the player just built at level 1). Owner-written.
+          if ((game.startingLevel ?? 1) > 1) await setLevelUpPending(created.id, true);
         }}
       />
     );

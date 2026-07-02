@@ -55,7 +55,9 @@ type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'background' | 'spel
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 // Long option lists (skills, abilities, spells) laid out 3-across so everything's visible at once.
-const grid3: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' };
+// minmax(0, 1fr) (not plain 1fr) lets the tracks shrink below their content's min-width, so long
+// option labels wrap inside the column instead of overflowing into the "Why this matters" panel.
+const grid3: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.5rem', minWidth: 0 };
 // Method selector pills — same visual language as the sheet's Combat/Spellbook tabs (teal accent
 // when active, muted outline when not). Inline because steps.module.css has no tab classes.
 const methodTabRow: React.CSSProperties = { display: 'flex', gap: '0.5rem' };

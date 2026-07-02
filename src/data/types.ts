@@ -56,6 +56,9 @@ export interface Game {
   rollLog?: Record<string, RollEntry>;
   /** Party level the GM has granted up to; a character can level while below it. */
   levelGrant?: number;
+  /** 5e: level a newly-built character starts at. When >1, the sheet chains the level-up flow up
+   *  to this level right after creation (new player joining mid-campaign, replacement PC). */
+  startingLevel?: number;
 }
 
 /** One entry in the initiative order. */

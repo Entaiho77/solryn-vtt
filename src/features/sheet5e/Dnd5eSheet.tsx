@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
@@ -51,11 +51,15 @@ export function Dnd5eSheet({
   system,
   character,
   target,
+  startingLevel,
 }: {
   system: SystemDefinition;
   character: Character;
   /** The current click-to-target token (its AC is used when present); undefined → manual AC. */
   target?: { id: string; name: string; ac?: number };
+  /** GM-set starting level (5e). When the character is below it with a pending level-up, the sheet
+   *  auto-opens the level-up flow and re-arms it each level until the character reaches it. */
+  startingLevel?: number;
 }) {
   const { postRoll } = useRollLog();
   const resolver = getCombatResolver(system);
@@ -76,6 +80,21 @@ export function Dnd5eSheet({
   const [slotChoice, setSlotChoice] = useState<Record<string, number>>({});
   const [spellQuery, setSpellQuery] = useState('');
   const [schoolFilter, setSchoolFilter] = useState('');
+
+  // Start-above-1 catch-up: a freshly-built character (pending level-up) below the game's starting
+  // level chains the normal level-up flow — auto-opening it, and re-arming it after each level —
+  // until it reaches that level. Pure reuse of the milestone flow; no leveling logic of its own.
+  const targetLevel = Math.min(20, Math.max(1, startingLevel ?? 1));
+  const catchingUp = !!character.play.levelUpPending && character.play.level < targetLevel;
+  useEffect(() => {
+    if (catchingUp) setLevelUpOpen(true);
+    // character.play.level in the deps re-opens the flow for the next level after each apply.
+  }, [catchingUp, character.play.level]);
+  // After a level-up is applied (level already bumped, pending cleared), re-arm if still short.
+  const onLevelUpDone = () => {
+    setLevelUpOpen(false);
+    if (character.play.level + 1 < targetLevel) void setLevelUpPending(character.id, true);
+  };
 
   // A targeted token with a known AC drives the roll (AC read from its stat block, name shown
   // in the log); otherwise fall back to the typed Target AC.
@@ -197,17 +216,20 @@ export function Dnd5eSheet({
         </span>
       )}
 
-      {/* Milestone level-up granted by the GM — clear, obvious, opens the guided flow. */}
+      {/* Level-up available — a GM milestone grant, or catch-up to the game's starting level. */}
       {character.play.levelUpPending && (
         <div
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)', background: 'var(--surface-raised)', border: '1px solid var(--accent-amber)' }}
         >
-          <span><strong>Level up available!</strong> You reached a milestone.</span>
+          <span>
+            <strong>Level up available!</strong>{' '}
+            {catchingUp ? `Catching up to level ${targetLevel}.` : 'You reached a milestone.'}
+          </span>
           <Button size="sm" onClick={() => setLevelUpOpen(true)}>Level up</Button>
         </div>
       )}
       {levelUpOpen && character.play.levelUpPending && (
-        <LevelUpModal system={system} character={character} onDone={() => setLevelUpOpen(false)} />
+        <LevelUpModal system={system} character={character} onDone={onLevelUpDone} />
       )}
 
       {/* Tabs (casters only). Non-casters see the plain combat sheet, no tabs. */}
