@@ -114,6 +114,8 @@ export interface LevelUpChoices {
   newCantripIds: string[];
   /** New leveled spells picked (known casters) or added to the spellbook (Wizard). */
   newSpellIds: string[];
+  /** Subclass chosen at this level (only when summary.subclassPending). */
+  subclassId?: string;
 }
 
 export interface LevelUpResult {
@@ -125,6 +127,8 @@ export interface LevelUpResult {
   spellbookSpellIds?: string[];
   /** Refresh slots to the new maxima (level-up happens on a rest). Absent for non-casters. */
   spellSlots?: Record<number, number>;
+  /** Subclass chosen at this level, if any. */
+  subclassId?: string;
 }
 
 /** Fold the player's choices into the concrete values to persist. Pure — no Firebase. */
@@ -155,5 +159,6 @@ export function computeLevelUp(
     knownSpellIds,
     ...(spellbookSpellIds ? { spellbookSpellIds } : {}),
     ...(summary.model ? { spellSlots: summary.newMaxSlots } : {}),
+    ...(choices.subclassId ? { subclassId: choices.subclassId } : {}),
   };
 }

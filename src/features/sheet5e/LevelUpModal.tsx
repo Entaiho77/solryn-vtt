@@ -31,7 +31,13 @@ export function LevelUpModal({
   const [asiB, setAsiB] = useState<string>('');
   const [newCantripIds, setNewCantripIds] = useState<string[]>([]);
   const [newSpellIds, setNewSpellIds] = useState<string[]>([]);
+  const [subclassId, setSubclassId] = useState<string>('');
   const [busy, setBusy] = useState(false);
+
+  // Subclass options (this class's subclasses) when this level is the subclass level.
+  const subclassOptions = summary.subclassPending
+    ? (system.subclasses ?? []).filter((sub) => sub.classId === character.definition.classId)
+    : [];
   // UI-only: which spell level the leveled picker shows ('all' or a specific level).
   const [spellLevelFilter, setSpellLevelFilter] = useState<number | 'all'>('all');
 
@@ -53,11 +59,12 @@ export function LevelUpModal({
   const asiComplete = !summary.isAsi || Object.keys(asi).length === (asiMode === 'one' ? 1 : 2);
   const cantripsComplete = newCantripIds.length === summary.cantripsGain;
   const spellsComplete = newSpellIds.length === summary.spellsGain;
-  const canFinish = asiComplete && cantripsComplete && spellsComplete && !busy && !summary.atMax;
+  const subclassComplete = !summary.subclassPending || subclassOptions.length === 0 || !!subclassId;
+  const canFinish = asiComplete && cantripsComplete && spellsComplete && subclassComplete && !busy && !summary.atMax;
 
   async function finish() {
     setBusy(true);
-    const choices: LevelUpChoices = { asi, newCantripIds, newSpellIds };
+    const choices: LevelUpChoices = { asi, newCantripIds, newSpellIds, ...(subclassId ? { subclassId } : {}) };
     const result = computeLevelUp(system, character, summary, choices);
     try {
       await applyLevelUp5e(character.id, result);
@@ -153,8 +160,18 @@ export function LevelUpModal({
             ))}
           </>
         )}
-        {summary.subclassPending && (
-          <p className={s.hint}>Your subclass unlocks at this level — subclass selection coming soon.</p>
+        {summary.subclassPending && subclassOptions.length > 0 && (
+          <>
+            <span className={s.label}>Choose your subclass</span>
+            {subclassOptions.map((sub) => (
+              <label key={sub.id} className={`${s.item} ${subclassId === sub.id ? s.itemActive ?? '' : ''}`} style={{ ...row, alignItems: 'flex-start' }}>
+                <span>
+                  <input type="radio" checked={subclassId === sub.id} onChange={() => setSubclassId(sub.id)} /> <strong>{sub.name}</strong>
+                  {sub.description && <span className={s.itemMeta}> — {sub.description}</span>}
+                </span>
+              </label>
+            ))}
+          </>
         )}
 
         {/* HP */}

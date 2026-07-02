@@ -531,6 +531,17 @@ export interface ClassDefinition {
   subclasses?: { id: string; name: string; description?: string }[];
 }
 
+/** A subclass (5e): granted features at specific levels on top of the parent class. */
+export interface SubclassDefinition {
+  id: string;
+  name: string;
+  description?: string;
+  /** Parent class id (e.g. 'fighter'). */
+  classId: string;
+  /** Feature names gained at each level (same shape as ClassLevel.features). */
+  levels: { level: number; features: string[] }[];
+}
+
 /** A background in a class-and-level system. Minimal for now. */
 export interface BackgroundDefinition {
   id: string;
@@ -581,5 +592,6 @@ export interface SystemDefinition {
 
   // --- Class-and-level systems (5e). Optional → classless systems (Solryn) omit them. ---
   classes?: ClassDefinition[];
+  subclasses?: SubclassDefinition[];
   backgrounds?: BackgroundDefinition[];
 }

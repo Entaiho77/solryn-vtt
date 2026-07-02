@@ -213,6 +213,8 @@ export interface CharacterPlayState {
   levelUpPending?: boolean;
   /** 5e experience points (cumulative total). GM-awarded; drives the XP-based level-up. */
   xp?: number;
+  /** 5e subclass id, chosen at the class's subclass level. */
+  subclassId?: string;
   /** Skill points granted (by level-up) but not yet placed. */
   unspentSkillPoints?: number;
   equippedArmorId?: string;

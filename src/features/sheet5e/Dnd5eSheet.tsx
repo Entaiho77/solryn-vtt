@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { restoreSpellSlots, setConcentrating, setLevelUpPending, setPoolCurrent, setSpellSlot } from '../../data/characters';
+import { restoreSpellSlots, setConcentrating, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
 import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
@@ -82,6 +82,7 @@ export function Dnd5eSheet({
         attackBonus: atk.attackBonus,
         targetAc: usingTarget ? target!.ac : targetAc,
         advantage,
+        critThreshold: d.critThreshold, // Champion's Improved/Superior Critical (weapon attacks only)
         // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
         ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
       }).logText,
@@ -419,6 +420,34 @@ export function Dnd5eSheet({
                 <p className={s.hint}>Pact Magic: all slots are the same level and recover on a short (or long) rest.</p>
               )}
             </>
+          )}
+
+          {/* Subclass — its features (merged into pcDerived), or a picker when the character has
+              reached its subclass level but hasn't chosen (covers L1/L2 classes the level-up flow
+              never prompts). */}
+          {d.subclassName ? (
+            <>
+              <span className={s.label}>{d.subclassName}</span>
+              {d.subclassFeatures.map((f) => (
+                <p key={f} className={s.hint} style={{ margin: 0 }}>• {f}</p>
+              ))}
+            </>
+          ) : (
+            d.cls?.subclassLevel != null &&
+            character.play.level >= d.cls.subclassLevel &&
+            (system.subclasses ?? []).some((su) => su.classId === d.cls!.id) && (
+              <>
+                <span className={s.label}>Choose your subclass</span>
+                {(system.subclasses ?? [])
+                  .filter((su) => su.classId === d.cls!.id)
+                  .map((su) => (
+                    <div key={su.id} style={row}>
+                      <span style={bodyText}>{su.name}</span>
+                      <Button size="sm" onClick={() => void setSubclass(character.id, su.id)}>Choose</Button>
+                    </div>
+                  ))}
+              </>
+            )
           )}
 
           {/* Background — name + its narrative feature. Its skill proficiencies already appear

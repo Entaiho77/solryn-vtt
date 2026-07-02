@@ -66,6 +66,12 @@ export interface PcDerived {
   attacks: { name: string; dice: string; damageType: string; attackBonus: number }[];
   /** Rogue Sneak Attack dice at the character's level (e.g. "1d6"), if the class has it. */
   sneakAttackDice?: string;
+  // --- Subclass (5e) ---
+  subclassName?: string;
+  /** Subclass feature names gained up to the character's level. */
+  subclassFeatures: string[];
+  /** Natural-die crit threshold for weapon attacks (20 default; Champion 19 at L3, 18 at L15). */
+  critThreshold: number;
   // --- Background (5e) ---
   backgroundName?: string;
   backgroundFeature?: { name: string; description: string };
@@ -110,6 +116,9 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   const ancestry = system.ancestries.find((a) => a.id === character.definition.ancestryId);
   const subrace = ancestry?.subraces?.find((sr) => sr.id === character.definition.subraceId);
   const background = system.backgrounds?.find((b) => b.id === character.definition.backgroundId);
+  const subclass = system.subclasses?.find(
+    (sub) => sub.id === character.play.subclassId && sub.classId === character.definition.classId,
+  );
   const level = character.play.level;
   const scores = character.definition.coreScores;
 
@@ -193,6 +202,15 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
         }
       : undefined;
 
+  // Subclass features gained up to this level, and the crit threshold they imply. Champion's
+  // Improved Critical (L3) crits on 19–20; Superior Critical (L15) crits on 18–20.
+  const subclassFeatures = subclass ? subclass.levels.filter((l) => l.level <= level).flatMap((l) => l.features) : [];
+  const critThreshold = subclassFeatures.includes('Superior Critical')
+    ? 18
+    : subclassFeatures.includes('Improved Critical')
+      ? 19
+      : 20;
+
   const raceTraits = [...(ancestry?.traits ?? []), ...(subrace?.traits ?? [])];
   const resistances = [...(ancestry?.resistances ?? []), ...(subrace?.resistances ?? [])];
   // Breath weapon (subrace/draconic color wins). DC = 8 + CON mod + proficiency (SRD).
@@ -212,6 +230,9 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     skills,
     attacks,
     ...(typeof sneakAttackDice === 'string' ? { sneakAttackDice } : {}),
+    ...(subclass ? { subclassName: subclass.name } : {}),
+    subclassFeatures,
+    critThreshold,
     ...(background ? { backgroundName: background.name } : {}),
     ...(background?.feature ? { backgroundFeature: background.feature } : {}),
     ...(ancestry ? { raceName: ancestry.name } : {}),

@@ -65,6 +65,7 @@ export function applyLevelUp5e(
     knownSpellIds: string[];
     spellbookSpellIds?: string[];
     spellSlots?: Record<number, number>;
+    subclassId?: string;
   },
 ): Promise<void> {
   const paths: Record<string, unknown> = {
@@ -76,6 +77,7 @@ export function applyLevelUp5e(
   };
   if (result.spellbookSpellIds) paths[`/characters/${characterId}/definition/spellbookSpellIds`] = result.spellbookSpellIds;
   if (result.spellSlots) paths[`/characters/${characterId}/play/spellSlots`] = result.spellSlots;
+  if (result.subclassId) paths[`/characters/${characterId}/play/subclassId`] = result.subclassId;
   return multiUpdate(paths);
 }
 
@@ -85,6 +87,11 @@ export function setConcentrating(
   value: { spellId: string; spellName: string } | null,
 ): Promise<void> {
   return writeValue(`characters/${characterId}/play/concentrating`, value);
+}
+
+/** Set a character's subclass (5e). Owner-written from the level-up flow or the sheet prompt. */
+export function setSubclass(characterId: string, subclassId: string): Promise<void> {
+  return writeValue(`characters/${characterId}/play/subclassId`, subclassId);
 }
 
 /** Set a character's total XP (5e). GM-awarded — see the play/xp security rule. */

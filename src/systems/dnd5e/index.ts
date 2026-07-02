@@ -17,6 +17,7 @@ import { bestiary } from './bestiary';
 import { spells } from './spells';
 import { skills, skillCategories } from './skills';
 import { generatedClasses } from './classes.generated';
+import { subclasses } from './subclasses';
 import { backgrounds } from './backgrounds';
 import { ancestries } from './races';
 import { equipment } from './equipment';
@@ -166,5 +167,6 @@ export const dnd5eSystem: SystemDefinition = {
   creation,
 
   classes,
+  subclasses,
   backgrounds,
 };
