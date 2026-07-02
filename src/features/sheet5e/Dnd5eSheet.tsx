@@ -7,6 +7,7 @@ import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
 import { LevelUpModal } from './LevelUpModal';
+import { Modal } from '../../components/ui/Modal';
 import { Button } from '../../components/ui/Button';
 import { ResourceTracker } from '../sheet/ResourceTracker';
 import { useRollLog } from '../rolllog/rollLog';
@@ -48,6 +49,7 @@ export function Dnd5eSheet({
 
   const [tab, setTab] = useState<'combat' | 'spellbook'>('combat');
   const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const [detailSpell, setDetailSpell] = useState<Dnd5eSpell | null>(null);
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
@@ -418,29 +420,40 @@ export function Dnd5eSheet({
             ))}
           </select>
           {filteredBook.length === 0 && <p className={s.hint}>No spells match.</p>}
+          {/* Compact, scannable rows: name + school tag. Click a spell to see full details. */}
           {byLevel(filteredBook).map(([lvl, list]) => (
             <div key={lvl}>
               <span className={s.label}>{levelLabel(lvl)}</span>
-              {list.map((sp) => {
-                const comps = [sp.components.v && 'V', sp.components.s && 'S', sp.components.m && 'M'].filter(Boolean).join(', ');
-                return (
-                  <div key={sp.id} style={{ paddingBlock: 'var(--space-1)' }}>
-                    <div style={{ fontWeight: 600 }}>
-                      {sp.name} <span className={s.itemMeta}>· {sp.school}{sp.concentration ? ' · concentration' : ''}{sp.ritual ? ' · ritual' : ''}</span>
-                    </div>
-                    <div className={s.itemMeta}>
-                      {sp.castingTime} · {sp.range} · {comps || '—'} · {sp.duration}
-                    </div>
-                    <p className={s.hint} style={{ whiteSpace: 'pre-line' }}>{sp.description}</p>
-                    {sp.higherLevel && (
-                      <p className={s.hint} style={{ whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {sp.higherLevel}</p>
-                    )}
-                  </div>
-                );
-              })}
+              {list.map((sp) => (
+                <button key={sp.id} style={{ ...row, cursor: 'pointer', background: 'transparent', border: 'none', padding: 'var(--space-1) 0', textAlign: 'left', width: '100%' }} onClick={() => setDetailSpell(sp)}>
+                  <span style={{ fontWeight: 600 }}>{sp.name}</span>
+                  <span className={s.itemMeta}>{sp.school}{sp.concentration ? ' · conc' : ''}</span>
+                </button>
+              ))}
             </div>
           ))}
         </>
+      )}
+
+      {/* Spell detail popup (Spellbook tab) — dismisses on click-away or Escape (Modal behavior). */}
+      {detailSpell && (
+        <Modal open onClose={() => setDetailSpell(null)} title={detailSpell.name} width={440}>
+          <div className={s.section}>
+            <span className={s.itemMeta}>
+              {levelLabel(detailSpell.level) === 'Cantrips' ? 'Cantrip' : `Level ${detailSpell.level}`} · {detailSpell.school}
+              {detailSpell.concentration ? ' · concentration' : ''}{detailSpell.ritual ? ' · ritual' : ''}
+            </span>
+            <div className={s.itemMeta}>
+              {detailSpell.castingTime} · {detailSpell.range} ·{' '}
+              {[detailSpell.components.v && 'V', detailSpell.components.s && 'S', detailSpell.components.m && 'M'].filter(Boolean).join(', ') || '—'}
+              {' '}· {detailSpell.duration}
+            </div>
+            <p className={s.hint} style={{ whiteSpace: 'pre-line' }}>{detailSpell.description}</p>
+            {detailSpell.higherLevel && (
+              <p className={s.hint} style={{ whiteSpace: 'pre-line' }}><strong>At higher levels:</strong> {detailSpell.higherLevel}</p>
+            )}
+          </div>
+        </Modal>
       )}
     </div>
   );

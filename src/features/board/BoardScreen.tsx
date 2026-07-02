@@ -345,6 +345,8 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         label: 'Character',
         short: 'Character',
         glyph: '◈',
+        // The richer 5e sheet gets a wider drawer; Solryn's quick-view stays the default width.
+        wide: isClassAndLevel(system),
         // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
         content:
           isClassAndLevel(system) ? (
