@@ -56,6 +56,20 @@ type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'background' | 'spel
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 // Long option lists (skills, abilities, spells) laid out 3-across so everything's visible at once.
 const grid3: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' };
+// Method selector pills — same visual language as the sheet's Combat/Spellbook tabs (teal accent
+// when active, muted outline when not). Inline because steps.module.css has no tab classes.
+const methodTabRow: React.CSSProperties = { display: 'flex', gap: '0.5rem' };
+const methodTab = (active: boolean): React.CSSProperties => ({
+  flex: 1,
+  padding: '8px 10px',
+  borderRadius: 'var(--radius-sm)',
+  border: `1px solid ${active ? 'var(--accent-teal)' : 'var(--border-hairline)'}`,
+  background: active ? 'var(--teal-tint)' : 'var(--surface-raised)',
+  color: active ? 'var(--accent-teal)' : 'var(--text-muted)',
+  fontWeight: active ? 700 : 500,
+  fontSize: 'var(--text-sm)',
+  cursor: 'pointer',
+});
 /** SRD: a Wizard starts with six 1st-level spells in their spellbook. */
 const WIZARD_START_SPELLS = 6;
 
@@ -265,9 +279,9 @@ export function Dnd5eCharacterBuilder({
       {kind === 'abilities' && (
         <div className={s.statList}>
           {/* Method selector — all three write the same {ability → score} map. */}
-          <div className={s.tabs}>
+          <div style={methodTabRow}>
             {([['standard', 'Standard Array'], ['pointbuy', 'Point Buy'], ['roll', 'Roll Stats']] as const).map(([m, label]) => (
-              <button key={m} className={`${s.tab} ${draft.method === m ? s.tabActive : ''}`} onClick={() => setMethod(m)}>
+              <button key={m} style={methodTab(draft.method === m)} onClick={() => setMethod(m)}>
                 {label}
               </button>
             ))}
