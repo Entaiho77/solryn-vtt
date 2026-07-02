@@ -40,6 +40,8 @@ interface Draft {
 type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'spells' | 'finish';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
+// Long option lists (skills, abilities, spells) laid out 3-across so everything's visible at once.
+const grid3: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' };
 /** SRD: a Wizard starts with six 1st-level spells in their spellbook. */
 const WIZARD_START_SPELLS = 6;
 
@@ -290,6 +292,7 @@ export function Dnd5eCharacterBuilder({
               <p className={s.teachText}>
                 +{flex.amount} to {flex.count} abilities ({Object.keys(draft.ancestryChoices).length}/{flex.count}):
               </p>
+              <div style={grid3}>
               {(flex.from ?? ABILITY_IDS).map((stat) => {
                 const picked = draft.ancestryChoices[stat] != null;
                 const full = Object.keys(draft.ancestryChoices).length >= flex.count;
@@ -312,6 +315,7 @@ export function Dnd5eCharacterBuilder({
                   </label>
                 );
               })}
+              </div>
             </>
           ) : null}
 
@@ -321,6 +325,7 @@ export function Dnd5eCharacterBuilder({
               <p className={s.teachText}>
                 Choose {raceSkillChoose} skill proficiencies ({draft.raceSkillIds.length}/{raceSkillChoose}):
               </p>
+              <div style={grid3}>
               {raceSkillFrom.map((sid) => {
                 const sk = system.skills.find((x) => x.id === sid);
                 const checked = draft.raceSkillIds.includes(sid);
@@ -343,6 +348,7 @@ export function Dnd5eCharacterBuilder({
                   </label>
                 );
               })}
+              </div>
             </>
           ) : null}
         </div>
@@ -371,7 +377,7 @@ export function Dnd5eCharacterBuilder({
       )}
 
       {kind === 'skills' && (
-        <div className={s.statList}>
+        <div className={s.statList} style={grid3}>
           {skillFrom.map((sid) => {
             const sk = system.skills.find((x) => x.id === sid);
             const checked = draft.chosenSkillIds.includes(sid);
@@ -402,6 +408,7 @@ export function Dnd5eCharacterBuilder({
           {cantripCount > 0 && (
             <>
               <p className={s.teachText}>Cantrips ({draft.cantripIds.length}/{cantripCount}):</p>
+              <div style={grid3}>
               {cantripOptions.map((sp) => {
                 const checked = draft.cantripIds.includes(sp.id);
                 const full = draft.cantripIds.length >= cantripCount;
@@ -420,6 +427,7 @@ export function Dnd5eCharacterBuilder({
                   </label>
                 );
               })}
+              </div>
             </>
           )}
           {leveledCount > 0 && (
@@ -427,6 +435,7 @@ export function Dnd5eCharacterBuilder({
               <p className={s.teachText}>
                 {casterModel === 'spellbook' ? `Spellbook — pick ${leveledCount} 1st-level spells` : `Spells known — pick ${leveledCount}`} ({draft.spellIds.length}/{leveledCount}):
               </p>
+              <div style={grid3}>
               {leveledOptions.map((sp) => {
                 const checked = draft.spellIds.includes(sp.id);
                 const full = draft.spellIds.length >= leveledCount;
@@ -445,6 +454,7 @@ export function Dnd5eCharacterBuilder({
                   </label>
                 );
               })}
+              </div>
             </>
           )}
           {casterModel === 'prepared' && (
