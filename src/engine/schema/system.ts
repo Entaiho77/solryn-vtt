@@ -542,6 +542,44 @@ export interface SubclassDefinition {
   levels: { level: number; features: string[] }[];
 }
 
+/** Typed passive/active effects a feat applies (the mechanizable subset; text-only feats omit it). */
+export interface FeatEffects {
+  /** Fixed ability increases (half-feats with a set stat, e.g. Actor +1 CHA). */
+  abilityBonus?: { ability: string; amount: number }[];
+  /** +N to ONE ability the player chooses from a set (e.g. Resilient, Weapon Master). */
+  abilityChoice?: { amount: number; from: string[] };
+  /** Bonus max HP per character level (Tough = 2). */
+  hpPerLevel?: number;
+  /** Flat AC bonus. */
+  acBonus?: number;
+  /** Walking-speed bonus in feet (Mobile = 10). */
+  speedBonus?: number;
+  /** Damage resistances granted. */
+  resistances?: string[];
+  /** Skill/tool/weapon/armor proficiency ids granted outright. */
+  grantedProficiencies?: string[];
+  /** Power-attack toggle for weapon attacks: −toHit / +damage (Great Weapon Master, Sharpshooter). */
+  powerAttack?: { toHit: number; damage: number };
+  /** Active resource pool (Lucky = 3 points), tracked on the sheet. */
+  resource?: { id: string; name: string; max: number };
+}
+
+/** A feat (5e). Passive effects fold into pcDerived; the rest are notes/toggles on the sheet. */
+export interface FeatDefinition {
+  id: string;
+  name: string;
+  description: string;
+  /** Free-text prerequisite (SRD/PHB). */
+  prerequisite?: string;
+  /** Structured prerequisite for the eligibility filter. */
+  requires?: { ability?: string; min?: number; needsSpellcasting?: boolean };
+  effects?: FeatEffects;
+  /** Extra mechanical note shown on the sheet for effects not auto-applied. */
+  note?: string;
+  /** Needs a system we don't model yet (grapple, mounts, wild shape) → text only. */
+  displayOnly?: boolean;
+}
+
 /** A background in a class-and-level system. Minimal for now. */
 export interface BackgroundDefinition {
   id: string;
@@ -593,5 +631,6 @@ export interface SystemDefinition {
   // --- Class-and-level systems (5e). Optional → classless systems (Solryn) omit them. ---
   classes?: ClassDefinition[];
   subclasses?: SubclassDefinition[];
+  feats?: FeatDefinition[];
   backgrounds?: BackgroundDefinition[];
 }

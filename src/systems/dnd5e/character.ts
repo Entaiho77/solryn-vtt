@@ -1,10 +1,12 @@
 import type {
   Ancestry,
   ClassDefinition,
+  FeatDefinition,
   RacialBreath,
   Subrace,
   SystemDefinition,
 } from '../../engine/schema';
+import { featById } from './feats';
 import type { Character } from '../../data/types';
 import {
   armorClass,
@@ -66,6 +68,12 @@ export interface PcDerived {
   attacks: { name: string; dice: string; damageType: string; attackBonus: number }[];
   /** Rogue Sneak Attack dice at the character's level (e.g. "1d6"), if the class has it. */
   sneakAttackDice?: string;
+  // --- Feats (5e) ---
+  feats: FeatDefinition[];
+  /** Active feat resources (Lucky, Healer) with their current/max. */
+  featResources: { id: string; name: string; max: number; current: number }[];
+  /** A power-attack toggle (Great Weapon Master / Sharpshooter): −toHit / +damage on weapons. */
+  powerAttack?: { toHit: number; damage: number };
   // --- Subclass (5e) ---
   subclassName?: string;
   /** Subclass feature names gained up to the character's level. */
@@ -120,7 +128,19 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     (sub) => sub.id === character.play.subclassId && sub.classId === character.definition.classId,
   );
   const level = character.play.level;
-  const scores = character.definition.coreScores;
+
+  // Feats (taken at level-up) add ability bonuses on top of the locked core scores. Half-feats
+  // with a fixed stat apply directly; flexible +1s apply the player's stored choice.
+  const ownedFeats = (character.play.featIds ?? [])
+    .map((id) => featById(id))
+    .filter((f): f is FeatDefinition => !!f);
+  const scores: Record<string, number> = { ...character.definition.coreScores };
+  for (const f of ownedFeats) {
+    for (const b of f.effects?.abilityBonus ?? []) scores[b.ability] = (scores[b.ability] ?? 10) + b.amount;
+    const choice = f.effects?.abilityChoice;
+    const chosen = character.play.featChoices?.[f.id];
+    if (choice && chosen && choice.from.includes(chosen)) scores[chosen] = (scores[chosen] ?? 10) + choice.amount;
+  }
 
   const mods: Record<string, number> = {};
   for (const id of ABILITY_IDS) mods[id] = computeModifier(scores[id] ?? 10, rule);
@@ -128,16 +148,19 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   const pb = cls ? proficiencyBonus(cls, level) : 2;
 
   const armor = system.equipment.armor.find((a) => a.id === character.play.equippedArmorId);
+  const featAcBonus = ownedFeats.reduce((sum, f) => sum + (f.effects?.acBonus ?? 0), 0);
   // AC: worn armor wins; else Unarmored Defense (Barbarian/Monk) = 10 + DEX + class ability;
-  // else plain 10 + DEX. Armored classes (Fighter) are unaffected.
+  // else plain 10 + DEX. Armored classes (Fighter) are unaffected. Plus any flat feat AC bonus.
   const ac =
-    armor?.baseAc != null
+    (armor?.baseAc != null
       ? armorClass(mods.DEX, { baseAc: armor.baseAc, maxDexBonus: armor.maxDexBonus })
       : cls?.unarmoredDefense
         ? 10 + mods.DEX + (mods[cls.unarmoredDefense.ability] ?? 0)
-        : armorClass(mods.DEX);
+        : armorClass(mods.DEX)) + featAcBonus;
 
-  const maxHp = cls ? maxHitPoints(cls, level, mods.CON) : 0;
+  // Tough (+2 HP/level) and other per-level feat HP fold into the max.
+  const featHpPerLevel = ownedFeats.reduce((sum, f) => sum + (f.effects?.hpPerLevel ?? 0), 0);
+  const maxHp = (cls ? maxHitPoints(cls, level, mods.CON) : 0) + featHpPerLevel * level;
 
   const saves = ABILITY_IDS.map((id) => ({
     id,
@@ -212,7 +235,19 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
       : 20;
 
   const raceTraits = [...(ancestry?.traits ?? []), ...(subrace?.traits ?? [])];
-  const resistances = [...(ancestry?.resistances ?? []), ...(subrace?.resistances ?? [])];
+  const resistances = [
+    ...(ancestry?.resistances ?? []),
+    ...(subrace?.resistances ?? []),
+    ...ownedFeats.flatMap((f) => f.effects?.resistances ?? []),
+  ];
+  const featSpeedBonus = ownedFeats.reduce((sum, f) => sum + (f.effects?.speedBonus ?? 0), 0);
+  // Active feat resources (Lucky, Healer) with their current count (default full).
+  const featResources = ownedFeats
+    .map((f) => f.effects?.resource)
+    .filter((r): r is NonNullable<typeof r> => !!r)
+    .map((r) => ({ ...r, current: character.play.featResources?.[r.id] ?? r.max }));
+  // Power-attack toggle from Great Weapon Master / Sharpshooter (both −5 / +10).
+  const powerAttack = ownedFeats.find((f) => f.effects?.powerAttack)?.effects?.powerAttack;
   // Breath weapon (subrace/draconic color wins). DC = 8 + CON mod + proficiency (SRD).
   const breathBase = subrace?.breath ?? ancestry?.breath;
   const breath = breathBase
@@ -230,6 +265,9 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     skills,
     attacks,
     ...(typeof sneakAttackDice === 'string' ? { sneakAttackDice } : {}),
+    feats: ownedFeats,
+    featResources,
+    ...(powerAttack ? { powerAttack } : {}),
     ...(subclass ? { subclassName: subclass.name } : {}),
     subclassFeatures,
     critThreshold,
@@ -237,7 +275,7 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     ...(background?.feature ? { backgroundFeature: background.feature } : {}),
     ...(ancestry ? { raceName: ancestry.name } : {}),
     ...(subrace ? { subraceName: subrace.name } : {}),
-    speed: ancestry?.speed ?? 30,
+    speed: (ancestry?.speed ?? 30) + featSpeedBonus,
     raceTraits,
     resistances,
     ...(breath ? { breath } : {}),

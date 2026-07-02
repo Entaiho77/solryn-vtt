@@ -66,6 +66,8 @@ export function applyLevelUp5e(
     spellbookSpellIds?: string[];
     spellSlots?: Record<number, number>;
     subclassId?: string;
+    featIds?: string[];
+    featChoices?: Record<string, string>;
   },
 ): Promise<void> {
   const paths: Record<string, unknown> = {
@@ -78,6 +80,8 @@ export function applyLevelUp5e(
   if (result.spellbookSpellIds) paths[`/characters/${characterId}/definition/spellbookSpellIds`] = result.spellbookSpellIds;
   if (result.spellSlots) paths[`/characters/${characterId}/play/spellSlots`] = result.spellSlots;
   if (result.subclassId) paths[`/characters/${characterId}/play/subclassId`] = result.subclassId;
+  if (result.featIds) paths[`/characters/${characterId}/play/featIds`] = result.featIds;
+  if (result.featChoices) paths[`/characters/${characterId}/play/featChoices`] = result.featChoices;
   return multiUpdate(paths);
 }
 
@@ -97,6 +101,15 @@ export function setSubclass(characterId: string, subclassId: string): Promise<vo
 /** Set a character's total XP (5e). GM-awarded — see the play/xp security rule. */
 export function setXp(characterId: string, xp: number): Promise<void> {
   return writeValue(`characters/${characterId}/play/xp`, Math.max(0, Math.round(xp)));
+}
+
+/** Set the remaining count of a feat's resource pool (5e), e.g. Lucky luck points. Owner-written. */
+export function setFeatResource(
+  characterId: string,
+  resourceId: string,
+  current: number,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/featResources/${resourceId}`, Math.max(0, current));
 }
 
 /** Set the remaining slot count for one spell level (5e). Object-keyed under play.spellSlots. */

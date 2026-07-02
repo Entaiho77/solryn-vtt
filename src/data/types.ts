@@ -215,6 +215,12 @@ export interface CharacterPlayState {
   xp?: number;
   /** 5e subclass id, chosen at the class's subclass level. */
   subclassId?: string;
+  /** 5e feats taken (in place of ASIs at ASI levels). */
+  featIds?: string[];
+  /** Ability chosen for a feat's flexible +1 (featId → ability id), applied by pcDerived. */
+  featChoices?: Record<string, string>;
+  /** Feat resource pools remaining (resource id → current), e.g. Lucky luck points. */
+  featResources?: Record<string, number>;
   /** Skill points granted (by level-up) but not yet placed. */
   unspentSkillPoints?: number;
   equippedArmorId?: string;

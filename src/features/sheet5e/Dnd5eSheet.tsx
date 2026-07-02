@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { restoreSpellSlots, setConcentrating, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
+import { restoreSpellSlots, setConcentrating, setFeatResource, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
 import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
@@ -24,6 +24,15 @@ const metaBase: React.CSSProperties = { fontFamily: 'var(--font-sans)', fontSize
 
 const spellById = (id: string): Dnd5eSpell | undefined => allSpells.find((sp) => sp.id === id);
 const levelLabel = (lvl: number) => (lvl === 0 ? 'Cantrips' : `Level ${lvl}`);
+
+/** Fold a flat damage add into a dice string's modifier (GWM/Sharpshooter +10). "1d8+3" → "1d8+13".
+ *  Kept in the modifier (not a bonus die) so it correctly does NOT double on a crit. */
+function addFlatDamage(dice: string, add: number): string {
+  const m = dice.match(/^(\d*d\d+)\s*([+-]\d+)?$/i);
+  if (!m) return dice;
+  const base = (m[2] ? parseInt(m[2], 10) : 0) + add;
+  return base === 0 ? m[1] : `${m[1]}${base > 0 ? '+' : ''}${base}`;
+}
 
 /** Group spells by level, ascending (cantrips first). */
 function byLevel(list: Dnd5eSpell[]): [number, Dnd5eSpell[]][] {
@@ -61,6 +70,7 @@ export function Dnd5eSheet({
   const [targetAc, setTargetAc] = useState(13);
   const [advantage, setAdvantage] = useState<'advantage' | 'disadvantage' | undefined>();
   const [sneak, setSneak] = useState(false);
+  const [powerAttack, setPowerAttack] = useState(false);
   const [lucky, setLucky] = useState(false);
   // Per-spell chosen slot level for upcasting (defaults to the spell's own level).
   const [slotChoice, setSlotChoice] = useState<Record<string, number>>({});
@@ -73,13 +83,15 @@ export function Dnd5eSheet({
   const attackLabel = (name: string) =>
     usingTarget ? `${character.name} → ${target!.name} — ${name}` : `${character.name} — ${name}`;
 
+  // Great Weapon Master / Sharpshooter: −5 to hit, +10 damage when the toggle is on.
+  const pa = powerAttack && d.powerAttack ? d.powerAttack : undefined;
   const rollAttack = (atk: (typeof d.attacks)[number]) =>
     postRoll(
       resolver.resolveAttack({
         label: attackLabel(atk.name),
-        dice: atk.dice,
+        dice: pa ? addFlatDamage(atk.dice, pa.damage) : atk.dice,
         damageType: atk.damageType,
-        attackBonus: atk.attackBonus,
+        attackBonus: atk.attackBonus + (pa?.toHit ?? 0),
         targetAc: usingTarget ? target!.ac : targetAc,
         advantage,
         critThreshold: d.critThreshold, // Champion's Improved/Superior Critical (weapon attacks only)
@@ -297,6 +309,12 @@ export function Dnd5eSheet({
                 Sneak Attack ({d.sneakAttackDice})
               </label>
             )}
+            {d.powerAttack && (
+              <label className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }} title="Great Weapon Master / Sharpshooter: take −5 to hit for +10 damage (heavy/ranged weapons).">
+                <input type="checkbox" checked={powerAttack} onChange={(e) => setPowerAttack(e.target.checked)} />
+                Power Attack ({sign(d.powerAttack.toHit)}/{sign(d.powerAttack.damage)})
+              </label>
+            )}
           </div>
           {!usingTarget && (
             <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
@@ -461,6 +479,40 @@ export function Dnd5eSheet({
                   <strong>{d.backgroundFeature.name}:</strong> {d.backgroundFeature.description}
                 </p>
               )}
+            </>
+          )}
+
+          {/* Feats — passive effects are already folded into the numbers above (AC/HP/scores/speed);
+              this lists them for reference, with active trackers for resource feats (Lucky, Healer). */}
+          {d.feats.length > 0 && (
+            <>
+              <span className={s.label}>Feats</span>
+              {d.feats.map((f) => (
+                <div key={f.id}>
+                  <div style={row}>
+                    <span style={bodyText}><strong>{f.name}</strong></span>
+                  </div>
+                  <p className={s.hint} style={{ margin: 0 }}>{f.description}</p>
+                  {f.note && <p className={s.hint} style={{ margin: 0, fontStyle: 'italic' }}>{f.note}</p>}
+                </div>
+              ))}
+              {d.featResources.map((r) => (
+                <div key={r.id} style={row}>
+                  <span className={s.itemMeta}>{r.name}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                    <Button size="sm" variant="ghost" onClick={() => void setFeatResource(character.id, r.id, Math.max(0, r.current - 1))}>
+                      −
+                    </Button>
+                    <strong>{r.current}/{r.max}</strong>
+                    <Button size="sm" variant="ghost" onClick={() => void setFeatResource(character.id, r.id, Math.min(r.max, r.current + 1))}>
+                      +
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => void setFeatResource(character.id, r.id, r.max)} title="Restore on a long rest">
+                      Rest
+                    </Button>
+                  </span>
+                </div>
+              ))}
             </>
           )}
 
