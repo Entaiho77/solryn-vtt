@@ -79,6 +79,14 @@ export function applyLevelUp5e(
   return multiUpdate(paths);
 }
 
+/** Set (or clear) the active concentration spell (5e). Null ends concentration. */
+export function setConcentrating(
+  characterId: string,
+  value: { spellId: string; spellName: string } | null,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/play/concentrating`, value);
+}
+
 /** Set the remaining slot count for one spell level (5e). Object-keyed under play.spellSlots. */
 export function setSpellSlot(
   characterId: string,

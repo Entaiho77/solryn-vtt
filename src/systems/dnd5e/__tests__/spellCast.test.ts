@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import type { SystemDefinition } from '../../../engine/schema';
 import { getCombatResolver, type Rng } from '../../../engine/rules';
 import { spells } from '../spells';
-import { spellCastLog, spellDamage } from '../spellCast';
+import { concentrationOnCast, spellCastLog, spellDamage } from '../spellCast';
 
 const dnd = { modes: { combat: { id: 'attack-roll-vs-ac' } } } as unknown as SystemDefinition;
 const resolver = getCombatResolver(dnd);
@@ -56,5 +56,28 @@ describe('spellCastLog — resolution branches (reuses shared resolvers)', () =>
       casterName: 'Cleric', saveDc: 13, attackBonus: 5, dice: null, resolver,
     });
     expect(line).toBe('Cleric casts Bless.');
+  });
+});
+
+describe('concentrationOnCast — one concentration spell at a time', () => {
+  it('casting a concentration spell with none active sets it, no break log', () => {
+    const res = concentrationOnCast(undefined, byId('bless'), 'Cleric');
+    expect(res).toEqual({ concentrating: { spellId: 'bless', spellName: 'Bless' } });
+    expect(res?.breakLog).toBeUndefined();
+  });
+
+  it('casting a second concentration spell breaks the first and logs it', () => {
+    const res = concentrationOnCast({ spellId: 'bless', spellName: 'Bless' }, byId('hypnotic-pattern'), 'Cleric');
+    expect(res?.concentrating).toEqual({ spellId: 'hypnotic-pattern', spellName: 'Hypnotic Pattern' });
+    expect(res?.breakLog).toBe('Cleric: Concentration on Bless broken.');
+  });
+
+  it('non-concentration spell leaves concentration untouched (returns null)', () => {
+    expect(concentrationOnCast({ spellId: 'bless', spellName: 'Bless' }, byId('fireball'), 'Mage')).toBeNull();
+  });
+
+  it('recasting the same concentration spell does not log a break', () => {
+    const res = concentrationOnCast({ spellId: 'bless', spellName: 'Bless' }, byId('bless'), 'Cleric');
+    expect(res?.breakLog).toBeUndefined();
   });
 });

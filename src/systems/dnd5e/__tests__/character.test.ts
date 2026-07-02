@@ -211,8 +211,17 @@ describe('5e spell slots + caster model', () => {
     expect(d.spell?.maxSlots).toEqual({ 1: 4, 2: 2 });
   });
 
-  it('Warlock L5: Pact Magic counts (2 third-level slots) surfaced as standard slots', () => {
+  it('Warlock Pact Magic: all slots at a single (rising) level, 1–4 by character level', () => {
+    // Single-level record at every level: L1 1×1st, L2 2×1st, L5 2×3rd, L11 3×5th, L17 4×5th.
+    expect(spellSlots(cls('warlock'), 1)).toEqual({ 1: 1 });
+    expect(spellSlots(cls('warlock'), 2)).toEqual({ 1: 2 });
     expect(spellSlots(cls('warlock'), 5)).toEqual({ 3: 2 });
+    expect(spellSlots(cls('warlock'), 11)).toEqual({ 5: 3 });
+    expect(spellSlots(cls('warlock'), 17)).toEqual({ 5: 4 });
+    // Exactly one slot level at any level (the pact level).
+    for (const lvl of [1, 3, 7, 15, 20]) {
+      expect(Object.keys(spellSlots(cls('warlock'), lvl))).toHaveLength(1);
+    }
   });
 });
 

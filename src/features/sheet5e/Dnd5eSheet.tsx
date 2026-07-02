@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { restoreSpellSlots, setPoolCurrent, setSpellSlot } from '../../data/characters';
+import { restoreSpellSlots, setConcentrating, setPoolCurrent, setSpellSlot } from '../../data/characters';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
-import { spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
+import { concentrationOnCast, spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
 import { LevelUpModal } from './LevelUpModal';
 import { Modal } from '../../components/ui/Modal';
 import { Button } from '../../components/ui/Button';
@@ -100,6 +100,11 @@ export function Dnd5eSheet({
   const prepared = character.play.preparedSpellIds ?? [];
   const model = d.spell?.model;
 
+  // Warlock Pact Magic: all slots are a single level (the pact level); casting always spends one
+  // of those, and there's no upcast choice. maxSlots is already a single {pactLevel: count} record.
+  const isWarlock = d.cls?.id === 'warlock';
+  const pactLevel = isWarlock ? Number(Object.keys(d.spell?.maxSlots ?? {})[0]) : undefined;
+
   const damageAt = (sp: Dnd5eSpell, slotLevel: number) => spellDamage(sp, slotLevel, character.play.level);
   const currentSlots = (level: number) => character.play.spellSlots?.[level] ?? d.spell?.maxSlots[level] ?? 0;
 
@@ -117,11 +122,19 @@ export function Dnd5eSheet({
         resolver,
       }),
     );
+    // Concentration: casting a concentration spell breaks any previous one (logged) and becomes
+    // the active one. Non-concentration spells leave play.concentrating alone.
+    const conc = concentrationOnCast(character.play.concentrating, sp, character.name);
+    if (conc) {
+      if (conc.breakLog) postRoll(conc.breakLog);
+      void setConcentrating(character.id, conc.concentrating);
+    }
     // Spend a slot for leveled spells (cantrips are at-will). Persists to Firebase.
     if (sp.level > 0) {
       void setSpellSlot(character.id, slotLevel, Math.max(0, currentSlots(slotLevel) - 1));
     }
   };
+  const endConcentration = () => void setConcentrating(character.id, null);
 
   // Combat-tab castable list: cantrips (always known) + the leveled list for the model. Prepared
   // casters have no daily-prep UI yet (G2), so fall back to the full preparable source.
@@ -277,6 +290,18 @@ export function Dnd5eSheet({
             </div>
           ))}
 
+          {/* Concentration banner — the one active concentration spell + a manual End + the
+              damage-triggered CON-save reminder (the save itself is rolled manually). */}
+          {d.spell && character.play.concentrating && (
+            <div style={{ padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)', background: 'var(--surface-raised)', border: '1px solid var(--accent-teal)' }}>
+              <div style={row}>
+                <span style={bodyText}>Concentrating: <strong>{character.play.concentrating.spellName}</strong></span>
+                <Button size="sm" variant="ghost" onClick={endConcentration}>End</Button>
+              </div>
+              <p className={s.hint} style={{ margin: 0 }}>Take damage? Roll a CON save to maintain concentration.</p>
+            </div>
+          )}
+
           {/* Spells — cast alongside weapons, grouped by level (cantrips first). */}
           {d.spell && combatSpells.length > 0 && (
             <>
@@ -285,9 +310,11 @@ export function Dnd5eSheet({
                 <div key={lvl}>
                   <p className={s.hint} style={{ marginBottom: 2 }}>{levelLabel(lvl)}{lvl > 0 ? ' (1 slot)' : ' · at-will'}</p>
                   {list.map((sp) => {
-                    const chosen = lvl === 0 ? 0 : (slotChoice[sp.id] ?? lvl);
-                    // Upcast options: slot levels ≥ the spell's level that the class has.
-                    const upcasts = lvl === 0 ? [] : Object.keys(d.spell!.maxSlots).map(Number).filter((L) => L >= lvl);
+                    // Warlock always casts leveled spells with a pact slot (its single level); no
+                    // upcast choice. Other casters pick the slot (default = the spell's own level).
+                    const chosen = lvl === 0 ? 0 : isWarlock ? pactLevel! : (slotChoice[sp.id] ?? lvl);
+                    // Upcast options: slot levels ≥ the spell's level that the class has (none for Warlock).
+                    const upcasts = lvl === 0 || isWarlock ? [] : Object.keys(d.spell!.maxSlots).map(Number).filter((L) => L >= lvl);
                     const noSlot = lvl > 0 && currentSlots(chosen) <= 0;
                     const dmg = damageAt(sp, chosen);
                     return (
@@ -337,9 +364,16 @@ export function Dnd5eSheet({
                 <span className={s.itemMeta}>
                   {d.spell.ability} · Save DC {d.spell.saveDc} · Attack {sign(d.spell.attackBonus)}
                 </span>
-                <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
-                  Long Rest
-                </Button>
+                <span style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                  {isWarlock && (
+                    <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
+                      Short Rest
+                    </Button>
+                  )}
+                  <Button size="sm" variant="ghost" onClick={() => void restoreSpellSlots(character.id, d.spell!.maxSlots)}>
+                    Long Rest
+                  </Button>
+                </span>
               </div>
               {Object.keys(d.spell.maxSlots).length === 0 ? (
                 <p className={s.hint}>No spell slots at this level yet.</p>
@@ -349,7 +383,8 @@ export function Dnd5eSheet({
                   const current = character.play.spellSlots?.[level] ?? max;
                   return (
                     <div key={lvl} style={row}>
-                      <span className={s.itemMeta}>Level {lvl} slots</span>
+                      {/* Warlock: a single Pact Magic row (all slots at the pact level). */}
+                      <span className={s.itemMeta}>{isWarlock ? `Pact Magic · Level ${lvl} slots` : `Level ${lvl} slots`}</span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
                         <Button size="sm" variant="ghost" onClick={() => void setSpellSlot(character.id, level, Math.max(0, current - 1))}>
                           −
@@ -363,11 +398,8 @@ export function Dnd5eSheet({
                   );
                 })
               )}
-              {d.cls?.id === 'warlock' && (
-                <p className={s.hint}>
-                  Warlock uses Pact Magic slot counts, but slot recovery here is a placeholder (Long
-                  Rest). Short-rest recovery arrives with Pact Magic.
-                </p>
+              {isWarlock && (
+                <p className={s.hint}>Pact Magic: all slots are the same level and recover on a short (or long) rest.</p>
               )}
             </>
           )}
