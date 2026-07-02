@@ -12,6 +12,15 @@ import {
   type AbilityId,
 } from '../../systems/dnd5e/character';
 import { getSpellsForClass, spells as spellList } from '../../systems/dnd5e/spells';
+import {
+  POINT_BUY_BUDGET,
+  POINT_BUY_MAX,
+  POINT_BUY_MIN,
+  pointBuyCost,
+  pointBuyRemaining,
+  rollAbilityScores,
+  type AbilityScoreMethod,
+} from '../../systems/dnd5e/abilityScores';
 import s from '../builder/steps/steps.module.css';
 
 /**
@@ -22,7 +31,11 @@ import s from '../builder/steps/steps.module.css';
 
 interface Draft {
   name: string;
+  /** How ability scores are generated; all three write into `abilities`. */
+  method: AbilityScoreMethod;
   abilities: Partial<Record<AbilityId, number>>;
+  /** Roll-method pool (six 4d6-drop-lowest values) to assign from. */
+  rolledValues?: number[];
   raceId?: string;
   subraceId?: string;
   /** Half-Elf's flexible +1s (stat id → amount). */
@@ -59,6 +72,7 @@ export function Dnd5eCharacterBuilder({
 }) {
   const [draft, setDraft] = useState<Draft>({
     name: '',
+    method: 'standard',
     abilities: {},
     ancestryChoices: {},
     raceSkillIds: [],
@@ -84,8 +98,23 @@ export function Dnd5eCharacterBuilder({
   // like Elf Perception are added automatically by pcDerived).
   const allChosenSkills = [...new Set([...draft.chosenSkillIds, ...draft.raceSkillIds])];
 
-  const usedValues = Object.values(draft.abilities);
+  const usedValues = Object.values(draft.abilities).filter((v): v is number => v !== undefined);
   const assignedAll = ABILITY_IDS.every((id) => draft.abilities[id] !== undefined);
+  // Point-buy budget (only meaningful for the pointbuy method; abilities are direct scores there).
+  const pbRemaining = pointBuyRemaining(draft.abilities as Record<string, number>);
+  const abilitiesComplete = draft.method === 'pointbuy' ? assignedAll && pbRemaining >= 0 : assignedAll;
+
+  // Switch the generation method, resetting the score state to that method's starting point.
+  const setMethod = (method: AbilityScoreMethod) =>
+    setDraft((d) => ({
+      ...d,
+      method,
+      abilities:
+        method === 'pointbuy'
+          ? (Object.fromEntries(ABILITY_IDS.map((id) => [id, POINT_BUY_MIN])) as Partial<Record<AbilityId, number>>)
+          : {},
+      ...(method === 'roll' ? { rolledValues: rollAbilityScores() } : { rolledValues: undefined }),
+    }));
 
   // Spellcasting (caster classes only): a spell step slots in before 'finish'. Counts come
   // from the class's level-1 table; leveled picks are the known list / Wizard starting book.
@@ -123,7 +152,7 @@ export function Dnd5eCharacterBuilder({
   const canNext = (() => {
     switch (kind) {
       case 'abilities':
-        return assignedAll;
+        return abilitiesComplete;
       case 'race': {
         if (!draft.raceId) return false;
         if (race?.subraces?.length && !draft.subraceId) return false;
@@ -188,6 +217,7 @@ export function Dnd5eCharacterBuilder({
         ...(Object.keys(draft.ancestryChoices).length ? { ancestryChoices: draft.ancestryChoices } : {}),
         classId: draft.classId,
         ...(draft.backgroundId ? { backgroundId: draft.backgroundId } : {}),
+        abilityScoreMethod: draft.method,
         coreScores: scores,
         chosenSkillIds: allChosenSkills,
         knownSpellIds,
@@ -234,27 +264,76 @@ export function Dnd5eCharacterBuilder({
     <StepFrame {...nav} teaching={teaching}>
       {kind === 'abilities' && (
         <div className={s.statList}>
-          {ABILITY_IDS.map((id) => {
-            const val = draft.abilities[id];
-            const options = STANDARD_ARRAY.filter((v) => !usedValues.includes(v) || v === val);
-            return (
-              <div key={id} className={s.statRow}>
-                <span className={s.statName}>{id}</span>
-                <select
-                  value={val ?? ''}
-                  onChange={(e) =>
-                    setDraft((d) => ({ ...d, abilities: { ...d.abilities, [id]: e.target.value ? Number(e.target.value) : undefined } }))
-                  }
-                >
-                  <option value="">—</option>
-                  {options.map((v) => (
-                    <option key={v} value={v}>{v}</option>
-                  ))}
-                </select>
-                <span className={s.statMod}>{val !== undefined ? `${sign(computeModifier(val, rule))} mod` : '—'}</span>
-              </div>
-            );
-          })}
+          {/* Method selector — all three write the same {ability → score} map. */}
+          <div className={s.tabs}>
+            {([['standard', 'Standard Array'], ['pointbuy', 'Point Buy'], ['roll', 'Roll Stats']] as const).map(([m, label]) => (
+              <button key={m} className={`${s.tab} ${draft.method === m ? s.tabActive : ''}`} onClick={() => setMethod(m)}>
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {draft.method === 'pointbuy' ? (
+            <>
+              <p className={s.teachText}>
+                Point buy — <strong>{pbRemaining}</strong> of {POINT_BUY_BUDGET} points left. Each score {POINT_BUY_MIN}–{POINT_BUY_MAX}.
+              </p>
+              {ABILITY_IDS.map((id) => {
+                const val = draft.abilities[id] ?? POINT_BUY_MIN;
+                const canInc = val < POINT_BUY_MAX && pointBuyCost(val + 1) - pointBuyCost(val) <= pbRemaining;
+                const canDec = val > POINT_BUY_MIN;
+                return (
+                  <div key={id} className={s.statRow}>
+                    <span className={s.statName}>{id}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                      <button disabled={!canDec} onClick={() => setDraft((d) => ({ ...d, abilities: { ...d.abilities, [id]: val - 1 } }))}>−</button>
+                      <strong>{val}</strong>
+                      <button disabled={!canInc} onClick={() => setDraft((d) => ({ ...d, abilities: { ...d.abilities, [id]: val + 1 } }))}>+</button>
+                    </span>
+                    <span className={s.statMod}>{sign(computeModifier(val, rule))} mod</span>
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <>
+              {draft.method === 'standard' && (
+                <p className={s.teachText}>Assign 15 / 14 / 13 / 12 / 10 / 8 — each value once.</p>
+              )}
+              {draft.method === 'roll' && (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                  <span className={s.teachText}>Rolled (4d6 drop lowest): {(draft.rolledValues ?? []).join(', ')}</span>
+                  <button className={s.place} onClick={() => setDraft((d) => ({ ...d, abilities: {}, rolledValues: rollAbilityScores() }))}>
+                    Reroll
+                  </button>
+                </div>
+              )}
+              {ABILITY_IDS.map((id) => {
+                const val = draft.abilities[id];
+                const pool = draft.method === 'roll' ? (draft.rolledValues ?? []) : STANDARD_ARRAY;
+                // Distinct values still available — count-aware so duplicate rolled values work.
+                const remainingOf = (v: number) => pool.filter((x) => x === v).length - usedValues.filter((x) => x === v).length;
+                const options = [...new Set(pool)].sort((a, b) => b - a).filter((v) => remainingOf(v) + (v === val ? 1 : 0) > 0);
+                return (
+                  <div key={id} className={s.statRow}>
+                    <span className={s.statName}>{id}</span>
+                    <select
+                      value={val ?? ''}
+                      onChange={(e) =>
+                        setDraft((d) => ({ ...d, abilities: { ...d.abilities, [id]: e.target.value ? Number(e.target.value) : undefined } }))
+                      }
+                    >
+                      <option value="">—</option>
+                      {options.map((v) => (
+                        <option key={v} value={v}>{v}</option>
+                      ))}
+                    </select>
+                    <span className={s.statMod}>{val !== undefined ? `${sign(computeModifier(val, rule))} mod` : '—'}</span>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
       )}
 

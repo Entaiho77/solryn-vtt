@@ -193,6 +193,8 @@ export interface CharacterDefinition {
   classId?: string;
   /** Background id (5e). Grants fixed skill/tool proficiencies + a narrative feature. */
   backgroundId?: string;
+  /** How ability scores were generated (5e), kept for display reference. */
+  abilityScoreMethod?: 'standard' | 'pointbuy' | 'roll';
 }
 
 export interface CharacterPlayState {
