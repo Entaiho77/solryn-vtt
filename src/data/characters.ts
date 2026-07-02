@@ -87,6 +87,11 @@ export function setConcentrating(
   return writeValue(`characters/${characterId}/play/concentrating`, value);
 }
 
+/** Set a character's total XP (5e). GM-awarded — see the play/xp security rule. */
+export function setXp(characterId: string, xp: number): Promise<void> {
+  return writeValue(`characters/${characterId}/play/xp`, Math.max(0, Math.round(xp)));
+}
+
 /** Set the remaining slot count for one spell level (5e). Object-keyed under play.spellSlots. */
 export function setSpellSlot(
   characterId: string,

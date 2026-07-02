@@ -211,6 +211,8 @@ export interface CharacterPlayState {
   concentrating?: { spellId: string; spellName: string };
   /** 5e milestone level-up: set true by the GM to grant, cleared when the player applies it. */
   levelUpPending?: boolean;
+  /** 5e experience points (cumulative total). GM-awarded; drives the XP-based level-up. */
+  xp?: number;
   /** Skill points granted (by level-up) but not yet placed. */
   unspentSkillPoints?: number;
   equippedArmorId?: string;

@@ -78,7 +78,10 @@
         ".write": "auth != null && ((!data.exists() && newData.child('ownerUserId').val() === auth.uid) || data.child('ownerUserId').val() === auth.uid)",
         "play": {
           "levelUpPending": {
-           
+            ".write": "auth != null && root.child('games').child(data.parent().parent().child('gameId').val()).child('members').child(auth.uid).child('role').val() === 'gm'"
+          },
+          "xp": {
+            "//": "The GM of the character's game may award XP (owner covered by the parent rule).",
             ".write": "auth != null && root.child('games').child(data.parent().parent().child('gameId').val()).child('members').child(auth.uid).child('role').val() === 'gm'"
           }
         }

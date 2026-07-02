@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Game, Role } from '../../data/types';
+import type { SystemDefinition } from '../../engine/schema';
 import {
   deleteGame,
   grantLevelUp,
@@ -8,7 +9,8 @@ import {
   removeMember,
   updateGameName,
 } from '../../data/games';
-import { setLevelUpPending, useGameCharacters } from '../../data/characters';
+import { setLevelUpPending, setXp, useGameCharacters } from '../../data/characters';
+import { monsterXp } from '../../systems/dnd5e/xp';
 import { Modal } from '../../components/ui/Modal';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { Button } from '../../components/ui/Button';
@@ -27,6 +29,8 @@ interface GameSettingsModalProps {
   characterId?: string;
   /** True for class-and-level (5e) games → per-player milestone level-up grants. */
   is5e?: boolean;
+  /** The active system (for the 5e XP encounter picker's bestiary). */
+  system?: SystemDefinition;
   /** Called after the user exits/quits or the GM deletes — navigate back to the lobby. */
   onExit: () => void;
 }
@@ -39,10 +43,41 @@ export function GameSettingsModal({
   currentUid,
   characterId,
   is5e,
+  system,
   onExit,
 }: GameSettingsModalProps) {
   const isGM = role === 'gm';
   const gameCharacters = useGameCharacters(isGM && is5e ? game.id : null);
+  // 5e XP award state: per-player manual award inputs + an encounter picker (creatureId → count).
+  const [xpInputs, setXpInputs] = useState<Record<string, string>>({});
+  const [encounter, setEncounter] = useState<Record<string, number>>({});
+  const [monsterQuery, setMonsterQuery] = useState('');
+  const encounterList = useMemo(
+    () =>
+      Object.entries(encounter)
+        .map(([id, count]) => {
+          const b = system?.bestiary.find((m) => m.id === id);
+          const cr = typeof b?.stats?.cr === 'number' ? b.stats.cr : 0;
+          return { id, name: b?.name ?? id, count, each: monsterXp(cr) };
+        })
+        .filter((e) => e.count > 0),
+    [encounter, system],
+  );
+  const encounterTotal = encounterList.reduce((sum, e) => sum + e.each * e.count, 0);
+  const partySize = Math.max(1, gameCharacters.length);
+  const perHead = Math.floor(encounterTotal / partySize);
+  const monsterMatches = (() => {
+    const q = monsterQuery.trim().toLowerCase();
+    if (!q || !system) return [];
+    return system.bestiary.filter((m) => m.name.toLowerCase().includes(q) && typeof m.stats?.cr === 'number').slice(0, 6);
+  })();
+
+  const awardManual = (charId: string, current: number) => {
+    const amt = Number(xpInputs[charId]);
+    if (!Number.isFinite(amt) || amt === 0) return;
+    void setXp(charId, current + amt);
+    setXpInputs((x) => ({ ...x, [charId]: '' }));
+  };
   const [name, setName] = useState(game.name);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -219,6 +254,69 @@ export function GameSettingsModal({
             </p>
           </section>
         )}
+
+        {/* XP awards (GM, 5e). Coexists with milestone leveling — use either or both. */}
+        {isGM && is5e && (
+          <section className={styles.section}>
+            <span className={styles.label}>Award XP</span>
+            {gameCharacters.map((ch) => (
+              <div key={ch.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                <span>{game.members[ch.ownerUserId]?.displayName ?? 'Player'} — {(ch.play.xp ?? 0).toLocaleString()} XP</span>
+                <span style={{ display: 'flex', gap: 'var(--space-1)' }}>
+                  <input
+                    type="number"
+                    placeholder="+XP"
+                    value={xpInputs[ch.id] ?? ''}
+                    onChange={(e) => setXpInputs((x) => ({ ...x, [ch.id]: e.target.value }))}
+                    style={{ width: 80 }}
+                  />
+                  <Button size="sm" variant="secondary" onClick={() => awardManual(ch.id, ch.play.xp ?? 0)}>Award</Button>
+                </span>
+              </div>
+            ))}
+
+            {/* Encounter XP: pick defeated monsters, split their total among the party. */}
+            <span className={styles.label} style={{ marginTop: 'var(--space-2)' }}>Encounter XP</span>
+            <input
+              type="text"
+              placeholder="Search a defeated creature…"
+              value={monsterQuery}
+              onChange={(e) => setMonsterQuery(e.target.value)}
+            />
+            {monsterMatches.map((m) => (
+              <div key={m.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                <span className={styles.hint} style={{ margin: 0 }}>{m.name} · CR {m.stats.crLabel ?? m.stats.cr} · {monsterXp(m.stats.cr as number)} XP</span>
+                <Button size="sm" variant="ghost" onClick={() => setEncounter((c) => ({ ...c, [m.id]: (c[m.id] ?? 0) + 1 }))}>+ Add</Button>
+              </div>
+            ))}
+            {encounterList.map((e) => (
+              <div key={e.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                <span>{e.name} ×{e.count} · {(e.each * e.count).toLocaleString()} XP</span>
+                <Button size="sm" variant="ghost" onClick={() => setEncounter((c) => { const n = { ...c }; delete n[e.id]; return n; })}>Remove</Button>
+              </div>
+            ))}
+            {encounterTotal > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                <span>Total {encounterTotal.toLocaleString()} XP → {perHead.toLocaleString()} each ({partySize})</span>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    gameCharacters.forEach((ch) => void setXp(ch.id, (ch.play.xp ?? 0) + perHead));
+                    setEncounter({});
+                    setMonsterQuery('');
+                  }}
+                >
+                  Award to party
+                </Button>
+              </div>
+            )}
+            <p className={styles.hint}>
+              XP is cumulative. When a player crosses the next threshold, a “Level Up!” button
+              appears on their sheet. Milestone grants above still work independently.
+            </p>
+          </section>
+        )}
+
         {isGM && !is5e && (
           <section className={styles.section}>
             <span className={styles.label}>Party</span>

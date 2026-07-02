@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { restoreSpellSlots, setConcentrating, setPoolCurrent, setSpellSlot } from '../../data/characters';
+import { restoreSpellSlots, setConcentrating, setLevelUpPending, setPoolCurrent, setSpellSlot } from '../../data/characters';
+import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { concentrationOnCast, spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
@@ -51,6 +52,8 @@ export function Dnd5eSheet({
   const resolver = getCombatResolver(system);
   const d = pcDerived(system, character);
   const hpCurrent = character.play.pools?.hp?.current ?? d.maxHp;
+  const xp = character.play.xp ?? 0;
+  const xpProg = xpProgress(xp, character.play.level);
 
   const [tab, setTab] = useState<'combat' | 'spellbook'>('combat');
   const [levelUpOpen, setLevelUpOpen] = useState(false);
@@ -226,6 +229,20 @@ export function Dnd5eSheet({
             max={d.maxHp}
             onChange={(n) => void setPoolCurrent(character.id, 'hp', n)}
           />
+
+          {/* Experience — progress toward the next level; "Level Up!" appears at the threshold. */}
+          <div style={row}>
+            <span className={s.itemMeta}>Experience</span>
+            <span>{xp.toLocaleString()}{xpProg.atMax ? ' · Level 20 (max)' : ` / ${xpProg.nextThreshold.toLocaleString()} XP`}</span>
+          </div>
+          {!xpProg.atMax && (
+            <div style={{ height: 6, background: 'var(--surface-raised)', borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ width: `${Math.round(xpProg.fraction * 100)}%`, height: '100%', background: 'var(--accent-teal)' }} />
+            </div>
+          )}
+          {xpProg.canLevelUp && !character.play.levelUpPending && (
+            <Button size="sm" onClick={() => void setLevelUpPending(character.id, true)}>Level Up!</Button>
+          )}
 
           {/* Saving throws */}
           <span className={s.label}>Saving throws</span>
