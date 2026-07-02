@@ -78,7 +78,7 @@
         ".write": "auth != null && ((!data.exists() && newData.child('ownerUserId').val() === auth.uid) || data.child('ownerUserId').val() === auth.uid)",
         "play": {
           "levelUpPending": {
-            "//": "The GM of the character's game may grant a level-up. The owner is already covered by the parent .write; this only adds the GM.",
+           
             ".write": "auth != null && root.child('games').child(data.parent().parent().child('gameId').val()).child('members').child(auth.uid).child('role').val() === 'gm'"
           }
         }
