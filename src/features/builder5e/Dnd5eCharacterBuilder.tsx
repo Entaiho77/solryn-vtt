@@ -54,10 +54,13 @@ interface Draft {
 type StepKind = 'abilities' | 'race' | 'class' | 'skills' | 'background' | 'spells' | 'finish';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
-// Long option lists (skills, abilities, spells) laid out 3-across so everything's visible at once.
-// minmax(0, 1fr) (not plain 1fr) lets the tracks shrink below their content's min-width, so long
-// option labels wrap inside the column instead of overflowing into the "Why this matters" panel.
-const grid3: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.5rem', minWidth: 0 };
+// Long option lists (skills, abilities, spells) laid out in a responsive multi-column grid.
+// auto-fill + a 170px MIN track keeps every column wide enough to fit the longest option labels
+// ("Investigation", "Animal Handling", "Sleight of Hand") on one line without breaking words, while
+// only packing as many columns as fit — so the grid never bleeds into the "Why this matters" panel.
+// (Plain repeat(3, …) can't satisfy both: 3 columns in the ~494px action column are too narrow for
+// these names, forcing either mid-word wrapping or overflow.)
+const grid3: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: '0.5rem', minWidth: 0 };
 // Method selector pills — same visual language as the sheet's Combat/Spellbook tabs (teal accent
 // when active, muted outline when not). Inline because steps.module.css has no tab classes.
 const methodTabRow: React.CSSProperties = { display: 'flex', gap: '0.5rem' };
