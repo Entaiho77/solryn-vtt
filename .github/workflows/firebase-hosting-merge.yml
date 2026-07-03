@@ -36,7 +36,8 @@ jobs:
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/firebase-sa.json"
           GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json" \
             npx --yes firebase-tools@latest deploy --only database \
-              --project solryn-virtual-table-top --non-interactive
+              --project solryn-virtual-table-top --non-interactive \
+              --instance solryn-virtual-table-top-default-rtdb
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOLRYN_VIRTUAL_TABLE_TOP }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
