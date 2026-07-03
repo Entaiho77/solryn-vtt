@@ -6,13 +6,13 @@ import type {
   Subrace,
   SystemDefinition,
 } from '../../engine/schema';
-import { featById } from './feats';
 import type { Character } from '../../data/types';
 import {
   armorClass,
   attackBonus,
   classLevel,
   computeModifier,
+  cumulativeFeatures,
   maxHitPoints,
   proficiencyBonus,
   saveModifier,
@@ -66,6 +66,8 @@ function breathDice(level: number): string {
 
 export interface PcDerived {
   cls?: ClassDefinition;
+  /** Base class feature names gained up to the character's level (cumulative). */
+  classFeatures: string[];
   scores: Record<string, number>;
   mods: Record<string, number>;
   proficiencyBonus: number;
@@ -140,7 +142,7 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
   // Feats (taken at level-up) add ability bonuses on top of the locked core scores. Half-feats
   // with a fixed stat apply directly; flexible +1s apply the player's stored choice.
   const ownedFeats = (character.play.featIds ?? [])
-    .map((id) => featById(id))
+    .map((id) => system.feats?.find((f) => f.id === id))
     .filter((f): f is FeatDefinition => !!f);
   const scores: Record<string, number> = { ...character.definition.coreScores };
   for (const f of ownedFeats) {
@@ -294,8 +296,12 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     ? { ...breathBase, dice: breathDice(level), dc: 8 + mods.CON + pb }
     : undefined;
 
+  // Base class features gained up to this level (SRD + homebrew classes alike).
+  const classFeatures = cls ? cumulativeFeatures(cls, level) : [];
+
   return {
     cls,
+    classFeatures,
     scores,
     mods,
     proficiencyBonus: pb,

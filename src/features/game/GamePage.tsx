@@ -4,6 +4,7 @@ import { useAuth } from '../../auth/AuthProvider';
 import { useValue } from '../../data/realtime';
 import { createCharacter, setLevelUpPending, useGameCharacter } from '../../data/characters';
 import type { Game } from '../../data/types';
+import { withHomebrewOptions } from '../../data/homebrew';
 import { roleOf } from '../../permissions';
 import { getSystem, isClassAndLevel } from '../../systems/registry';
 import { Button } from '../../components/ui/Button';
@@ -52,7 +53,12 @@ export function GamePage() {
     );
   }
 
-  const system = getSystem(game.systemId);
+  // Fold this game's GM-authored homebrew player options (races/classes/backgrounds/feats) into
+  // the system so the builder, level-up, pcDerived, and sheet see them alongside SRD content.
+  const baseSystem = getSystem(game.systemId);
+  const system = baseSystem
+    ? withHomebrewOptions(baseSystem, game.homebrew?.playerOptions)
+    : undefined;
 
   // Player without a completed character → the builder. Otherwise → the board.
   const building =

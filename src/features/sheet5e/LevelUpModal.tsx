@@ -3,7 +3,7 @@ import type { SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { applyLevelUp5e } from '../../data/characters';
 import { ABILITY_IDS, pcDerived } from '../../systems/dnd5e/character';
-import { feats as allFeats, meetsFeatPrerequisite } from '../../systems/dnd5e/feats';
+import { meetsFeatPrerequisite } from '../../systems/dnd5e/feats';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { computeLevelUp, levelUpSummary, type LevelUpChoices } from '../../systems/dnd5e/levelUp';
 import { Modal } from '../../components/ui/Modal';
@@ -42,6 +42,9 @@ export function LevelUpModal({
   // Feats the character is eligible for (prerequisites met, not already taken).
   const derived = useMemo(() => pcDerived(system, character), [system, character]);
   const owned = new Set(character.play.featIds ?? []);
+  // Feats come from the (possibly homebrew-augmented) system, so GM-authored feats appear in the
+  // picker alongside SRD ones with the same prerequisite check.
+  const allFeats = system.feats ?? [];
   const eligibleFeats = allFeats.filter(
     (f) => !owned.has(f.id) && meetsFeatPrerequisite(f, derived.scores, !!derived.spell),
   );

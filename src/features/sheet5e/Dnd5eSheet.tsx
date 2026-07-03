@@ -462,6 +462,17 @@ export function Dnd5eSheet({
             </>
           )}
 
+          {/* Class features — the base class features unlocked up to this level. Works identically
+              for SRD and homebrew classes (both feed pcDerived via cumulativeFeatures). */}
+          {d.cls && d.classFeatures.length > 0 && (
+            <>
+              <span className={s.label}>{d.cls.name} features</span>
+              {d.classFeatures.map((f) => (
+                <p key={f} className={s.hint} style={{ margin: 0 }}>• {f}</p>
+              ))}
+            </>
+          )}
+
           {/* Subclass — its features (merged into pcDerived), or a picker when the character has
               reached its subclass level but hasn't chosen (covers L1/L2 classes the level-up flow
               never prompts). */}

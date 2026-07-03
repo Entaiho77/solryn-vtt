@@ -1,4 +1,13 @@
-import type { BestiaryEntry } from '../engine/schema';
+import type {
+  Ancestry,
+  BackgroundDefinition,
+  BestiaryEntry,
+  ClassDefinition,
+  ClassLevel,
+  FeatDefinition,
+  StatBonus,
+  SystemDefinition,
+} from '../engine/schema';
 import { newKey, writeValue } from './realtime';
 
 /**
@@ -220,5 +229,334 @@ export function homebrewToBestiaryEntry(hb: HomebrewMonster): BestiaryEntry {
     stats,
     ...(attacks.length ? { attacks } : {}),
     ...(abilities.length ? { abilities } : {}),
+  };
+}
+
+// --- Homebrew player options (Phase C) --------------------------------------
+//
+// GM-authored races, classes, backgrounds, and feats, stored under
+// games/$gameId/homebrew/playerOptions/{backgrounds,feats,races,classes}/$id (object-keyed maps,
+// never arrays). Each converts losslessly into the corresponding SRD engine shape
+// (Ancestry / ClassDefinition / BackgroundDefinition / FeatDefinition), and withHomebrewOptions
+// merges them into a shallow-copied SystemDefinition so the builder, level-up, pcDerived, and
+// sheet treat homebrew and SRD options identically — one combined list, no special cases.
+
+/** A named text trait/feature (race trait, class feature). */
+export interface HomebrewTrait {
+  name: string;
+  description: string;
+}
+
+export interface HomebrewBackground {
+  id: string;
+  name: string;
+  description: string;
+  /** Exactly two skill ids from the standard 5e skill list. */
+  skillProficiencies: string[];
+  /** Free text (tools + languages). */
+  toolLanguageProficiencies: string;
+  featureName: string;
+  featureDescription: string;
+  createdBy: string;
+}
+
+export interface HomebrewFeat {
+  id: string;
+  name: string;
+  description: string;
+  /** Optional ability-score prerequisite (ability id + minimum score). */
+  prerequisiteAbility?: string;
+  prerequisiteScore?: number;
+  requiresSpellcasting?: boolean;
+  /** Fixed ability increases folded into scores (e.g. { STR: 1 }). */
+  abilityBonus?: Record<string, number>;
+  /** True if the feat's effects are narrative only (no mechanical bonus). */
+  displayOnly: boolean;
+  createdBy: string;
+}
+
+export type HomebrewSize = 'Small' | 'Medium' | 'Large';
+
+export interface HomebrewRace {
+  id: string;
+  name: string;
+  description: string;
+  size: HomebrewSize;
+  /** Walking speed in feet. */
+  speed: number;
+  /** Ability increases keyed by ability id (e.g. { STR: 2, DEX: 1 }). */
+  abilityBonuses: Record<string, number>;
+  /** Darkvision range in feet (0 / omitted = none). */
+  darkvision?: number;
+  /** Racial traits, object-keyed map (never an array). */
+  traits: Record<string, HomebrewTrait>;
+  createdBy: string;
+}
+
+export type HitDie = 6 | 8 | 10 | 12;
+export type CasterType = 'full' | 'half' | 'third';
+export type UnarmoredFormula = 'DEX+CON' | 'DEX+WIS';
+
+/** A class feature at a specific level (object-map entry). */
+export interface HomebrewClassFeature {
+  level: number;
+  name: string;
+  description: string;
+}
+
+export interface HomebrewClass {
+  id: string;
+  name: string;
+  description: string;
+  hitDie: HitDie;
+  primaryAbility: string;
+  /** Exactly two ability ids. */
+  savingThrows: string[];
+  /** Any of 'light' | 'medium' | 'heavy' | 'shields' (or empty / 'none'). */
+  armorProficiencies: string[];
+  weaponProficiencies: string;
+  skillChoiceCount: number;
+  skillChoiceList: string[];
+  spellcasting?: { ability: string; casterType: CasterType };
+  unarmoredDefense?: { formula: UnarmoredFormula };
+  subclassLevel: number;
+  startingEquipment: string;
+  /** Level features, object-keyed map (never an array). */
+  features: Record<string, HomebrewClassFeature>;
+  createdBy: string;
+}
+
+/** The four homebrew player-option maps, as stored on the Game object. */
+export interface HomebrewPlayerOptions {
+  backgrounds?: Record<string, HomebrewBackground>;
+  feats?: Record<string, HomebrewFeat>;
+  races?: Record<string, HomebrewRace>;
+  classes?: Record<string, HomebrewClass>;
+}
+
+type PlayerOptionKind = 'backgrounds' | 'feats' | 'races' | 'classes';
+
+const optionPath = (gameId: string, kind: PlayerOptionKind) =>
+  `games/${gameId}/homebrew/playerOptions/${kind}`;
+
+async function saveOption<T extends { id?: string }>(
+  gameId: string,
+  kind: PlayerOptionKind,
+  option: T,
+): Promise<string> {
+  const id = option.id ?? newKey(optionPath(gameId, kind));
+  await writeValue(`${optionPath(gameId, kind)}/${id}`, pruneUndefined({ ...option, id }));
+  return id;
+}
+
+const deleteOption = (gameId: string, kind: PlayerOptionKind, id: string): Promise<void> =>
+  writeValue(`${optionPath(gameId, kind)}/${id}`, null);
+
+const sortedList = <T extends { name: string }>(map: Record<string, T> | undefined): T[] =>
+  Object.values(map ?? {}).sort((a, b) => a.name.localeCompare(b.name));
+
+// --- CRUD (GM-only, enforced by the security rules) ---
+
+export const saveHomebrewBackground = (gameId: string, bg: Omit<HomebrewBackground, 'id'> & { id?: string }) =>
+  saveOption(gameId, 'backgrounds', bg);
+export const deleteHomebrewBackground = (gameId: string, id: string) => deleteOption(gameId, 'backgrounds', id);
+export const backgroundOptionList = (m: Record<string, HomebrewBackground> | undefined) => sortedList(m);
+
+export const saveHomebrewFeat = (gameId: string, feat: Omit<HomebrewFeat, 'id'> & { id?: string }) =>
+  saveOption(gameId, 'feats', feat);
+export const deleteHomebrewFeat = (gameId: string, id: string) => deleteOption(gameId, 'feats', id);
+export const featOptionList = (m: Record<string, HomebrewFeat> | undefined) => sortedList(m);
+
+export const saveHomebrewRace = (gameId: string, race: Omit<HomebrewRace, 'id'> & { id?: string }) =>
+  saveOption(gameId, 'races', race);
+export const deleteHomebrewRace = (gameId: string, id: string) => deleteOption(gameId, 'races', id);
+export const raceOptionList = (m: Record<string, HomebrewRace> | undefined) => sortedList(m);
+
+export const saveHomebrewClass = (gameId: string, cls: Omit<HomebrewClass, 'id'> & { id?: string }) =>
+  saveOption(gameId, 'classes', cls);
+export const deleteHomebrewClass = (gameId: string, id: string) => deleteOption(gameId, 'classes', id);
+export const classOptionList = (m: Record<string, HomebrewClass> | undefined) => sortedList(m);
+
+// --- Converters (homebrew shape → SRD engine shape) ---
+
+const upper = (s: string) => s.toUpperCase();
+
+/** Ability increases (map → StatBonus[]), dropping zero/blank entries and normalizing ids. */
+function abilityBonuses(map: Record<string, number> | undefined): StatBonus[] {
+  return Object.entries(map ?? {})
+    .filter(([, amount]) => Number(amount) !== 0)
+    .map(([stat, amount]) => ({ kind: 'fixed', stat: upper(stat), amount: Number(amount) }));
+}
+
+export function homebrewRaceToAncestry(hb: HomebrewRace): Ancestry {
+  const bonuses = abilityBonuses(hb.abilityBonuses);
+  const bonusSummary = bonuses.length
+    ? bonuses.map((b) => `+${(b as { amount: number }).amount} ${(b as { stat: string }).stat}`).join(', ')
+    : 'No ability bonuses';
+  const traits = [
+    ...(hb.darkvision ? [`Darkvision ${hb.darkvision} ft.`] : []),
+    ...Object.values(hb.traits ?? {}).map((t) => `${t.name}: ${t.description}`),
+  ];
+  return {
+    id: hb.id,
+    name: hb.name,
+    bonusSummary,
+    bonuses,
+    advantages: [],
+    weaknesses: [],
+    ...(hb.description ? { flavor: hb.description } : {}),
+    speed: hb.speed,
+    size: hb.size,
+    traits,
+  };
+}
+
+export function homebrewFeatToFeat(hb: HomebrewFeat): FeatDefinition {
+  const bonus = abilityBonuses(hb.abilityBonus).map((b) => ({
+    ability: (b as { stat: string }).stat,
+    amount: (b as { amount: number }).amount,
+  }));
+  const hasScoreReq = !!hb.prerequisiteAbility && hb.prerequisiteScore != null;
+  const requires =
+    hasScoreReq || hb.requiresSpellcasting
+      ? {
+          ...(hasScoreReq ? { ability: upper(hb.prerequisiteAbility!), min: hb.prerequisiteScore } : {}),
+          ...(hb.requiresSpellcasting ? { needsSpellcasting: true } : {}),
+        }
+      : undefined;
+  const prereqText = [
+    hasScoreReq ? `${upper(hb.prerequisiteAbility!)} ${hb.prerequisiteScore}` : '',
+    hb.requiresSpellcasting ? 'the ability to cast at least one spell' : '',
+  ]
+    .filter(Boolean)
+    .join(', ');
+  return {
+    id: hb.id,
+    name: hb.name,
+    description: hb.description,
+    ...(prereqText ? { prerequisite: prereqText } : {}),
+    ...(requires ? { requires } : {}),
+    ...(bonus.length ? { effects: { abilityBonus: bonus } } : {}),
+    ...(hb.displayOnly ? { displayOnly: true } : {}),
+  };
+}
+
+export function homebrewBackgroundToBackground(hb: HomebrewBackground): BackgroundDefinition {
+  return {
+    id: hb.id,
+    name: hb.name,
+    ...(hb.description ? { description: hb.description } : {}),
+    skillProficiencies: hb.skillProficiencies ?? [],
+    ...(hb.toolLanguageProficiencies ? { toolProficiencies: [hb.toolLanguageProficiencies] } : {}),
+    ...(hb.featureName
+      ? { feature: { name: hb.featureName, description: hb.featureDescription } }
+      : {}),
+  };
+}
+
+/** Proficiency bonus by character level (5e: +2 at 1–4, +3 at 5–8, … +6 at 17–20). */
+const profBonusAt = (level: number) => 2 + Math.floor((level - 1) / 4);
+/** Standard ASI/feat levels (SRD): 4, 8, 12, 16, 19. */
+const ASI_LEVELS = new Set([4, 8, 12, 16, 19]);
+
+/**
+ * Spell-slot progression tables by caster type, indexed [characterLevel - 1] → number[] where
+ * index 0 is 1st-level slots. Straight from the SRD full/half/third-caster tables (the same tables
+ * the existing spell-slot UI already consumes for SRD classes).
+ */
+const FULL_CASTER_SLOTS: number[][] = [
+  [2], [3], [4, 2], [4, 3], [4, 3, 2], [4, 3, 3], [4, 3, 3, 1], [4, 3, 3, 2], [4, 3, 3, 3, 1],
+  [4, 3, 3, 3, 2], [4, 3, 3, 3, 2, 1], [4, 3, 3, 3, 2, 1], [4, 3, 3, 3, 2, 1, 1], [4, 3, 3, 3, 2, 1, 1],
+  [4, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 2, 1, 1, 1, 1], [4, 3, 3, 3, 3, 1, 1, 1, 1],
+  [4, 3, 3, 3, 3, 2, 1, 1, 1], [4, 3, 3, 3, 3, 2, 2, 1, 1],
+];
+const HALF_CASTER_SLOTS: number[][] = [
+  [], [2], [3], [3], [4, 2], [4, 2], [4, 3], [4, 3], [4, 3, 2], [4, 3, 2], [4, 3, 3], [4, 3, 3],
+  [4, 3, 3, 1], [4, 3, 3, 1], [4, 3, 3, 2], [4, 3, 3, 2], [4, 3, 3, 3, 1], [4, 3, 3, 3, 1],
+  [4, 3, 3, 3, 2], [4, 3, 3, 3, 2],
+];
+const THIRD_CASTER_SLOTS: number[][] = [
+  [], [], [2], [3], [3], [3], [4, 2], [4, 2], [4, 2], [4, 3], [4, 3], [4, 3], [4, 3, 2], [4, 3, 2],
+  [4, 3, 2], [4, 3, 3], [4, 3, 3], [4, 3, 3], [4, 3, 3, 1], [4, 3, 3, 1],
+];
+const CASTER_SLOTS: Record<CasterType, number[][]> = {
+  full: FULL_CASTER_SLOTS,
+  half: HALF_CASTER_SLOTS,
+  third: THIRD_CASTER_SLOTS,
+};
+
+export function homebrewClassToClassDefinition(hb: HomebrewClass): ClassDefinition {
+  const featuresByLevel = new Map<number, string[]>();
+  for (const f of Object.values(hb.features ?? {})) {
+    const list = featuresByLevel.get(f.level) ?? [];
+    list.push(f.name);
+    featuresByLevel.set(f.level, list);
+  }
+  const slotTable = hb.spellcasting ? CASTER_SLOTS[hb.spellcasting.casterType] : undefined;
+
+  const levels: ClassLevel[] = [];
+  for (let lvl = 1; lvl <= 20; lvl++) {
+    const row: ClassLevel = {
+      level: lvl,
+      proficiencyBonus: profBonusAt(lvl),
+      features: featuresByLevel.get(lvl) ?? [],
+    };
+    if (ASI_LEVELS.has(lvl)) row.abilityScoreImprovement = true;
+    const slots = slotTable?.[lvl - 1];
+    if (slots && slots.length) row.spellSlots = slots;
+    levels.push(row);
+  }
+
+  // 'none' is a sentinel for "no armor"; keep only real proficiency ids.
+  const armor = (hb.armorProficiencies ?? []).filter((a) => a && a !== 'none');
+  return {
+    id: hb.id,
+    name: hb.name,
+    ...(hb.description ? { description: hb.description } : {}),
+    hitDie: `d${hb.hitDie}`,
+    primaryAbilities: [upper(hb.primaryAbility)],
+    savingThrows: (hb.savingThrows ?? []).map(upper),
+    proficiencies: {
+      armor,
+      weapons: hb.weaponProficiencies ? [hb.weaponProficiencies] : [],
+      tools: [],
+    },
+    skillChoices: { choose: hb.skillChoiceCount, from: hb.skillChoiceList ?? [] },
+    startingEquipment: hb.startingEquipment ? [hb.startingEquipment] : [],
+    // Homebrew casters use the 'prepared' model: slots come from the caster table, DC/attack from
+    // the class's ability. No curated spell list this phase (cantrips/known omitted → 0), which is
+    // why the builder/level-up spell pickers stay empty rather than dead-locking.
+    ...(hb.spellcasting ? { spellcasting: { ability: upper(hb.spellcasting.ability), type: 'prepared' as const } } : {}),
+    ...(hb.unarmoredDefense
+      ? { unarmoredDefense: { ability: hb.unarmoredDefense.formula === 'DEX+WIS' ? 'WIS' : 'CON' } }
+      : {}),
+    levels,
+    // subclassLevel is captured on the homebrew record but intentionally NOT wired into progression:
+    // homebrew subclasses are out of scope this phase (the character simply has no subclass).
+  };
+}
+
+/**
+ * Return a shallow-copied SystemDefinition with this game's homebrew player options folded into the
+ * ancestries / classes / feats / backgrounds lists, so every downstream consumer (builder,
+ * level-up, pcDerived, sheet) sees homebrew alongside SRD in one combined list. Returns the system
+ * unchanged when there are no options.
+ */
+export function withHomebrewOptions(
+  system: SystemDefinition,
+  playerOptions: HomebrewPlayerOptions | undefined,
+): SystemDefinition {
+  if (!playerOptions) return system;
+  const races = Object.values(playerOptions.races ?? {}).map(homebrewRaceToAncestry);
+  const classes = Object.values(playerOptions.classes ?? {}).map(homebrewClassToClassDefinition);
+  const feats = Object.values(playerOptions.feats ?? {}).map(homebrewFeatToFeat);
+  const backgrounds = Object.values(playerOptions.backgrounds ?? {}).map(homebrewBackgroundToBackground);
+  if (!races.length && !classes.length && !feats.length && !backgrounds.length) return system;
+  return {
+    ...system,
+    ancestries: [...system.ancestries, ...races],
+    classes: [...(system.classes ?? []), ...classes],
+    feats: [...(system.feats ?? []), ...feats],
+    backgrounds: [...(system.backgrounds ?? []), ...backgrounds],
   };
 }

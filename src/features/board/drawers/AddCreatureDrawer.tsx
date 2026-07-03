@@ -9,19 +9,35 @@ import {
   useMyCreatures,
 } from '../../../data/creatures';
 import {
+  backgroundOptionList,
+  classOptionList,
+  deleteHomebrewBackground,
+  deleteHomebrewClass,
   deleteHomebrewEquipment,
+  deleteHomebrewFeat,
   deleteHomebrewMonster,
+  deleteHomebrewRace,
   equipmentList,
+  featOptionList,
   homebrewList,
   homebrewToBestiaryEntry,
+  raceOptionList,
+  type HomebrewBackground,
+  type HomebrewClass,
   type HomebrewEquipment,
+  type HomebrewFeat,
   type HomebrewMonster,
+  type HomebrewRace,
 } from '../../../data/homebrew';
 import { firstFreeCell, gridDimensions } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
 import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import { HomebrewMonsterForm } from './HomebrewMonsterForm';
 import { HomebrewEquipmentForm } from './HomebrewEquipmentForm';
+import { HomebrewBackgroundForm } from './HomebrewBackgroundForm';
+import { HomebrewFeatForm } from './HomebrewFeatForm';
+import { HomebrewRaceForm } from './HomebrewRaceForm';
+import { HomebrewClassForm } from './HomebrewClassForm';
 import s from './drawers.module.css';
 
 const CREATURE_COLOR = '#b05a5a';
@@ -45,13 +61,24 @@ export function AddCreatureDrawer({
   tokens: Token[];
 }) {
   const [tab, setTab] = useState<'bestiary' | 'homebrew' | 'mine' | 'build'>('bestiary');
-  // Sub-tab within Homebrew: monsters (Phase A) vs equipment (Phase B1).
-  const [hbSubTab, setHbSubTab] = useState<'monsters' | 'equipment'>('monsters');
+  // Sub-tab within Homebrew: monsters (Phase A) · equipment (Phase B1) · player options (Phase C).
+  const [hbSubTab, setHbSubTab] = useState<'monsters' | 'equipment' | 'playerOptions'>('monsters');
   // Form modals: undefined = closed, null = new, item = editing that one.
   const [hbForm, setHbForm] = useState<HomebrewMonster | null | undefined>(undefined);
   const [eqForm, setEqForm] = useState<HomebrewEquipment | null | undefined>(undefined);
+  const [bgForm, setBgForm] = useState<HomebrewBackground | null | undefined>(undefined);
+  const [featForm, setFeatForm] = useState<HomebrewFeat | null | undefined>(undefined);
+  const [raceForm, setRaceForm] = useState<HomebrewRace | null | undefined>(undefined);
+  const [classForm, setClassForm] = useState<HomebrewClass | null | undefined>(undefined);
   const homebrewMonsters = homebrewList(game.homebrew?.monsters);
   const homebrewEquipment = equipmentList(game.homebrew?.equipment);
+  const playerOptions = game.homebrew?.playerOptions;
+  const hbBackgrounds = backgroundOptionList(playerOptions?.backgrounds);
+  const hbFeats = featOptionList(playerOptions?.feats);
+  const hbRaces = raceOptionList(playerOptions?.races);
+  const hbClasses = classOptionList(playerOptions?.classes);
+  const skillOptions = system.skills.map((sk) => ({ id: sk.id, name: sk.name }));
+  const skillName = (id: string) => skillOptions.find((sk) => sk.id === id)?.name ?? id;
   const [category, setCategory] = useState<Category>('creature');
   const [name, setName] = useState('');
   const [hp, setHp] = useState('5');
@@ -157,6 +184,46 @@ export function AddCreatureDrawer({
     setName('');
   }
 
+  // One player-option section (Backgrounds / Feats / Races / Classes): a heading + New button and a
+  // list of saved items, each with Edit / delete. All four render identically off this helper.
+  function optionSection<T extends { id: string; name: string }>(
+    title: string,
+    items: T[],
+    meta: (it: T) => string,
+    onNew: () => void,
+    onEdit: (it: T) => void,
+    onDelete: (id: string) => void,
+  ) {
+    return (
+      <div className={s.section} style={{ gap: 'var(--space-2)' }}>
+        <div className={s.row} style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+          <span className={s.label}>{title}</span>
+          <button className={s.place} onClick={onNew}>+ New</button>
+        </div>
+        <div className={s.list}>
+          {items.length === 0 && <p className={s.hint}>None yet.</p>}
+          {items.map((it) => (
+            <div key={it.id} className={s.item}>
+              <span className={s.itemMain}>
+                <span className={s.itemName}>{it.name}</span>
+                <span className={s.itemMeta}>{meta(it)}</span>
+              </span>
+              <button className={s.place} onClick={() => onEdit(it)}>Edit</button>
+              <button
+                className={s.place}
+                style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
+                onClick={() => onDelete(it.id)}
+                aria-label={`Delete ${it.name}`}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={s.tabs}>
@@ -178,9 +245,9 @@ export function AddCreatureDrawer({
       {tab === 'homebrew' && (
         <div className={s.section}>
           <div className={s.tabs}>
-            {(['monsters', 'equipment'] as const).map((t) => (
+            {(['monsters', 'equipment', 'playerOptions'] as const).map((t) => (
               <button key={t} className={`${s.tab} ${hbSubTab === t ? s.tabActive : ''}`} onClick={() => setHbSubTab(t)}>
-                {t === 'monsters' ? 'Monsters' : 'Equipment'}
+                {t === 'monsters' ? 'Monsters' : t === 'equipment' ? 'Equipment' : 'Player Options'}
               </button>
             ))}
           </div>
@@ -256,11 +323,66 @@ export function AddCreatureDrawer({
               </div>
             </>
           )}
+          {hbSubTab === 'playerOptions' && (
+            <>
+              <p className={s.hint}>Player options appear in the character builder and level-up alongside SRD content.</p>
+              {optionSection(
+                'Backgrounds',
+                hbBackgrounds,
+                (b) => b.skillProficiencies.map(skillName).join(', '),
+                () => setBgForm(null),
+                (b) => setBgForm(b),
+                (id) => void deleteHomebrewBackground(gameId, id),
+              )}
+              {optionSection(
+                'Feats',
+                hbFeats,
+                (f) =>
+                  f.displayOnly
+                    ? 'narrative'
+                    : f.prerequisiteAbility
+                      ? `requires ${f.prerequisiteAbility} ${f.prerequisiteScore ?? ''}`.trim()
+                      : 'feat',
+                () => setFeatForm(null),
+                (f) => setFeatForm(f),
+                (id) => void deleteHomebrewFeat(gameId, id),
+              )}
+              {optionSection(
+                'Races',
+                hbRaces,
+                (r) => `${r.size} · ${r.speed} ft${r.darkvision ? ` · darkvision ${r.darkvision}` : ''}`,
+                () => setRaceForm(null),
+                (r) => setRaceForm(r),
+                (id) => void deleteHomebrewRace(gameId, id),
+              )}
+              {optionSection(
+                'Classes',
+                hbClasses,
+                (c) => `d${c.hitDie} · saves ${c.savingThrows.join('/')}${c.spellcasting ? ` · ${c.spellcasting.casterType} caster` : ''}`,
+                () => setClassForm(null),
+                (c) => setClassForm(c),
+                (id) => void deleteHomebrewClass(gameId, id),
+              )}
+            </>
+          )}
         </div>
       )}
 
       {eqForm !== undefined && (
         <HomebrewEquipmentForm gameId={gameId} existing={eqForm ?? undefined} onClose={() => setEqForm(undefined)} />
+      )}
+
+      {bgForm !== undefined && (
+        <HomebrewBackgroundForm gameId={gameId} uid={uid} skills={skillOptions} existing={bgForm ?? undefined} onClose={() => setBgForm(undefined)} />
+      )}
+      {featForm !== undefined && (
+        <HomebrewFeatForm gameId={gameId} uid={uid} existing={featForm ?? undefined} onClose={() => setFeatForm(undefined)} />
+      )}
+      {raceForm !== undefined && (
+        <HomebrewRaceForm gameId={gameId} uid={uid} existing={raceForm ?? undefined} onClose={() => setRaceForm(undefined)} />
+      )}
+      {classForm !== undefined && (
+        <HomebrewClassForm gameId={gameId} uid={uid} skills={skillOptions} existing={classForm ?? undefined} onClose={() => setClassForm(undefined)} />
       )}
 
       {hbForm !== undefined && (

@@ -7,7 +7,7 @@
  */
 
 import type { RollEntry } from './rollLog';
-import type { HomebrewEquipment, HomebrewMonster, InventoryItem } from './homebrew';
+import type { HomebrewEquipment, HomebrewMonster, HomebrewPlayerOptions, InventoryItem } from './homebrew';
 
 export type Role = 'gm' | 'player';
 
@@ -61,10 +61,12 @@ export interface Game {
    *  to this level right after creation (new player joining mid-campaign, replacement PC). */
   startingLevel?: number;
   /** GM-authored homebrew content for this game. Object-keyed maps.
-   *  Phase A: monsters. Phase B1: equipment (attachable to monsters as loot). */
+   *  Phase A: monsters. Phase B1: equipment (attachable to monsters as loot).
+   *  Phase C: playerOptions (races/classes/backgrounds/feats for the builder & level-up). */
   homebrew?: {
     monsters?: Record<string, HomebrewMonster>;
     equipment?: Record<string, HomebrewEquipment>;
+    playerOptions?: HomebrewPlayerOptions;
   };
 }
 
