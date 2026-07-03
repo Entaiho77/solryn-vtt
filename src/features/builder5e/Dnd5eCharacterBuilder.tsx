@@ -374,13 +374,19 @@ export function Dnd5eCharacterBuilder({
                 {race.id === 'dragonborn' ? 'Choose a draconic ancestry (sets your breath weapon):' : 'Choose a subrace:'}
               </p>
               {race.subraces.map((sr) => (
+                // Stack name over description (like the background cards). The description can be a
+                // full sentence (e.g. Dragonborn "Breath weapon: 30 ft. line, Acid damage. …") whose
+                // content is wider than the card; as a right-hand flex column it left no positive
+                // free space, so the flex:1 (basis-0) name collapsed to zero width and broke
+                // letter-by-letter. Stacking gives the name the card's full width on one line.
                 <button
                   key={sr.id}
                   className={[s.statRow, draft.subraceId === sr.id ? s.active : ''].filter(Boolean).join(' ')}
+                  style={{ flexDirection: 'column', alignItems: 'stretch', gap: 2 }}
                   onClick={() => setDraft((d) => ({ ...d, subraceId: sr.id }))}
                 >
                   <span className={s.statName}>{sr.name}</span>
-                  <span className={s.statMod}>{sr.description}</span>
+                  <span className={s.statMod} style={{ textAlign: 'left' }}>{sr.description}</span>
                 </button>
               ))}
             </>
