@@ -322,6 +322,24 @@ export function MonsterStatCard({
         </div>
       )}
 
+      {/* Equipment the monster carries as loot (GM sees it before distributing). */}
+      {lootItems && lootItems.length > 0 && (
+        <div>
+          <span className={s.label}>Equipment</span>
+          {lootItems.map((eq) => (
+            <div key={eq.id} style={{ display: 'flex', flexDirection: 'column', gap: 2, paddingBlock: 'var(--space-1)' }}>
+              <span style={nameText}>
+                {eq.name} <span className={s.itemMeta}>· {eq.category}
+                  {eq.category === 'weapon' && eq.damageDice ? ` · ${eq.damageDice} ${eq.damageType ?? ''}` : ''}
+                  {eq.category === 'armor' && eq.baseAc !== undefined ? ` · ${eq.armorType ?? ''} AC ${eq.baseAc}` : ''}
+                </span>
+              </span>
+              {eq.description && <span className={s.itemMeta}>{eq.description}</span>}
+            </div>
+          ))}
+        </div>
+      )}
+
       {gmControls && (
         <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
           <Button

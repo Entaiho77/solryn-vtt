@@ -26,6 +26,14 @@ export type AbilityId = (typeof ABILITY_IDS)[number];
 /** The standard array, highest → lowest. */
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8];
 
+/** 5e AC from a worn armor's type + base value (shields are added separately, +2):
+ *  light = base + DEX, medium = base + min(DEX, 2), heavy = base flat. */
+function armorAcFromType(armorType: string, baseAc: number, dexMod: number): number {
+  if (armorType === 'heavy') return baseAc;
+  if (armorType === 'medium') return baseAc + Math.min(dexMod, 2);
+  return baseAc + dexMod; // light (no cap)
+}
+
 const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 /** Damage notation with an ability modifier folded in (no "+0"). */
 const diceWithMod = (dice: string, mod: number) => (mod === 0 ? dice : `${dice}${signed(mod)}`);
@@ -147,16 +155,25 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
 
   const pb = cls ? proficiencyBonus(cls, level) : 2;
 
+  // Equipped inventory (Phase B2): looted armor sets the AC base, a shield adds +2, weapons add
+  // to the attack list. Everything is derived here from the raw `equipped` flag — nothing stored.
+  const equippedItems = Object.values(character.inventory ?? {}).filter((it) => it.equipped);
+  const invArmor = equippedItems.find((it) => it.category === 'armor' && it.armorType !== 'shield');
+  const invShield = equippedItems.some((it) => it.category === 'armor' && it.armorType === 'shield');
+
   const armor = system.equipment.armor.find((a) => a.id === character.play.equippedArmorId);
   const featAcBonus = ownedFeats.reduce((sum, f) => sum + (f.effects?.acBonus ?? 0), 0);
-  // AC: worn armor wins; else Unarmored Defense (Barbarian/Monk) = 10 + DEX + class ability;
-  // else plain 10 + DEX. Armored classes (Fighter) are unaffected. Plus any flat feat AC bonus.
-  const ac =
-    (armor?.baseAc != null
-      ? armorClass(mods.DEX, { baseAc: armor.baseAc, maxDexBonus: armor.maxDexBonus })
-      : cls?.unarmoredDefense
-        ? 10 + mods.DEX + (mods[cls.unarmoredDefense.ability] ?? 0)
-        : armorClass(mods.DEX)) + featAcBonus;
+  // Base AC priority: equipped inventory armor > built-in worn armor > Unarmored Defense
+  // (Barbarian/Monk) > plain 10 + DEX. A shield (+2) and any flat feat AC bonus stack on top.
+  const baseAc =
+    invArmor?.baseAc != null
+      ? armorAcFromType(invArmor.armorType ?? 'light', invArmor.baseAc, mods.DEX)
+      : armor?.baseAc != null
+        ? armorClass(mods.DEX, { baseAc: armor.baseAc, maxDexBonus: armor.maxDexBonus })
+        : cls?.unarmoredDefense
+          ? 10 + mods.DEX + (mods[cls.unarmoredDefense.ability] ?? 0)
+          : armorClass(mods.DEX);
+  const ac = baseAc + (invShield ? 2 : 0) + featAcBonus;
 
   // Tough (+2 HP/level) and other per-level feat HP fold into the max.
   const featHpPerLevel = ownedFeats.reduce((sum, f) => sum + (f.effects?.hpPerLevel ?? 0), 0);
@@ -192,7 +209,7 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
     return { id: sid, name: sk?.name ?? sid, ability: sk?.attribute, mod: aMod + pb };
   });
 
-  const attacks = character.play.equippedWeaponIds
+  const builtinAttacks = character.play.equippedWeaponIds
     .map((wid) => system.equipment.weapons.find((w) => w.id === wid))
     .filter((w): w is NonNullable<typeof w> => !!w)
     .map((w) => {
@@ -205,6 +222,29 @@ export function pcDerived(system: SystemDefinition, character: Character): PcDer
         attackBonus: attackBonus(aMod, pb), // proficient with class weapons
       };
     });
+
+  // Equipped inventory weapons (Phase B2) join the attack list exactly like class weapons. Phase B2
+  // assumes proficiency with all equipped weapons (pb applies). A versatile weapon shows its
+  // two-handed dice only when nothing else occupies the off-hand (no other weapon and no shield).
+  const equippedWeapons = equippedItems.filter((it) => it.category === 'weapon');
+  const inventoryAttacks = equippedWeapons.map((w) => {
+    const isFinesse = !!w.properties?.includes('finesse');
+    const isRanged = w.weaponRange === 'ranged';
+    // STR for non-finesse melee; DEX for ranged; finesse uses the better of STR/DEX.
+    const aMod = isFinesse ? Math.max(mods.STR, mods.DEX) : isRanged ? mods.DEX : mods.STR;
+    const offHandOccupied = equippedItems.some(
+      (it) => it.id !== w.id && (it.category === 'weapon' || (it.category === 'armor' && it.armorType === 'shield')),
+    );
+    const twoHandedVersatile = !!w.properties?.includes('versatile') && !!w.versatileDamageDice && !offHandOccupied;
+    const dice = twoHandedVersatile ? w.versatileDamageDice! : (w.damageDice ?? '');
+    return {
+      name: w.name,
+      dice: diceWithMod(dice, aMod),
+      damageType: w.damageType ?? '',
+      attackBonus: attackBonus(aMod, pb),
+    };
+  });
+  const attacks = [...builtinAttacks, ...inventoryAttacks];
 
   // Rogue Sneak Attack dice at this level (from the class table counters; SRD key snake_case).
   const sneakAttackDice = cls?.levels.find((l) => l.level === level)?.counters?.sneak_attack;

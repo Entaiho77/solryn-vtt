@@ -167,13 +167,41 @@ export async function giveInventoryItem(
   return id;
 }
 
-/** Toggle an inventory item's equipped flag (Phase B2 consumes it). */
+/** Toggle an inventory item's equipped flag (raw single-leaf write). */
 export function setInventoryEquipped(
   characterId: string,
   itemId: string,
   equipped: boolean,
 ): Promise<void> {
   return writeValue(`characters/${characterId}/inventory/${itemId}/equipped`, equipped);
+}
+
+/**
+ * Equip (or unequip) an inventory item, enforcing 5e slot limits (Phase B2): equipping a body
+ * armor auto-unequips any other equipped body armor, and equipping a shield auto-unequips any
+ * other equipped shield — one of each at a time (shields still stack with armor). Weapons are
+ * unrestricted. Atomic multi-path write so the swap can't leave two armors equipped.
+ */
+export function equipInventoryItem(
+  characterId: string,
+  inventory: Record<string, InventoryItem>,
+  itemId: string,
+  equip: boolean,
+): Promise<void> {
+  const target = inventory[itemId];
+  const updates: Record<string, unknown> = {
+    [`/characters/${characterId}/inventory/${itemId}/equipped`]: equip,
+  };
+  if (equip && target?.category === 'armor') {
+    const isShield = target.armorType === 'shield';
+    for (const other of Object.values(inventory)) {
+      if (other.id === itemId || other.category !== 'armor' || !other.equipped) continue;
+      if ((other.armorType === 'shield') === isShield) {
+        updates[`/characters/${characterId}/inventory/${other.id}/equipped`] = false;
+      }
+    }
+  }
+  return multiUpdate(updates);
 }
 
 /** Discard an inventory item. */

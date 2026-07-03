@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { removeInventoryItem, restoreSpellSlots, setConcentrating, setFeatResource, setInventoryEquipped, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
+import { equipInventoryItem, removeInventoryItem, restoreSpellSlots, setConcentrating, setFeatResource, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
 import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
@@ -588,7 +588,7 @@ export function Dnd5eSheet({
                         <strong>{item.name}</strong> <span className={s.itemMeta}>· {item.category}{item.equipped ? ' · equipped' : ''}</span>
                       </span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
-                        <Button size="sm" variant="ghost" onClick={() => void setInventoryEquipped(character.id, item.id, !item.equipped)}>
+                        <Button size="sm" variant="ghost" onClick={() => void equipInventoryItem(character.id, character.inventory ?? {}, item.id, !item.equipped)}>
                           {item.equipped ? 'Unequip' : 'Equip'}
                         </Button>
                         <Button size="sm" variant="ghost" onClick={() => void removeInventoryItem(character.id, item.id)} aria-label={`Discard ${item.name}`}>
