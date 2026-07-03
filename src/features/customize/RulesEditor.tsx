@@ -24,9 +24,21 @@ const STARTING_HP: { id: StartingHp; label: string }[] = [
   { id: 'rolled', label: 'Rolled' },
 ];
 
+// Ready-made custom formulas shown in the "How do I write a formula?" helper. Clicking one fills
+// the input (and the live preview updates immediately) so the DM has a starting point.
+const CUSTOM_EXAMPLES: { formula: string; desc: string }[] = [
+  { formula: '(MAX_DICE + MOD) * 2', desc: 'Max all dice, then double everything' },
+  { formula: '(ROLL_DICE + MOD) * 2', desc: 'Roll normally, then double everything' },
+  { formula: 'MAX_DICE + ROLL_DICE + MOD', desc: 'Add max roll to actual roll, plus modifier' },
+  { formula: 'ROLL_DICE * 3', desc: 'Triple the dice roll (ignore modifier)' },
+];
+
 const label: React.CSSProperties = { display: 'flex', flexDirection: 'column', gap: 2, fontSize: 'var(--text-sm)', color: 'var(--text-muted)' };
 const radio: React.CSSProperties = { display: 'flex', alignItems: 'flex-start', gap: 6, cursor: 'pointer' };
 const toggleRow: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', paddingBlock: 2 };
+const mono: React.CSSProperties = { fontFamily: 'ui-monospace, monospace' };
+const helpToggle: React.CSSProperties = { background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', cursor: 'pointer', fontSize: 'var(--text-sm)', textAlign: 'left', width: 'fit-content' };
+const exampleBtn: React.CSSProperties = { ...mono, background: 'none', border: '1px solid var(--border-hairline)', borderRadius: 4, padding: '1px 6px', cursor: 'pointer', color: 'var(--accent-teal)', fontSize: 'var(--text-sm)', whiteSpace: 'nowrap' };
 
 /** A labelled on/off toggle. */
 function Toggle({ title, desc, value, onChange }: { title: string; desc?: string; value: boolean; onChange: (v: boolean) => void }) {
@@ -51,6 +63,8 @@ export function RulesEditor({ uid }: { uid: string }) {
   const [draft, setDraft] = useState<CampaignRules | null>(null);
   // House rules edited as an ordered array; persisted back to an object-keyed map.
   const [houseRules, setHouseRules] = useState<HouseRule[]>([]);
+  // Collapsed-by-default "How do I write a formula?" helper under the custom crit formula.
+  const [helpOpen, setHelpOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && draft === null) {
@@ -132,9 +146,6 @@ export function RulesEditor({ uid }: { uid: string }) {
               onChange={(e) => patch({ critFormulaCustom: e.target.value })}
             />
             <span className={d.hint}>
-              Variables: <strong>ROLL_DICE</strong> (actual dice roll), <strong>MAX_DICE</strong> (maximum possible dice roll), <strong>MOD</strong> (flat modifier).
-            </span>
-            <span className={d.hint}>
               Example with 1d6+2:{' '}
               {preview == null ? (
                 <span style={{ color: 'var(--accent-red)' }}>Invalid formula — check your syntax and variables.</span>
@@ -142,6 +153,43 @@ export function RulesEditor({ uid }: { uid: string }) {
                 <strong>{Math.max(0, Math.round(preview))}</strong>
               )}
             </span>
+
+            {/* Collapsible "how to" — collapsed by default. */}
+            <button type="button" onClick={() => setHelpOpen((o) => !o)} aria-expanded={helpOpen} style={helpToggle}>
+              {helpOpen ? '▼' : '▶'} How do I write a formula?
+            </button>
+            {helpOpen && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', paddingLeft: 'var(--space-2)' }}>
+                <div>
+                  <p className={d.hint} style={{ margin: 0 }}><strong>Variables you can use:</strong></p>
+                  <ul style={{ margin: '2px 0 0', paddingLeft: '1.1rem' }}>
+                    <li className={d.hint}><span style={mono}>ROLL_DICE</span> — what you actually rolled on the dice (e.g. 4 on a d6)</li>
+                    <li className={d.hint}><span style={mono}>MAX_DICE</span> — the highest number the dice could roll (e.g. 6 on a d6)</li>
+                    <li className={d.hint}><span style={mono}>MOD</span> — the flat bonus added to damage (e.g. +2 in 1d6+2)</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className={d.hint} style={{ margin: 0 }}><strong>Example formulas</strong> (click one to use it):</p>
+                  <table style={{ borderCollapse: 'collapse', width: '100%', marginTop: 4 }}>
+                    <tbody>
+                      {CUSTOM_EXAMPLES.map((ex) => (
+                        <tr key={ex.formula}>
+                          <td style={{ padding: '2px 8px 2px 0', verticalAlign: 'top' }}>
+                            <button type="button" style={exampleBtn} onClick={() => patch({ critFormulaCustom: ex.formula })}>
+                              {ex.formula}
+                            </button>
+                          </td>
+                          <td className={d.itemMeta} style={{ padding: '2px 0', verticalAlign: 'top' }}>{ex.desc}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className={d.hint} style={{ margin: 0 }}>
+                  If your formula has an error, the roller automatically falls back to double dice so combat never breaks.
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
