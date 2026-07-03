@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { CreatureSave, SystemDefinition } from '../../../engine/schema';
+import type { BestiaryEntry, CreatureSave, SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
 import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
@@ -70,6 +70,7 @@ export function MonsterStatCard({
   system,
   name,
   creatureId,
+  extraEntries,
   token,
   gameId,
   uid,
@@ -79,6 +80,9 @@ export function MonsterStatCard({
   system: SystemDefinition;
   name: string;
   creatureId?: string;
+  /** Non-SRD stat blocks (e.g. game homebrew) resolved identically to SRD entries; searched
+   *  first so a homebrew id/name wins. Keeps the combat resolver free of any SRD/homebrew branch. */
+  extraEntries?: BestiaryEntry[];
   token?: Token;
   gameId?: string;
   /** Present in GM context → enables the bestiary token-art upload (per-GM global). */
@@ -100,9 +104,12 @@ export function MonsterStatCard({
   const [saveAbility, setSaveAbility] = useState<AbilityId>('dex');
   const [saveDc, setSaveDc] = useState(13);
   const [checkMode, setCheckMode] = useState<'save' | 'check'>('save');
+  // Search homebrew (extraEntries) before the SRD bestiary so a homebrew id/name wins; both are
+  // plain BestiaryEntry, so everything below (attacks, abilities, resolver) is source-agnostic.
+  const pool = extraEntries && extraEntries.length ? [...extraEntries, ...system.bestiary] : system.bestiary;
   const entry =
-    (creatureId ? system.bestiary.find((b) => b.id === creatureId) : undefined) ??
-    system.bestiary.find((b) => b.name === name);
+    (creatureId ? pool.find((b) => b.id === creatureId) : undefined) ??
+    pool.find((b) => b.name === name);
 
   // Prefill the save panel from the creature's first save-based ability (e.g. a breath
   // weapon's DC + ability), so the GM doesn't retype it. Still editable afterward.

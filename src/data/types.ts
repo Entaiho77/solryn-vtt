@@ -7,6 +7,7 @@
  */
 
 import type { RollEntry } from './rollLog';
+import type { HomebrewMonster } from './homebrew';
 
 export type Role = 'gm' | 'player';
 
@@ -59,6 +60,10 @@ export interface Game {
   /** 5e: level a newly-built character starts at. When >1, the sheet chains the level-up flow up
    *  to this level right after creation (new player joining mid-campaign, replacement PC). */
   startingLevel?: number;
+  /** GM-authored homebrew content for this game (Phase A: monsters). Object-keyed maps. */
+  homebrew?: {
+    monsters?: Record<string, HomebrewMonster>;
+  };
 }
 
 /** One entry in the initiative order. */

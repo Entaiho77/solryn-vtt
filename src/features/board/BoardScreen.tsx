@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, Game, Role, Token } from '../../data/types';
+import { homebrewToBestiaryEntry } from '../../data/homebrew';
 import {
   addToken,
   grabPartyToken,
@@ -182,6 +183,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   // Toggle a token as the current target (click the same one again to clear).
   const onSetTarget = (id: string) => setTargetId((cur) => (cur === id ? null : id));
 
+  // Homebrew monsters (game-synced) as BestiaryEntry[], so the stat card + combat resolver read
+  // them exactly like SRD creatures — no special-casing in the resolver.
+  const homebrewEntries = useMemo(
+    () => Object.values(game.homebrew?.monsters ?? {}).map(homebrewToBestiaryEntry),
+    [game.homebrew?.monsters],
+  );
+
   // GM-selected creature → the merged stat card in a proper right-side slide-out panel
   // (same chrome/width as the Add-creature drawer). Other tokens keep the floating TokenCard.
   const showMonsterPanel = !!selected && selected.kind === 'creature' && canSeeMonsterStats(role);
@@ -194,6 +202,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               system={system}
               name={selected.name}
               creatureId={selected.creatureId}
+              extraEntries={homebrewEntries}
               token={selected}
               gameId={gameId}
               uid={uid}
@@ -298,6 +307,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         content: (
           <AddCreatureDrawer
             system={system}
+            game={game}
             gameId={gameId}
             uid={uid}
             activeMap={activeMap}

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { SystemDefinition } from '../../../engine/schema';
-import type { MapDef, Token } from '../../../data/types';
+import type { Game, MapDef, Token } from '../../../data/types';
 import { addToken } from '../../../data/board';
 import {
   deleteCreature,
@@ -8,9 +8,16 @@ import {
   setSavedCreatureImage,
   useMyCreatures,
 } from '../../../data/creatures';
+import {
+  deleteHomebrewMonster,
+  homebrewList,
+  homebrewToBestiaryEntry,
+  type HomebrewMonster,
+} from '../../../data/homebrew';
 import { firstFreeCell, gridDimensions } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
 import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
+import { HomebrewMonsterForm } from './HomebrewMonsterForm';
 import s from './drawers.module.css';
 
 const CREATURE_COLOR = '#b05a5a';
@@ -20,18 +27,23 @@ type Category = 'creature' | 'trap';
 
 export function AddCreatureDrawer({
   system,
+  game,
   gameId,
   uid,
   activeMap,
   tokens,
 }: {
   system: SystemDefinition;
+  game: Game;
   gameId: string;
   uid: string;
   activeMap?: MapDef;
   tokens: Token[];
 }) {
-  const [tab, setTab] = useState<'bestiary' | 'mine' | 'build'>('bestiary');
+  const [tab, setTab] = useState<'bestiary' | 'homebrew' | 'mine' | 'build'>('bestiary');
+  // Homebrew form modal: undefined = closed, null = new monster, monster = editing that one.
+  const [hbForm, setHbForm] = useState<HomebrewMonster | null | undefined>(undefined);
+  const homebrewMonsters = homebrewList(game.homebrew?.monsters);
   const [category, setCategory] = useState<Category>('creature');
   const [name, setName] = useState('');
   const [hp, setHp] = useState('5');
@@ -82,19 +94,20 @@ export function AddCreatureDrawer({
     setDmgFilter('');
   };
 
-  if (!activeMap) return <p className={s.hint}>Add a map first, then place creatures.</p>;
-
-  const { cols, rows } = gridDimensions(activeMap.width, activeMap.height, activeMap.gridSize);
-  const center = { col: Math.floor(cols / 2), row: Math.floor(rows / 2) };
+  // Spawning needs a map; managing homebrew (create/edit) does not. So we no longer early-return
+  // the whole drawer without a map — place() is a no-op instead, and the spawn tabs show a hint.
+  const grid = activeMap ? gridDimensions(activeMap.width, activeMap.height, activeMap.gridSize) : null;
+  const center = grid ? { col: Math.floor(grid.cols / 2), row: Math.floor(grid.rows / 2) } : null;
 
   function place(token: Omit<Token, 'id' | 'mapId' | 'col' | 'row'>) {
+    if (!activeMap || !grid || !center) return;
     // Drop onto the nearest free cell to centre so multiple creatures don't pile up on
     // one square (which would hide all but the topmost). Click-cycling is the safety net
     // if a rapid burst places faster than tokens sync back.
     const occupied = new Set(
       tokens.filter((t) => t.mapId === activeMap!.id).map((t) => `${t.col},${t.row}`),
     );
-    const cell = firstFreeCell(occupied, center.col, center.row, cols, rows);
+    const cell = firstFreeCell(occupied, center.col, center.row, grid.cols, grid.rows);
     void addToken(gameId, { ...token, mapId: activeMap!.id, col: cell.col, row: cell.row });
   }
 
@@ -139,16 +152,68 @@ export function AddCreatureDrawer({
   return (
     <div>
       <div className={s.tabs}>
-        {(['bestiary', 'mine', 'build'] as const).map((t) => (
+        {(['bestiary', 'homebrew', 'mine', 'build'] as const).map((t) => (
           <button
             key={t}
             className={`${s.tab} ${tab === t ? s.tabActive : ''}`}
             onClick={() => setTab(t)}
           >
-            {t === 'bestiary' ? 'Bestiary' : t === 'mine' ? 'Saved' : 'Build'}
+            {t === 'bestiary' ? 'Bestiary' : t === 'homebrew' ? 'Homebrew' : t === 'mine' ? 'Saved' : 'Build'}
           </button>
         ))}
       </div>
+
+      {!activeMap && (
+        <p className={s.hint}>Add a map to place creatures on the board.{tab === 'homebrew' ? ' You can still create and edit homebrew monsters below.' : ''}</p>
+      )}
+
+      {tab === 'homebrew' && (
+        <div className={s.section}>
+          <Button onClick={() => setHbForm(null)} full>+ New Monster</Button>
+          <div className={s.list}>
+            {homebrewMonsters.length === 0 && (
+              <p className={s.hint}>No homebrew monsters yet. Create one, then spawn it like any bestiary creature.</p>
+            )}
+            {homebrewMonsters.map((hb) => (
+              <div key={hb.id} className={s.item}>
+                <span className={s.itemMain}>
+                  <span className={s.itemName}>{hb.name}</span>
+                  <span className={s.itemMeta}>
+                    {hb.size} {hb.type} · HP {hb.hp} · AC {hb.ac} · CR {hb.cr}
+                  </span>
+                </span>
+                <button className={s.place} onClick={() => setHbForm(hb)}>Edit</button>
+                <button
+                  className={s.place}
+                  onClick={() => {
+                    const entry = homebrewToBestiaryEntry(hb);
+                    placeStatBlock(entry.name, 'creature', entry.stats, entry.id);
+                  }}
+                >
+                  Spawn
+                </button>
+                <button
+                  className={s.place}
+                  style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
+                  onClick={() => void deleteHomebrewMonster(gameId, hb.id)}
+                  aria-label={`Delete ${hb.name}`}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {hbForm !== undefined && (
+        <HomebrewMonsterForm
+          gameId={gameId}
+          uid={uid}
+          existing={hbForm ?? undefined}
+          onClose={() => setHbForm(undefined)}
+        />
+      )}
 
       {tab === 'bestiary' && (
         <div className={s.section}>

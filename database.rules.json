@@ -35,6 +35,10 @@
         "activeMapId": { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
         "maps":        { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
 
+        "homebrew": {
+          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'"
+        },
+
         "members": {
           "$memberId": {
             ".write": "auth != null && ((auth.uid === $memberId && (!newData.exists() || newData.child('role').val() === 'player')) || root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm')"
