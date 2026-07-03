@@ -111,16 +111,20 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     ? (activeMap.customSquare ?? activeType?.perSquare ?? { value: 1, unit: 'sq' })
     : undefined;
 
-  // Auto-create the player's character token on the active map (once per map). Skipped on
-  // travel-scale maps, where the party rides a single shared token instead.
+  // Auto-create the player's character token on the active map (once per character per map).
+  // Skipped on travel-scale maps, where the party rides a single shared token instead.
+  // The guard key is characterId+mapId (not just mapId): a replacement/re-created character on a
+  // still-mounted board must still get its own token — keying by map alone left the map "attempted"
+  // from the previous character and silently skipped the new one.
   const attempted = useRef<Set<string>>(new Set());
   useEffect(() => {
     if (role !== 'player' || !character || !activeMap || partyScale) return;
     const exists = tokens.some(
       (t) => t.characterId === character.id && t.mapId === activeMap.id,
     );
-    if (exists || attempted.current.has(activeMap.id)) return;
-    attempted.current.add(activeMap.id);
+    const key = `${character.id}:${activeMap.id}`;
+    if (exists || attempted.current.has(key)) return;
+    attempted.current.add(key);
     const count = tokens.filter(
       (t) => t.kind === 'character' && t.mapId === activeMap.id,
     ).length;
