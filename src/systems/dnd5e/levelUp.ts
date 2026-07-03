@@ -1,13 +1,28 @@
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { classLevel } from '../../engine/rules';
+import type { StartingHp } from '../../data/homebrew';
+import { classLevel, rollDice, type Rng } from '../../engine/rules';
 import { pcDerived } from './character';
 
 const dieSize = (hitDie: string): number => parseInt(hitDie.replace(/^d/i, ''), 10);
 
-/** 5e "take the average" HP gained per level after the first: ⌊hitDie/2⌋ + 1 + CON mod. */
-export function hpGainForLevel(hitDie: string, conMod: number): number {
-  return Math.floor(dieSize(hitDie) / 2) + 1 + conMod;
+/**
+ * HP gained for a level, by the campaign's starting-HP method (default average). A level always
+ * gains at least 1 HP before the CON mod (5e floor).
+ *   - max     : hit-die max + CON mod
+ *   - average : ⌊hitDie/2⌋ + 1 + CON mod (the standard "take the average")
+ *   - rolled  : 1dHit + CON mod (rng injectable for tests)
+ */
+export function hpGainForLevel(
+  hitDie: string,
+  conMod: number,
+  method: StartingHp = 'average',
+  rng?: Rng,
+): number {
+  const size = dieSize(hitDie);
+  const base =
+    method === 'max' ? size : method === 'rolled' ? rollDice(`1d${size}`, rng).total : Math.floor(size / 2) + 1;
+  return base + conMod;
 }
 
 /** Wizards add two spells to their spellbook each level; other prepared casters add none. */
@@ -51,8 +66,13 @@ function slotsRecord(row: { spellSlots?: number[] } | undefined): Record<number,
   return out;
 }
 
-/** Describe the level-up from the character's current level to the next. */
-export function levelUpSummary(system: SystemDefinition, character: Character): LevelUpSummary {
+/** Describe the level-up from the character's current level to the next. `startingHp` (a campaign
+ *  rule) selects the HP-gain method; it defaults to average when the rules aren't supplied. */
+export function levelUpSummary(
+  system: SystemDefinition,
+  character: Character,
+  startingHp: StartingHp = 'average',
+): LevelUpSummary {
   const cls = system.classes?.find((c) => c.id === character.definition.classId);
   const fromLevel = character.play.level;
   if (!cls) {
@@ -95,7 +115,7 @@ export function levelUpSummary(system: SystemDefinition, character: Character): 
     toLevel,
     className: cls.name,
     newFeatures: nextRow.features ?? [],
-    hpGain: hpGainForLevel(cls.hitDie, d.mods.CON ?? 0),
+    hpGain: hpGainForLevel(cls.hitDie, d.mods.CON ?? 0, startingHp),
     isAsi: !!nextRow.abilityScoreImprovement,
     subclassPending: cls.subclassLevel === toLevel,
     counterChanges,

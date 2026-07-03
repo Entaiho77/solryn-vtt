@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, Game, Role, Token } from '../../data/types';
-import { homebrewList, homebrewToBestiaryEntry, useLibrary } from '../../data/homebrew';
+import { homebrewList, homebrewToBestiaryEntry, useLibrary, useRules } from '../../data/homebrew';
 import {
   addToken,
   grabPartyToken,
@@ -53,6 +53,8 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   const gmUid = game.gmUid ?? game.createdBy;
   // The GM's account-wide library (monsters/equipment/player options), read live for this session.
   const { library } = useLibrary(gmUid);
+  // Campaign rules (crit threshold/formula, starting HP, feats toggle, house rules), resolved.
+  const { rules } = useRules(gmUid);
   const tokens: Token[] = Object.values(game.tokens ?? {});
   const activeMap = game.activeMapId ? game.maps?.[game.activeMapId] : undefined;
 
@@ -227,6 +229,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               gameId={gameId}
               uid={uid}
               target={target}
+              rules={rules}
               onClose={() => setSelectedId(null)}
             />
           ),
@@ -245,7 +248,14 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     glyph: '✉',
     content: <ChatDrawer gameId={gameId} uid={uid} displayName={myName} members={game.members} />,
   };
-  const rules: BarItem = { kind: 'drawer', id: 'rules', label: 'Rules', short: 'Rules', glyph: 'ℹ', content: <RulesDrawer system={system} /> };
+  const rulesBar: BarItem = {
+    kind: 'drawer',
+    id: 'rules',
+    label: 'Rules',
+    short: 'Rules',
+    glyph: 'ℹ',
+    content: <RulesDrawer system={system} rules={rules} role={role} gameId={gameId} />,
+  };
 
   const initiative: BarItem = {
     kind: 'drawer',
@@ -253,7 +263,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     label: 'Initiative',
     short: 'Initiative',
     glyph: '⚔',
-    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} homebrewEntries={homebrewEntries} />,
+    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} homebrewEntries={homebrewEntries} rules={rules} />,
   };
 
   // Distance measuring is available to everyone — players measure their own movement/range.
@@ -295,13 +305,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
   const left: BarItem[] =
     role === 'gm'
-      ? [initiative, dice, log, chat, rules]
+      ? [initiative, dice, log, chat, rulesBar]
       : [
           dice,
           log,
           chat,
           { kind: 'drawer', id: 'notes', label: 'Notes', short: 'Notes', glyph: '✎', content: <NotesDrawer uid={uid} gameId={gameId} /> },
-          rules,
+          rulesBar,
         ];
 
   let right: BarItem[] = [];
@@ -388,7 +398,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
         content:
           isClassAndLevel(system) ? (
-            <Dnd5eSheet system={system} character={character} target={target} startingLevel={game.startingLevel} />
+            <Dnd5eSheet system={system} character={character} target={target} startingLevel={game.startingLevel} rules={rules} />
           ) : (
             <CharacterQuickView
               system={system}

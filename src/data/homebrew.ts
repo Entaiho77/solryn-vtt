@@ -8,7 +8,10 @@ import type {
   StatBonus,
   SystemDefinition,
 } from '../engine/schema';
+import type { CritFormula } from '../engine/rules';
 import { newKey, useValue, writeValue } from './realtime';
+
+export type { CritFormula };
 
 /**
  * Per-game homebrew monsters (Phase A). Stored at games/$gameId/homebrew/monsters/$monsterId —
@@ -338,12 +341,75 @@ export interface Library {
   monsters?: Record<string, HomebrewMonster>;
   equipment?: Record<string, HomebrewEquipment>;
   playerOptions?: HomebrewPlayerOptions;
+  rules?: Partial<CampaignRules>;
 }
 
 /** Live subscription to a DM's library (real-time, like useGame). Pass null to disable. */
 export function useLibrary(uid: string | null): { library: Library | null; loading: boolean } {
   const { value, loading } = useValue<Library>(uid ? `users/${uid}/library` : null);
   return { library: value, loading };
+}
+
+// --- Campaign rules (Phase D) -----------------------------------------------
+//
+// DM-configured house/campaign rules, stored at users/$uid/library/rules. Some are mechanized (the
+// engine reads them — crit threshold/formula, starting HP, feats toggle); the rest are display-only
+// on the board's Rules panel. resolveRules fills defaults so every consumer gets a complete object.
+
+/** How per-level HP is granted on level-up. */
+export type StartingHp = 'max' | 'average' | 'rolled';
+
+/** A DM-authored narrative rule (display-only, shown on the Rules panel). */
+export interface HouseRule {
+  title: string;
+  description: string;
+}
+
+export interface CampaignRules {
+  /** Lowest natural d20 that crits (default 20; e.g. 19 = crit on 19–20). */
+  critThreshold: number;
+  critFormula: CritFormula;
+  /** Custom crit expression over ROLL_DICE / MAX_DICE / MOD (only when critFormula === 'custom'). */
+  critFormulaCustom?: string;
+  /** Failed death saves needed to die (display-only until death saves are tracked). */
+  deathSaveFailures: number;
+  startingHp: StartingHp;
+  flanking: boolean;
+  multiclassing: boolean;
+  feats: boolean;
+  inspiration: boolean;
+  encumbrance: boolean;
+  /** House rules, object-keyed map (never an array). */
+  houseRules: Record<string, HouseRule>;
+}
+
+export const DEFAULT_RULES: CampaignRules = {
+  critThreshold: 20,
+  critFormula: 'double_dice',
+  deathSaveFailures: 3,
+  startingHp: 'max',
+  flanking: false,
+  multiclassing: false,
+  feats: true,
+  inspiration: true,
+  encumbrance: false,
+  houseRules: {},
+};
+
+/** Fill defaults over a stored (partial) rules record so consumers always get a full object. */
+export function resolveRules(stored: Partial<CampaignRules> | null | undefined): CampaignRules {
+  return { ...DEFAULT_RULES, ...(stored ?? {}), houseRules: stored?.houseRules ?? {} };
+}
+
+/** Overwrite the DM's campaign rules (owner-only). Auto-saved on each change — no Save button. */
+export function saveRules(uid: string, rules: CampaignRules): Promise<void> {
+  return writeValue(`users/${uid}/library/rules`, pruneUndefined({ ...rules }));
+}
+
+/** Live campaign rules for a DM, always resolved to a complete object (defaults filled). */
+export function useRules(uid: string | null): { rules: CampaignRules; loading: boolean } {
+  const { value, loading } = useValue<Partial<CampaignRules>>(uid ? `users/${uid}/library/rules` : null);
+  return { rules: resolveRules(value), loading };
 }
 
 type PlayerOptionKind = 'backgrounds' | 'feats' | 'races' | 'classes';

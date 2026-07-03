@@ -6,6 +6,7 @@ import { ABILITY_IDS, pcDerived } from '../../systems/dnd5e/character';
 import { meetsFeatPrerequisite } from '../../systems/dnd5e/feats';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { computeLevelUp, levelUpSummary, type LevelUpChoices } from '../../systems/dnd5e/levelUp';
+import type { CampaignRules } from '../../data/homebrew';
 import { Modal } from '../../components/ui/Modal';
 import { Button } from '../../components/ui/Button';
 import s from '../board/drawers/drawers.module.css';
@@ -20,13 +21,20 @@ const row: React.CSSProperties = { display: 'flex', alignItems: 'center', justif
 export function LevelUpModal({
   system,
   character,
+  rules,
   onDone,
 }: {
   system: SystemDefinition;
   character: Character;
+  /** Campaign rules — startingHp drives the HP gain; feats === false hides the feat option. */
+  rules?: CampaignRules;
   onDone: () => void;
 }) {
-  const summary = useMemo(() => levelUpSummary(system, character), [system, character]);
+  const featsEnabled = rules?.feats ?? true;
+  const summary = useMemo(
+    () => levelUpSummary(system, character, rules?.startingHp),
+    [system, character, rules?.startingHp],
+  );
   const [asiMode, setAsiMode] = useState<'one' | 'two'>('one');
   const [asiA, setAsiA] = useState<string>('');
   const [asiB, setAsiB] = useState<string>('');
@@ -205,7 +213,7 @@ export function LevelUpModal({
         {/* HP */}
         <div style={row}>
           <span className={s.itemMeta}>Hit points</span>
-          <strong>+{summary.hpGain} (average)</strong>
+          <strong>+{summary.hpGain} ({rules?.startingHp ?? 'average'})</strong>
         </div>
 
         {/* Counter changes */}
@@ -220,14 +228,17 @@ export function LevelUpModal({
         {summary.isAsi && (
           <>
             <span className={s.label}>Ability Score Improvement</span>
-            <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-              <label className={s.itemMeta}>
-                <input type="radio" checked={asiOrFeat === 'asi'} onChange={() => setAsiOrFeat('asi')} /> Ability Score Improvement
-              </label>
-              <label className={s.itemMeta}>
-                <input type="radio" checked={asiOrFeat === 'feat'} onChange={() => setAsiOrFeat('feat')} /> Take a feat
-              </label>
-            </div>
+            {/* Feats can be disabled by a campaign rule — then this level only grants an ASI. */}
+            {featsEnabled && (
+              <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                <label className={s.itemMeta}>
+                  <input type="radio" checked={asiOrFeat === 'asi'} onChange={() => setAsiOrFeat('asi')} /> Ability Score Improvement
+                </label>
+                <label className={s.itemMeta}>
+                  <input type="radio" checked={asiOrFeat === 'feat'} onChange={() => setAsiOrFeat('feat')} /> Take a feat
+                </label>
+              </div>
+            )}
 
             {asiOrFeat === 'asi' ? (
               <>

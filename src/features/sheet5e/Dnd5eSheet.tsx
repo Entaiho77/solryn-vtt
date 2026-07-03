@@ -7,6 +7,7 @@ import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
 import { concentrationOnCast, spellCastLog, spellDamage } from '../../systems/dnd5e/spellCast';
+import type { CampaignRules } from '../../data/homebrew';
 import { LevelUpModal } from './LevelUpModal';
 import { Modal } from '../../components/ui/Modal';
 import { Button } from '../../components/ui/Button';
@@ -52,6 +53,7 @@ export function Dnd5eSheet({
   character,
   target,
   startingLevel,
+  rules,
 }: {
   system: SystemDefinition;
   character: Character;
@@ -60,6 +62,8 @@ export function Dnd5eSheet({
   /** GM-set starting level (5e). When the character is below it with a pending level-up, the sheet
    *  auto-opens the level-up flow and re-arms it each level until the character reaches it. */
   startingLevel?: number;
+  /** Campaign rules (crit threshold/formula for attacks; feats/startingHp for the level-up flow). */
+  rules?: CampaignRules;
 }) {
   const { postRoll } = useRollLog();
   const resolver = getCombatResolver(system);
@@ -102,6 +106,13 @@ export function Dnd5eSheet({
   const attackLabel = (name: string) =>
     usingTarget ? `${character.name} → ${target!.name} — ${name}` : `${character.name} — ${name}`;
 
+  // Campaign crit rules: the effective weapon crit threshold is the lower of the campaign rule and
+  // the character's own (Champion's Improved/Superior Critical), and crit damage uses the campaign
+  // formula. These fall back to standard 5e (nat-20 / double dice) when no rules are supplied.
+  const critThreshold = Math.min(rules?.critThreshold ?? 20, d.critThreshold);
+  const critFormula = rules?.critFormula;
+  const critFormulaCustom = rules?.critFormulaCustom;
+
   // Great Weapon Master / Sharpshooter: −5 to hit, +10 damage when the toggle is on.
   const pa = powerAttack && d.powerAttack ? d.powerAttack : undefined;
   const rollAttack = (atk: (typeof d.attacks)[number]) =>
@@ -113,7 +124,9 @@ export function Dnd5eSheet({
         attackBonus: atk.attackBonus + (pa?.toHit ?? 0),
         targetAc: usingTarget ? target!.ac : targetAc,
         advantage,
-        critThreshold: d.critThreshold, // Champion's Improved/Superior Critical (weapon attacks only)
+        critThreshold,
+        ...(critFormula ? { critFormula } : {}),
+        ...(critFormulaCustom ? { critFormulaCustom } : {}),
         // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
         ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
       }).logText,
@@ -155,6 +168,10 @@ export function Dnd5eSheet({
         attackBonus: d.spell!.attackBonus,
         dice: damageAt(sp, slotLevel),
         resolver,
+        // Spell attacks crit on the campaign threshold (Champion doesn't apply) with the campaign formula.
+        critThreshold: rules?.critThreshold ?? 20,
+        ...(critFormula ? { critFormula } : {}),
+        ...(critFormulaCustom ? { critFormulaCustom } : {}),
       }),
     );
     // Concentration: casting a concentration spell breaks any previous one (logged) and becomes
@@ -229,7 +246,7 @@ export function Dnd5eSheet({
         </div>
       )}
       {levelUpOpen && character.play.levelUpPending && (
-        <LevelUpModal system={system} character={character} onDone={onLevelUpDone} />
+        <LevelUpModal system={system} character={character} rules={rules} onDone={onLevelUpDone} />
       )}
 
       {/* Tabs (casters only). Non-casters see the plain combat sheet, no tabs. */}

@@ -1,5 +1,5 @@
 import type { Dnd5eSpell } from '../../engine/schema';
-import { describeRoll, rollDice, type CombatResolver, type Rng } from '../../engine/rules';
+import { describeRoll, rollDice, type CombatResolver, type CritFormula, type Rng } from '../../engine/rules';
 
 /**
  * Damage dice for a spell cast at a given slot level. Cantrips scale by the caster's level
@@ -50,6 +50,10 @@ export interface CastContext {
   /** Damage dice already resolved for the chosen slot/level (null = non-damage spell). */
   dice: string | null;
   resolver: CombatResolver;
+  /** Campaign crit rules for attack spells (threshold + damage formula). */
+  critThreshold?: number;
+  critFormula?: CritFormula;
+  critFormulaCustom?: string;
   /** Injectable RNG for deterministic tests. */
   rng?: Rng;
 }
@@ -74,6 +78,9 @@ export function spellCastLog(sp: Dnd5eSpell, ctx: CastContext): string {
       attackBonus: ctx.attackBonus,
       targetAc: ctx.targetAc,
       advantage: ctx.advantage,
+      ...(ctx.critThreshold != null ? { critThreshold: ctx.critThreshold } : {}),
+      ...(ctx.critFormula ? { critFormula: ctx.critFormula } : {}),
+      ...(ctx.critFormulaCustom ? { critFormulaCustom: ctx.critFormulaCustom } : {}),
       rng: ctx.rng,
     }).logText;
   }

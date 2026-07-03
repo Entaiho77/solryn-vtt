@@ -30,6 +30,7 @@ import { HomebrewBackgroundForm } from '../board/drawers/HomebrewBackgroundForm'
 import { HomebrewFeatForm } from '../board/drawers/HomebrewFeatForm';
 import { HomebrewRaceForm } from '../board/drawers/HomebrewRaceForm';
 import { HomebrewClassForm } from '../board/drawers/HomebrewClassForm';
+import { RulesEditor } from './RulesEditor';
 import d from '../board/drawers/drawers.module.css';
 import s from './CustomizePage.module.css';
 
@@ -222,12 +223,7 @@ export function CustomizePage() {
           </>
         )}
 
-        {tab === 'rules' && (
-          <div className={s.placeholder}>
-            <p><strong>Rules</strong></p>
-            <p>Coming soon — homebrew rules override system.</p>
-          </div>
-        )}
+        {tab === 'rules' && <RulesEditor uid={uid} />}
       </main>
 
       {monsterForm !== undefined && (

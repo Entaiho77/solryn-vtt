@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { BestiaryEntry, CreatureSave, SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
-import type { HomebrewEquipment } from '../../../data/homebrew';
+import type { CampaignRules, HomebrewEquipment } from '../../../data/homebrew';
 import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
@@ -78,6 +78,7 @@ export function MonsterStatCard({
   gameId,
   uid,
   target,
+  rules,
   onClose,
 }: {
   system: SystemDefinition;
@@ -95,6 +96,8 @@ export function MonsterStatCard({
   /** Current click-to-target token (5e), set via the board right-click menu. Attacks read its
    *  AC when set; otherwise the manual Target AC below is the fallback. */
   target?: { id: string; name: string; ac?: number };
+  /** Campaign crit rules (threshold + damage formula) applied to this creature's attacks. */
+  rules?: CampaignRules;
   onClose?: () => void;
 }) {
   const { postRoll } = useRollLog();
@@ -143,6 +146,9 @@ export function MonsterStatCard({
         attackBonus,
         targetAc: rollToHit ? (usingTarget ? target!.ac : targetAc) : undefined,
         advantage: rollToHit ? advantage : undefined,
+        critThreshold: rules?.critThreshold ?? 20,
+        ...(rules?.critFormula ? { critFormula: rules.critFormula } : {}),
+        ...(rules?.critFormulaCustom ? { critFormulaCustom: rules.critFormulaCustom } : {}),
       }).logText,
     );
   // Abilities (breath weapons, traits) are NOT to-hit attacks — roll plain damage, never

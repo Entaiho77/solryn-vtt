@@ -1,6 +1,18 @@
 import type { SystemDefinition } from '../schema';
 import type { CombatModeId } from '../schema';
 import { parseDice, rollDice, rollHighest, rollLowest, type RollResult, type Rng } from './dice';
+import { evalFormula } from './formula';
+
+/**
+ * How critical-hit damage is computed (a campaign rule). Each variant maps to the homebrew Rules
+ * setting; `custom` evaluates a DM-authored expression over ROLL_DICE / MAX_DICE / MOD.
+ */
+export type CritFormula =
+  | 'double_dice'
+  | 'max_plus_roll'
+  | 'roll_then_double'
+  | 'max_then_double'
+  | 'custom';
 
 /**
  * The combat-resolution seam. Every attack flows through a system-selected `CombatResolver`
@@ -46,6 +58,10 @@ export interface AttackInput {
   bonusDamage?: { dice: string; label: string };
   /** Lowest natural d20 that scores a crit (default 20; Champion 19 at L3, 18 at L15). */
   critThreshold?: number;
+  /** How crit damage is computed (campaign rule; default double_dice = standard 5e). */
+  critFormula?: CritFormula;
+  /** Custom crit expression (used only when critFormula === 'custom'). */
+  critFormulaCustom?: string;
   /** Injectable RNG for deterministic tests. */
   rng?: Rng;
 }
@@ -89,12 +105,64 @@ function rollD20Face(advantage: AttackInput['advantage'], rng?: Rng): number {
   return rollDice('d20', rng).total;
 }
 
-/** Crit damage: double the DICE (count ×2), add the flat modifier once (standard 5e). */
-function rollCritDamage(dice: string, rng?: Rng): RollResult {
+/** A damage roll with a display breakdown; crit rolls carry a formula-specific breakdown string. */
+interface DamageRoll {
+  total: number;
+  rolls: number[];
+  modifier: number;
+  breakdown?: string;
+}
+
+/**
+ * Crit damage per the campaign's crit formula, using these variables of the base dice term NdX+M:
+ *   ROLL_DICE = a normal roll of NdX (no modifier), MAX_DICE = N×X, MOD = M.
+ * - double_dice     : roll 2N dice, add MOD once (standard 5e — the default)
+ * - max_plus_roll   : MAX_DICE + ROLL_DICE + MOD ("max one set of dice, roll the other")
+ * - roll_then_double: (ROLL_DICE + MOD) × 2
+ * - max_then_double : (MAX_DICE + MOD) × 2
+ * - custom          : evaluate the DM's expression over ROLL_DICE/MAX_DICE/MOD; on any failure
+ *                     (bad syntax / unknown var / non-finite) fall back to double_dice and warn.
+ */
+function critDamage(dice: string, formula: CritFormula, custom: string | undefined, rng?: Rng): DamageRoll {
   const p = parseDice(dice);
-  if (!p) return rollDice(dice, rng);
-  const doubled = `${p.count * 2}d${p.sides}${p.modifier ? sign(p.modifier) : ''}`;
-  return rollDice(doubled, rng);
+  if (!p) {
+    const r = rollDice(dice, rng);
+    return { total: r.total, rolls: r.rolls, modifier: r.modifier, breakdown: `${r.rolls.join('+')}${sign(r.modifier)}` };
+  }
+  const { count, sides, modifier: MOD } = p;
+  const roll1 = rollDice(`${count}d${sides}`, rng); // ROLL_DICE (dice only, no modifier)
+  const ROLL_DICE = roll1.total;
+  const MAX_DICE = count * sides;
+  const maxed = Array.from({ length: count }, () => sides);
+
+  const doubleDice = (): DamageRoll => {
+    const roll2 = rollDice(`${count}d${sides}`, rng);
+    const rolls = [...roll1.rolls, ...roll2.rolls];
+    return { total: roll1.total + roll2.total + MOD, rolls, modifier: MOD, breakdown: `${rolls.join('+')}${sign(MOD)}` };
+  };
+
+  switch (formula) {
+    case 'max_plus_roll': {
+      const rolls = [...maxed, ...roll1.rolls];
+      return { total: MAX_DICE + ROLL_DICE + MOD, rolls, modifier: MOD, breakdown: `${rolls.join('+')}${sign(MOD)}` };
+    }
+    case 'roll_then_double':
+      return { total: (ROLL_DICE + MOD) * 2, rolls: roll1.rolls, modifier: MOD, breakdown: `(${roll1.rolls.join('+')}${sign(MOD)})×2` };
+    case 'max_then_double':
+      return { total: (MAX_DICE + MOD) * 2, rolls: maxed, modifier: MOD, breakdown: `(${maxed.join('+')}${sign(MOD)})×2` };
+    case 'custom': {
+      const v = custom ? evalFormula(custom, { ROLL_DICE, MAX_DICE, MOD }) : null;
+      if (v == null) {
+        console.warn(`[crit] invalid custom formula "${custom}" — falling back to double dice`);
+        return doubleDice();
+      }
+      const total = Math.max(0, Math.round(v));
+      return { total, rolls: roll1.rolls, modifier: MOD, breakdown: `${custom} = ${total}` };
+    }
+    case 'double_dice':
+    default:
+      return doubleDice();
+  }
 }
 
 /**
@@ -103,7 +171,7 @@ function rollCritDamage(dice: string, rng?: Rng): RollResult {
  * 1 → auto-miss. Otherwise total ≥ AC hits. Solryn's autoHitVsDr is unaffected.
  */
 const attackRollVsAc: CombatResolver = {
-  resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, bonusDamage, critThreshold = 20, rng }) {
+  resolveAttack({ label, dice, damageType, attackBonus = 0, targetAc = 10, advantage, bonusDamage, critThreshold = 20, critFormula = 'double_dice', critFormulaCustom, rng }) {
     const face = rollD20Face(advantage, rng); // raw natural value of the kept die
     const attackRoll = face + attackBonus;
     const advTag =
@@ -122,14 +190,18 @@ const attackRollVsAc: CombatResolver = {
     if (!hit) {
       return { hit: false, attackRoll, rolls: [], modifier: 0, damage: 0, logText: `${label}: ${toHit} vs AC ${targetAc} — MISS` };
     }
-    const dmg = crit ? rollCritDamage(dice, rng) : rollDice(dice, rng);
-    // Bonus damage dice (Sneak Attack) also double on a crit, per 5e.
-    const bonus = bonusDamage ? (crit ? rollCritDamage(bonusDamage.dice, rng) : rollDice(bonusDamage.dice, rng)) : null;
+    const dmg: DamageRoll = crit ? critDamage(dice, critFormula, critFormulaCustom, rng) : rollDice(dice, rng);
+    // Bonus damage dice (Sneak Attack) also crit alongside the weapon dice, per 5e.
+    const bonus: DamageRoll | null = bonusDamage
+      ? crit
+        ? critDamage(bonusDamage.dice, critFormula, critFormulaCustom, rng)
+        : rollDice(bonusDamage.dice, rng)
+      : null;
     const total = dmg.total + (bonus?.total ?? 0);
     const head = crit ? `natural ${face} — CRIT` : `${toHit} vs AC ${targetAc} — HIT`;
     // Individual dice + modifier, e.g. [3,4] +2 → "3+4+2" (empty modifier for 0), matching the
     // describeRoll breakdown style. Only crits show this; a normal hit stays total-only.
-    const breakdown = (r: RollResult) => `${r.rolls.join('+')}${sign(r.modifier)}`;
+    const breakdown = (r: DamageRoll) => r.breakdown ?? `${r.rolls.join('+')}${sign(r.modifier)}`;
     const dmgText = crit
       ? bonus
         ? `${breakdown(dmg)}${typeStr} + ${breakdown(bonus)} ${bonusDamage!.label} = ${total} damage`
