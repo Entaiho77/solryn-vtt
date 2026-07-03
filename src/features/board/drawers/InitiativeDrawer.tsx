@@ -3,7 +3,7 @@ import type { Combatant, Game, MapDef } from '../../../data/types';
 import type { SystemDefinition } from '../../../engine/schema';
 import { endCombat, removeCombatantsByToken, rollInitiative, startCombat } from '../../../data/combat';
 import { removeToken } from '../../../data/board';
-import { homebrewToBestiaryEntry } from '../../../data/homebrew';
+import type { BestiaryEntry } from '../../../engine/schema';
 import { Button } from '../../../components/ui/Button';
 import { ConfirmDialog } from '../../../components/ui/ConfirmDialog';
 import { MonsterStatCard } from './MonsterStatCard';
@@ -15,20 +15,21 @@ export function InitiativeDrawer({
   activeMap,
   system,
   uid,
+  homebrewEntries,
 }: {
   gameId: string;
   game: Game;
   activeMap?: MapDef;
   system: SystemDefinition;
   uid?: string;
+  /** The GM's library monsters as BestiaryEntry[], so the stat card resolves them like SRD. */
+  homebrewEntries: BestiaryEntry[];
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [card, setCard] = useState<{ name: string; creatureId?: string } | null>(null);
   // Pending bulk-clear awaiting confirmation (replaces window.confirm).
   const [confirm, setConfirm] = useState<{ message: string; onConfirm: () => void } | null>(null);
   const init = game.initiative;
-  // Homebrew stat blocks as BestiaryEntry[], so the initiative stat card resolves them like SRD.
-  const homebrewEntries = Object.values(game.homebrew?.monsters ?? {}).map(homebrewToBestiaryEntry);
   const creatures = activeMap
     ? Object.values(game.tokens ?? {}).filter(
         (t) => t.kind === 'creature' && t.mapId === activeMap.id,

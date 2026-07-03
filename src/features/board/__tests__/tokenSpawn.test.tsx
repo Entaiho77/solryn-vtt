@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import type { Character, Game } from '../../../data/types';
 import { dnd5eSystem } from '../../../systems/dnd5e/index';
 
@@ -38,13 +39,13 @@ describe('player character token auto-spawn', () => {
   beforeEach(() => addToken.mockClear());
 
   it('spawns a token when a new player lands on the board', async () => {
-    render(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charA')} />);
+    render(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charA')} />, { wrapper: MemoryRouter });
     await settle();
     expect(spawnedIds()).toContain('charA');
   });
 
   it('spawns a token for a replacement character on a still-mounted board (regression)', async () => {
-    const { rerender } = render(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charA')} />);
+    const { rerender } = render(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charA')} />, { wrapper: MemoryRouter });
     await settle();
     // The player's character is replaced (new id) without the board unmounting.
     rerender(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charB')} />);
@@ -55,7 +56,7 @@ describe('player character token auto-spawn', () => {
 
   it('does not double-spawn the same character while the write is in flight', async () => {
     // tokens stays empty (write not yet synced back) across a re-render with the same character.
-    const { rerender } = render(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charA')} />);
+    const { rerender } = render(<BoardScreen system={dnd5eSystem} game={game} role="player" uid="u1" character={character('charA')} />, { wrapper: MemoryRouter });
     await settle();
     rerender(<BoardScreen system={dnd5eSystem} game={{ ...game }} role="player" uid="u1" character={character('charA')} />);
     await settle();

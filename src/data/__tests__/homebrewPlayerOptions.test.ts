@@ -25,7 +25,6 @@ const race: HomebrewRace = {
   abilityBonuses: { str: 2, con: 1 },
   darkvision: 60,
   traits: { t0: { name: 'Stone Skin', description: '+1 AC while unarmored.' } },
-  createdBy: 'gm',
 };
 
 const klass: HomebrewClass = {
@@ -47,7 +46,6 @@ const klass: HomebrewClass = {
     a: { level: 1, name: 'Nature Bond', description: 'Commune with the wild.' },
     b: { level: 3, name: 'Guardian Form', description: 'Assume a beastly shape.' },
   },
-  createdBy: 'gm',
 };
 
 const feat: HomebrewFeat = {
@@ -58,7 +56,6 @@ const feat: HomebrewFeat = {
   prerequisiteScore: 13,
   abilityBonus: { con: 1 },
   displayOnly: false,
-  createdBy: 'gm',
 };
 
 const background: HomebrewBackground = {
@@ -69,7 +66,6 @@ const background: HomebrewBackground = {
   toolLanguageProficiencies: "Cartographer's tools",
   featureName: 'Trail Sense',
   featureDescription: 'You always know true north.',
-  createdBy: 'gm',
 };
 
 const options: HomebrewPlayerOptions = {

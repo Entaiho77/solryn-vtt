@@ -24,11 +24,11 @@ const checkGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: '
 /** GM form to create/edit a homebrew equipment item. Weapon/armor fields render only for that
  *  category; on Save, only the relevant fields are persisted (undefineds pruned before write). */
 export function HomebrewEquipmentForm({
-  gameId,
+  uid,
   existing,
   onClose,
 }: {
-  gameId: string;
+  uid: string;
   existing?: HomebrewEquipment;
   onClose: () => void;
 }) {
@@ -80,7 +80,7 @@ export function HomebrewEquipmentForm({
         : {}),
     };
     try {
-      await saveHomebrewEquipment(gameId, equipment);
+      await saveHomebrewEquipment(uid, equipment);
       onClose();
     } catch {
       setBusy(false);

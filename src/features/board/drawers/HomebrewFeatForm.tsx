@@ -11,12 +11,10 @@ const check: React.CSSProperties = { display: 'flex', alignItems: 'center', gap:
 /** GM form to create/edit a homebrew feat: optional ability prerequisite, spellcasting requirement,
  *  a fixed ability bonus, and a display-only flag for narrative feats. */
 export function HomebrewFeatForm({
-  gameId,
   uid,
   existing,
   onClose,
 }: {
-  gameId: string;
   uid: string;
   existing?: HomebrewFeat;
   onClose: () => void;
@@ -47,10 +45,9 @@ export function HomebrewFeatForm({
       ...(requiresSpellcasting ? { requiresSpellcasting: true } : {}),
       ...(hasBonus ? { abilityBonus: { [bonusAbility]: Number(bonusAmount) || 0 } } : {}),
       displayOnly,
-      createdBy: existing?.createdBy ?? uid,
     };
     try {
-      await saveHomebrewFeat(gameId, feat);
+      await saveHomebrewFeat(uid, feat);
       onClose();
     } catch {
       setBusy(false);

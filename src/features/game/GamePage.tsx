@@ -4,7 +4,7 @@ import { useAuth } from '../../auth/AuthProvider';
 import { useValue } from '../../data/realtime';
 import { createCharacter, setLevelUpPending, useGameCharacter } from '../../data/characters';
 import type { Game } from '../../data/types';
-import { withHomebrewOptions } from '../../data/homebrew';
+import { useLibrary, withHomebrewOptions } from '../../data/homebrew';
 import { roleOf } from '../../permissions';
 import { getSystem, isClassAndLevel } from '../../systems/registry';
 import { Button } from '../../components/ui/Button';
@@ -27,6 +27,8 @@ export function GamePage() {
     gameId ?? null,
     user?.uid ?? null,
   );
+  // The GM's account-wide library, read live for homebrew player options (races/classes/etc.).
+  const { library } = useLibrary(game?.gmUid ?? game?.createdBy ?? null);
   const [showSettings, setShowSettings] = useState(false);
 
   if (loading) return <div className={styles.center}>Loading game…</div>;
@@ -57,7 +59,7 @@ export function GamePage() {
   // the system so the builder, level-up, pcDerived, and sheet see them alongside SRD content.
   const baseSystem = getSystem(game.systemId);
   const system = baseSystem
-    ? withHomebrewOptions(baseSystem, game.homebrew?.playerOptions)
+    ? withHomebrewOptions(baseSystem, library?.playerOptions)
     : undefined;
 
   // Player without a completed character → the builder. Otherwise → the board.

@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './auth/AuthProvider';
 import { AuthPage } from './features/auth/AuthPage';
 import { LobbyPage } from './features/lobby/LobbyPage';
 import { GamePage } from './features/game/GamePage';
+import { CustomizePage } from './features/customize/CustomizePage';
 
 function FullScreenMessage({ children }: { children: string }) {
   return (
@@ -31,6 +32,14 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={user ? <LobbyPage /> : <AuthPage />} />
+      <Route
+        path="/library"
+        element={user ? <CustomizePage /> : <Navigate to="/" replace />}
+      />
+      <Route
+        path="/game/:gameId/customize"
+        element={user ? <CustomizePage /> : <Navigate to="/" replace />}
+      />
       <Route
         path="/game/:gameId"
         element={user ? <GamePage /> : <Navigate to="/" replace />}

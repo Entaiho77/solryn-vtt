@@ -36,21 +36,19 @@ const label: React.CSSProperties = { display: 'flex', flexDirection: 'column', g
 const checkGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '2px 12px' };
 
 /**
- * GM form to create/edit a homebrew monster. Repeatable sections (attacks, traits, actions,
+ * DM form to create/edit a library monster. Repeatable sections (attacks, traits, actions,
  * legendary actions) are edited as rows and stored as object-keyed maps. On Save, writes to
- * games/$gameId/homebrew/monsters (GM-only per the security rules).
+ * users/$uid/library/monsters (owner-only per the security rules).
  */
 export function HomebrewMonsterForm({
-  gameId,
   uid,
   existing,
   equipment,
   onClose,
 }: {
-  gameId: string;
   uid: string;
   existing?: HomebrewMonster;
-  /** The game's homebrew equipment library, selectable as loot on this monster. */
+  /** The DM's library equipment, selectable as loot on this monster. */
   equipment: HomebrewEquipment[];
   onClose: () => void;
 }) {
@@ -107,10 +105,9 @@ export function HomebrewMonsterForm({
       actions: toMap(actions),
       legendaryActions: toMap(legendary),
       ...(loot.length ? { loot: Object.fromEntries(loot.map((id) => [id, true as const])) } : {}),
-      createdBy: uid,
     };
     try {
-      await saveHomebrewMonster(gameId, monster);
+      await saveHomebrewMonster(uid, monster);
       onClose();
     } catch {
       setBusy(false);

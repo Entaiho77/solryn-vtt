@@ -21,7 +21,6 @@ function hb(over: Partial<HomebrewMonster> = {}): HomebrewMonster {
     traits: { t0: { name: 'Ambusher', description: 'Advantage on attacks in the first round.' } },
     actions: { c0: { name: 'Multiattack', description: 'Two claw attacks.' } },
     legendaryActions: { l0: { name: 'Pounce', description: 'Move up to half speed.' } },
-    createdBy: 'gm-uid',
     ...over,
   };
 }

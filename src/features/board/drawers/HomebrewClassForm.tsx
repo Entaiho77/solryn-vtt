@@ -29,13 +29,11 @@ type FeatureRow = { level: string; name: string; description: string };
 /** GM form to create/edit a homebrew class: hit die, saves, proficiencies, optional spellcasting
  *  and unarmored defense, and level features. Converts to a full 1–20 ClassDefinition on use. */
 export function HomebrewClassForm({
-  gameId,
   uid,
   skills,
   existing,
   onClose,
 }: {
-  gameId: string;
   uid: string;
   skills: { id: string; name: string }[];
   existing?: HomebrewClass;
@@ -112,10 +110,9 @@ export function HomebrewClassForm({
       subclassLevel: Number(subclassLevel) || 0,
       startingEquipment: startingEquipment.trim(),
       features: featureMap,
-      createdBy: existing?.createdBy ?? uid,
     };
     try {
-      await saveHomebrewClass(gameId, cls);
+      await saveHomebrewClass(uid, cls);
       onClose();
     } catch {
       setBusy(false);

@@ -3,7 +3,11 @@
     "users": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
-        ".write": "auth != null && auth.uid === $uid"
+        ".write": "auth != null && auth.uid === $uid",
+        "library": {
+          ".read": "auth != null",
+          ".write": "auth != null && auth.uid === $uid"
+        }
       }
     },
 
@@ -34,10 +38,6 @@
         "inviteCode":  { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
         "activeMapId": { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
         "maps":        { ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'" },
-
-        "homebrew": {
-          ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm'"
-        },
 
         "members": {
           "$memberId": {

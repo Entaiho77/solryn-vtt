@@ -8,7 +8,7 @@ import type {
   StatBonus,
   SystemDefinition,
 } from '../engine/schema';
-import { newKey, writeValue } from './realtime';
+import { newKey, useValue, writeValue } from './realtime';
 
 /**
  * Per-game homebrew monsters (Phase A). Stored at games/$gameId/homebrew/monsters/$monsterId —
@@ -65,25 +65,24 @@ export interface HomebrewMonster {
   actions: Record<string, HomebrewFeature>;
   legendaryActions: Record<string, HomebrewFeature>;
   /** Homebrew-equipment ids carried as loot (object-keyed set — never an array). Distributed to
-   *  players from a spawned instance's stat card (Phase B1). */
+   *  players from a spawned instance's stat card (Phase B1). Equipment ids reference the DM's
+   *  account-wide library. */
   loot?: Record<string, true>;
-  /** GM (game owner) uid that authored it. */
-  createdBy: string;
 }
 
-/** Create or overwrite a homebrew monster (GM-only, enforced by the security rules). */
+/** Create or overwrite a monster in the DM's library (owner-only, enforced by the security rules). */
 export async function saveHomebrewMonster(
-  gameId: string,
+  uid: string,
   monster: Omit<HomebrewMonster, 'id'> & { id?: string },
 ): Promise<string> {
-  const id = monster.id ?? newKey(`games/${gameId}/homebrew/monsters`);
-  await writeValue(`games/${gameId}/homebrew/monsters/${id}`, { ...monster, id });
+  const id = monster.id ?? newKey(`users/${uid}/library/monsters`);
+  await writeValue(`users/${uid}/library/monsters/${id}`, pruneUndefined({ ...monster, id }));
   return id;
 }
 
-/** Delete a homebrew monster. Already-spawned tokens keep their own stats (see the converter). */
-export function deleteHomebrewMonster(gameId: string, id: string): Promise<void> {
-  return writeValue(`games/${gameId}/homebrew/monsters/${id}`, null);
+/** Delete a library monster. Already-spawned tokens keep their own stats (see the converter). */
+export function deleteHomebrewMonster(uid: string, id: string): Promise<void> {
+  return writeValue(`users/${uid}/library/monsters/${id}`, null);
 }
 
 /** Homebrew monsters for a game as an array (from the game-synced object map). */
@@ -99,7 +98,7 @@ export type EquipmentCategory = 'weapon' | 'armor' | 'tool' | 'other';
 export type WeaponRange = 'melee' | 'ranged';
 export type ArmorType = 'light' | 'medium' | 'heavy' | 'shield';
 
-/** GM-authored equipment, stored at games/$gameId/homebrew/equipment/$id. Weapon/armor fields are
+/** DM-authored equipment, stored at users/$uid/library/equipment/$id. Weapon/armor fields are
  *  present only for those categories; Phase B2 turns them into mechanical effects. */
 export interface HomebrewEquipment {
   id: string;
@@ -136,21 +135,21 @@ function pruneUndefined<T extends Record<string, unknown>>(obj: T): T {
   return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)) as T;
 }
 
-/** Create or overwrite a homebrew equipment item (GM-only, enforced by the security rules). */
+/** Create or overwrite an equipment item in the DM's library (owner-only per the security rules). */
 export async function saveHomebrewEquipment(
-  gameId: string,
+  uid: string,
   equipment: Omit<HomebrewEquipment, 'id'> & { id?: string },
 ): Promise<string> {
-  const id = equipment.id ?? newKey(`games/${gameId}/homebrew/equipment`);
-  await writeValue(`games/${gameId}/homebrew/equipment/${id}`, pruneUndefined({ ...equipment, id }));
+  const id = equipment.id ?? newKey(`users/${uid}/library/equipment`);
+  await writeValue(`users/${uid}/library/equipment/${id}`, pruneUndefined({ ...equipment, id }));
   return id;
 }
 
-export function deleteHomebrewEquipment(gameId: string, id: string): Promise<void> {
-  return writeValue(`games/${gameId}/homebrew/equipment/${id}`, null);
+export function deleteHomebrewEquipment(uid: string, id: string): Promise<void> {
+  return writeValue(`users/${uid}/library/equipment/${id}`, null);
 }
 
-/** Homebrew equipment for a game as a sorted array (from the game-synced object map). */
+/** Homebrew equipment as a sorted array (from the library's object map). */
 export function equipmentList(
   equipment: Record<string, HomebrewEquipment> | undefined,
 ): HomebrewEquipment[] {
@@ -257,7 +256,6 @@ export interface HomebrewBackground {
   toolLanguageProficiencies: string;
   featureName: string;
   featureDescription: string;
-  createdBy: string;
 }
 
 export interface HomebrewFeat {
@@ -272,7 +270,6 @@ export interface HomebrewFeat {
   abilityBonus?: Record<string, number>;
   /** True if the feat's effects are narrative only (no mechanical bonus). */
   displayOnly: boolean;
-  createdBy: string;
 }
 
 export type HomebrewSize = 'Small' | 'Medium' | 'Large';
@@ -290,7 +287,6 @@ export interface HomebrewRace {
   darkvision?: number;
   /** Racial traits, object-keyed map (never an array). */
   traits: Record<string, HomebrewTrait>;
-  createdBy: string;
 }
 
 export type HitDie = 6 | 8 | 10 | 12;
@@ -323,10 +319,9 @@ export interface HomebrewClass {
   startingEquipment: string;
   /** Level features, object-keyed map (never an array). */
   features: Record<string, HomebrewClassFeature>;
-  createdBy: string;
 }
 
-/** The four homebrew player-option maps, as stored on the Game object. */
+/** The four homebrew player-option maps, stored under the DM's library. */
 export interface HomebrewPlayerOptions {
   backgrounds?: Record<string, HomebrewBackground>;
   feats?: Record<string, HomebrewFeat>;
@@ -334,47 +329,64 @@ export interface HomebrewPlayerOptions {
   classes?: Record<string, HomebrewClass>;
 }
 
+/**
+ * A DM's account-wide library (users/$uid/library) — homebrew available across all their games.
+ * Object-keyed maps throughout (never arrays). Owned/written by the DM; a game's members read it
+ * live during a session for player options, equipment details, and monster stat blocks.
+ */
+export interface Library {
+  monsters?: Record<string, HomebrewMonster>;
+  equipment?: Record<string, HomebrewEquipment>;
+  playerOptions?: HomebrewPlayerOptions;
+}
+
+/** Live subscription to a DM's library (real-time, like useGame). Pass null to disable. */
+export function useLibrary(uid: string | null): { library: Library | null; loading: boolean } {
+  const { value, loading } = useValue<Library>(uid ? `users/${uid}/library` : null);
+  return { library: value, loading };
+}
+
 type PlayerOptionKind = 'backgrounds' | 'feats' | 'races' | 'classes';
 
-const optionPath = (gameId: string, kind: PlayerOptionKind) =>
-  `games/${gameId}/homebrew/playerOptions/${kind}`;
+const optionPath = (uid: string, kind: PlayerOptionKind) =>
+  `users/${uid}/library/playerOptions/${kind}`;
 
 async function saveOption<T extends { id?: string }>(
-  gameId: string,
+  uid: string,
   kind: PlayerOptionKind,
   option: T,
 ): Promise<string> {
-  const id = option.id ?? newKey(optionPath(gameId, kind));
-  await writeValue(`${optionPath(gameId, kind)}/${id}`, pruneUndefined({ ...option, id }));
+  const id = option.id ?? newKey(optionPath(uid, kind));
+  await writeValue(`${optionPath(uid, kind)}/${id}`, pruneUndefined({ ...option, id }));
   return id;
 }
 
-const deleteOption = (gameId: string, kind: PlayerOptionKind, id: string): Promise<void> =>
-  writeValue(`${optionPath(gameId, kind)}/${id}`, null);
+const deleteOption = (uid: string, kind: PlayerOptionKind, id: string): Promise<void> =>
+  writeValue(`${optionPath(uid, kind)}/${id}`, null);
 
 const sortedList = <T extends { name: string }>(map: Record<string, T> | undefined): T[] =>
   Object.values(map ?? {}).sort((a, b) => a.name.localeCompare(b.name));
 
-// --- CRUD (GM-only, enforced by the security rules) ---
+// --- CRUD (owner-only, enforced by the security rules) ---
 
-export const saveHomebrewBackground = (gameId: string, bg: Omit<HomebrewBackground, 'id'> & { id?: string }) =>
-  saveOption(gameId, 'backgrounds', bg);
-export const deleteHomebrewBackground = (gameId: string, id: string) => deleteOption(gameId, 'backgrounds', id);
+export const saveHomebrewBackground = (uid: string, bg: Omit<HomebrewBackground, 'id'> & { id?: string }) =>
+  saveOption(uid, 'backgrounds', bg);
+export const deleteHomebrewBackground = (uid: string, id: string) => deleteOption(uid, 'backgrounds', id);
 export const backgroundOptionList = (m: Record<string, HomebrewBackground> | undefined) => sortedList(m);
 
-export const saveHomebrewFeat = (gameId: string, feat: Omit<HomebrewFeat, 'id'> & { id?: string }) =>
-  saveOption(gameId, 'feats', feat);
-export const deleteHomebrewFeat = (gameId: string, id: string) => deleteOption(gameId, 'feats', id);
+export const saveHomebrewFeat = (uid: string, feat: Omit<HomebrewFeat, 'id'> & { id?: string }) =>
+  saveOption(uid, 'feats', feat);
+export const deleteHomebrewFeat = (uid: string, id: string) => deleteOption(uid, 'feats', id);
 export const featOptionList = (m: Record<string, HomebrewFeat> | undefined) => sortedList(m);
 
-export const saveHomebrewRace = (gameId: string, race: Omit<HomebrewRace, 'id'> & { id?: string }) =>
-  saveOption(gameId, 'races', race);
-export const deleteHomebrewRace = (gameId: string, id: string) => deleteOption(gameId, 'races', id);
+export const saveHomebrewRace = (uid: string, race: Omit<HomebrewRace, 'id'> & { id?: string }) =>
+  saveOption(uid, 'races', race);
+export const deleteHomebrewRace = (uid: string, id: string) => deleteOption(uid, 'races', id);
 export const raceOptionList = (m: Record<string, HomebrewRace> | undefined) => sortedList(m);
 
-export const saveHomebrewClass = (gameId: string, cls: Omit<HomebrewClass, 'id'> & { id?: string }) =>
-  saveOption(gameId, 'classes', cls);
-export const deleteHomebrewClass = (gameId: string, id: string) => deleteOption(gameId, 'classes', id);
+export const saveHomebrewClass = (uid: string, cls: Omit<HomebrewClass, 'id'> & { id?: string }) =>
+  saveOption(uid, 'classes', cls);
+export const deleteHomebrewClass = (uid: string, id: string) => deleteOption(uid, 'classes', id);
 export const classOptionList = (m: Record<string, HomebrewClass> | undefined) => sortedList(m);
 
 // --- Converters (homebrew shape → SRD engine shape) ---

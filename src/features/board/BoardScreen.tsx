@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, Game, Role, Token } from '../../data/types';
-import { homebrewToBestiaryEntry } from '../../data/homebrew';
+import { homebrewList, homebrewToBestiaryEntry, useLibrary } from '../../data/homebrew';
 import {
   addToken,
   grabPartyToken,
@@ -47,7 +48,11 @@ interface BoardScreenProps {
 }
 
 export function BoardScreen({ system, game, role, uid, character }: BoardScreenProps) {
+  const navigate = useNavigate();
   const gameId = game.id;
+  const gmUid = game.gmUid ?? game.createdBy;
+  // The GM's account-wide library (monsters/equipment/player options), read live for this session.
+  const { library } = useLibrary(gmUid);
   const tokens: Token[] = Object.values(game.tokens ?? {});
   const activeMap = game.activeMapId ? game.maps?.[game.activeMapId] : undefined;
 
@@ -187,11 +192,12 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   // Toggle a token as the current target (click the same one again to clear).
   const onSetTarget = (id: string) => setTargetId((cur) => (cur === id ? null : id));
 
-  // Homebrew monsters (game-synced) as BestiaryEntry[], so the stat card + combat resolver read
-  // them exactly like SRD creatures — no special-casing in the resolver.
+  // Library monsters (from the GM's account) as BestiaryEntry[], so the stat card + combat resolver
+  // read them exactly like SRD creatures — no special-casing in the resolver.
+  const libraryMonsters = useMemo(() => homebrewList(library?.monsters), [library?.monsters]);
   const homebrewEntries = useMemo(
-    () => Object.values(game.homebrew?.monsters ?? {}).map(homebrewToBestiaryEntry),
-    [game.homebrew?.monsters],
+    () => libraryMonsters.map(homebrewToBestiaryEntry),
+    [libraryMonsters],
   );
 
   // GM-selected creature → the merged stat card in a proper right-side slide-out panel
@@ -200,12 +206,12 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   // The homebrew loot the selected spawned monster carries, resolved from the game's equipment
   // library (drives the GM "Distribute Loot" button on the stat card).
   const selectedLoot = useMemo(() => {
-    const hb = selected?.creatureId ? game.homebrew?.monsters?.[selected.creatureId] : undefined;
-    const eq = game.homebrew?.equipment ?? {};
+    const hb = selected?.creatureId ? library?.monsters?.[selected.creatureId] : undefined;
+    const eq = library?.equipment ?? {};
     return Object.keys(hb?.loot ?? {})
       .map((id) => eq[id])
       .filter((x): x is NonNullable<typeof x> => !!x);
-  }, [selected?.creatureId, game.homebrew?.monsters, game.homebrew?.equipment]);
+  }, [selected?.creatureId, library?.monsters, library?.equipment]);
   const monsterPanel =
     showMonsterPanel && selected
       ? {
@@ -247,7 +253,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     label: 'Initiative',
     short: 'Initiative',
     glyph: '⚔',
-    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} />,
+    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} homebrewEntries={homebrewEntries} />,
   };
 
   // Distance measuring is available to everyone — players measure their own movement/range.
@@ -321,13 +327,21 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         content: (
           <AddCreatureDrawer
             system={system}
-            game={game}
+            homebrewMonsters={libraryMonsters}
             gameId={gameId}
             uid={uid}
             activeMap={activeMap}
             tokens={tokens}
           />
         ),
+      },
+      {
+        kind: 'action',
+        id: 'library',
+        label: 'Open my library',
+        short: 'Library',
+        glyph: '📖',
+        onClick: () => navigate(`/game/${gameId}/customize`),
       },
       { kind: 'divider', id: 'd2' },
       {

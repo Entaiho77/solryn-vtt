@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthProvider';
 import { joinGameByCode, useUserGames } from '../../data/games';
 import type { Game } from '../../data/types';
+import { roleOf } from '../../permissions';
 import { Avatar } from '../../components/ui/Avatar';
 import { Button } from '../../components/ui/Button';
 import { TextField } from '../../components/ui/TextField';
@@ -62,7 +63,10 @@ export function LobbyPage() {
       <main className={styles.content}>
         <div className={styles.sectionHead}>
           <h1 className={styles.h1}>Your games</h1>
-          <Button onClick={() => setShowCreate(true)}>+ Create game</Button>
+          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+            <Button variant="secondary" onClick={() => navigate('/library')}>My Library</Button>
+            <Button onClick={() => setShowCreate(true)}>+ Create game</Button>
+          </div>
         </div>
 
         {loading ? (
@@ -78,7 +82,16 @@ export function LobbyPage() {
           <div className={styles.list}>
             {uid &&
               games.map((g) => (
-                <GameRow key={g.id} game={g} uid={uid} onOpen={openGame} />
+                <div key={g.id} style={{ display: 'flex', alignItems: 'stretch', gap: 'var(--space-2)' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <GameRow game={g} uid={uid} onOpen={openGame} />
+                  </div>
+                  {roleOf(g, uid) === 'gm' && (
+                    <Button variant="secondary" size="sm" onClick={() => navigate(`/game/${g.id}/customize`)}>
+                      Library
+                    </Button>
+                  )}
+                </div>
               ))}
           </div>
         )}

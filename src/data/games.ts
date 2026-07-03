@@ -42,6 +42,7 @@ export async function createGame(params: {
     systemColor: system.color,
     inviteCode,
     createdBy: params.owner.uid,
+    gmUid: params.owner.uid,
     createdAt: now,
     members: {
       [params.owner.uid]: {

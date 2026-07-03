@@ -7,7 +7,9 @@
  */
 
 import type { RollEntry } from './rollLog';
-import type { HomebrewEquipment, HomebrewMonster, HomebrewPlayerOptions, InventoryItem } from './homebrew';
+import type { InventoryItem } from './homebrew';
+
+export type { Library } from './homebrew';
 
 export type Role = 'gm' | 'player';
 
@@ -40,6 +42,9 @@ export interface Game {
   systemColor: string;
   inviteCode: string;
   createdBy: string;
+  /** The GM (owner) uid. Set at creation (= createdBy); the board and builder use it to read the
+   *  GM's account-wide library (users/$gmUid/library) for homebrew content during a session. */
+  gmUid?: string;
   createdAt: number;
   members: Record<string, GameMember>;
 
@@ -60,14 +65,6 @@ export interface Game {
   /** 5e: level a newly-built character starts at. When >1, the sheet chains the level-up flow up
    *  to this level right after creation (new player joining mid-campaign, replacement PC). */
   startingLevel?: number;
-  /** GM-authored homebrew content for this game. Object-keyed maps.
-   *  Phase A: monsters. Phase B1: equipment (attachable to monsters as loot).
-   *  Phase C: playerOptions (races/classes/backgrounds/feats for the builder & level-up). */
-  homebrew?: {
-    monsters?: Record<string, HomebrewMonster>;
-    equipment?: Record<string, HomebrewEquipment>;
-    playerOptions?: HomebrewPlayerOptions;
-  };
 }
 
 /** One entry in the initiative order. */

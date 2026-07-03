@@ -20,12 +20,10 @@ type TraitRow = { name: string; description: string };
 /** GM form to create/edit a homebrew race: size/speed, up to six ability bonuses, optional
  *  darkvision, and repeatable named traits. */
 export function HomebrewRaceForm({
-  gameId,
   uid,
   existing,
   onClose,
 }: {
-  gameId: string;
   uid: string;
   existing?: HomebrewRace;
   onClose: () => void;
@@ -77,10 +75,9 @@ export function HomebrewRaceForm({
       abilityBonuses,
       ...(hasDarkvision ? { darkvision: Number(darkvision) || 0 } : {}),
       traits: traitMap,
-      createdBy: existing?.createdBy ?? uid,
     };
     try {
-      await saveHomebrewRace(gameId, race);
+      await saveHomebrewRace(uid, race);
       onClose();
     } catch {
       setBusy(false);

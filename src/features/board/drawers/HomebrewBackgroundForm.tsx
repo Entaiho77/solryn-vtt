@@ -8,13 +8,11 @@ const label: React.CSSProperties = { display: 'flex', flexDirection: 'column', g
 
 /** GM form to create/edit a homebrew background: two skill proficiencies + a narrative feature. */
 export function HomebrewBackgroundForm({
-  gameId,
   uid,
   skills,
   existing,
   onClose,
 }: {
-  gameId: string;
   uid: string;
   skills: { id: string; name: string }[];
   existing?: HomebrewBackground;
@@ -42,10 +40,9 @@ export function HomebrewBackgroundForm({
       toolLanguageProficiencies: toolLang.trim(),
       featureName: featureName.trim(),
       featureDescription: featureDescription.trim(),
-      createdBy: existing?.createdBy ?? uid,
     };
     try {
-      await saveHomebrewBackground(gameId, bg);
+      await saveHomebrewBackground(uid, bg);
       onClose();
     } catch {
       setBusy(false);
