@@ -225,38 +225,39 @@ describe('5e spell slots + caster model', () => {
   });
 });
 
-describe('5e backgrounds (SRD 2014)', () => {
-  it('all 12 backgrounds are present', () => {
-    expect(dnd5eSystem.backgrounds?.length).toBe(12);
+describe('5e backgrounds (SRD 5.1)', () => {
+  it('only the SRD Acolyte background is present', () => {
+    expect(dnd5eSystem.backgrounds?.length).toBe(1);
+    expect(dnd5eSystem.backgrounds?.[0]?.id).toBe('acolyte');
   });
 
-  it('Sage grants Arcana + History (fixed skills)', () => {
-    const sage = dnd5eSystem.backgrounds?.find((b) => b.id === 'sage');
-    expect(sage?.skillProficiencies).toEqual(['arcana', 'history']);
-    expect(sage?.feature?.name).toBe('Researcher');
+  it('Acolyte grants Insight + Religion (fixed skills)', () => {
+    const acolyte = dnd5eSystem.backgrounds?.find((b) => b.id === 'acolyte');
+    expect(acolyte?.skillProficiencies).toEqual(['insight', 'religion']);
+    expect(acolyte?.feature?.name).toBe('Shelter of the Faithful');
   });
 
   it('background skill proficiencies are added to pcDerived, alongside class picks', () => {
-    // Fighter with a chosen class skill (athletics) + Sage background (arcana, history).
+    // Fighter with a chosen class skill (athletics) + Acolyte background (insight, religion).
     const c = classChar('fighter', { STR: 16, DEX: 14, CON: 15, INT: 12, WIS: 12, CHA: 8 }, 1);
     c.definition.chosenSkillIds = ['athletics'];
-    c.definition.backgroundId = 'sage';
+    c.definition.backgroundId = 'acolyte';
     const d = pcDerived(dnd5eSystem, c);
     const ids = d.skills.map((sk) => sk.id).sort();
-    expect(ids).toEqual(['arcana', 'athletics', 'history']);
-    expect(d.backgroundName).toBe('Sage');
-    expect(d.backgroundFeature?.name).toBe('Researcher');
+    expect(ids).toEqual(['athletics', 'insight', 'religion']);
+    expect(d.backgroundName).toBe('Acolyte');
+    expect(d.backgroundFeature?.name).toBe('Shelter of the Faithful');
   });
 
   it('a background skill overlapping a class pick is counted once', () => {
-    // Rogue picks Stealth from its list; Criminal background also grants Stealth.
-    const c = classChar('rogue', { STR: 10, DEX: 16, CON: 12, INT: 12, WIS: 10, CHA: 12 }, 1);
-    c.definition.chosenSkillIds = ['stealth'];
-    c.definition.backgroundId = 'criminal';
+    // Cleric picks Religion from its list; Acolyte background also grants Religion.
+    const c = classChar('cleric', { STR: 10, DEX: 12, CON: 14, INT: 10, WIS: 16, CHA: 12 }, 1);
+    c.definition.chosenSkillIds = ['religion'];
+    c.definition.backgroundId = 'acolyte';
     const d = pcDerived(dnd5eSystem, c);
-    // stealth appears once (deception from Criminal + stealth once).
-    expect(d.skills.filter((sk) => sk.id === 'stealth')).toHaveLength(1);
-    expect(d.skills.map((sk) => sk.id).sort()).toEqual(['deception', 'stealth']);
+    // religion appears once (insight from Acolyte + religion once).
+    expect(d.skills.filter((sk) => sk.id === 'religion')).toHaveLength(1);
+    expect(d.skills.map((sk) => sk.id).sort()).toEqual(['insight', 'religion']);
   });
 });
 

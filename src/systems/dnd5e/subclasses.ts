@@ -44,14 +44,16 @@ export const subclasses: SubclassDefinition[] = [
     ],
   },
   {
-    id: 'circle-of-the-moon',
-    name: 'Circle of the Moon',
+    id: 'circle-of-the-land',
+    name: 'Circle of the Land',
     classId: 'druid',
-    description: 'Druids who master the art of Wild Shape as a fierce combat form.',
+    description: 'Druids whose magic is drawn from a particular kind of land — forest, grassland, desert, and more.',
     levels: [
-      { level: 2, features: ['Combat Wild Shape', 'Circle Forms'] },
-      { level: 10, features: ['Elemental Wild Shape'] },
-      { level: 14, features: ['Thousand Forms'] },
+      { level: 2, features: ['Bonus Cantrip', 'Natural Recovery'] },
+      { level: 3, features: ['Circle Spells'] },
+      { level: 6, features: ["Land's Stride"] },
+      { level: 10, features: ["Nature's Ward"] },
+      { level: 14, features: ["Nature's Sanctuary"] },
     ],
   },
   {
