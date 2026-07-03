@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Character, CharacterPlayState, CharacterSkillState } from './types';
+import type { InventoryItem } from './homebrew';
 import {
   multiUpdate,
   newKey,
@@ -149,6 +150,35 @@ export function setLoadedSpell(
   spellId: string,
 ): Promise<void> {
   return writeValue(`characters/${characterId}/play/loadedSpellId`, spellId);
+}
+
+// --- Inventory (Phase B1: looted homebrew equipment) -------------------------
+// Stored at characters/$id/inventory/$itemId. The owning player may write their own inventory
+// (parent owner rule); the GM may write any character's inventory (the inventory GM-write rule)
+// to distribute loot.
+
+/** Add a (snapshotted) item to a character's inventory. Returns the new inventory-record id. */
+export async function giveInventoryItem(
+  characterId: string,
+  item: Omit<InventoryItem, 'id'>,
+): Promise<string> {
+  const id = newKey(`characters/${characterId}/inventory`);
+  await writeValue(`characters/${characterId}/inventory/${id}`, { ...item, id });
+  return id;
+}
+
+/** Toggle an inventory item's equipped flag (Phase B2 consumes it). */
+export function setInventoryEquipped(
+  characterId: string,
+  itemId: string,
+  equipped: boolean,
+): Promise<void> {
+  return writeValue(`characters/${characterId}/inventory/${itemId}/equipped`, equipped);
+}
+
+/** Discard an inventory item. */
+export function removeInventoryItem(characterId: string, itemId: string): Promise<void> {
+  return writeValue(`characters/${characterId}/inventory/${itemId}`, null);
 }
 
 /** Apply a completed level-up: new core scores, level, refreshed pools, +skill points. */

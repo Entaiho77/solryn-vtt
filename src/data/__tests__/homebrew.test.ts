@@ -3,7 +3,10 @@ import type { SystemDefinition } from '../../engine/schema';
 import { getCombatResolver, type Rng } from '../../engine/rules';
 import {
   crToNumber,
+  equipmentList,
+  equipmentToInventoryItem,
   homebrewToBestiaryEntry,
+  type HomebrewEquipment,
   type HomebrewMonster,
 } from '../homebrew';
 
@@ -112,5 +115,49 @@ describe('homebrew attacks run through the SAME combat resolver as SRD', () => {
     expect(res.hit).toBe(true);
     expect(res.damage).toBe(12);
     expect(res.logText).toContain('HIT');
+  });
+});
+
+function eq(over: Partial<HomebrewEquipment> = {}): HomebrewEquipment {
+  return {
+    id: 'eq1', name: 'Flametongue', category: 'weapon', description: 'A blade wreathed in fire.',
+    weight: 3, value: '5000 gp',
+    damageDice: '1d8', damageType: 'slashing', weaponRange: 'melee',
+    properties: ['versatile'], versatileDamageDice: '1d10',
+    ...over,
+  };
+}
+
+describe('equipmentToInventoryItem (loot snapshot)', () => {
+  it('snapshots the item: references equipmentId, drops the source id, defaults equipped false', () => {
+    const item = equipmentToInventoryItem(eq());
+    expect('id' in item).toBe(false); // record id is assigned on write, not here
+    expect(item.equipmentId).toBe('eq1');
+    expect(item.equipped).toBe(false);
+    expect(item.name).toBe('Flametongue');
+    expect(item.category).toBe('weapon');
+    expect(item.damageDice).toBe('1d8');
+    expect(item.versatileDamageDice).toBe('1d10');
+  });
+
+  it('prunes undefined optional fields (Firebase set() rejects undefined)', () => {
+    const item = equipmentToInventoryItem(
+      eq({ weight: undefined, value: undefined, properties: undefined, versatileDamageDice: undefined }),
+    );
+    for (const [, v] of Object.entries(item)) expect(v).not.toBeUndefined();
+    expect('weight' in item).toBe(false);
+    expect('value' in item).toBe(false);
+    expect('versatileDamageDice' in item).toBe(false);
+  });
+});
+
+describe('equipmentList', () => {
+  it('returns a name-sorted array, tolerating an undefined map', () => {
+    expect(equipmentList(undefined)).toEqual([]);
+    const sorted = equipmentList({
+      b: eq({ id: 'b', name: 'Zither' }),
+      a: eq({ id: 'a', name: 'Amulet', category: 'other' }),
+    });
+    expect(sorted.map((e) => e.name)).toEqual(['Amulet', 'Zither']);
   });
 });

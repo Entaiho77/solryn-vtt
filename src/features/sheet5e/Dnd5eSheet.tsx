@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
 import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
-import { restoreSpellSlots, setConcentrating, setFeatResource, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
+import { removeInventoryItem, restoreSpellSlots, setConcentrating, setFeatResource, setInventoryEquipped, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
 import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
 import { spells as allSpells, getSpellsForClass } from '../../systems/dnd5e/spells';
@@ -572,6 +572,36 @@ export function Dnd5eSheet({
               ))}
             </>
           )}
+
+          {/* Inventory — looted equipment (Phase B1). Equipped toggle is stored for Phase B2 to
+              consume; no mechanical effect yet. Players can discard items. */}
+          {(() => {
+            const items = Object.values(character.inventory ?? {}).sort((a, b) => a.name.localeCompare(b.name));
+            if (items.length === 0) return null;
+            return (
+              <>
+                <span className={s.label}>Inventory</span>
+                {items.map((item) => (
+                  <div key={item.id} style={{ display: 'flex', flexDirection: 'column', gap: 2, paddingBlock: 'var(--space-1)' }}>
+                    <div style={row}>
+                      <span style={bodyText}>
+                        <strong>{item.name}</strong> <span className={s.itemMeta}>· {item.category}{item.equipped ? ' · equipped' : ''}</span>
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+                        <Button size="sm" variant="ghost" onClick={() => void setInventoryEquipped(character.id, item.id, !item.equipped)}>
+                          {item.equipped ? 'Unequip' : 'Equip'}
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={() => void removeInventoryItem(character.id, item.id)} aria-label={`Discard ${item.name}`}>
+                          Discard
+                        </Button>
+                      </span>
+                    </div>
+                    {item.description && <p className={s.hint} style={{ margin: 0 }}>{item.description}</p>}
+                  </div>
+                ))}
+              </>
+            );
+          })()}
         </>
       )}
 

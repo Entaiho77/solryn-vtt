@@ -193,6 +193,15 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   // GM-selected creature → the merged stat card in a proper right-side slide-out panel
   // (same chrome/width as the Add-creature drawer). Other tokens keep the floating TokenCard.
   const showMonsterPanel = !!selected && selected.kind === 'creature' && canSeeMonsterStats(role);
+  // The homebrew loot the selected spawned monster carries, resolved from the game's equipment
+  // library (drives the GM "Distribute Loot" button on the stat card).
+  const selectedLoot = useMemo(() => {
+    const hb = selected?.creatureId ? game.homebrew?.monsters?.[selected.creatureId] : undefined;
+    const eq = game.homebrew?.equipment ?? {};
+    return Object.keys(hb?.loot ?? {})
+      .map((id) => eq[id])
+      .filter((x): x is NonNullable<typeof x> => !!x);
+  }, [selected?.creatureId, game.homebrew?.monsters, game.homebrew?.equipment]);
   const monsterPanel =
     showMonsterPanel && selected
       ? {
@@ -203,6 +212,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               name={selected.name}
               creatureId={selected.creatureId}
               extraEntries={homebrewEntries}
+              lootItems={role === 'gm' ? selectedLoot : undefined}
               token={selected}
               gameId={gameId}
               uid={uid}

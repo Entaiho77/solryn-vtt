@@ -9,15 +9,19 @@ import {
   useMyCreatures,
 } from '../../../data/creatures';
 import {
+  deleteHomebrewEquipment,
   deleteHomebrewMonster,
+  equipmentList,
   homebrewList,
   homebrewToBestiaryEntry,
+  type HomebrewEquipment,
   type HomebrewMonster,
 } from '../../../data/homebrew';
 import { firstFreeCell, gridDimensions } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
 import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import { HomebrewMonsterForm } from './HomebrewMonsterForm';
+import { HomebrewEquipmentForm } from './HomebrewEquipmentForm';
 import s from './drawers.module.css';
 
 const CREATURE_COLOR = '#b05a5a';
@@ -41,9 +45,13 @@ export function AddCreatureDrawer({
   tokens: Token[];
 }) {
   const [tab, setTab] = useState<'bestiary' | 'homebrew' | 'mine' | 'build'>('bestiary');
-  // Homebrew form modal: undefined = closed, null = new monster, monster = editing that one.
+  // Sub-tab within Homebrew: monsters (Phase A) vs equipment (Phase B1).
+  const [hbSubTab, setHbSubTab] = useState<'monsters' | 'equipment'>('monsters');
+  // Form modals: undefined = closed, null = new, item = editing that one.
   const [hbForm, setHbForm] = useState<HomebrewMonster | null | undefined>(undefined);
+  const [eqForm, setEqForm] = useState<HomebrewEquipment | null | undefined>(undefined);
   const homebrewMonsters = homebrewList(game.homebrew?.monsters);
+  const homebrewEquipment = equipmentList(game.homebrew?.equipment);
   const [category, setCategory] = useState<Category>('creature');
   const [name, setName] = useState('');
   const [hp, setHp] = useState('5');
@@ -169,46 +177,96 @@ export function AddCreatureDrawer({
 
       {tab === 'homebrew' && (
         <div className={s.section}>
-          <Button onClick={() => setHbForm(null)} full>+ New Monster</Button>
-          <div className={s.list}>
-            {homebrewMonsters.length === 0 && (
-              <p className={s.hint}>No homebrew monsters yet. Create one, then spawn it like any bestiary creature.</p>
-            )}
-            {homebrewMonsters.map((hb) => (
-              <div key={hb.id} className={s.item}>
-                <span className={s.itemMain}>
-                  <span className={s.itemName}>{hb.name}</span>
-                  <span className={s.itemMeta}>
-                    {hb.size} {hb.type} · HP {hb.hp} · AC {hb.ac} · CR {hb.cr}
-                  </span>
-                </span>
-                <button className={s.place} onClick={() => setHbForm(hb)}>Edit</button>
-                <button
-                  className={s.place}
-                  onClick={() => {
-                    const entry = homebrewToBestiaryEntry(hb);
-                    placeStatBlock(entry.name, 'creature', entry.stats, entry.id);
-                  }}
-                >
-                  Spawn
-                </button>
-                <button
-                  className={s.place}
-                  style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
-                  onClick={() => void deleteHomebrewMonster(gameId, hb.id)}
-                  aria-label={`Delete ${hb.name}`}
-                >
-                  ×
-                </button>
-              </div>
+          <div className={s.tabs}>
+            {(['monsters', 'equipment'] as const).map((t) => (
+              <button key={t} className={`${s.tab} ${hbSubTab === t ? s.tabActive : ''}`} onClick={() => setHbSubTab(t)}>
+                {t === 'monsters' ? 'Monsters' : 'Equipment'}
+              </button>
             ))}
           </div>
+
+          {hbSubTab === 'monsters' && (
+            <>
+              <Button onClick={() => setHbForm(null)} full>+ New Monster</Button>
+              <div className={s.list}>
+                {homebrewMonsters.length === 0 && (
+                  <p className={s.hint}>No homebrew monsters yet. Create one, then spawn it like any bestiary creature.</p>
+                )}
+                {homebrewMonsters.map((hb) => (
+                  <div key={hb.id} className={s.item}>
+                    <span className={s.itemMain}>
+                      <span className={s.itemName}>{hb.name}</span>
+                      <span className={s.itemMeta}>
+                        {hb.size} {hb.type} · HP {hb.hp} · AC {hb.ac} · CR {hb.cr}
+                        {hb.loot ? ` · ${Object.keys(hb.loot).length} loot` : ''}
+                      </span>
+                    </span>
+                    <button className={s.place} onClick={() => setHbForm(hb)}>Edit</button>
+                    <button
+                      className={s.place}
+                      onClick={() => {
+                        const entry = homebrewToBestiaryEntry(hb);
+                        placeStatBlock(entry.name, 'creature', entry.stats, entry.id);
+                      }}
+                    >
+                      Spawn
+                    </button>
+                    <button
+                      className={s.place}
+                      style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
+                      onClick={() => void deleteHomebrewMonster(gameId, hb.id)}
+                      aria-label={`Delete ${hb.name}`}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {hbSubTab === 'equipment' && (
+            <>
+              <Button onClick={() => setEqForm(null)} full>+ New Equipment</Button>
+              <div className={s.list}>
+                {homebrewEquipment.length === 0 && (
+                  <p className={s.hint}>No homebrew equipment yet. Create items, then attach them to monsters as loot.</p>
+                )}
+                {homebrewEquipment.map((eq) => (
+                  <div key={eq.id} className={s.item}>
+                    <span className={s.itemMain}>
+                      <span className={s.itemName}>{eq.name}</span>
+                      <span className={s.itemMeta}>
+                        {eq.category}
+                        {eq.category === 'weapon' && eq.damageDice ? ` · ${eq.damageDice} ${eq.damageType ?? ''}` : ''}
+                        {eq.category === 'armor' && eq.baseAc !== undefined ? ` · AC ${eq.baseAc}` : ''}
+                      </span>
+                    </span>
+                    <button className={s.place} onClick={() => setEqForm(eq)}>Edit</button>
+                    <button
+                      className={s.place}
+                      style={{ color: 'var(--accent-red)', borderColor: 'var(--accent-red)' }}
+                      onClick={() => void deleteHomebrewEquipment(gameId, eq.id)}
+                      aria-label={`Delete ${eq.name}`}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
+      )}
+
+      {eqForm !== undefined && (
+        <HomebrewEquipmentForm gameId={gameId} existing={eqForm ?? undefined} onClose={() => setEqForm(undefined)} />
       )}
 
       {hbForm !== undefined && (
         <HomebrewMonsterForm
           gameId={gameId}
+          equipment={homebrewEquipment}
           uid={uid}
           existing={hbForm ?? undefined}
           onClose={() => setHbForm(undefined)}

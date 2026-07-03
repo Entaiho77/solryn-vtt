@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   saveHomebrewMonster,
   type HomebrewAttack,
+  type HomebrewEquipment,
   type HomebrewFeature,
   type HomebrewMonster,
 } from '../../../data/homebrew';
@@ -43,11 +44,14 @@ export function HomebrewMonsterForm({
   gameId,
   uid,
   existing,
+  equipment,
   onClose,
 }: {
   gameId: string;
   uid: string;
   existing?: HomebrewMonster;
+  /** The game's homebrew equipment library, selectable as loot on this monster. */
+  equipment: HomebrewEquipment[];
   onClose: () => void;
 }) {
   const [name, setName] = useState(existing?.name ?? '');
@@ -69,6 +73,7 @@ export function HomebrewMonsterForm({
   const [traits, setTraits] = useState<HomebrewFeature[]>(Object.values(existing?.traits ?? {}));
   const [actions, setActions] = useState<HomebrewFeature[]>(Object.values(existing?.actions ?? {}));
   const [legendary, setLegendary] = useState<HomebrewFeature[]>(Object.values(existing?.legendaryActions ?? {}));
+  const [loot, setLoot] = useState<string[]>(Object.keys(existing?.loot ?? {}));
   const [busy, setBusy] = useState(false);
 
   const toggle = (list: string[], set: (v: string[]) => void, val: string) =>
@@ -101,6 +106,7 @@ export function HomebrewMonsterForm({
       traits: toMap(traits),
       actions: toMap(actions),
       legendaryActions: toMap(legendary),
+      ...(loot.length ? { loot: Object.fromEntries(loot.map((id) => [id, true as const])) } : {}),
       createdBy: uid,
     };
     try {
@@ -224,6 +230,22 @@ export function HomebrewMonsterForm({
         {featureRows('Traits', traits, setTraits)}
         {featureRows('Actions', actions, setActions)}
         {featureRows('Legendary Actions', legendary, setLegendary)}
+
+        <div>
+          <span className={s.label}>Loot</span>
+          {equipment.length === 0 ? (
+            <p className={s.hint}>No homebrew equipment yet. Create items in the Equipment tab, then attach them here.</p>
+          ) : (
+            <div style={checkGrid}>
+              {equipment.map((eq) => (
+                <label key={eq.id} className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <input type="checkbox" checked={loot.includes(eq.id)} onChange={() => toggle(loot, setLoot, eq.id)} />
+                  {eq.name}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </Modal>
   );

@@ -7,7 +7,7 @@
  */
 
 import type { RollEntry } from './rollLog';
-import type { HomebrewMonster } from './homebrew';
+import type { HomebrewEquipment, HomebrewMonster, InventoryItem } from './homebrew';
 
 export type Role = 'gm' | 'player';
 
@@ -60,9 +60,11 @@ export interface Game {
   /** 5e: level a newly-built character starts at. When >1, the sheet chains the level-up flow up
    *  to this level right after creation (new player joining mid-campaign, replacement PC). */
   startingLevel?: number;
-  /** GM-authored homebrew content for this game (Phase A: monsters). Object-keyed maps. */
+  /** GM-authored homebrew content for this game. Object-keyed maps.
+   *  Phase A: monsters. Phase B1: equipment (attachable to monsters as loot). */
   homebrew?: {
     monsters?: Record<string, HomebrewMonster>;
+    equipment?: Record<string, HomebrewEquipment>;
   };
 }
 
@@ -163,6 +165,9 @@ export interface Token {
   defeated?: boolean;
   /** Trap lifecycle: hidden → revealed → sprung (GM-arbitrated). */
   trapState?: 'hidden' | 'revealed' | 'sprung';
+  /** Homebrew loot already distributed from this spawned instance (equipmentId → true), so the
+   *  GM can't hand out the same item twice. Per-token (each instance loots independently). */
+  lootGiven?: Record<string, true>;
   /**
    * Party token (kind 'party') soft-lock: the uid currently dragging it and when they
    * grabbed it (ms). While held by someone else (within the staleness window) other
@@ -247,6 +252,8 @@ export interface Character {
   buildComplete: boolean;
   definition: CharacterDefinition;
   play: CharacterPlayState;
+  /** Looted equipment (Phase B1), keyed by inventory-record id. */
+  inventory?: Record<string, InventoryItem>;
   /** Round token art (Firebase Storage URL or inline data URL). */
   imageUrl?: string;
 }

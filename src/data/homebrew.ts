@@ -55,6 +55,9 @@ export interface HomebrewMonster {
   traits: Record<string, HomebrewFeature>;
   actions: Record<string, HomebrewFeature>;
   legendaryActions: Record<string, HomebrewFeature>;
+  /** Homebrew-equipment ids carried as loot (object-keyed set — never an array). Distributed to
+   *  players from a spawned instance's stat card (Phase B1). */
+  loot?: Record<string, true>;
   /** GM (game owner) uid that authored it. */
   createdBy: string;
 }
@@ -79,6 +82,78 @@ export function homebrewList(
   monsters: Record<string, HomebrewMonster> | undefined,
 ): HomebrewMonster[] {
   return Object.values(monsters ?? {}).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// --- Homebrew equipment (Phase B1) ------------------------------------------
+
+export type EquipmentCategory = 'weapon' | 'armor' | 'tool' | 'other';
+export type WeaponRange = 'melee' | 'ranged';
+export type ArmorType = 'light' | 'medium' | 'heavy' | 'shield';
+
+/** GM-authored equipment, stored at games/$gameId/homebrew/equipment/$id. Weapon/armor fields are
+ *  present only for those categories; Phase B2 turns them into mechanical effects. */
+export interface HomebrewEquipment {
+  id: string;
+  name: string;
+  category: EquipmentCategory;
+  description: string;
+  weight?: number;
+  value?: string;
+  // --- weapon ---
+  damageDice?: string;
+  damageType?: string;
+  weaponRange?: WeaponRange;
+  /** finesse | versatile | thrown | ranged | two-handed | light | heavy | loading. */
+  properties?: string[];
+  versatileDamageDice?: string;
+  // --- armor ---
+  armorType?: ArmorType;
+  baseAc?: number;
+  stealthDisadvantage?: boolean;
+}
+
+/** A looted item on a character (characters/$id/inventory/$itemId) — a full snapshot of the
+ *  equipment at loot time (so it survives edits/deletes of the source), plus an equipped flag. */
+export interface InventoryItem extends Omit<HomebrewEquipment, 'id'> {
+  /** Inventory-record id (distinct from the source equipment id). */
+  id: string;
+  /** Source homebrew-equipment id it was looted from (reference only; data is snapshotted). */
+  equipmentId: string;
+  equipped: boolean;
+}
+
+/** Drop undefined-valued keys — Firebase set() rejects objects containing undefined. */
+function pruneUndefined<T extends Record<string, unknown>>(obj: T): T {
+  return Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)) as T;
+}
+
+/** Create or overwrite a homebrew equipment item (GM-only, enforced by the security rules). */
+export async function saveHomebrewEquipment(
+  gameId: string,
+  equipment: Omit<HomebrewEquipment, 'id'> & { id?: string },
+): Promise<string> {
+  const id = equipment.id ?? newKey(`games/${gameId}/homebrew/equipment`);
+  await writeValue(`games/${gameId}/homebrew/equipment/${id}`, pruneUndefined({ ...equipment, id }));
+  return id;
+}
+
+export function deleteHomebrewEquipment(gameId: string, id: string): Promise<void> {
+  return writeValue(`games/${gameId}/homebrew/equipment/${id}`, null);
+}
+
+/** Homebrew equipment for a game as a sorted array (from the game-synced object map). */
+export function equipmentList(
+  equipment: Record<string, HomebrewEquipment> | undefined,
+): HomebrewEquipment[] {
+  return Object.values(equipment ?? {}).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Snapshot an equipment item into an inventory record (minus the record id, added on write). */
+export function equipmentToInventoryItem(
+  equip: HomebrewEquipment,
+): Omit<InventoryItem, 'id'> {
+  const { id, ...rest } = equip;
+  return pruneUndefined({ ...rest, equipmentId: id, equipped: false });
 }
 
 /** Numeric CR from a label, so homebrew feeds the XP/encounter math like SRD creatures. */

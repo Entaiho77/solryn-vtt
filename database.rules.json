@@ -88,6 +88,9 @@
           "xp": {
             ".write": "auth != null && root.child('games').child(data.parent().parent().child('gameId').val()).child('members').child(auth.uid).child('role').val() === 'gm'"
           }
+        },
+        "inventory": {
+          ".write": "auth != null && root.child('games').child(data.parent().child('gameId').val()).child('members').child(auth.uid).child('role').val() === 'gm'"
         }
       }
     },

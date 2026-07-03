@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { BestiaryEntry, CreatureSave, SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
+import type { HomebrewEquipment } from '../../../data/homebrew';
 import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
 import { Button } from '../../../components/ui/Button';
 import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import { ResourceTracker } from '../../sheet/ResourceTracker';
+import { LootDistributionModal } from './LootDistributionModal';
 import { useRollLog } from '../../rolllog/rollLog';
 import s from './drawers.module.css';
 
@@ -71,6 +73,7 @@ export function MonsterStatCard({
   name,
   creatureId,
   extraEntries,
+  lootItems,
   token,
   gameId,
   uid,
@@ -83,6 +86,8 @@ export function MonsterStatCard({
   /** Non-SRD stat blocks (e.g. game homebrew) resolved identically to SRD entries; searched
    *  first so a homebrew id/name wins. Keeps the combat resolver free of any SRD/homebrew branch. */
   extraEntries?: BestiaryEntry[];
+  /** Resolved homebrew loot this spawned monster carries (GM-only "Distribute Loot"). */
+  lootItems?: HomebrewEquipment[];
   token?: Token;
   gameId?: string;
   /** Present in GM context → enables the bestiary token-art upload (per-GM global). */
@@ -104,6 +109,7 @@ export function MonsterStatCard({
   const [saveAbility, setSaveAbility] = useState<AbilityId>('dex');
   const [saveDc, setSaveDc] = useState(13);
   const [checkMode, setCheckMode] = useState<'save' | 'check'>('save');
+  const [lootOpen, setLootOpen] = useState(false);
   // Search homebrew (extraEntries) before the SRD bestiary so a homebrew id/name wins; both are
   // plain BestiaryEntry, so everything below (attacks, abilities, resolver) is source-agnostic.
   const pool = extraEntries && extraEntries.length ? [...extraEntries, ...system.bestiary] : system.bestiary;
@@ -332,6 +338,11 @@ export function MonsterStatCard({
           >
             {token.defeated ? 'Revive' : 'Defeat'}
           </Button>
+          {lootItems && lootItems.length > 0 && (
+            <Button variant="secondary" size="sm" onClick={() => setLootOpen(true)}>
+              Distribute Loot
+            </Button>
+          )}
           <Button
             variant="danger"
             size="sm"
@@ -343,6 +354,15 @@ export function MonsterStatCard({
             Remove
           </Button>
         </div>
+      )}
+
+      {gmControls && lootOpen && lootItems && (
+        <LootDistributionModal
+          gameId={gameId}
+          token={token}
+          lootItems={lootItems}
+          onClose={() => setLootOpen(false)}
+        />
       )}
     </div>
   );

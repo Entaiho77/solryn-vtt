@@ -100,6 +100,15 @@ export function moveToken(
   });
 }
 
+/** Mark a loot item as distributed from this token instance (GM loot flow, Phase B1). */
+export function markLootGiven(
+  gameId: string,
+  tokenId: string,
+  equipmentId: string,
+): Promise<void> {
+  return writeValue(`games/${gameId}/tokens/${tokenId}/lootGiven/${equipmentId}`, true);
+}
+
 export function updateToken(
   gameId: string,
   tokenId: string,
