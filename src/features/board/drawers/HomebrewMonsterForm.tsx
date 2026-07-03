@@ -72,6 +72,8 @@ export function HomebrewMonsterForm({
   const [actions, setActions] = useState<HomebrewFeature[]>(Object.values(existing?.actions ?? {}));
   const [legendary, setLegendary] = useState<HomebrewFeature[]>(Object.values(existing?.legendaryActions ?? {}));
   const [loot, setLoot] = useState<string[]>(Object.keys(existing?.loot ?? {}));
+  // Case-insensitive filter for the loot equipment list (helpful once a DM has many items).
+  const [lootSearch, setLootSearch] = useState('');
   const [busy, setBusy] = useState(false);
 
   const toggle = (list: string[], set: (v: string[]) => void, val: string) =>
@@ -168,11 +170,16 @@ export function HomebrewMonsterForm({
     </div>
   );
 
+  const lootQuery = lootSearch.trim().toLowerCase();
+  const filteredEquipment = lootQuery
+    ? equipment.filter((eq) => eq.name.toLowerCase().includes(lootQuery))
+    : equipment;
+
   return (
     <Modal
       open
       onClose={onClose}
-      title={existing ? `Edit ${existing.name}` : 'New homebrew monster'}
+      title={existing ? `Edit ${existing.name}` : 'New Homebrew Monster'}
       width={560}
       footer={
         <div style={{ display: 'flex', gap: 'var(--space-2)', justifyContent: 'flex-end' }}>
@@ -233,14 +240,26 @@ export function HomebrewMonsterForm({
           {equipment.length === 0 ? (
             <p className={s.hint}>No homebrew equipment yet. Create items in the Equipment tab, then attach them here.</p>
           ) : (
-            <div style={checkGrid}>
-              {equipment.map((eq) => (
-                <label key={eq.id} className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <input type="checkbox" checked={loot.includes(eq.id)} onChange={() => toggle(loot, setLoot, eq.id)} />
-                  {eq.name}
-                </label>
-              ))}
-            </div>
+            <>
+              <input
+                className={s.input}
+                placeholder="Search equipment..."
+                value={lootSearch}
+                onChange={(e) => setLootSearch(e.target.value)}
+              />
+              {filteredEquipment.length === 0 ? (
+                <p className={s.hint}>No equipment matches your search.</p>
+              ) : (
+                <div style={checkGrid}>
+                  {filteredEquipment.map((eq) => (
+                    <label key={eq.id} className={s.itemMeta} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <input type="checkbox" checked={loot.includes(eq.id)} onChange={() => toggle(loot, setLoot, eq.id)} />
+                      {eq.name}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
