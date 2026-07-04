@@ -113,6 +113,22 @@ function drawSpikedDisk(ctx: CanvasRenderingContext2D, cx: number, cy: number, r
   ctx.fill();
 }
 
+/**
+ * Token art radius in world pixels. Tiny/Small render visually smaller than Medium even though all
+ * three occupy one square; Medium and larger scale with the footprint (`cells`). `hasConditions`
+ * shrinks the art slightly to make room for the condition rings (Medium+ only).
+ */
+function tokenRadius(g: number, cells: number, hasConditions: boolean, sizeCategory?: string): number {
+  switch (sizeCategory?.toLowerCase()) {
+    case 'tiny':
+      return g * 0.18;
+    case 'small':
+      return g * 0.25;
+    default:
+      return g * cells * (hasConditions ? 0.3 : 0.42);
+  }
+}
+
 const fmt = (n: number) =>
   Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.?0+$/, '');
 
@@ -391,15 +407,16 @@ export function BoardCanvas({
         .filter((id) => conditionDefs?.[id])
         .slice(-4);
       // Shrink the token art when rings are present so the token + all rings stay inside the
-      // footprint. Radius scales with the footprint size (cells).
-      const radius = g * cells * (condIds.length ? 0.3 : 0.42);
+      // footprint. Radius also honours the size category (Tiny/Small render smaller than Medium).
+      const radius = tokenRadius(g, cells, condIds.length > 0, token.sizeCategory);
 
       // Nested condition rings, drawn BEFORE (behind) the token art at full opacity — spike tips
-      // reach rMax (< half the footprint, so nothing overflows the token's squares), innermost band
-      // meets the token art at `radius`. Largest first so each smaller disk carves the next band.
+      // reach rMax, innermost band meets the token art at `radius`. Ring geometry is derived from
+      // `radius` so it hugs the token at any size (for Medium+ this reproduces the old
+      // g·cells·0.48 / 0.06 band exactly, since a conditioned Medium radius is g·cells·0.30).
       if (condIds.length) {
-        const rMax = g * cells * 0.48;
-        const spike = g * cells * 0.06;
+        const rMax = radius * 1.6;
+        const spike = radius * 0.2;
         const n = condIds.length;
         condIds.forEach((id, i) => {
           const r = rMax - ((rMax - radius) * i) / n;

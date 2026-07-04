@@ -127,6 +127,8 @@ export function AddCreatureDrawer({
       stats,
       ...(creatureId ? { creatureId } : {}),
       ...(squares > 1 ? { size: squares } : {}),
+      // Keep the original category string for visual radius (Tiny/Small render smaller than Medium).
+      ...(!isTrap && sizeCategory ? { sizeCategory } : {}),
       ...(isTrap ? { trapState: 'hidden' as const } : {}),
       ...(!isTrap && Number.isFinite(hpVal) && hpVal > 0
         ? { hp: { current: hpVal, max: hpVal } }

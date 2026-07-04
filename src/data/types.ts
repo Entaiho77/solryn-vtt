@@ -149,6 +149,11 @@ export interface Token {
    * larger footprint; rendering sized tokens is a follow-up.
    */
   size?: number;
+  /**
+   * Original size category ("Tiny" / "Small" / …) for VISUAL scaling only — collision uses `size`.
+   * Lets the canvas render Tiny/Small tokens smaller than Medium while all three occupy 1×1.
+   */
+  sizeCategory?: string;
   /** false = hidden token (GM sees it dimmed; players don't render it). */
   visible?: boolean;
   /** Character tokens: the controlling player + linked character. */
