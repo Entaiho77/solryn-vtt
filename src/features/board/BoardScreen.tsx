@@ -137,6 +137,10 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     const count = tokens.filter(
       (t) => t.kind === 'character' && t.mapId === activeMap.id,
     ).length;
+    // The PC's race sets its visual token size (5e Gnome/Halfling are Small). Solryn ancestries
+    // define no size → undefined → default Medium radius. sizeCategory is visual only; the
+    // footprint (`size`) stays 1×1 for every PC race.
+    const ancestry = system.ancestries.find((a) => a.id === character.definition.ancestryId);
     void addToken(gameId, {
       mapId: activeMap.id,
       kind: 'character',
@@ -147,6 +151,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
       visible: true,
       ownerUserId: uid,
       characterId: character.id,
+      ...(ancestry?.size ? { sizeCategory: ancestry.size } : {}),
       // 5e: stamp the PC's derived AC (+max HP) onto the token so a GM attacking this player
       // reads the AC straight from the stat block — no typed number. Solryn tokens carry none.
       ...(isClassAndLevel(system) ? { stats: pcTokenStats(system, character) } : {}),
