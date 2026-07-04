@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, InitiativeState, Role, Token } from '../../data/types';
 import { computeDerived } from '../../engine/rules';
@@ -16,38 +15,41 @@ import t from './InitiativeTracker.module.css';
 const SLOT = 100;
 
 /**
- * A jagged spiked ring (condition indicator) drawn around the OUTSIDE of an initiative disk, matching
- * the board-canvas treatment. One color when a single condition is active; a slow ~1.5s cycle through
- * the colors when several are. Rendered as an SVG overlay centered on the disk (spikes point outward).
+ * Nested jagged condition rings drawn BEHIND an initiative disk, matching the board-canvas treatment:
+ * one SOLID filled spiked ring per active condition, concentric — the first is outermost, each later
+ * one nested inward. Capped at 4 (the 4 most recently applied). Rendered as an SVG overlay centered
+ * on the disk; the disk (higher z-index) covers the innermost center, leaving colored jagged bands.
  */
 function ConditionRing({ colors, size }: { colors: string[]; size: number }) {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    if (colors.length < 2) return;
-    const id = setInterval(() => setI((n) => n + 1), 1500);
-    return () => clearInterval(id);
-  }, [colors.length]);
-  if (colors.length === 0) return null;
-  const color = colors.length === 1 ? colors[0] : colors[i % colors.length];
-  const spikes = 16;
+  const ids = colors.slice(-4);
+  if (ids.length === 0) return null;
+  const n = ids.length;
   const c = size / 2;
-  const outer = size / 2;
-  const inner = outer * 0.78;
-  const pts: string[] = [];
-  for (let k = 0; k <= spikes * 2; k++) {
-    const r = k % 2 === 0 ? outer : inner;
-    const a = (Math.PI / spikes) * k - Math.PI / 2;
-    pts.push(`${(c + Math.cos(a) * r).toFixed(1)},${(c + Math.sin(a) * r).toFixed(1)}`);
-  }
+  const rMax = size / 2; // outermost spike tips
+  const rInner = 18; // just under the 38px disk radius so the innermost band tucks beneath its edge
+  const spikes = 16;
+  const spike = 3;
+  const star = (r: number) => {
+    const pts: string[] = [];
+    for (let k = 0; k < spikes * 2; k++) {
+      const rr = k % 2 === 0 ? r : r - spike;
+      const a = (Math.PI / spikes) * k - Math.PI / 2;
+      pts.push(`${(c + Math.cos(a) * rr).toFixed(1)},${(c + Math.sin(a) * rr).toFixed(1)}`);
+    }
+    return pts.join(' ');
+  };
   return (
     <svg
       width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       aria-hidden
-      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}
+      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none', zIndex: 0 }}
     >
-      <polygon points={pts.join(' ')} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" />
+      {/* Largest → smallest: each smaller disk carves the next band; first id = outermost. */}
+      {ids.map((color, i) => (
+        <polygon key={i} points={star(rMax - ((rMax - rInner) * i) / n)} fill={color} />
+      ))}
     </svg>
   );
 }
@@ -180,7 +182,7 @@ export function InitiativeTracker({
                   <span style={{ position: 'relative', display: 'inline-flex' }}>
                     <span
                       className={t.disk}
-                      style={{ background: com.kind === 'character' ? '#5dcaa5' : '#b05a5a' }}
+                      style={{ background: com.kind === 'character' ? '#5dcaa5' : '#b05a5a', position: 'relative', zIndex: 1 }}
                     >
                       {com.name[0]?.toUpperCase() ?? '?'}
                     </span>

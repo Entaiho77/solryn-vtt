@@ -495,7 +495,9 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
 
         {ctxMenu && (
           <TokenContextMenu
-            token={ctxMenu.token}
+            // Read the LIVE token from state so condition toggles reflect (and can remove)
+            // the current Firebase value — the ctxMenu snapshot is captured at right-click time.
+            token={tokens.find((t) => t.id === ctxMenu.token.id) ?? ctxMenu.token}
             x={ctxMenu.x}
             y={ctxMenu.y}
             gameId={gameId}

@@ -92,14 +92,16 @@ interface BoardCanvasProps {
 }
 
 /**
- * Draw a jagged spiked ring (condition indicator) hugging the OUTSIDE of a token circle: valleys sit
- * at `r`, spike tips reach `r + spike`, so it reads as a crown of spikes radiating from the border.
+ * Draw a SOLID jagged spiked disk (condition indicator) filled with `color`: spike tips reach `r`,
+ * valleys dip to `r - spike`, and the polygon is filled all the way to the center. Nested disks are
+ * drawn largest→smallest so smaller ones cover the centers of larger ones, leaving concentric
+ * jagged bands (one per condition); the token art on top covers the innermost center.
  */
-function drawSpikedRing(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, spike: number, color: string, zoom: number) {
+function drawSpikedDisk(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, spike: number, color: string) {
   const spikes = 18;
   ctx.beginPath();
   for (let i = 0; i <= spikes * 2; i++) {
-    const rad = i % 2 === 0 ? r + spike : r;
+    const rad = i % 2 === 0 ? r : r - spike;
     const a = (Math.PI / spikes) * i;
     const px = cx + Math.cos(a) * rad;
     const py = cy + Math.sin(a) * rad;
@@ -107,10 +109,8 @@ function drawSpikedRing(ctx: CanvasRenderingContext2D, cx: number, cy: number, r
     else ctx.lineTo(px, py);
   }
   ctx.closePath();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2 / zoom;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
+  ctx.fillStyle = color;
+  ctx.fill();
 }
 
 const fmt = (n: number) =>
@@ -379,7 +379,28 @@ export function BoardCanvas({
       const col = dragging ? ghost!.col : token.col;
       const row = dragging ? ghost!.row : token.row;
       const { x, y } = cellCenter(col, row, g);
-      const radius = g * 0.42;
+
+      // Active conditions (defined in this system) → concentric jagged rings. Cap at 4; when more
+      // are active, keep the 4 most recently applied (last keys — Firebase preserves insertion
+      // order and stores no timestamps). First id = outermost ring.
+      const condIds = Object.keys(token.conditions ?? {})
+        .filter((id) => conditionDefs?.[id])
+        .slice(-4);
+      // Shrink the token art when rings are present so the token + all rings stay inside the cell.
+      const radius = g * (condIds.length ? 0.3 : 0.42);
+
+      // Nested condition rings, drawn BEFORE (behind) the token art at full opacity — spike tips
+      // reach rMax (< half a cell, so nothing overflows the grid square), innermost band meets the
+      // token art at `radius`. Largest first so each smaller disk carves the next band.
+      if (condIds.length) {
+        const rMax = g * 0.48;
+        const spike = g * 0.06;
+        const n = condIds.length;
+        condIds.forEach((id, i) => {
+          const r = rMax - ((rMax - radius) * i) / n;
+          drawSpikedDisk(ctx, x, y, r, spike, conditionDefs![id].color);
+        });
+      }
 
       ctx.save();
       if (token.visible === false) ctx.globalAlpha = 0.45;
@@ -447,16 +468,6 @@ export function BoardCanvas({
       ctx.textBaseline = 'top';
       ctx.fillText(token.name, x, y + radius + 3);
       ctx.restore();
-
-      // Condition indicator: a jagged spiked ring drawn around the OUTSIDE of the token border
-      // (full opacity even when the token is dimmed). One condition → its color; several → a slow
-      // cycle through their colors (the animation timer below drives the redraws).
-      const condIds = Object.keys(token.conditions ?? {}).filter((id) => conditionDefs?.[id]);
-      if (condIds.length) {
-        const colors = condIds.map((id) => conditionDefs![id].color);
-        const color = colors.length === 1 ? colors[0] : colors[Math.floor(Date.now() / 1500) % colors.length];
-        drawSpikedRing(ctx, x, y, radius + 1.5, g * 0.1, color, cam.zoom);
-      }
     }
 
     // Fog — GM semi-transparent, players opaque.
@@ -516,19 +527,6 @@ export function BoardCanvas({
     conditionDefs,
     version,
   ]);
-
-  // Animate the multi-condition color cycle: while any visible token has 2+ conditions, tick a
-  // redraw so drawSpikedRing picks the next color (~every 1.5s). Idle otherwise (no timer).
-  const anyCycling = onMap.some(
-    (token) =>
-      tokenVisibility(token, uid, role) !== 'hidden' &&
-      Object.keys(token.conditions ?? {}).filter((id) => conditionDefs?.[id]).length >= 2,
-  );
-  useEffect(() => {
-    if (!anyCycling) return;
-    const id = setInterval(bump, 750);
-    return () => clearInterval(id);
-  }, [anyCycling]);
 
   /** Mouse event → world (map) pixel coords, undoing the camera. */
   function eventCell(e: MouseEvent<HTMLCanvasElement>) {
