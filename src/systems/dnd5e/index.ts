@@ -1,18 +1,17 @@
 import type {
   ClassDefinition,
-  ConditionEntry,
   CoreStat,
   CreationConfig,
   DerivedStat,
   MapType,
   ModifierRule,
   QualityScale,
-  RulesCard,
   StatBlockShape,
   SystemDefinition,
   SystemModes,
 } from '../../engine/schema';
 import { c } from '../../engine/schema';
+import { rulesReference, conditions } from './reference';
 import { bestiary } from './bestiary';
 import { spells } from './spells';
 import { skills, skillCategories } from './skills';
@@ -123,18 +122,6 @@ const statBlockShapes: StatBlockShape[] = [
     ],
   },
 ];
-
-const rulesReference: RulesCard[] = [
-  {
-    id: 'placeholder',
-    category: 'About',
-    name: 'D&D 5e (SRD) — in progress',
-    description: 'Combat, spells, conditions, and character options are being added in stages.',
-  },
-];
-
-// Empty content placeholders — real data arrives in later phases.
-const conditions: ConditionEntry[] = [];
 
 export const dnd5eSystem: SystemDefinition = {
   id: 'dnd5e',
