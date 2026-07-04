@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { SystemDefinition } from '../../engine/schema';
 import type { Character, InitiativeState, Role, Token } from '../../data/types';
 import { computeDerived } from '../../engine/rules';
@@ -13,6 +14,43 @@ import t from './InitiativeTracker.module.css';
 
 /** Width (px) of one combatant slot in the carousel — must match `.slot` in the CSS. */
 const SLOT = 100;
+
+/**
+ * A jagged spiked ring (condition indicator) drawn around the OUTSIDE of an initiative disk, matching
+ * the board-canvas treatment. One color when a single condition is active; a slow ~1.5s cycle through
+ * the colors when several are. Rendered as an SVG overlay centered on the disk (spikes point outward).
+ */
+function ConditionRing({ colors, size }: { colors: string[]; size: number }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (colors.length < 2) return;
+    const id = setInterval(() => setI((n) => n + 1), 1500);
+    return () => clearInterval(id);
+  }, [colors.length]);
+  if (colors.length === 0) return null;
+  const color = colors.length === 1 ? colors[0] : colors[i % colors.length];
+  const spikes = 16;
+  const c = size / 2;
+  const outer = size / 2;
+  const inner = outer * 0.78;
+  const pts: string[] = [];
+  for (let k = 0; k <= spikes * 2; k++) {
+    const r = k % 2 === 0 ? outer : inner;
+    const a = (Math.PI / spikes) * k - Math.PI / 2;
+    pts.push(`${(c + Math.cos(a) * r).toFixed(1)},${(c + Math.sin(a) * r).toFixed(1)}`);
+  }
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      aria-hidden
+      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}
+    >
+      <polygon points={pts.join(' ')} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 function initiativeModifier(system: SystemDefinition, character: Character): number {
   const armor = system.equipment.armor.find(
@@ -94,6 +132,10 @@ export function InitiativeTracker({
             const opacity = isCurrent ? 1 : Math.max(0.25, 1 - 0.3 * dist);
             const tok = com.tokenId ? tokens[com.tokenId] : undefined;
             const defeated = com.kind === 'creature' && tok?.defeated;
+            // Condition colors for this combatant's token → the spiked-ring overlay on the disk.
+            const ringColors = Object.keys(tok?.conditions ?? {})
+              .map((id) => system.tokenConditions?.find((c) => c.id === id)?.color)
+              .filter((c): c is string => !!c);
             const canJumpHere = canJump && !isCurrent;
             // A tap selects the token (surfaces its card); GMs also jump the turn.
             const interactive = canJumpHere || Boolean(tok && onSelectToken);
@@ -135,11 +177,14 @@ export function InitiativeTracker({
                   }
                 >
                   {isCurrent && <span className={t.turnLabel}>current turn</span>}
-                  <span
-                    className={t.disk}
-                    style={{ background: com.kind === 'character' ? '#5dcaa5' : '#b05a5a' }}
-                  >
-                    {com.name[0]?.toUpperCase() ?? '?'}
+                  <span style={{ position: 'relative', display: 'inline-flex' }}>
+                    <span
+                      className={t.disk}
+                      style={{ background: com.kind === 'character' ? '#5dcaa5' : '#b05a5a' }}
+                    >
+                      {com.name[0]?.toUpperCase() ?? '?'}
+                    </span>
+                    <ConditionRing colors={ringColors} size={50} />
                   </span>
                   <span className={t.cname}>{com.name}</span>
                   <span className={t.init}>{com.initiative}</span>

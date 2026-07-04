@@ -91,23 +91,25 @@ interface BoardCanvasProps {
   conditionDefs?: Record<string, { name: string; color: string }>;
 }
 
-/** Draw a small jagged starburst (condition indicator) centered at (cx, cy) in world space. */
-function drawBurst(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, color: string, zoom: number) {
-  const spikes = 8;
+/**
+ * Draw a jagged spiked ring (condition indicator) hugging the OUTSIDE of a token circle: valleys sit
+ * at `r`, spike tips reach `r + spike`, so it reads as a crown of spikes radiating from the border.
+ */
+function drawSpikedRing(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, spike: number, color: string, zoom: number) {
+  const spikes = 18;
   ctx.beginPath();
-  for (let i = 0; i < spikes * 2; i++) {
-    const rad = i % 2 === 0 ? r : r * 0.5;
-    const a = (Math.PI / spikes) * i - Math.PI / 2;
+  for (let i = 0; i <= spikes * 2; i++) {
+    const rad = i % 2 === 0 ? r + spike : r;
+    const a = (Math.PI / spikes) * i;
     const px = cx + Math.cos(a) * rad;
     const py = cy + Math.sin(a) * rad;
     if (i === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   }
   ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-  ctx.lineWidth = 1 / zoom;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2 / zoom;
+  ctx.lineJoin = 'round';
   ctx.stroke();
 }
 
@@ -446,19 +448,14 @@ export function BoardCanvas({
       ctx.fillText(token.name, x, y + radius + 3);
       ctx.restore();
 
-      // Condition indicators: small jagged bursts clustered around the token's top arc (full
-      // opacity even when the token itself is dimmed).
+      // Condition indicator: a jagged spiked ring drawn around the OUTSIDE of the token border
+      // (full opacity even when the token is dimmed). One condition → its color; several → a slow
+      // cycle through their colors (the animation timer below drives the redraws).
       const condIds = Object.keys(token.conditions ?? {}).filter((id) => conditionDefs?.[id]);
       if (condIds.length) {
-        const br = g * 0.14;
-        const step = Math.min(0.6, (Math.PI * 0.9) / Math.max(1, condIds.length));
-        const start = -Math.PI / 2 - (step * (condIds.length - 1)) / 2;
-        condIds.forEach((id, i) => {
-          const a = start + i * step;
-          const bx = x + Math.cos(a) * (radius + br * 0.5);
-          const by = y + Math.sin(a) * (radius + br * 0.5);
-          drawBurst(ctx, bx, by, br, conditionDefs![id].color, cam.zoom);
-        });
+        const colors = condIds.map((id) => conditionDefs![id].color);
+        const color = colors.length === 1 ? colors[0] : colors[Math.floor(Date.now() / 1500) % colors.length];
+        drawSpikedRing(ctx, x, y, radius + 1.5, g * 0.1, color, cam.zoom);
       }
     }
 
@@ -519,6 +516,19 @@ export function BoardCanvas({
     conditionDefs,
     version,
   ]);
+
+  // Animate the multi-condition color cycle: while any visible token has 2+ conditions, tick a
+  // redraw so drawSpikedRing picks the next color (~every 1.5s). Idle otherwise (no timer).
+  const anyCycling = onMap.some(
+    (token) =>
+      tokenVisibility(token, uid, role) !== 'hidden' &&
+      Object.keys(token.conditions ?? {}).filter((id) => conditionDefs?.[id]).length >= 2,
+  );
+  useEffect(() => {
+    if (!anyCycling) return;
+    const id = setInterval(bump, 750);
+    return () => clearInterval(id);
+  }, [anyCycling]);
 
   /** Mouse event → world (map) pixel coords, undoing the camera. */
   function eventCell(e: MouseEvent<HTMLCanvasElement>) {
