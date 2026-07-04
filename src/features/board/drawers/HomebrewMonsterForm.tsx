@@ -5,12 +5,13 @@ import {
   type HomebrewEquipment,
   type HomebrewFeature,
   type HomebrewMonster,
+  type HomebrewSize,
 } from '../../../data/homebrew';
 import { Modal } from '../../../components/ui/Modal';
 import { Button } from '../../../components/ui/Button';
 import s from './drawers.module.css';
 
-const SIZES = ['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan'];
+const SIZES: HomebrewSize[] = ['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan'];
 const TYPES = [
   'beast', 'undead', 'humanoid', 'dragon', 'fiend', 'celestial', 'construct', 'elemental',
   'fey', 'giant', 'monstrosity', 'ooze', 'plant', 'swarm', 'aberration',
@@ -53,7 +54,7 @@ export function HomebrewMonsterForm({
   onClose: () => void;
 }) {
   const [name, setName] = useState(existing?.name ?? '');
-  const [size, setSize] = useState(existing?.size ?? 'Medium');
+  const [size, setSize] = useState<HomebrewSize>(existing?.size ?? 'Medium');
   const [type, setType] = useState(existing?.type ?? 'humanoid');
   const [alignment, setAlignment] = useState(existing?.alignment ?? 'unaligned');
   const [hp, setHp] = useState(String(existing?.hp ?? 10));
@@ -192,7 +193,7 @@ export function HomebrewMonsterForm({
         <input className={s.input} placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
         <div className={s.row}>
           <label style={label}>Size
-            <select className={s.input} value={size} onChange={(e) => setSize(e.target.value)}>
+            <select className={s.input} value={size} onChange={(e) => setSize(e.target.value as HomebrewSize)}>
               {SIZES.map((x) => <option key={x} value={x}>{x}</option>)}
             </select>
           </label>

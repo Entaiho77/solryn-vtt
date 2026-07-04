@@ -9,6 +9,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "aboleth",
     "name": "Aboleth",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 135,
@@ -69,6 +70,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "acolyte",
     "name": "Acolyte",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 9,
@@ -101,6 +103,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-black-dragon",
     "name": "Adult Black Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 195,
@@ -167,6 +170,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-blue-dragon",
     "name": "Adult Blue Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 225,
@@ -232,6 +236,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-brass-dragon",
     "name": "Adult Brass Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 18,
       "hp": 172,
@@ -290,6 +295,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-bronze-dragon",
     "name": "Adult Bronze Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 212,
@@ -349,6 +355,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-copper-dragon",
     "name": "Adult Copper Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 18,
       "hp": 184,
@@ -407,6 +414,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-gold-dragon",
     "name": "Adult Gold Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 256,
@@ -466,6 +474,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-green-dragon",
     "name": "Adult Green Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 207,
@@ -532,6 +541,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-red-dragon",
     "name": "Adult Red Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 256,
@@ -597,6 +607,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-silver-dragon",
     "name": "Adult Silver Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 243,
@@ -655,6 +666,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "adult-white-dragon",
     "name": "Adult White Dragon",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 18,
       "hp": 200,
@@ -721,6 +733,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "air-elemental",
     "name": "Air Elemental",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 90,
@@ -755,6 +768,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-black-dragon",
     "name": "Ancient Black Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 22,
       "hp": 367,
@@ -821,6 +835,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-blue-dragon",
     "name": "Ancient Blue Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 22,
       "hp": 481,
@@ -886,6 +901,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-brass-dragon",
     "name": "Ancient Brass Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 20,
       "hp": 297,
@@ -945,6 +961,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-bronze-dragon",
     "name": "Ancient Bronze Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 22,
       "hp": 444,
@@ -1005,6 +1022,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-copper-dragon",
     "name": "Ancient Copper Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 21,
       "hp": 350,
@@ -1064,6 +1082,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-gold-dragon",
     "name": "Ancient Gold Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 22,
       "hp": 546,
@@ -1124,6 +1143,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-green-dragon",
     "name": "Ancient Green Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 21,
       "hp": 385,
@@ -1190,6 +1210,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-red-dragon",
     "name": "Ancient Red Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 22,
       "hp": 546,
@@ -1255,6 +1276,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-silver-dragon",
     "name": "Ancient Silver Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 22,
       "hp": 487,
@@ -1314,6 +1336,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ancient-white-dragon",
     "name": "Ancient White Dragon",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 20,
       "hp": 333,
@@ -1380,6 +1403,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "androsphinx",
     "name": "Androsphinx",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 199,
@@ -1419,6 +1443,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "animated-armor",
     "name": "Animated Armor",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 18,
       "hp": 33,
@@ -1453,6 +1478,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ankheg",
     "name": "Ankheg",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 39,
@@ -1494,6 +1520,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ape",
     "name": "Ape",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 19,
@@ -1532,6 +1559,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "archmage",
     "name": "Archmage",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 99,
@@ -1565,6 +1593,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "assassin",
     "name": "Assassin",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 78,
@@ -1608,6 +1637,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "awakened-shrub",
     "name": "Awakened Shrub",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 9,
       "hp": 10,
@@ -1640,6 +1670,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "awakened-tree",
     "name": "Awakened Tree",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 13,
       "hp": 59,
@@ -1672,6 +1703,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "axe-beak",
     "name": "Axe Beak",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 19,
@@ -1701,6 +1733,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "azer",
     "name": "Azer",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 39,
@@ -1736,6 +1769,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "baboon",
     "name": "Baboon",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 3,
@@ -1768,6 +1802,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "badger",
     "name": "Badger",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 10,
       "hp": 3,
@@ -1800,6 +1835,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "balor",
     "name": "Balor",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 19,
       "hp": 262,
@@ -1845,6 +1881,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bandit",
     "name": "Bandit",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 11,
@@ -1880,6 +1917,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bandit-captain",
     "name": "Bandit Captain",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 65,
@@ -1918,6 +1956,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "barbed-devil",
     "name": "Barbed Devil",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 110,
@@ -1965,6 +2004,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "basilisk",
     "name": "Basilisk",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 52,
@@ -1998,6 +2038,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bat",
     "name": "Bat",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 12,
       "hp": 1,
@@ -2031,6 +2072,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bearded-devil",
     "name": "Bearded Devil",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 52,
@@ -2072,6 +2114,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "behir",
     "name": "Behir",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 17,
       "hp": 168,
@@ -2121,6 +2164,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "berserker",
     "name": "Berserker",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 67,
@@ -2153,6 +2197,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "black-bear",
     "name": "Black Bear",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 19,
@@ -2192,6 +2237,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "black-dragon-wyrmling",
     "name": "Black Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 33,
@@ -2234,6 +2280,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "black-pudding",
     "name": "Black Pudding",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 7,
       "hp": 85,
@@ -2269,6 +2316,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "blink-dog",
     "name": "Blink Dog",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 22,
@@ -2302,6 +2350,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "blood-hawk",
     "name": "Blood Hawk",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 7,
@@ -2335,6 +2384,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "blue-dragon-wyrmling",
     "name": "Blue Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 52,
@@ -2376,6 +2426,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "boar",
     "name": "Boar",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 11,
@@ -2409,6 +2460,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bone-devil",
     "name": "Bone Devil",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 19,
       "hp": 142,
@@ -2450,6 +2502,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "brass-dragon-wyrmling",
     "name": "Brass Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 16,
@@ -2482,6 +2535,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bronze-dragon-wyrmling",
     "name": "Bronze Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 32,
@@ -2515,6 +2569,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "brown-bear",
     "name": "Brown Bear",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 34,
@@ -2554,6 +2609,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bugbear",
     "name": "Bugbear",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 27,
@@ -2593,6 +2649,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "bulette",
     "name": "Bulette",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 94,
@@ -2626,6 +2683,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "camel",
     "name": "Camel",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 9,
       "hp": 15,
@@ -2655,6 +2713,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "cat",
     "name": "Cat",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 12,
       "hp": 2,
@@ -2687,6 +2746,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "centaur",
     "name": "Centaur",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 45,
@@ -2732,6 +2792,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "chain-devil",
     "name": "Chain Devil",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 85,
@@ -2767,6 +2828,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "chimera",
     "name": "Chimera",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 114,
@@ -2820,6 +2882,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "chuul",
     "name": "Chuul",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 16,
       "hp": 93,
@@ -2863,6 +2926,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "clay-golem",
     "name": "Clay Golem",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 133,
@@ -2901,6 +2965,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "cloaker",
     "name": "Cloaker",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 78,
@@ -2952,6 +3017,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "cloud-giant",
     "name": "Cloud Giant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 14,
       "hp": 200,
@@ -2992,6 +3058,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "cockatrice",
     "name": "Cockatrice",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 11,
       "hp": 27,
@@ -3021,6 +3088,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "commoner",
     "name": "Commoner",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 4,
@@ -3050,6 +3118,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "constrictor-snake",
     "name": "Constrictor Snake",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 13,
@@ -3085,6 +3154,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "copper-dragon-wyrmling",
     "name": "Copper Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 22,
@@ -3117,6 +3187,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "couatl",
     "name": "Couatl",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 19,
       "hp": 97,
@@ -3158,6 +3229,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "crab",
     "name": "Crab",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 11,
       "hp": 2,
@@ -3190,6 +3262,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "crocodile",
     "name": "Crocodile",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 19,
@@ -3222,6 +3295,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "cult-fanatic",
     "name": "Cult Fanatic",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 22,
@@ -3256,6 +3330,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "cultist",
     "name": "Cultist",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 9,
@@ -3288,6 +3363,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "darkmantle",
     "name": "Darkmantle",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 11,
       "hp": 22,
@@ -3322,6 +3398,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "death-dog",
     "name": "Death Dog",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 39,
@@ -3355,6 +3432,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "deep-gnome-svirfneblin",
     "name": "Deep Gnome (Svirfneblin)",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 15,
       "hp": 16,
@@ -3395,6 +3473,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "deer",
     "name": "Deer",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 4,
@@ -3424,6 +3503,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "deva",
     "name": "Deva",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 136,
@@ -3462,6 +3542,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "dire-wolf",
     "name": "Dire Wolf",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 37,
@@ -3495,6 +3576,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "djinni",
     "name": "Djinni",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 161,
@@ -3539,6 +3621,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "doppelganger",
     "name": "Doppelganger",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 52,
@@ -3575,6 +3658,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "draft-horse",
     "name": "Draft Horse",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 10,
       "hp": 19,
@@ -3604,6 +3688,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "dragon-turtle",
     "name": "Dragon Turtle",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 20,
       "hp": 341,
@@ -3658,6 +3743,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "dretch",
     "name": "Dretch",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 11,
       "hp": 18,
@@ -3705,6 +3791,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "drider",
     "name": "Drider",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 19,
       "hp": 123,
@@ -3756,6 +3843,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "drow",
     "name": "Drow",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 13,
@@ -3796,6 +3884,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "druid",
     "name": "Druid",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 27,
@@ -3828,6 +3917,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "dryad",
     "name": "Dryad",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 22,
@@ -3872,6 +3962,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "duergar",
     "name": "Duergar",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 26,
@@ -3913,6 +4004,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "dust-mephit",
     "name": "Dust Mephit",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 17,
@@ -3955,6 +4047,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "eagle",
     "name": "Eagle",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 3,
@@ -3987,6 +4080,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "earth-elemental",
     "name": "Earth Elemental",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 126,
@@ -4021,6 +4115,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "efreeti",
     "name": "Efreeti",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 200,
@@ -4062,6 +4157,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "elephant",
     "name": "Elephant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 12,
       "hp": 76,
@@ -4100,6 +4196,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "elk",
     "name": "Elk",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 10,
       "hp": 13,
@@ -4138,6 +4235,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "erinyes",
     "name": "Erinyes",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 18,
       "hp": 153,
@@ -4180,6 +4278,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ettercap",
     "name": "Ettercap",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 44,
@@ -4223,6 +4322,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ettin",
     "name": "Ettin",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 85,
@@ -4263,6 +4363,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "fire-elemental",
     "name": "Fire Elemental",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 102,
@@ -4298,6 +4399,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "fire-giant",
     "name": "Fire Giant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 18,
       "hp": 162,
@@ -4336,6 +4438,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "flesh-golem",
     "name": "Flesh Golem",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 9,
       "hp": 93,
@@ -4374,6 +4477,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "flying-snake",
     "name": "Flying Snake",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 14,
       "hp": 5,
@@ -4407,6 +4511,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "flying-sword",
     "name": "Flying Sword",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 17,
       "hp": 17,
@@ -4440,6 +4545,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "frog",
     "name": "Frog",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 11,
       "hp": 1,
@@ -4465,6 +4571,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "frost-giant",
     "name": "Frost Giant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 15,
       "hp": 138,
@@ -4503,6 +4610,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gargoyle",
     "name": "Gargoyle",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 52,
@@ -4542,6 +4650,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gelatinous-cube",
     "name": "Gelatinous Cube",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 6,
       "hp": 84,
@@ -4584,6 +4693,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ghast",
     "name": "Ghast",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 36,
@@ -4623,6 +4733,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ghost",
     "name": "Ghost",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 45,
@@ -4673,6 +4784,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ghoul",
     "name": "Ghoul",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -4708,6 +4820,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-ape",
     "name": "Giant Ape",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 12,
       "hp": 157,
@@ -4746,6 +4859,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-badger",
     "name": "Giant Badger",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 13,
@@ -4785,6 +4899,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-bat",
     "name": "Giant Bat",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 22,
@@ -4818,6 +4933,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-boar",
     "name": "Giant Boar",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 42,
@@ -4851,6 +4967,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-centipede",
     "name": "Giant Centipede",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 13,
       "hp": 4,
@@ -4880,6 +4997,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-constrictor-snake",
     "name": "Giant Constrictor Snake",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 12,
       "hp": 60,
@@ -4915,6 +5033,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-crab",
     "name": "Giant Crab",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 13,
@@ -4947,6 +5066,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-crocodile",
     "name": "Giant Crocodile",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 14,
       "hp": 85,
@@ -4986,6 +5106,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-eagle",
     "name": "Giant Eagle",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 26,
@@ -5025,6 +5146,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-elk",
     "name": "Giant Elk",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 14,
       "hp": 42,
@@ -5063,6 +5185,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-fire-beetle",
     "name": "Giant Fire Beetle",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 13,
       "hp": 4,
@@ -5095,6 +5218,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-frog",
     "name": "Giant Frog",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 18,
@@ -5129,6 +5253,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-goat",
     "name": "Giant Goat",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 19,
@@ -5162,6 +5287,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-hyena",
     "name": "Giant Hyena",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 45,
@@ -5194,6 +5320,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-lizard",
     "name": "Giant Lizard",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 19,
@@ -5223,6 +5350,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-octopus",
     "name": "Giant Octopus",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 52,
@@ -5258,6 +5386,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-owl",
     "name": "Giant Owl",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 19,
@@ -5291,6 +5420,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-poisonous-snake",
     "name": "Giant Poisonous Snake",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 11,
@@ -5320,6 +5450,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-rat",
     "name": "Giant Rat",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 7,
@@ -5353,6 +5484,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-rat-diseased",
     "name": "Giant Rat (Diseased)",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 7,
@@ -5386,6 +5518,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-scorpion",
     "name": "Giant Scorpion",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 52,
@@ -5424,6 +5557,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-sea-horse",
     "name": "Giant Sea Horse",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 16,
@@ -5457,6 +5591,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-shark",
     "name": "Giant Shark",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 13,
       "hp": 126,
@@ -5490,6 +5625,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-spider",
     "name": "Giant Spider",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 26,
@@ -5525,6 +5661,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-toad",
     "name": "Giant Toad",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 39,
@@ -5560,6 +5697,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-vulture",
     "name": "Giant Vulture",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 10,
       "hp": 22,
@@ -5600,6 +5738,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-wasp",
     "name": "Giant Wasp",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 13,
@@ -5629,6 +5768,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-weasel",
     "name": "Giant Weasel",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 9,
@@ -5661,6 +5801,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "giant-wolf-spider",
     "name": "Giant Wolf Spider",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 11,
@@ -5695,6 +5836,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gibbering-mouther",
     "name": "Gibbering Mouther",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 9,
       "hp": 67,
@@ -5738,6 +5880,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "glabrezu",
     "name": "Glabrezu",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 157,
@@ -5778,6 +5921,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gladiator",
     "name": "Gladiator",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 112,
@@ -5818,6 +5962,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gnoll",
     "name": "Gnoll",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 22,
@@ -5862,6 +6007,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "goat",
     "name": "Goat",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 4,
@@ -5895,6 +6041,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "goblin",
     "name": "Goblin",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 15,
       "hp": 7,
@@ -5933,6 +6080,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gold-dragon-wyrmling",
     "name": "Gold Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 60,
@@ -5966,6 +6114,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gorgon",
     "name": "Gorgon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 19,
       "hp": 114,
@@ -6013,6 +6162,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gray-ooze",
     "name": "Gray Ooze",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 8,
       "hp": 22,
@@ -6048,6 +6198,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "green-dragon-wyrmling",
     "name": "Green Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 38,
@@ -6090,6 +6241,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "green-hag",
     "name": "Green Hag",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 82,
@@ -6126,6 +6278,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "grick",
     "name": "Grick",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 27,
@@ -6165,6 +6318,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "griffon",
     "name": "Griffon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 59,
@@ -6204,6 +6358,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "grimlock",
     "name": "Grimlock",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 11,
@@ -6239,6 +6394,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "guard",
     "name": "Guard",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 11,
@@ -6268,6 +6424,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "guardian-naga",
     "name": "Guardian Naga",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 127,
@@ -6302,6 +6459,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "gynosphinx",
     "name": "Gynosphinx",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 136,
@@ -6340,6 +6498,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "half-red-dragon-veteran",
     "name": "Half-Red Dragon Veteran",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 18,
       "hp": 65,
@@ -6393,6 +6552,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "harpy",
     "name": "Harpy",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 38,
@@ -6432,6 +6592,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hawk",
     "name": "Hawk",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 1,
@@ -6464,6 +6625,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hell-hound",
     "name": "Hell Hound",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 45,
@@ -6507,6 +6669,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hezrou",
     "name": "Hezrou",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 16,
       "hp": 136,
@@ -6547,6 +6710,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hill-giant",
     "name": "Hill Giant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 13,
       "hp": 105,
@@ -6585,6 +6749,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hippogriff",
     "name": "Hippogriff",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 19,
@@ -6624,6 +6789,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hobgoblin",
     "name": "Hobgoblin",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 18,
       "hp": 11,
@@ -6662,6 +6828,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "homunculus",
     "name": "Homunculus",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 5,
@@ -6694,6 +6861,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "horned-devil",
     "name": "Horned Devil",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 178,
@@ -6740,6 +6908,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hunter-shark",
     "name": "Hunter Shark",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 45,
@@ -6773,6 +6942,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hydra",
     "name": "Hydra",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 15,
       "hp": 172,
@@ -6809,6 +6979,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "hyena",
     "name": "Hyena",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 5,
@@ -6841,6 +7012,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ice-devil",
     "name": "Ice Devil",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 180,
@@ -6891,6 +7063,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ice-mephit",
     "name": "Ice Mephit",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 11,
       "hp": 21,
@@ -6935,6 +7108,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "imp",
     "name": "Imp",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 10,
@@ -6970,6 +7144,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "invisible-stalker",
     "name": "Invisible Stalker",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 104,
@@ -7004,6 +7179,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "iron-golem",
     "name": "Iron Golem",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 20,
       "hp": 210,
@@ -7055,6 +7231,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "jackal",
     "name": "Jackal",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 3,
@@ -7088,6 +7265,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "killer-whale",
     "name": "Killer Whale",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 12,
       "hp": 90,
@@ -7122,6 +7300,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "knight",
     "name": "Knight",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 18,
       "hp": 52,
@@ -7162,6 +7341,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "kobold",
     "name": "Kobold",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 5,
@@ -7201,6 +7381,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "kraken",
     "name": "Kraken",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 18,
       "hp": 472,
@@ -7255,6 +7436,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "lamia",
     "name": "Lamia",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 97,
@@ -7295,6 +7477,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "lemure",
     "name": "Lemure",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 7,
       "hp": 13,
@@ -7328,6 +7511,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "lich",
     "name": "Lich",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 135,
@@ -7367,6 +7551,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "lion",
     "name": "Lion",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 26,
@@ -7408,6 +7593,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "lizard",
     "name": "Lizard",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 10,
       "hp": 2,
@@ -7437,6 +7623,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "lizardfolk",
     "name": "Lizardfolk",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 22,
@@ -7488,6 +7675,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mage",
     "name": "Mage",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 40,
@@ -7520,6 +7708,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "magma-mephit",
     "name": "Magma Mephit",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 11,
       "hp": 22,
@@ -7564,6 +7753,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "magmin",
     "name": "Magmin",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 14,
       "hp": 9,
@@ -7597,6 +7787,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mammoth",
     "name": "Mammoth",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 13,
       "hp": 126,
@@ -7635,6 +7826,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "manticore",
     "name": "Manticore",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 68,
@@ -7680,6 +7872,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "marilith",
     "name": "Marilith",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 189,
@@ -7722,6 +7915,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mastiff",
     "name": "Mastiff",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 5,
@@ -7754,6 +7948,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "medusa",
     "name": "Medusa",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 127,
@@ -7801,6 +7996,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "merfolk",
     "name": "Merfolk",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 11,
@@ -7833,6 +8029,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "merrow",
     "name": "Merrow",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 45,
@@ -7878,6 +8075,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mimic",
     "name": "Mimic",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 58,
@@ -7920,6 +8118,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "minotaur",
     "name": "Minotaur",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 76,
@@ -7960,6 +8159,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "minotaur-skeleton",
     "name": "Minotaur Skeleton",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 67,
@@ -7998,6 +8198,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mule",
     "name": "Mule",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 11,
@@ -8031,6 +8232,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mummy",
     "name": "Mummy",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 58,
@@ -8073,6 +8275,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "mummy-lord",
     "name": "Mummy Lord",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 97,
@@ -8123,6 +8326,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "nalfeshnee",
     "name": "Nalfeshnee",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 184,
@@ -8172,6 +8376,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "night-hag",
     "name": "Night Hag",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 112,
@@ -8209,6 +8414,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "nightmare",
     "name": "Nightmare",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 68,
@@ -8244,6 +8450,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "noble",
     "name": "Noble",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 9,
@@ -8273,6 +8480,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ochre-jelly",
     "name": "Ochre Jelly",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 8,
       "hp": 45,
@@ -8307,6 +8515,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "octopus",
     "name": "Octopus",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 12,
       "hp": 3,
@@ -8342,6 +8551,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ogre",
     "name": "Ogre",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 59,
@@ -8377,6 +8587,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "ogre-zombie",
     "name": "Ogre Zombie",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 8,
       "hp": 85,
@@ -8409,6 +8620,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "oni",
     "name": "Oni",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 16,
       "hp": 110,
@@ -8451,6 +8663,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "orc",
     "name": "Orc",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 15,
@@ -8489,6 +8702,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "otyugh",
     "name": "Otyugh",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 114,
@@ -8538,6 +8752,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "owl",
     "name": "Owl",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 11,
       "hp": 1,
@@ -8571,6 +8786,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "owlbear",
     "name": "Owlbear",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 59,
@@ -8610,6 +8826,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "panther",
     "name": "Panther",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 13,
@@ -8649,6 +8866,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "pegasus",
     "name": "Pegasus",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 59,
@@ -8678,6 +8896,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "phase-spider",
     "name": "Phase Spider",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 32,
@@ -8712,6 +8931,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "pit-fiend",
     "name": "Pit Fiend",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 19,
       "hp": 300,
@@ -8766,6 +8986,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "planetar",
     "name": "Planetar",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 19,
       "hp": 200,
@@ -8804,6 +9025,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "plesiosaurus",
     "name": "Plesiosaurus",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 68,
@@ -8836,6 +9058,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "poisonous-snake",
     "name": "Poisonous Snake",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 2,
@@ -8865,6 +9088,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "polar-bear",
     "name": "Polar Bear",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 42,
@@ -8904,6 +9128,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "pony",
     "name": "Pony",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 11,
@@ -8933,6 +9158,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "priest",
     "name": "Priest",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 27,
@@ -8966,6 +9192,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "pseudodragon",
     "name": "Pseudodragon",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 7,
@@ -9006,6 +9233,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "purple-worm",
     "name": "Purple Worm",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 18,
       "hp": 247,
@@ -9045,6 +9273,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "quasit",
     "name": "Quasit",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 7,
@@ -9088,6 +9317,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "quipper",
     "name": "Quipper",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 1,
@@ -9121,6 +9351,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "rakshasa",
     "name": "Rakshasa",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 110,
@@ -9155,6 +9386,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "rat",
     "name": "Rat",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 10,
       "hp": 1,
@@ -9187,6 +9419,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "raven",
     "name": "Raven",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 12,
       "hp": 1,
@@ -9219,6 +9452,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "red-dragon-wyrmling",
     "name": "Red Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 75,
@@ -9260,6 +9494,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "reef-shark",
     "name": "Reef Shark",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -9293,6 +9528,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "remorhaz",
     "name": "Remorhaz",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 17,
       "hp": 195,
@@ -9327,6 +9563,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "rhinoceros",
     "name": "Rhinoceros",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 45,
@@ -9359,6 +9596,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "riding-horse",
     "name": "Riding Horse",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 10,
       "hp": 13,
@@ -9388,6 +9626,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "roc",
     "name": "Roc",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 15,
       "hp": 248,
@@ -9427,6 +9666,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "roper",
     "name": "Roper",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 20,
       "hp": 93,
@@ -9464,6 +9704,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "rug-of-smothering",
     "name": "Rug of Smothering",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 33,
@@ -9491,6 +9732,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "rust-monster",
     "name": "Rust Monster",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 27,
@@ -9525,6 +9767,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "saber-toothed-tiger",
     "name": "Saber-Toothed Tiger",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 52,
@@ -9564,6 +9807,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "sahuagin",
     "name": "Sahuagin",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -9611,6 +9855,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "salamander",
     "name": "Salamander",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 90,
@@ -9653,6 +9898,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "satyr",
     "name": "Satyr",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 31,
@@ -9697,6 +9943,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "scorpion",
     "name": "Scorpion",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 11,
       "hp": 1,
@@ -9726,6 +9973,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "scout",
     "name": "Scout",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 16,
@@ -9765,6 +10013,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "sea-hag",
     "name": "Sea Hag",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 52,
@@ -9808,6 +10057,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "sea-horse",
     "name": "Sea Horse",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 11,
       "hp": 1,
@@ -9832,6 +10082,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "shadow",
     "name": "Shadow",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 16,
@@ -9866,6 +10117,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "shambling-mound",
     "name": "Shambling Mound",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 136,
@@ -9900,6 +10152,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "shield-guardian",
     "name": "Shield Guardian",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 142,
@@ -9935,6 +10188,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "shrieker",
     "name": "Shrieker",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 5,
       "hp": 13,
@@ -9959,6 +10213,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "silver-dragon-wyrmling",
     "name": "Silver Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 45,
@@ -9991,6 +10246,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "skeleton",
     "name": "Skeleton",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 13,
@@ -10026,6 +10282,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "solar",
     "name": "Solar",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 21,
       "hp": 243,
@@ -10075,6 +10332,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "specter",
     "name": "Specter",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10108,6 +10366,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "spider",
     "name": "Spider",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 12,
       "hp": 1,
@@ -10142,6 +10401,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "spirit-naga",
     "name": "Spirit Naga",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 75,
@@ -10175,6 +10435,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "sprite",
     "name": "Sprite",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 15,
       "hp": 2,
@@ -10222,6 +10483,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "spy",
     "name": "Spy",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 27,
@@ -10262,6 +10524,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "steam-mephit",
     "name": "Steam Mephit",
     "category": "creature",
+    "size": "Small",
     "stats": {
       "ac": 10,
       "hp": 21,
@@ -10305,6 +10568,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "stirge",
     "name": "Stirge",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 14,
       "hp": 2,
@@ -10334,6 +10598,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "stone-giant",
     "name": "Stone Giant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 17,
       "hp": 126,
@@ -10373,6 +10638,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "stone-golem",
     "name": "Stone Golem",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 178,
@@ -10417,6 +10683,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "storm-giant",
     "name": "Storm Giant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 16,
       "hp": 230,
@@ -10466,6 +10733,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "succubus-incubus",
     "name": "Succubus/Incubus",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 66,
@@ -10510,6 +10778,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-bats",
     "name": "Swarm of Bats",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10544,6 +10813,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-beetles",
     "name": "Swarm of Beetles",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10576,6 +10846,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-centipedes",
     "name": "Swarm of Centipedes",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10608,6 +10879,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-insects",
     "name": "Swarm of Insects",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10640,6 +10912,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-poisonous-snakes",
     "name": "Swarm of Poisonous Snakes",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 36,
@@ -10672,6 +10945,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-quippers",
     "name": "Swarm of Quippers",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 28,
@@ -10706,6 +10980,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-rats",
     "name": "Swarm of Rats",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 24,
@@ -10739,6 +11014,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-ravens",
     "name": "Swarm of Ravens",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 24,
@@ -10771,6 +11047,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-spiders",
     "name": "Swarm of Spiders",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10806,6 +11083,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "swarm-of-wasps",
     "name": "Swarm of Wasps",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 22,
@@ -10838,6 +11116,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "tarrasque",
     "name": "Tarrasque",
     "category": "creature",
+    "size": "Gargantuan",
     "stats": {
       "ac": 25,
       "hp": 676,
@@ -10905,6 +11184,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "thug",
     "name": "Thug",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 32,
@@ -10944,6 +11224,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "tiger",
     "name": "Tiger",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 37,
@@ -10983,6 +11264,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "treant",
     "name": "Treant",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 16,
       "hp": 138,
@@ -11024,6 +11306,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "tribal-warrior",
     "name": "Tribal Warrior",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 11,
@@ -11056,6 +11339,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "triceratops",
     "name": "Triceratops",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 13,
       "hp": 95,
@@ -11094,6 +11378,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "troll",
     "name": "Troll",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 84,
@@ -11134,6 +11419,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "tyrannosaurus-rex",
     "name": "Tyrannosaurus Rex",
     "category": "creature",
+    "size": "Huge",
     "stats": {
       "ac": 13,
       "hp": 136,
@@ -11172,6 +11458,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "unicorn",
     "name": "Unicorn",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 12,
       "hp": 67,
@@ -11219,6 +11506,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "vampire-vampire",
     "name": "Vampire, Vampire Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 144,
@@ -11277,6 +11565,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "vampire-bat",
     "name": "Vampire, Bat Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 144,
@@ -11328,6 +11617,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "vampire-mist",
     "name": "Vampire, Mist Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 144,
@@ -11360,6 +11650,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "vampire-spawn",
     "name": "Vampire Spawn",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 15,
       "hp": 82,
@@ -11402,6 +11693,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "veteran",
     "name": "Veteran",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 17,
       "hp": 58,
@@ -11446,6 +11738,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "violet-fungus",
     "name": "Violet Fungus",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 5,
       "hp": 18,
@@ -11479,6 +11772,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "vrock",
     "name": "Vrock",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 15,
       "hp": 104,
@@ -11534,6 +11828,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "vulture",
     "name": "Vulture",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 5,
@@ -11567,6 +11862,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "warhorse",
     "name": "Warhorse",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 11,
       "hp": 19,
@@ -11599,6 +11895,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "warhorse-skeleton",
     "name": "Warhorse Skeleton",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 22,
@@ -11628,6 +11925,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "water-elemental",
     "name": "Water Elemental",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 14,
       "hp": 114,
@@ -11671,6 +11969,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "weasel",
     "name": "Weasel",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 13,
       "hp": 1,
@@ -11703,6 +12002,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "werebear-bear",
     "name": "Werebear, Bear Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 135,
@@ -11743,6 +12043,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "werebear-human",
     "name": "Werebear, Human Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 135,
@@ -11777,6 +12078,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "werebear-hybrid",
     "name": "Werebear, Hybrid Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 135,
@@ -11823,6 +12125,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wereboar-boar",
     "name": "Wereboar, Boar Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 78,
@@ -11857,6 +12160,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wereboar-human",
     "name": "Wereboar, Human Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 10,
       "hp": 78,
@@ -11891,6 +12195,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wereboar-hybrid",
     "name": "Wereboar, Hybrid Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 78,
@@ -11932,6 +12237,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wererat-human",
     "name": "Wererat, Human Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 33,
@@ -11972,6 +12278,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wererat-hybrid",
     "name": "Wererat, Hybrid Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 33,
@@ -12018,6 +12325,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wererat-rat",
     "name": "Wererat, Rat Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 33,
@@ -12051,6 +12359,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "weretiger-human",
     "name": "Weretiger, Human Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 120,
@@ -12091,6 +12400,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "weretiger-hybrid",
     "name": "Weretiger, Hybrid Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 120,
@@ -12144,6 +12454,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "weretiger-tiger",
     "name": "Weretiger, Tiger Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 120,
@@ -12184,6 +12495,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "werewolf-human",
     "name": "Werewolf, Human Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 11,
       "hp": 58,
@@ -12218,6 +12530,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "werewolf-hybrid",
     "name": "Werewolf, Hybrid Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 58,
@@ -12258,6 +12571,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "werewolf-wolf",
     "name": "Werewolf, Wolf Form",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 12,
       "hp": 58,
@@ -12291,6 +12605,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "white-dragon-wyrmling",
     "name": "White Dragon Wyrmling",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 16,
       "hp": 32,
@@ -12332,6 +12647,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wight",
     "name": "Wight",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 14,
       "hp": 45,
@@ -12377,6 +12693,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "will-o-wisp",
     "name": "Will-o'-Wisp",
     "category": "creature",
+    "size": "Tiny",
     "stats": {
       "ac": 19,
       "hp": 22,
@@ -12413,6 +12730,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "winter-wolf",
     "name": "Winter Wolf",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 75,
@@ -12456,6 +12774,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wolf",
     "name": "Wolf",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 11,
@@ -12489,6 +12808,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "worg",
     "name": "Worg",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 26,
@@ -12521,6 +12841,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wraith",
     "name": "Wraith",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 13,
       "hp": 67,
@@ -12555,6 +12876,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "wyvern",
     "name": "Wyvern",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 13,
       "hp": 110,
@@ -12599,6 +12921,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "xorn",
     "name": "Xorn",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 19,
       "hp": 73,
@@ -12640,6 +12963,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-black-dragon",
     "name": "Young Black Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 127,
@@ -12689,6 +13013,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-blue-dragon",
     "name": "Young Blue Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 152,
@@ -12737,6 +13062,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-brass-dragon",
     "name": "Young Brass Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 110,
@@ -12776,6 +13102,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-bronze-dragon",
     "name": "Young Bronze Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 142,
@@ -12816,6 +13143,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-copper-dragon",
     "name": "Young Copper Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 119,
@@ -12855,6 +13183,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-gold-dragon",
     "name": "Young Gold Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 178,
@@ -12895,6 +13224,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-green-dragon",
     "name": "Young Green Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 136,
@@ -12944,6 +13274,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-red-dragon",
     "name": "Young Red Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 178,
@@ -12992,6 +13323,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-silver-dragon",
     "name": "Young Silver Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 18,
       "hp": 168,
@@ -13031,6 +13363,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "young-white-dragon",
     "name": "Young White Dragon",
     "category": "creature",
+    "size": "Large",
     "stats": {
       "ac": 17,
       "hp": 133,
@@ -13080,6 +13413,7 @@ export const generatedBestiary: BestiaryEntry[] = [
     "id": "zombie",
     "name": "Zombie",
     "category": "creature",
+    "size": "Medium",
     "stats": {
       "ac": 8,
       "hp": 22,

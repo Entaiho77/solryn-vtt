@@ -54,6 +54,7 @@ interface Prof {
 interface Monster {
   index: string;
   name: string;
+  size?: string;
   type: string;
   subtype?: string;
   armor_class?: { value: number }[];
@@ -179,6 +180,7 @@ const entries = data.map((m) => {
     id: m.index,
     name: m.name,
     category: 'creature',
+    ...(m.size ? { size: m.size } : {}),
     stats: {
       ac: ac ?? 10,
       hp: m.hit_points ?? 0,

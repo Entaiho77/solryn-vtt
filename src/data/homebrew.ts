@@ -42,7 +42,7 @@ export interface HomebrewMonster {
   id: string;
   name: string;
   /** Tiny/Small/Medium/Large/Huge/Gargantuan. */
-  size: string;
+  size: HomebrewSize;
   /** beast, undead, humanoid, dragon, … (free-form but drawn from a fixed dropdown). */
   type: string;
   alignment: string;
@@ -228,6 +228,7 @@ export function homebrewToBestiaryEntry(hb: HomebrewMonster): BestiaryEntry {
     id: hb.id,
     name: hb.name,
     category: 'creature',
+    size: hb.size,
     stats,
     ...(attacks.length ? { attacks } : {}),
     ...(abilities.length ? { abilities } : {}),
@@ -275,7 +276,7 @@ export interface HomebrewFeat {
   displayOnly: boolean;
 }
 
-export type HomebrewSize = 'Small' | 'Medium' | 'Large';
+export type HomebrewSize = 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Gargantuan';
 
 export interface HomebrewRace {
   id: string;

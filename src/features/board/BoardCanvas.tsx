@@ -378,7 +378,11 @@ export function BoardCanvas({
       const dragging = ghost?.id === token.id;
       const col = dragging ? ghost!.col : token.col;
       const row = dragging ? ghost!.row : token.row;
-      const { x, y } = cellCenter(col, row, g);
+      // Multi-square creatures (Large 2×2, Huge 3×3, Gargantuan 4×4) center on the MIDDLE of their
+      // footprint, not the anchor cell, and scale every ring/label off `cells`.
+      const cells = token.size ?? 1;
+      const x = (col + cells / 2) * g;
+      const y = (row + cells / 2) * g;
 
       // Active conditions (defined in this system) → concentric jagged rings. Cap at 4; when more
       // are active, keep the 4 most recently applied (last keys — Firebase preserves insertion
@@ -386,15 +390,16 @@ export function BoardCanvas({
       const condIds = Object.keys(token.conditions ?? {})
         .filter((id) => conditionDefs?.[id])
         .slice(-4);
-      // Shrink the token art when rings are present so the token + all rings stay inside the cell.
-      const radius = g * (condIds.length ? 0.3 : 0.42);
+      // Shrink the token art when rings are present so the token + all rings stay inside the
+      // footprint. Radius scales with the footprint size (cells).
+      const radius = g * cells * (condIds.length ? 0.3 : 0.42);
 
       // Nested condition rings, drawn BEFORE (behind) the token art at full opacity — spike tips
-      // reach rMax (< half a cell, so nothing overflows the grid square), innermost band meets the
-      // token art at `radius`. Largest first so each smaller disk carves the next band.
+      // reach rMax (< half the footprint, so nothing overflows the token's squares), innermost band
+      // meets the token art at `radius`. Largest first so each smaller disk carves the next band.
       if (condIds.length) {
-        const rMax = g * 0.48;
-        const spike = g * 0.06;
+        const rMax = g * cells * 0.48;
+        const spike = g * cells * 0.06;
         const n = condIds.length;
         condIds.forEach((id, i) => {
           const r = rMax - ((rMax - radius) * i) / n;

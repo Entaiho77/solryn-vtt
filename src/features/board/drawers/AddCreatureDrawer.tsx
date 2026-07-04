@@ -10,7 +10,7 @@ import {
   useMyCreatures,
 } from '../../../data/creatures';
 import { homebrewToBestiaryEntry, type HomebrewMonster } from '../../../data/homebrew';
-import { firstFreeCell, gridDimensions } from '../boardGeometry';
+import { firstFreeCell, gridDimensions, sizeToSquares } from '../boardGeometry';
 import { Button } from '../../../components/ui/Button';
 import { TokenArtUpload } from '../../../components/ui/TokenArtUpload';
 import s from './drawers.module.css';
@@ -111,9 +111,14 @@ export function AddCreatureDrawer({
     cat: Category,
     stats: Record<string, number | string>,
     creatureId?: string,
+    /** Creature size category (e.g. "Large"); sets a multi-square token footprint. */
+    sizeCategory?: string,
   ) {
     const isTrap = cat === 'trap';
     const hpVal = Number(stats.hp);
+    // Large/Huge/Gargantuan creatures get a 2×2/3×3/4×4 footprint; everything else stays 1×1
+    // (default, so we only stamp `size` when it exceeds one square). Traps are always 1×1.
+    const squares = isTrap ? 1 : sizeToSquares(sizeCategory);
     place({
       kind: isTrap ? 'trap' : 'creature',
       name: blockName,
@@ -121,6 +126,7 @@ export function AddCreatureDrawer({
       visible: !isTrap, // traps start hidden until the GM reveals/springs them
       stats,
       ...(creatureId ? { creatureId } : {}),
+      ...(squares > 1 ? { size: squares } : {}),
       ...(isTrap ? { trapState: 'hidden' as const } : {}),
       ...(!isTrap && Number.isFinite(hpVal) && hpVal > 0
         ? { hp: { current: hpVal, max: hpVal } }
@@ -185,7 +191,7 @@ export function AddCreatureDrawer({
                   className={s.place}
                   onClick={() => {
                     const entry = homebrewToBestiaryEntry(hb);
-                    placeStatBlock(entry.name, 'creature', entry.stats, entry.id);
+                    placeStatBlock(entry.name, 'creature', entry.stats, entry.id, entry.size);
                   }}
                 >
                   Spawn
@@ -272,7 +278,7 @@ export function AddCreatureDrawer({
               </span>
               <button
                 className={s.place}
-                onClick={() => placeStatBlock(b.name, b.category as Category, b.stats, b.id)}
+                onClick={() => placeStatBlock(b.name, b.category as Category, b.stats, b.id, b.size)}
               >
                 + Place
               </button>

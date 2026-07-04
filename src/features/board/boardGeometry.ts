@@ -42,21 +42,30 @@ export function gridDimensions(
   };
 }
 
-/** Topmost token occupying a cell (later tokens render on top). */
+/** Whether (col,row) falls within a token's footprint (honours multi-square `size`). */
+function coversCell(t: Token, col: number, row: number): boolean {
+  const n = t.size ?? 1;
+  return col >= t.col && col < t.col + n && row >= t.row && row < t.row + n;
+}
+
+/** Topmost token occupying a cell (later tokens render on top; multi-square footprints count). */
 export function tokenAtCell(
   tokens: Token[],
   col: number,
   row: number,
 ): Token | undefined {
   for (let i = tokens.length - 1; i >= 0; i--) {
-    if (tokens[i].col === col && tokens[i].row === row) return tokens[i];
+    if (coversCell(tokens[i], col, row)) return tokens[i];
   }
   return undefined;
 }
 
-/** Every token occupying a cell, in render order (bottom → top; topmost is last). */
+/**
+ * Every token whose footprint covers a cell, in render order (bottom → top; topmost is last).
+ * A `size: 2` token at (3,3) is returned for clicks on (3,3), (3,4), (4,3) and (4,4).
+ */
 export function tokensAtCell(tokens: Token[], col: number, row: number): Token[] {
-  return tokens.filter((t) => t.col === col && t.row === row);
+  return tokens.filter((t) => coversCell(t, col, row));
 }
 
 /**
@@ -117,6 +126,27 @@ export function gridDistanceSquares(
   er: number,
 ): number {
   return Math.max(Math.abs(ec - sc), Math.abs(er - sr));
+}
+
+/**
+ * A creature's size category → its footprint in squares per side (5e). Tiny/Small/Medium share a
+ * square (1); Large = 2×2, Huge = 3×3, Gargantuan = 4×4. Unknown/missing → 1. Case-insensitive.
+ */
+export function sizeToSquares(size?: string): number {
+  switch (size?.toLowerCase()) {
+    case 'tiny':
+    case 'small':
+    case 'medium':
+      return 1;
+    case 'large':
+      return 2;
+    case 'huge':
+      return 3;
+    case 'gargantuan':
+      return 4;
+    default:
+      return 1;
+  }
 }
 
 /** Cells a token of `size` squares-per-side (default 1) covers, anchored at its top-left. */

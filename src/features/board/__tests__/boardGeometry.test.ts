@@ -13,6 +13,7 @@ import {
   gridDistanceSquares,
   occupiedCells,
   pixelToCell,
+  sizeToSquares,
   tokenAtCell,
   tokensAtCell,
 } from '../boardGeometry';
@@ -42,6 +43,26 @@ describe('gridDimensions', () => {
   });
 });
 
+describe('sizeToSquares', () => {
+  it.each([
+    ['Tiny', 1],
+    ['Small', 1],
+    ['Medium', 1],
+    ['Large', 2],
+    ['Huge', 3],
+    ['Gargantuan', 4],
+  ])('%s → %i squares per side', (size, squares) => {
+    expect(sizeToSquares(size)).toBe(squares);
+  });
+
+  it('is case-insensitive and defaults unknown/missing to 1', () => {
+    expect(sizeToSquares('huge')).toBe(3);
+    expect(sizeToSquares('GARGANTUAN')).toBe(4);
+    expect(sizeToSquares(undefined)).toBe(1);
+    expect(sizeToSquares('Colossal')).toBe(1);
+  });
+});
+
 describe('tokenAtCell', () => {
   const tokens = [
     { id: 'a', col: 1, row: 1 },
@@ -53,6 +74,14 @@ describe('tokenAtCell', () => {
     expect(tokenAtCell(tokens, 1, 1)?.id).toBe('b');
     expect(tokenAtCell(tokens, 2, 0)?.id).toBe('c');
     expect(tokenAtCell(tokens, 5, 5)).toBeUndefined();
+  });
+
+  it('hits a multi-square token anywhere in its footprint', () => {
+    const big = [{ id: 'giant', col: 3, row: 3, size: 2 }] as Token[];
+    for (const [c, r] of [[3, 3], [4, 3], [3, 4], [4, 4]]) {
+      expect(tokenAtCell(big, c, r)?.id).toBe('giant');
+    }
+    expect(tokenAtCell(big, 5, 5)).toBeUndefined(); // just outside the 2×2
   });
 });
 
@@ -67,6 +96,14 @@ describe('tokensAtCell', () => {
     expect(tokensAtCell(tokens, 1, 1).map((t) => t.id)).toEqual(['a', 'b']);
     expect(tokensAtCell(tokens, 2, 0).map((t) => t.id)).toEqual(['c']);
     expect(tokensAtCell(tokens, 5, 5)).toEqual([]);
+  });
+
+  it('includes a size-2 token for every cell of its 2×2 footprint', () => {
+    const big = [{ id: 'giant', col: 3, row: 3, size: 2 }] as Token[];
+    expect(tokensAtCell(big, 3, 3).map((t) => t.id)).toEqual(['giant']);
+    expect(tokensAtCell(big, 4, 4).map((t) => t.id)).toEqual(['giant']);
+    expect(tokensAtCell(big, 4, 3).map((t) => t.id)).toEqual(['giant']);
+    expect(tokensAtCell(big, 2, 2)).toEqual([]); // outside the footprint
   });
 });
 

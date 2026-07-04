@@ -403,6 +403,8 @@ export interface BestiaryEntry {
   name: string;
   /** Which stat-block shape this entry uses. */
   category: string;
+  /** Size category, e.g. "Medium" / "Large" (5e). Drives the token footprint via sizeToSquares. */
+  size?: string;
   /** Free-form values keyed by field id (kept generic per the schema philosophy). */
   stats: Record<string, number | string>;
   abilities?: string[];
