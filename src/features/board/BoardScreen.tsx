@@ -10,6 +10,7 @@ import {
   releasePartyToken,
   setGridVisible,
   toggleFogSquare,
+  updateToken,
 } from '../../data/board';
 import { addShape } from '../../data/shapes';
 import { useCreatureArt, useMyCreatures } from '../../data/creatures';
@@ -128,19 +129,28 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   const attempted = useRef<Set<string>>(new Set());
   useEffect(() => {
     if (role !== 'player' || !character || !activeMap || partyScale) return;
-    const exists = tokens.some(
-      (t) => t.characterId === character.id && t.mapId === activeMap.id,
-    );
-    const key = `${character.id}:${activeMap.id}`;
-    if (exists || attempted.current.has(key)) return;
-    attempted.current.add(key);
-    const count = tokens.filter(
-      (t) => t.kind === 'character' && t.mapId === activeMap.id,
-    ).length;
     // The PC's race sets its visual token size (5e Gnome/Halfling are Small). Solryn ancestries
     // define no size → undefined → default Medium radius. sizeCategory is visual only; the
     // footprint (`size`) stays 1×1 for every PC race.
     const ancestry = system.ancestries.find((a) => a.id === character.definition.ancestryId);
+    const existingToken = tokens.find(
+      (t) => t.characterId === character.id && t.mapId === activeMap.id,
+    );
+    const key = `${character.id}:${activeMap.id}`;
+    if (existingToken) {
+      // Backfill: tokens created before sizeCategory existed render at Medium. Stamp the race's
+      // size onto them once (self-terminating — the write flips sizeCategory truthy). Footprint
+      // is untouched.
+      if (!existingToken.sizeCategory && ancestry?.size) {
+        void updateToken(gameId, existingToken.id, { sizeCategory: ancestry.size });
+      }
+      return;
+    }
+    if (attempted.current.has(key)) return;
+    attempted.current.add(key);
+    const count = tokens.filter(
+      (t) => t.kind === 'character' && t.mapId === activeMap.id,
+    ).length;
     void addToken(gameId, {
       mapId: activeMap.id,
       kind: 'character',
