@@ -22,10 +22,13 @@ export function CharacterQuickView({
   system,
   character,
   canLevelUp = false,
+  target,
 }: {
   system: SystemDefinition;
   character: Character;
   canLevelUp?: boolean;
+  /** Current click-to-target creature (Solryn): its DR is shown in and used by the attack UI. */
+  target?: { name: string; dr?: number };
 }) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
@@ -91,7 +94,7 @@ export function CharacterQuickView({
         ))}
       </div>
 
-      <AttacksSection system={system} character={character} />
+      <AttacksSection system={system} character={character} target={target} />
 
       <div className={s.row}>
         {isCaster && (

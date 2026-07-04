@@ -1,23 +1,36 @@
 import type { Spell, SystemDefinition, WeaponItem } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { computeSkillState, getCombatResolver } from '../../engine/rules';
+import { computeModifier, computeSkillState } from '../../engine/rules';
+import { attemptLuckCrit, resolveSolrynAttack, type CritState } from '../../systems/solryn/combat';
 import { setLoadedSpell, setPoolCurrent } from '../../data/characters';
 import { Button } from '../../components/ui/Button';
 import { useRollLog } from '../rolllog/rollLog';
 import styles from './AttacksSection.module.css';
 
 const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
+/** The Luck Points resource pool id (Solryn derived stat). */
+const LUCK_POOL = 'luckPoints';
 
 export function AttacksSection({
   system,
   character,
+  target,
 }: {
   system: SystemDefinition;
   character: Character;
+  /** Current click-to-target creature (Solryn): its DR drives auto-hit damage resolution. */
+  target?: { name: string; dr?: number };
 }) {
   const { postRoll } = useRollLog();
   const mode = system.modes.skill;
-  const resolver = getCombatResolver(system);
+  const scores = character.definition.coreScores;
+
+  // Luck drives crits: the modifier sets the crit threshold, and each attempt spends a Luck Point.
+  const luckMod = computeModifier(scores.LCK ?? 0, system.modifierRule);
+  const arcanaMod = computeModifier(scores.ARC ?? 0, system.modifierRule);
+  const luckMax = Math.max(0, luckMod);
+  const luckCurrent = character.play.pools?.[LUCK_POOL]?.current ?? luckMax;
+  const canCrit = luckCurrent >= 1;
 
   const weapons = character.play.equippedWeaponIds
     .map((id) => system.equipment.weapons.find((w) => w.id === id))
@@ -45,21 +58,42 @@ export function AttacksSection({
     return computeSkillState(st.investedPoints, st.realizedPoints, mode).activeBonus;
   }
 
-  function rollWeapon(w: WeaponItem) {
-    postRoll(
-      resolver.resolveAttack({ label: w.name, dice: w.damageDice, bonus: weaponBonus(w) }).logText,
-    );
+  const attackLabel = (name: string) =>
+    target?.name ? `${character.name} → ${target.name} — ${name}` : `${character.name} — ${name}`;
+
+  // Spend a Luck Point, roll the d20, and return the crit outcome + a log suffix noting the roll.
+  function rollCrit(): { crit: CritState; suffix: string } {
+    void setPoolCurrent(character.id, LUCK_POOL, Math.max(0, luckCurrent - 1));
+    const a = attemptLuckCrit(luckMod);
+    return { crit: a.success ? 'success' : 'failed', suffix: ` · Luck d20 ${a.roll} vs ${a.threshold} (−1 LP)` };
   }
 
-  function cast() {
+  function rollWeapon(w: WeaponItem, useCrit: boolean) {
+    const { crit, suffix } = useCrit ? rollCrit() : { crit: 'none' as CritState, suffix: '' };
+    const res = resolveSolrynAttack({
+      label: attackLabel(w.name),
+      dice: w.damageDice,
+      bonus: weaponBonus(w),
+      targetDr: target?.dr,
+      crit,
+    });
+    postRoll(res.logText + suffix);
+  }
+
+  function cast(useCrit: boolean) {
     if (!loaded || !arcanaPoolId || arcanaCurrent < loaded.cost) return;
-    const res = loaded.damageDice
-      ? resolver.resolveAttack({ label: loaded.name, dice: loaded.damageDice, damageType: loaded.damageType })
-      : null;
+    if (useCrit && !canCrit) return;
     void setPoolCurrent(character.id, arcanaPoolId, arcanaCurrent - loaded.cost);
-    postRoll(
-      `${res ? res.logText : `${loaded.name}: cast`} (−${loaded.cost} Arcana)`,
-    );
+    const { crit, suffix } = useCrit ? rollCrit() : { crit: 'none' as CritState, suffix: '' };
+    if (loaded.damageDice) {
+      // Solryn spell save: DC = 10 + Arcana modifier (+ skill bonus, unused here). Success = half,
+      // which the target/GM then compares against DR — surfaced as a note on the log line.
+      const saveDc = 10 + arcanaMod;
+      const res = resolveSolrynAttack({ label: attackLabel(loaded.name), dice: loaded.damageDice, targetDr: target?.dr, crit });
+      postRoll(`${res.logText} · save DC ${saveDc} (success: half vs DR) · −${loaded.cost} AP${suffix}`);
+    } else {
+      postRoll(`${character.name} — ${loaded.name}: cast (−${loaded.cost} AP)`);
+    }
   }
 
   const nothing = weapons.length === 0 && knownOffensive.length === 0;
@@ -67,6 +101,13 @@ export function AttacksSection({
   return (
     <section>
       <h3 className={styles.title}>Attacks &amp; damage</h3>
+
+      {target && (
+        <p className={styles.synopsis}>
+          Target: <strong>{target.name}</strong>
+          {typeof target.dr === 'number' ? ` — DR ${target.dr}` : ' — no DR'}
+        </p>
+      )}
 
       {nothing ? (
         <p className={styles.empty}>No attacks equipped.</p>
@@ -81,8 +122,17 @@ export function AttacksSection({
                   {w.damageDice}
                   {bonus ? ` ${sign(bonus)}` : ''} · auto-hit vs DR
                 </span>
-                <Button size="sm" onClick={() => rollWeapon(w)}>
+                <Button size="sm" onClick={() => rollWeapon(w, false)}>
                   Roll
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  disabled={!canCrit}
+                  title={canCrit ? 'Attempt Critical Hit (spend 1 Luck Point)' : 'No Luck Points'}
+                  onClick={() => rollWeapon(w, true)}
+                >
+                  ⚡ Crit
                 </Button>
               </div>
             );
@@ -110,14 +160,21 @@ export function AttacksSection({
               <button
                 type="button"
                 className={styles.cast}
-                onClick={cast}
+                onClick={() => cast(false)}
                 disabled={arcanaCurrent < loaded.cost}
-                title={
-                  arcanaCurrent < loaded.cost ? 'Not enough Arcana' : undefined
-                }
+                title={arcanaCurrent < loaded.cost ? 'Not enough Arcana' : undefined}
               >
                 Cast
               </button>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={!canCrit || arcanaCurrent < loaded.cost}
+                title={canCrit ? 'Attempt Critical Hit (spend 1 Luck Point)' : 'No Luck Points'}
+                onClick={() => cast(true)}
+              >
+                ⚡ Crit
+              </Button>
             </div>
           )}
 

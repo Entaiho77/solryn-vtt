@@ -90,9 +90,11 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     role === 'player' ? 'character' : null,
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  // Click-to-target combat (5e only): a per-user, local current target. Its AC is read from
-  // the token's stat block when an attack resolves — no typed AC. Solryn has no targeting.
+  // Click-to-target combat: a per-user, local current target whose defense is read from the
+  // token's stat block when an attack resolves (5e → AC, Solryn → DR); no typed number.
   const is5e = isClassAndLevel(system);
+  // Systems with a target-vs-defense combat model: 5e (attack roll vs AC) and Solryn (auto-hit vs DR).
+  const canTargetMode = is5e || system.modes.combat.id === 'auto-hit-vs-dr';
   const [targetId, setTargetId] = useState<string | null>(null);
   // GM right-click token menu (board cleanup): the token + cursor position, null when closed.
   const [ctxMenu, setCtxMenu] = useState<{ token: Token; x: number; y: number } | null>(null);
@@ -183,12 +185,13 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
   // The current attack target (5e). We resolve its name + AC straight from the token's stats
   // (monsters carry AC from the bestiary; PC tokens are stamped with pcTokenStats). Using the
   // live token here also self-clears the target if it's removed from the board.
-  const targetToken = is5e && targetId ? (tokens.find((t) => t.id === targetId) ?? null) : null;
+  const targetToken = canTargetMode && targetId ? (tokens.find((t) => t.id === targetId) ?? null) : null;
   const target = targetToken
     ? {
         id: targetToken.id,
         name: targetToken.name,
         ...(typeof targetToken.stats?.ac === 'number' ? { ac: targetToken.stats.ac } : {}),
+        ...(typeof targetToken.stats?.dr === 'number' ? { dr: targetToken.stats.dr } : {}),
       }
     : undefined;
   // Toggle a token as the current target (click the same one again to clear).
@@ -404,6 +407,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               system={system}
               character={character}
               canLevelUp={character.play.level < (game.levelGrant ?? 1)}
+              target={target}
             />
           ),
       },
@@ -447,7 +451,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             // for the GM, remove tokens. Only opened when there's an action; party is excluded.
             onContextToken={(token, x, y) => {
               if (token.kind === 'party') return;
-              const canTarget = is5e && (token.kind === 'character' || token.kind === 'creature');
+              const canTarget = canTargetMode && (token.kind === 'character' || token.kind === 'creature');
               if (canTarget || role === 'gm') setCtxMenu({ token, x, y });
             }}
             onGrabParty={(id) => void grabPartyToken(gameId, id, uid)}
@@ -481,7 +485,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             x={ctxMenu.x}
             y={ctxMenu.y}
             gameId={gameId}
-            is5e={is5e}
+            targetingEnabled={canTargetMode}
             isTarget={ctxMenu.token.id === targetId}
             onSetTarget={() => onSetTarget(ctxMenu.token.id)}
             canRemove={role === 'gm'}

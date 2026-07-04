@@ -8,8 +8,8 @@ import styles from './TokenContextMenu.module.css';
  * backdrop) or Escape. It sets the attack target and (for the GM) removes tokens — both
  * WITHOUT changing selection, so the attacker's card stays open while you target a defender.
  *
- * - "Set as target" (5e only, character/creature) points attacks at this token; its AC is read
- *   from the stat block. Toggling clears it.
+ * - "Set as target" (character/creature, for systems with target-vs-defense combat) points attacks
+ *   at this token; its defense (5e AC / Solryn DR) is read from the stat block. Toggling clears it.
  * - "Remove token" (GM only) deletes just games/{gameId}/tokens/{tokenId}; a player's
  *   character, membership, and game link are untouched, so they can rejoin.
  */
@@ -18,7 +18,7 @@ export function TokenContextMenu({
   x,
   y,
   gameId,
-  is5e,
+  targetingEnabled,
   isTarget,
   onSetTarget,
   canRemove,
@@ -28,8 +28,8 @@ export function TokenContextMenu({
   x: number;
   y: number;
   gameId: string;
-  /** 5e game → offer targeting for attackable tokens. Solryn passes false (no targeting). */
-  is5e: boolean;
+  /** Whether this system's combat uses targeting (5e AC / Solryn DR) → offer "Set as target". */
+  targetingEnabled: boolean;
   /** Whether this token is already the current target (toggles the label to "Clear target"). */
   isTarget: boolean;
   /** Set/clear this token as the attack target (does not change selection). */
@@ -47,7 +47,7 @@ export function TokenContextMenu({
   }, [onClose]);
 
   // Only attackable tokens can be targeted (traps/party have no AC to hit).
-  const canTarget = is5e && (token.kind === 'character' || token.kind === 'creature');
+  const canTarget = targetingEnabled && (token.kind === 'character' || token.kind === 'creature');
 
   const setTarget = () => {
     onSetTarget();
