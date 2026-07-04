@@ -18,6 +18,7 @@ export function InitiativeDrawer({
   uid,
   homebrewEntries,
   rules,
+  target,
 }: {
   gameId: string;
   game: Game;
@@ -28,6 +29,9 @@ export function InitiativeDrawer({
   homebrewEntries: BestiaryEntry[];
   /** Campaign crit rules, forwarded to the creature stat card. */
   rules?: CampaignRules;
+  /** Current click-to-target token, forwarded so the stat card resolves attacks vs its defense
+   *  (5e AC / Solryn DR) — same as the main board monster panel. */
+  target?: { id: string; name: string; ac?: number; dr?: number };
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [card, setCard] = useState<{ name: string; creatureId?: string } | null>(null);
@@ -114,7 +118,7 @@ export function InitiativeDrawer({
         <button type="button" className={s.place} onClick={() => setCard(null)} style={{ alignSelf: 'flex-start' }}>
           ‹ Back
         </button>
-        <MonsterStatCard system={system} name={card.name} creatureId={card.creatureId} extraEntries={homebrewEntries} uid={uid} rules={rules} />
+        <MonsterStatCard system={system} name={card.name} creatureId={card.creatureId} extraEntries={homebrewEntries} uid={uid} rules={rules} target={target} />
       </div>
     );
   }

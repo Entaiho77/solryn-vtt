@@ -266,7 +266,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
     label: 'Initiative',
     short: 'Initiative',
     glyph: '⚔',
-    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} homebrewEntries={homebrewEntries} rules={rules} />,
+    content: <InitiativeDrawer gameId={gameId} game={game} activeMap={activeMap} system={system} uid={uid} homebrewEntries={homebrewEntries} rules={rules} target={target} />,
   };
 
   // Distance measuring is available to everyone — players measure their own movement/range.
