@@ -3,6 +3,7 @@ import type { BestiaryEntry, CreatureSave, SystemDefinition } from '../../../eng
 import type { Token } from '../../../data/types';
 import type { CampaignRules, HomebrewEquipment } from '../../../data/homebrew';
 import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
+import { resolveSolrynAttack } from '../../../systems/solryn/combat';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
 import { Button } from '../../../components/ui/Button';
@@ -95,7 +96,7 @@ export function MonsterStatCard({
   uid?: string;
   /** Current click-to-target token (5e), set via the board right-click menu. Attacks read its
    *  AC when set; otherwise the manual Target AC below is the fallback. */
-  target?: { id: string; name: string; ac?: number };
+  target?: { id: string; name: string; ac?: number; dr?: number };
   /** Campaign crit rules (threshold + damage formula) applied to this creature's attacks. */
   rules?: CampaignRules;
   onClose?: () => void;
@@ -134,10 +135,25 @@ export function MonsterStatCard({
 
   const st = entry.stats;
   const resolver = getCombatResolver(system);
+  // Solryn resolves monster attacks the same way player attacks do (auto-hit vs the target's DR),
+  // not through the 5e attack-roll-vs-AC path.
+  const isSolryn = system.modes.combat.id === 'auto-hit-vs-dr';
   // Resolve against the clicked target's AC when one is set (and it isn't this creature's own
   // token — a creature never attacks itself); otherwise fall back to the typed Target AC.
   const usingTarget = rollToHit && target != null && typeof target.ac === 'number' && target.id !== token?.id;
-  const post = (label: string, diceExpr: string, type?: string, attackBonus?: number) =>
+  const post = (label: string, diceExpr: string, type?: string, attackBonus?: number) => {
+    if (isSolryn) {
+      // Auto-hit; subtract the target's DR (sourced from its token stat block, like player attacks).
+      const drTargeted = target != null && typeof target.dr === 'number' && target.id !== token?.id;
+      const composed = drTargeted ? `${entry.name} → ${target!.name} — ${label}` : `${entry.name} — ${label}`;
+      const res = resolveSolrynAttack({
+        label: composed,
+        dice: diceExpr,
+        targetDr: drTargeted ? target!.dr : undefined,
+      });
+      postRoll(res.logText + (drTargeted ? '' : ' · No target set — apply DR manually'));
+      return;
+    }
     postRoll(
       resolver.resolveAttack({
         label: usingTarget ? `${entry.name} → ${target!.name} — ${label}` : `${entry.name} — ${label}`,
@@ -151,6 +167,7 @@ export function MonsterStatCard({
         ...(rules?.critFormulaCustom ? { critFormulaCustom: rules.critFormulaCustom } : {}),
       }).logText,
     );
+  };
   // Abilities (breath weapons, traits) are NOT to-hit attacks — roll plain damage, never
   // through the attack resolver, so 5e dice-bearing abilities don't misfire as hit/miss.
   const saveByName = new Map((entry.saves ?? []).map((sv) => [sv.name, sv] as const));
