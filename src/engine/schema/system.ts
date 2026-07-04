@@ -433,6 +433,58 @@ export interface ConditionEntry {
   save?: string;
 }
 
+/**
+ * Mechanized token-condition effects. Boolean flags the combat/roll code reads to apply
+ * advantage/disadvantage and special rules. Advantage and disadvantage from all sources cancel to
+ * a normal roll (and never stack beyond one), handled by attackAdvantage() in engine/rules.
+ */
+export interface TokenConditionEffects {
+  /** Incoming attacks against a creature with this condition have advantage (Blinded/Restrained/…). */
+  attacksAgainstAdvantage?: boolean;
+  /** Incoming attacks have disadvantage (Invisible target). */
+  attacksAgainstDisadvantage?: boolean;
+  /** This creature's own attacks have disadvantage (Blinded/Poisoned/Restrained/Prone/Frightened). */
+  ownAttacksDisadvantage?: boolean;
+  /** This creature's own attacks have advantage (Invisible attacker). */
+  ownAttacksAdvantage?: boolean;
+  /** Prone: melee within 5 ft gets advantage; attacks from farther get disadvantage. */
+  meleeAdvRangedDis?: boolean;
+  /** 5e: a melee hit from within 5 ft is a critical hit (Paralyzed/Unconscious). */
+  autoCritMeleeAgainst?: boolean;
+  /** Solryn: attacks against this creature ignore DR and are automatic crits (Stunned/Paralyzed/Unconscious). */
+  ignoreDrAgainst?: boolean;
+  /** Auto-fails Strength and Dexterity saving throws. */
+  autoFailStrDexSaves?: boolean;
+  /** Disadvantage on ability checks. */
+  disadvantageAbilityChecks?: boolean;
+  /** Disadvantage on Dexterity saving throws (Restrained). */
+  disadvantageDexSaves?: boolean;
+  /** Resistance to all damage — incoming damage is halved (Petrified). */
+  resistAllDamage?: boolean;
+  /** Can't take actions or reactions (Incapacitated family) — attack controls are disabled. */
+  cantAct?: boolean;
+  /** Speed becomes 0. */
+  speedZero?: boolean;
+  /** Speed is halved. */
+  speedHalved?: boolean;
+  /** Hit point maximum is halved (Exhaustion 4). */
+  hpMaxHalved?: boolean;
+}
+
+/** A token condition: a colored board indicator plus its mechanized effects. */
+export interface TokenCondition {
+  id: string;
+  name: string;
+  /** Hex color for the token's burst indicator. */
+  color: string;
+  description: string;
+  effects: TokenConditionEffects;
+  /** Exclusive group id (e.g. 'exhaustion') — only one member active at a time. */
+  group?: string;
+  /** Ordering within a group (e.g. exhaustion level 1–6). */
+  level?: number;
+}
+
 // --- Character-creation config ---------------------------------------------
 
 /**
@@ -625,6 +677,9 @@ export interface SystemDefinition {
 
   rulesReference: RulesCard[];
   conditions: ConditionEntry[];
+  /** Mechanized token conditions (board indicators + combat effects). Optional; systems without a
+   *  condition model omit it. */
+  tokenConditions?: TokenCondition[];
 
   creation: CreationConfig;
 

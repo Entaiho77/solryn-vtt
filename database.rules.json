@@ -47,7 +47,10 @@
 
         "tokens": {
           "$tokenId": {
-            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && (root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm' || (newData.child('kind').val() === 'character' && newData.child('ownerUserId').val() === auth.uid) || (data.child('kind').val() === 'character' && data.child('ownerUserId').val() === auth.uid) || newData.child('kind').val() === 'party' || data.child('kind').val() === 'party')"
+            ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists() && (root.child('games').child($gameId).child('members').child(auth.uid).child('role').val() === 'gm' || (newData.child('kind').val() === 'character' && newData.child('ownerUserId').val() === auth.uid) || (data.child('kind').val() === 'character' && data.child('ownerUserId').val() === auth.uid) || newData.child('kind').val() === 'party' || data.child('kind').val() === 'party')",
+            "conditions": {
+              ".write": "auth != null && root.child('games').child($gameId).child('members').child(auth.uid).exists()"
+            }
           }
         },
 

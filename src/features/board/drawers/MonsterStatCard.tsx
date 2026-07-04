@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { BestiaryEntry, CreatureSave, SystemDefinition } from '../../../engine/schema';
 import type { Token } from '../../../data/types';
 import type { CampaignRules, HomebrewEquipment } from '../../../data/homebrew';
-import { computeModifier, describeRoll, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
+import { attackAdvantage, autoCritAgainst, combineAdvantage, computeModifier, describeRoll, effectsFor, getCombatResolver, resolveCheck, rollDice } from '../../../engine/rules';
 import { resolveSolrynAttack } from '../../../systems/solryn/combat';
 import { removeToken, updateToken } from '../../../data/board';
 import { setCreatureArt, useCreatureArt } from '../../../data/creatures';
@@ -96,7 +96,7 @@ export function MonsterStatCard({
   uid?: string;
   /** Current click-to-target token (5e), set via the board right-click menu. Attacks read its
    *  AC when set; otherwise the manual Target AC below is the fallback. */
-  target?: { id: string; name: string; ac?: number; dr?: number };
+  target?: { id: string; name: string; ac?: number; dr?: number; conditions?: Record<string, true> };
   /** Campaign crit rules (threshold + damage formula) applied to this creature's attacks. */
   rules?: CampaignRules;
   onClose?: () => void;
@@ -138,35 +138,42 @@ export function MonsterStatCard({
   // Solryn resolves monster attacks the same way player attacks do (auto-hit vs the target's DR),
   // not through the 5e attack-roll-vs-AC path.
   const isSolryn = system.modes.combat.id === 'auto-hit-vs-dr';
+  // Token conditions: this creature (the attacker) is `token`, the defender is the current target.
+  const attackerEffects = effectsFor(system.tokenConditions, token?.conditions);
+  const targetEffects = effectsFor(system.tokenConditions, target?.conditions);
+  const conditionAdvantage = attackAdvantage(attackerEffects, targetEffects, true);
+  const autoCrit = autoCritAgainst(targetEffects, true);
+  const ignoreDr = !!targetEffects.ignoreDrAgainst; // Solryn: stunned/paralyzed/unconscious → ignore DR + auto-crit
+  const targetResists = !!targetEffects.resistAllDamage;
   // Resolve against the clicked target's AC when one is set (and it isn't this creature's own
   // token — a creature never attacks itself); otherwise fall back to the typed Target AC.
   const usingTarget = rollToHit && target != null && typeof target.ac === 'number' && target.id !== token?.id;
   const post = (label: string, diceExpr: string, type?: string, attackBonus?: number) => {
     if (isSolryn) {
-      // Auto-hit; subtract the target's DR (sourced from its token stat block, like player attacks).
+      // Auto-hit; subtract the target's DR. Stunned/Paralyzed/Unconscious targets → ignore DR + crit.
       const drTargeted = target != null && typeof target.dr === 'number' && target.id !== token?.id;
       const composed = drTargeted ? `${entry.name} → ${target!.name} — ${label}` : `${entry.name} — ${label}`;
       const res = resolveSolrynAttack({
         label: composed,
         dice: diceExpr,
         targetDr: drTargeted ? target!.dr : undefined,
+        ...(drTargeted && ignoreDr ? { crit: 'success' as const } : {}),
       });
       postRoll(res.logText + (drTargeted ? '' : ' · No target set — apply DR manually'));
       return;
     }
-    postRoll(
-      resolver.resolveAttack({
-        label: usingTarget ? `${entry.name} → ${target!.name} — ${label}` : `${entry.name} — ${label}`,
-        dice: diceExpr,
-        damageType: type,
-        attackBonus,
-        targetAc: rollToHit ? (usingTarget ? target!.ac : targetAc) : undefined,
-        advantage: rollToHit ? advantage : undefined,
-        critThreshold: rules?.critThreshold ?? 20,
-        ...(rules?.critFormula ? { critFormula: rules.critFormula } : {}),
-        ...(rules?.critFormulaCustom ? { critFormulaCustom: rules.critFormulaCustom } : {}),
-      }).logText,
-    );
+    const line = resolver.resolveAttack({
+      label: usingTarget ? `${entry.name} → ${target!.name} — ${label}` : `${entry.name} — ${label}`,
+      dice: diceExpr,
+      damageType: type,
+      attackBonus,
+      targetAc: rollToHit ? (usingTarget ? target!.ac : targetAc) : undefined,
+      advantage: rollToHit ? combineAdvantage(advantage, conditionAdvantage) : undefined,
+      critThreshold: autoCrit ? 1 : (rules?.critThreshold ?? 20),
+      ...(rules?.critFormula ? { critFormula: rules.critFormula } : {}),
+      ...(rules?.critFormulaCustom ? { critFormulaCustom: rules.critFormulaCustom } : {}),
+    }).logText;
+    postRoll(targetResists ? `${line} · target resists — halve the damage` : line);
   };
   // Abilities (breath weapons, traits) are NOT to-hit attacks — roll plain damage, never
   // through the attack resolver, so 5e dice-bearing abilities don't misfire as hit/miss.

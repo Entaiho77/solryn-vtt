@@ -7,6 +7,7 @@ import { equipment } from './equipment';
 import { mapTypes, qualityScale } from './world';
 import { bestiary, statBlockShapes } from './bestiary';
 import { rulesReference, conditions } from './reference';
+import { conditions as tokenConditions } from './conditions';
 import { modes, creation } from './modes';
 
 /**
@@ -45,6 +46,7 @@ export const solrynSystem: SystemDefinition = {
 
   rulesReference,
   conditions,
+  tokenConditions,
 
   creation,
 };

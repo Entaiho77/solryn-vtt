@@ -192,10 +192,22 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         name: targetToken.name,
         ...(typeof targetToken.stats?.ac === 'number' ? { ac: targetToken.stats.ac } : {}),
         ...(typeof targetToken.stats?.dr === 'number' ? { dr: targetToken.stats.dr } : {}),
+        ...(targetToken.conditions ? { conditions: targetToken.conditions } : {}),
       }
     : undefined;
   // Toggle a token as the current target (click the same one again to clear).
   const onSetTarget = (id: string) => setTargetId((cur) => (cur === id ? null : id));
+
+  // conditionId → { name, color } for the canvas indicators + hover tooltips.
+  const conditionDefs = useMemo(() => {
+    const m: Record<string, { name: string; color: string }> = {};
+    for (const c of system.tokenConditions ?? []) m[c.id] = { name: c.name, color: c.color };
+    return m;
+  }, [system.tokenConditions]);
+  // The viewer's own character token — its conditions are the attacker's, threaded to the sheet.
+  const myConditions = character
+    ? tokens.find((t) => t.characterId === character.id)?.conditions
+    : undefined;
 
   // Library monsters (from the GM's account) as BestiaryEntry[], so the stat card + combat resolver
   // read them exactly like SRD creatures — no special-casing in the resolver.
@@ -401,13 +413,14 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
         // Class-and-level systems (5e) use their own sheet; Solryn keeps CharacterQuickView.
         content:
           isClassAndLevel(system) ? (
-            <Dnd5eSheet system={system} character={character} target={target} startingLevel={game.startingLevel} rules={rules} />
+            <Dnd5eSheet system={system} character={character} target={target} startingLevel={game.startingLevel} rules={rules} attackerConditions={myConditions} />
           ) : (
             <CharacterQuickView
               system={system}
               character={character}
               canLevelUp={character.play.level < (game.levelGrant ?? 1)}
               target={target}
+              attackerConditions={myConditions}
             />
           ),
       },
@@ -447,15 +460,16 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
               activeMap && void toggleFogSquare(gameId, activeMap.id, col, row, f)
             }
             onSelectToken={(t) => setSelectedId(t?.id ?? null)}
-            // Right-click token menu: set the attack target (5e, without changing selection) and,
-            // for the GM, remove tokens. Only opened when there's an action; party is excluded.
+            // Right-click token menu: set the attack target, toggle conditions (any member, on any
+            // character/creature token), and — for the GM — remove tokens. Party is excluded.
             onContextToken={(token, x, y) => {
               if (token.kind === 'party') return;
-              const canTarget = canTargetMode && (token.kind === 'character' || token.kind === 'creature');
-              if (canTarget || role === 'gm') setCtxMenu({ token, x, y });
+              const attackable = token.kind === 'character' || token.kind === 'creature';
+              if (attackable || role === 'gm') setCtxMenu({ token, x, y });
             }}
             onGrabParty={(id) => void grabPartyToken(gameId, id, uid)}
             onReleaseParty={(id) => void releasePartyToken(gameId, id)}
+            conditionDefs={conditionDefs}
           />
         ) : (
           <div className={styles.empty}>
@@ -489,6 +503,7 @@ export function BoardScreen({ system, game, role, uid, character }: BoardScreenP
             isTarget={ctxMenu.token.id === targetId}
             onSetTarget={() => onSetTarget(ctxMenu.token.id)}
             canRemove={role === 'gm'}
+            conditions={system.tokenConditions}
             onClose={() => setCtxMenu(null)}
           />
         )}

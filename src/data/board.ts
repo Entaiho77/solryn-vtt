@@ -124,6 +124,38 @@ export function removeToken(gameId: string, tokenId: string): Promise<void> {
   return writeValue(`games/${gameId}/tokens/${tokenId}`, null);
 }
 
+// --- Token conditions (applied/removed by any game member) ---
+
+/** Toggle a single condition on a token (writing null removes it). */
+export function setTokenCondition(
+  gameId: string,
+  tokenId: string,
+  conditionId: string,
+  on: boolean,
+): Promise<void> {
+  return writeValue(
+    `games/${gameId}/tokens/${tokenId}/conditions/${conditionId}`,
+    on ? true : null,
+  );
+}
+
+/**
+ * Set an exclusive-group condition (e.g. one Exhaustion level): activate `activeId` and clear every
+ * other id in the group. Pass activeId = null to clear the whole group.
+ */
+export function setExclusiveCondition(
+  gameId: string,
+  tokenId: string,
+  groupIds: string[],
+  activeId: string | null,
+): Promise<void> {
+  const updates: Record<string, unknown> = {};
+  for (const id of groupIds) {
+    updates[`/games/${gameId}/tokens/${tokenId}/conditions/${id}`] = id === activeId ? true : null;
+  }
+  return multiUpdate(updates);
+}
+
 /**
  * Party-token soft-lock. Grabbing stamps the holder's uid + the current time so other
  * clients can't drag it meanwhile; releasing clears both. A crashed drag self-heals once

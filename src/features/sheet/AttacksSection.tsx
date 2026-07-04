@@ -1,6 +1,6 @@
 import type { Spell, SystemDefinition, WeaponItem } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { computeModifier, computeSkillState } from '../../engine/rules';
+import { computeModifier, computeSkillState, effectsFor } from '../../engine/rules';
 import { attemptLuckCrit, resolveSolrynAttack, type CritState } from '../../systems/solryn/combat';
 import { setLoadedSpell, setPoolCurrent } from '../../data/characters';
 import { Button } from '../../components/ui/Button';
@@ -15,11 +15,14 @@ export function AttacksSection({
   system,
   character,
   target,
+  attackerConditions,
 }: {
   system: SystemDefinition;
   character: Character;
   /** Current click-to-target creature (Solryn): its DR drives auto-hit damage resolution. */
-  target?: { name: string; dr?: number };
+  target?: { name: string; dr?: number; conditions?: Record<string, true> };
+  /** The attacker's own token conditions (Solryn: can't-act disables the attack buttons). */
+  attackerConditions?: Record<string, true>;
 }) {
   const { postRoll } = useRollLog();
   const mode = system.modes.skill;
@@ -31,6 +34,11 @@ export function AttacksSection({
   const luckMax = Math.max(0, luckMod);
   const luckCurrent = character.play.pools?.[LUCK_POOL]?.current ?? luckMax;
   const canCrit = luckCurrent >= 1;
+
+  // Token conditions: a Stunned/Paralyzed/Unconscious target forces ignore-DR + auto-crit; an
+  // attacker that can't act has its attack controls disabled.
+  const forcedCrit = !!effectsFor(system.tokenConditions, target?.conditions).ignoreDrAgainst;
+  const attackerCantAct = !!effectsFor(system.tokenConditions, attackerConditions).cantAct;
 
   const weapons = character.play.equippedWeaponIds
     .map((id) => system.equipment.weapons.find((w) => w.id === id))
@@ -69,7 +77,9 @@ export function AttacksSection({
   }
 
   function rollWeapon(w: WeaponItem, useCrit: boolean) {
-    const { crit, suffix } = useCrit ? rollCrit() : { crit: 'none' as CritState, suffix: '' };
+    const lc = useCrit ? rollCrit() : null;
+    const crit: CritState = forcedCrit ? 'success' : lc ? lc.crit : 'none';
+    const suffix = (lc ? lc.suffix : '') + (forcedCrit ? ' · target condition: DR ignored (auto-crit)' : '');
     const res = resolveSolrynAttack({
       label: attackLabel(w.name),
       dice: w.damageDice,
@@ -84,7 +94,9 @@ export function AttacksSection({
     if (!loaded || !arcanaPoolId || arcanaCurrent < loaded.cost) return;
     if (useCrit && !canCrit) return;
     void setPoolCurrent(character.id, arcanaPoolId, arcanaCurrent - loaded.cost);
-    const { crit, suffix } = useCrit ? rollCrit() : { crit: 'none' as CritState, suffix: '' };
+    const lc = useCrit ? rollCrit() : null;
+    const crit: CritState = forcedCrit ? 'success' : lc ? lc.crit : 'none';
+    const suffix = (lc ? lc.suffix : '') + (forcedCrit ? ' · target condition: DR ignored (auto-crit)' : '');
     if (loaded.damageDice) {
       // Solryn spell save: DC = 10 + Arcana modifier (+ skill bonus, unused here). Success = half,
       // which the target/GM then compares against DR — surfaced as a note on the log line.
@@ -109,6 +121,10 @@ export function AttacksSection({
         </p>
       )}
 
+      {attackerCantAct && (
+        <p className={styles.synopsis} style={{ color: 'var(--accent-red)' }}>Can’t act — attacks are disabled.</p>
+      )}
+
       {nothing ? (
         <p className={styles.empty}>No attacks equipped.</p>
       ) : (
@@ -122,13 +138,13 @@ export function AttacksSection({
                   {w.damageDice}
                   {bonus ? ` ${sign(bonus)}` : ''} · auto-hit vs DR
                 </span>
-                <Button size="sm" onClick={() => rollWeapon(w, false)}>
+                <Button size="sm" disabled={attackerCantAct} onClick={() => rollWeapon(w, false)}>
                   Roll
                 </Button>
                 <Button
                   size="sm"
                   variant="secondary"
-                  disabled={!canCrit}
+                  disabled={!canCrit || attackerCantAct}
                   title={canCrit ? 'Attempt Critical Hit (spend 1 Luck Point)' : 'No Luck Points'}
                   onClick={() => rollWeapon(w, true)}
                 >

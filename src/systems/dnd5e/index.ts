@@ -12,6 +12,7 @@ import type {
 } from '../../engine/schema';
 import { c } from '../../engine/schema';
 import { rulesReference, conditions } from './reference';
+import { conditions as tokenConditions } from './conditions';
 import { bestiary } from './bestiary';
 import { spells } from './spells';
 import { skills, skillCategories } from './skills';
@@ -151,6 +152,7 @@ export const dnd5eSystem: SystemDefinition = {
 
   rulesReference,
   conditions,
+  tokenConditions,
 
   creation,
 

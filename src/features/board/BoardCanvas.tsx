@@ -87,6 +87,28 @@ interface BoardCanvasProps {
   /** Party-token soft-lock: grab on drag start, release on drop. */
   onGrabParty: (tokenId: string) => void;
   onReleaseParty: (tokenId: string) => void;
+  /** conditionId → { name, color } for drawing token condition indicators + hover tooltips. */
+  conditionDefs?: Record<string, { name: string; color: string }>;
+}
+
+/** Draw a small jagged starburst (condition indicator) centered at (cx, cy) in world space. */
+function drawBurst(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, color: string, zoom: number) {
+  const spikes = 8;
+  ctx.beginPath();
+  for (let i = 0; i < spikes * 2; i++) {
+    const rad = i % 2 === 0 ? r : r * 0.5;
+    const a = (Math.PI / spikes) * i - Math.PI / 2;
+    const px = cx + Math.cos(a) * rad;
+    const py = cy + Math.sin(a) * rad;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+  ctx.lineWidth = 1 / zoom;
+  ctx.stroke();
 }
 
 const fmt = (n: number) =>
@@ -160,6 +182,7 @@ export function BoardCanvas({
   onContextToken,
   onGrabParty,
   onReleaseParty,
+  conditionDefs,
 }: BoardCanvasProps) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -179,6 +202,8 @@ export function BoardCanvas({
     null,
   );
   const [measure, setMeasure] = useState<Segment | null>(null);
+  // Hover tooltip listing a token's active conditions (screen coords + text), null when none.
+  const [hoverTip, setHoverTip] = useState<{ x: number; y: number; text: string } | null>(null);
   // While aiming a cone/line: the fixed anchor (grid cell or token) + current angle (deg).
   const [shapeAim, setShapeAim] = useState<
     { col: number; row: number; tokenId?: string; angleDeg: number } | null
@@ -420,6 +445,21 @@ export function BoardCanvas({
       ctx.textBaseline = 'top';
       ctx.fillText(token.name, x, y + radius + 3);
       ctx.restore();
+
+      // Condition indicators: small jagged bursts clustered around the token's top arc (full
+      // opacity even when the token itself is dimmed).
+      const condIds = Object.keys(token.conditions ?? {}).filter((id) => conditionDefs?.[id]);
+      if (condIds.length) {
+        const br = g * 0.14;
+        const step = Math.min(0.6, (Math.PI * 0.9) / Math.max(1, condIds.length));
+        const start = -Math.PI / 2 - (step * (condIds.length - 1)) / 2;
+        condIds.forEach((id, i) => {
+          const a = start + i * step;
+          const bx = x + Math.cos(a) * (radius + br * 0.5);
+          const by = y + Math.sin(a) * (radius + br * 0.5);
+          drawBurst(ctx, bx, by, br, conditionDefs![id].color, cam.zoom);
+        });
+      }
     }
 
     // Fog — GM semi-transparent, players opaque.
@@ -476,6 +516,7 @@ export function BoardCanvas({
     shapeDraft,
     shapeAim,
     measureScale,
+    conditionDefs,
     version,
   ]);
 
@@ -559,6 +600,20 @@ export function BoardCanvas({
   }
 
   function handleMove(e: MouseEvent<HTMLCanvasElement>) {
+    // Hover tooltip: while idle, show the active conditions of the token under the cursor.
+    if (!panRef.current && !tokenDrag.current && !fogPaint.current && !measuringRef.current && !shapeAim) {
+      const { col, row } = eventCell(e);
+      const stack = tokensAtCell(
+        onMap.filter((t) => tokenVisibility(t, uid, role) !== 'hidden'),
+        col,
+        row,
+      );
+      const hit = stack[stack.length - 1];
+      const names = hit
+        ? Object.keys(hit.conditions ?? {}).map((id) => conditionDefs?.[id]?.name).filter(Boolean)
+        : [];
+      setHoverTip(names.length ? { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY, text: names.join(', ') } : null);
+    }
     if (panRef.current) {
       const dx = e.clientX - panRef.current.lastX;
       const dy = e.clientY - panRef.current.lastY;
@@ -634,6 +689,7 @@ export function BoardCanvas({
     panRef.current = null;
     setPanning(false);
     setGhost(null);
+    setHoverTip(null);
   }
 
   // Right-click: while measuring, clear the line. Otherwise raise a token context menu for the
@@ -678,6 +734,26 @@ export function BoardCanvas({
         onMouseLeave={handleUp}
         onContextMenu={handleContextMenu}
       />
+      {hoverTip && (
+        <div
+          style={{
+            position: 'absolute',
+            left: hoverTip.x + 14,
+            top: hoverTip.y + 14,
+            pointerEvents: 'none',
+            background: 'rgba(15,17,21,0.92)',
+            color: '#e6e7ea',
+            border: '1px solid rgba(255,255,255,0.25)',
+            borderRadius: 4,
+            padding: '2px 6px',
+            fontSize: 12,
+            whiteSpace: 'nowrap',
+            zIndex: 5,
+          }}
+        >
+          {hoverTip.text}
+        </div>
+      )}
     </div>
   );
 }

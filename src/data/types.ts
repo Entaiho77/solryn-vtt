@@ -167,6 +167,9 @@ export interface Token {
   /** Homebrew loot already distributed from this spawned instance (equipmentId → true), so the
    *  GM can't hand out the same item twice. Per-token (each instance loots independently). */
   lootGiven?: Record<string, true>;
+  /** Active status conditions on this token (conditionId → true). Object-keyed map, never an array.
+   *  Applied/removed by any member; drives the board indicators and combat effects. */
+  conditions?: Record<string, true>;
   /**
    * Party token (kind 'party') soft-lock: the uid currently dragging it and when they
    * grabbed it (ms). While held by someone else (within the staleness window) other

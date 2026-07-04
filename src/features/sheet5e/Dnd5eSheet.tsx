@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Dnd5eSpell, SystemDefinition } from '../../engine/schema';
 import type { Character } from '../../data/types';
-import { describeRoll, getCombatResolver, rollDice } from '../../engine/rules';
+import { attackAdvantage, autoCritAgainst, combineAdvantage, describeRoll, effectsFor, getCombatResolver, rollDice } from '../../engine/rules';
 import { equipInventoryItem, removeInventoryItem, restoreSpellSlots, setConcentrating, setFeatResource, setLevelUpPending, setPoolCurrent, setSpellSlot, setSubclass } from '../../data/characters';
 import { xpProgress } from '../../systems/dnd5e/xp';
 import { pcDerived, ABILITY_IDS } from '../../systems/dnd5e/character';
@@ -54,16 +54,19 @@ export function Dnd5eSheet({
   target,
   startingLevel,
   rules,
+  attackerConditions,
 }: {
   system: SystemDefinition;
   character: Character;
-  /** The current click-to-target token (its AC is used when present); undefined → manual AC. */
-  target?: { id: string; name: string; ac?: number };
+  /** The current click-to-target token (AC + conditions used when present); undefined → manual AC. */
+  target?: { id: string; name: string; ac?: number; conditions?: Record<string, true> };
   /** GM-set starting level (5e). When the character is below it with a pending level-up, the sheet
    *  auto-opens the level-up flow and re-arms it each level until the character reaches it. */
   startingLevel?: number;
   /** Campaign rules (crit threshold/formula for attacks; feats/startingHp for the level-up flow). */
   rules?: CampaignRules;
+  /** The viewer's own token conditions (the attacker's) for advantage/disadvantage + can't-act. */
+  attackerConditions?: Record<string, true>;
 }) {
   const { postRoll } = useRollLog();
   const resolver = getCombatResolver(system);
@@ -113,24 +116,33 @@ export function Dnd5eSheet({
   const critFormula = rules?.critFormula;
   const critFormulaCustom = rules?.critFormulaCustom;
 
+  // Token conditions: advantage/disadvantage from attacker + target, plus auto-crit (melee within
+  // 5 ft, assumed) and can't-act. Manual advantage takes precedence when the player sets it.
+  const targetEffects = effectsFor(system.tokenConditions, target?.conditions);
+  const attackerEffects = effectsFor(system.tokenConditions, attackerConditions);
+  const conditionAdvantage = attackAdvantage(attackerEffects, targetEffects, true);
+  const autoCrit = autoCritAgainst(targetEffects, true);
+  const attackerCantAct = !!attackerEffects.cantAct;
+  const targetResists = !!targetEffects.resistAllDamage;
+
   // Great Weapon Master / Sharpshooter: −5 to hit, +10 damage when the toggle is on.
   const pa = powerAttack && d.powerAttack ? d.powerAttack : undefined;
-  const rollAttack = (atk: (typeof d.attacks)[number]) =>
-    postRoll(
-      resolver.resolveAttack({
-        label: attackLabel(atk.name),
-        dice: pa ? addFlatDamage(atk.dice, pa.damage) : atk.dice,
-        damageType: atk.damageType,
-        attackBonus: atk.attackBonus + (pa?.toHit ?? 0),
-        targetAc: usingTarget ? target!.ac : targetAc,
-        advantage,
-        critThreshold,
-        ...(critFormula ? { critFormula } : {}),
-        ...(critFormulaCustom ? { critFormulaCustom } : {}),
-        // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
-        ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
-      }).logText,
-    );
+  const rollAttack = (atk: (typeof d.attacks)[number]) => {
+    const line = resolver.resolveAttack({
+      label: attackLabel(atk.name),
+      dice: pa ? addFlatDamage(atk.dice, pa.damage) : atk.dice,
+      damageType: atk.damageType,
+      attackBonus: atk.attackBonus + (pa?.toHit ?? 0),
+      targetAc: usingTarget ? target!.ac : targetAc,
+      advantage: combineAdvantage(advantage, conditionAdvantage),
+      critThreshold: autoCrit ? 1 : critThreshold,
+      ...(critFormula ? { critFormula } : {}),
+      ...(critFormulaCustom ? { critFormulaCustom } : {}),
+      // Sneak Attack: manual — player enables when it applies (adv / ally adjacent). Doubles on a crit.
+      ...(sneak && d.sneakAttackDice ? { bonusDamage: { dice: d.sneakAttackDice, label: 'Sneak Attack' } } : {}),
+    }).logText;
+    postRoll(targetResists ? `${line} · target resists — halve the damage` : line);
+  };
 
   // Dragonborn breath weapon — plain damage roll + save note, via the same path as monster
   // abilities: never through the attack resolver, so it isn't a to-hit roll.
@@ -163,13 +175,14 @@ export function Dnd5eSheet({
         casterName: character.name,
         ...(usingTarget && sp.attackType ? { targetName: target!.name } : {}),
         targetAc: usingTarget ? target!.ac : targetAc,
-        advantage,
+        advantage: combineAdvantage(advantage, conditionAdvantage),
         saveDc: d.spell!.saveDc,
         attackBonus: d.spell!.attackBonus,
         dice: damageAt(sp, slotLevel),
         resolver,
-        // Spell attacks crit on the campaign threshold (Champion doesn't apply) with the campaign formula.
-        critThreshold: rules?.critThreshold ?? 20,
+        // Spell attacks crit on the campaign threshold (Champion doesn't apply) with the campaign
+        // formula; a paralyzed/unconscious target within 5 ft auto-crits.
+        critThreshold: autoCrit ? 1 : (rules?.critThreshold ?? 20),
         ...(critFormula ? { critFormula } : {}),
         ...(critFormulaCustom ? { critFormulaCustom } : {}),
       }),
@@ -358,10 +371,13 @@ export function Dnd5eSheet({
           {!usingTarget && (
             <p className={s.hint}>Right-click a creature on the board to attack its AC automatically.</p>
           )}
+          {attackerCantAct && (
+            <p className={s.hint} style={{ color: 'var(--accent-red)' }}>Incapacitated — can’t take actions.</p>
+          )}
           {d.attacks.map((atk) => (
             <div key={atk.name} style={row}>
               <span className={s.itemMeta} style={bodyText}>{atk.name}: {sign(atk.attackBonus)} to hit, {atk.dice} {atk.damageType}</span>
-              <Button size="sm" onClick={() => rollAttack(atk)}>Roll</Button>
+              <Button size="sm" disabled={attackerCantAct} onClick={() => rollAttack(atk)}>Roll</Button>
             </div>
           ))}
 
