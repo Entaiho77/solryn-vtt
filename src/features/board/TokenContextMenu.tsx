@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { TokenCondition } from '../../engine/schema';
 import type { Token } from '../../data/types';
-import { removeToken, setExclusiveCondition, setTokenCondition } from '../../data/board';
+import { removeToken, setExclusiveCondition, setTokenCondition, updateToken } from '../../data/board';
 import styles from './TokenContextMenu.module.css';
 
 /**
@@ -72,6 +72,12 @@ export function TokenContextMenu({
   };
   const remove = () => {
     void removeToken(gameId, token.id);
+    onClose();
+  };
+  // GM visibility toggle: hidden tokens are dimmed for the GM and not rendered for players.
+  const hidden = token.visible === false;
+  const toggleVisible = () => {
+    void updateToken(gameId, token.id, { visible: hidden });
     onClose();
   };
 
@@ -165,6 +171,12 @@ export function TokenContextMenu({
               </div>
             )}
           </>
+        )}
+
+        {canRemove && (
+          <button className={styles.item} role="menuitem" onClick={toggleVisible}>
+            {hidden ? 'Show token' : 'Hide token'}
+          </button>
         )}
 
         {canRemove && (
