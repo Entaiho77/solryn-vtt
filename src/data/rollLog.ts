@@ -1,4 +1,5 @@
 import { multiUpdate, newKey, writeValue } from './realtime';
+import type { RollEntry } from './types';
 
 /**
  * Table-wide roll log. Stored as an OBJECT MAP at games/{gameId}/rollLog/{pushId} — never an
@@ -7,14 +8,8 @@ import { multiUpdate, newKey, writeValue } from './realtime';
  * newest-first order independent of client clocks.
  */
 
-export interface RollEntry {
-  id: string;
-  text: string;
-  at: number;
-  /** Roller's uid + display name (attribution prefix in the shared log). */
-  byUid: string;
-  by: string;
-}
+// RollEntry now lives in the shared data-model module; re-exported here for existing callers.
+export type { RollEntry };
 
 /** Keep at most this many entries in Firebase; oldest are trimmed on write. */
 const CAP = 100;

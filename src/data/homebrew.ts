@@ -9,6 +9,14 @@ import type {
   SystemDefinition,
 } from '../engine/schema';
 import type { CritFormula } from '../engine/rules';
+import type {
+  ArmorType,
+  EquipmentCategory,
+  HomebrewEquipment,
+  InventoryItem,
+  StartingHp,
+  WeaponRange,
+} from './types';
 import { newKey, useValue, writeValue } from './realtime';
 
 export type { CritFormula };
@@ -96,42 +104,15 @@ export function homebrewList(
 }
 
 // --- Homebrew equipment (Phase B1) ------------------------------------------
-
-export type EquipmentCategory = 'weapon' | 'armor' | 'tool' | 'other';
-export type WeaponRange = 'melee' | 'ranged';
-export type ArmorType = 'light' | 'medium' | 'heavy' | 'shield';
-
-/** DM-authored equipment, stored at users/$uid/library/equipment/$id. Weapon/armor fields are
- *  present only for those categories; Phase B2 turns them into mechanical effects. */
-export interface HomebrewEquipment {
-  id: string;
-  name: string;
-  category: EquipmentCategory;
-  description: string;
-  weight?: number;
-  value?: string;
-  // --- weapon ---
-  damageDice?: string;
-  damageType?: string;
-  weaponRange?: WeaponRange;
-  /** finesse | versatile | thrown | ranged | two-handed | light | heavy | loading. */
-  properties?: string[];
-  versatileDamageDice?: string;
-  // --- armor ---
-  armorType?: ArmorType;
-  baseAc?: number;
-  stealthDisadvantage?: boolean;
-}
-
-/** A looted item on a character (characters/$id/inventory/$itemId) — a full snapshot of the
- *  equipment at loot time (so it survives edits/deletes of the source), plus an equipped flag. */
-export interface InventoryItem extends Omit<HomebrewEquipment, 'id'> {
-  /** Inventory-record id (distinct from the source equipment id). */
-  id: string;
-  /** Source homebrew-equipment id it was looted from (reference only; data is snapshotted). */
-  equipmentId: string;
-  equipped: boolean;
-}
+// The equipment/inventory shapes are part of the shared data model (Character.inventory uses
+// InventoryItem), so they live in ./types; imported for local use and re-exported for callers.
+export type {
+  ArmorType,
+  EquipmentCategory,
+  HomebrewEquipment,
+  InventoryItem,
+  WeaponRange,
+};
 
 /** Drop undefined-valued keys — Firebase set() rejects objects containing undefined. */
 function pruneUndefined<T extends Record<string, unknown>>(obj: T): T {
@@ -357,8 +338,8 @@ export function useLibrary(uid: string | null): { library: Library | null; loadi
 // engine reads them — crit threshold/formula, starting HP, feats toggle); the rest are display-only
 // on the board's Rules panel. resolveRules fills defaults so every consumer gets a complete object.
 
-/** How per-level HP is granted on level-up. */
-export type StartingHp = 'max' | 'average' | 'rolled';
+/** StartingHp now lives in ./types (shared data model); re-exported for callers. */
+export type { StartingHp };
 
 /** A DM-authored narrative rule (display-only, shown on the Rules panel). */
 export interface HouseRule {

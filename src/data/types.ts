@@ -6,12 +6,59 @@
  * Realtime Database favors maps over arrays, so members/tokens/etc. are keyed objects.
  */
 
-import type { RollEntry } from './rollLog';
-import type { InventoryItem } from './homebrew';
-
-export type { Library } from './homebrew';
-
 export type Role = 'gm' | 'player';
+
+// --- Shared data-model types (relocated here so this module has no back-dependency on the
+// Firebase-coupled data/ files; rollLog.ts and homebrew.ts re-export these for their callers). ---
+
+/** One entry in the table-wide roll log (games/{gameId}/rollLog/{pushId}). */
+export interface RollEntry {
+  id: string;
+  text: string;
+  at: number;
+  /** Roller's uid + display name (attribution prefix in the shared log). */
+  byUid: string;
+  by: string;
+}
+
+/** How per-level HP is granted on level-up (campaign rule). */
+export type StartingHp = 'max' | 'average' | 'rolled';
+
+export type EquipmentCategory = 'weapon' | 'armor' | 'tool' | 'other';
+export type WeaponRange = 'melee' | 'ranged';
+export type ArmorType = 'light' | 'medium' | 'heavy' | 'shield';
+
+/** DM-authored equipment, stored at users/$uid/library/equipment/$id. Weapon/armor fields are
+ *  present only for those categories; Phase B2 turns them into mechanical effects. */
+export interface HomebrewEquipment {
+  id: string;
+  name: string;
+  category: EquipmentCategory;
+  description: string;
+  weight?: number;
+  value?: string;
+  // --- weapon ---
+  damageDice?: string;
+  damageType?: string;
+  weaponRange?: WeaponRange;
+  /** finesse | versatile | thrown | ranged | two-handed | light | heavy | loading. */
+  properties?: string[];
+  versatileDamageDice?: string;
+  // --- armor ---
+  armorType?: ArmorType;
+  baseAc?: number;
+  stealthDisadvantage?: boolean;
+}
+
+/** A looted item on a character (characters/$id/inventory/$itemId) — a full snapshot of the
+ *  equipment at loot time (so it survives edits/deletes of the source), plus an equipped flag. */
+export interface InventoryItem extends Omit<HomebrewEquipment, 'id'> {
+  /** Inventory-record id (distinct from the source equipment id). */
+  id: string;
+  /** Source homebrew-equipment id it was looted from (reference only; data is snapshotted). */
+  equipmentId: string;
+  equipped: boolean;
+}
 
 export interface UserProfile {
   uid: string;
