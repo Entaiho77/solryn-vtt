@@ -2,42 +2,8 @@
   "name": "solryn-vtt",
   "private": true,
   "version": "0.1.0",
-  "type": "module",
-  "description": "System-agnostic virtual tabletop engine. Solryn is the first system preset (the flagship and proving ground). Every game system is data, not hardcoded logic.",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "seed:export": "vite-node scripts/exportSeed.ts",
-    "seed:push": "firebase database:set /systems ./seed/systems.json",
-    "gen:bestiary": "vite-node scripts/genBestiary.ts",
-    "gen:bestiary5e": "vite-node scripts/genDnd5eBestiary.ts",
-    "gen:classes5e": "vite-node scripts/genDnd5eClasses.ts",
-    "gen:spells5e": "vite-node scripts/genDnd5eSpells.ts"
-  },
-  "dependencies": {
-    "firebase": "^12.15.0",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^26.0.0",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.3",
-    "@vitest/coverage-v8": "^4.1.9",
-    "jsdom": "^29.1.1",
-    "typescript": "^6.0.3",
-    "vite": "^8.1.0",
-    "vite-node": "^6.0.0",
-    "vitest": "^4.1.9"
-  }
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
 }

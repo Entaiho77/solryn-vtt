@@ -17,7 +17,7 @@ jobs:
       # The Firebase web config is baked into the bundle at build time, so CI must have
       # these (public, client-safe) values — otherwise the deployed app renders but auth/db
       # are dead. Stored as GitHub repo secrets. Do NOT set VITE_USE_FIREBASE_EMULATOR here.
-      - run: npm run build
+      - run: npm run build --workspace=apps/web
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
@@ -31,7 +31,9 @@ jobs:
       # denied). Reuses the SAME service account as the hosting deploy below — no new secret —
       # authenticating firebase-tools via GOOGLE_APPLICATION_CREDENTIALS. If this step fails the
       # job stops here (default step fail-fast), so hosting is never deployed on top of stale rules.
+      # Runs in apps/web where firebase.json + database.rules.json now live.
       - name: Deploy database rules
+        working-directory: apps/web
         run: |
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/firebase-sa.json"
           GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json" \
@@ -46,6 +48,8 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOLRYN_VIRTUAL_TABLE_TOP }}
           channelId: live
           projectId: solryn-virtual-table-top
+          # firebase.json now lives in apps/web (the deploy entry point).
+          entryPoint: apps/web
           # Same recent CLI as the preview workflow, for consistency. (The live deploy is a
           # production release, not a preview-channel release, so it isn't subject to the
           # channel "already active version" precondition either way.)
