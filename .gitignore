@@ -47,3 +47,7 @@ seed/
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# Electron build output (electron-vite / electron-builder)
+apps/desktop/out/
+apps/desktop/dist-electron/
