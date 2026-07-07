@@ -20,7 +20,9 @@
       "@solryn/engine": ["./packages/engine/src/index.ts"],
       "@solryn/engine/*": ["./packages/engine/src/*"],
       "@solryn/systems": ["./packages/systems/src/index.ts"],
-      "@solryn/systems/*": ["./packages/systems/src/*"]
+      "@solryn/systems/*": ["./packages/systems/src/*"],
+      "@solryn/protocol": ["./packages/protocol/src/index.ts"],
+      "@solryn/protocol/*": ["./packages/protocol/src/*"]
     }
   }
 }

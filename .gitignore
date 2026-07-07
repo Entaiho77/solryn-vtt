@@ -44,3 +44,6 @@ ui-debug.log
 
 # Generated seed (run `npm run seed:export`)
 seed/
+
+# TypeScript incremental build info
+*.tsbuildinfo

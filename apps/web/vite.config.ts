@@ -16,6 +16,8 @@ const solrynAlias = [
   { find: /^@solryn\/engine\//, replacement: `${pkg('engine')}/` },
   { find: /^@solryn\/systems$/, replacement: `${pkg('systems')}/index.ts` },
   { find: /^@solryn\/systems\//, replacement: `${pkg('systems')}/` },
+  { find: /^@solryn\/protocol$/, replacement: `${pkg('protocol')}/index.ts` },
+  { find: /^@solryn\/protocol\//, replacement: `${pkg('protocol')}/` },
 ];
 
 // https://vite.dev/config/

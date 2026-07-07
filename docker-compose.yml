@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  relay:
+    build:
+      context: apps/relay
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MAX_ROOMS=50
+    restart: unless-stopped
