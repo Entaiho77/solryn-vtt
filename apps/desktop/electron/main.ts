@@ -2,9 +2,12 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'node:path';
 import { RelayClient } from './relay-client';
 
-// Force the X11 Ozone backend on Linux to avoid the noisy Wayland/Vulkan incompatibility warnings.
-// No-op on Windows/macOS. Must be set before the app is ready.
+// Linux/X11 (e.g. Bazzite) launch flags — must be set before the app is ready. X11 Ozone backend
+// avoids the noisy Wayland/Vulkan warnings; disabling the GPU and the sandbox works around
+// compositor/driver combos where the window never becomes visible. No-ops on Windows/macOS.
 app.commandLine.appendSwitch('ozone-platform', 'x11');
+app.commandLine.appendSwitch('disable-gpu');
+app.commandLine.appendSwitch('no-sandbox');
 
 let mainWindow: BrowserWindow | null = null;
 let relay: RelayClient | null = null;
@@ -15,7 +18,9 @@ function createWindow(): void {
     height: 800,
     minWidth: 1280,
     minHeight: 800,
-    show: false,
+    show: false, // shown on ready-to-show (and after load) to avoid a white flash
+    frame: true,
+    autoHideMenuBar: false,
     backgroundColor: '#1a1d24',
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -24,18 +29,27 @@ function createWindow(): void {
     },
   });
 
-  mainWindow.once('ready-to-show', () => mainWindow?.show());
+  const reveal = (): void => {
+    mainWindow?.show();
+    mainWindow?.focus();
+  };
+
+  // Preferred trigger: the window content is ready to paint.
+  mainWindow.once('ready-to-show', reveal);
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 
   // electron-vite sets ELECTRON_RENDERER_URL to the Vite dev server in development; in production
   // we load the built renderer (the reused apps/web UI) from disk.
-  if (process.env.ELECTRON_RENDERER_URL) {
-    void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
-  } else {
-    void mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
-  }
+  const load = process.env.ELECTRON_RENDERER_URL
+    ? mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
+    : mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
+
+  // Fallback: some Linux/X11 compositors don't reliably emit ready-to-show, which leaves the
+  // window created-but-hidden (the reported "tray icon but no window"). Force it visible once the
+  // content has loaded. show()/focus() are idempotent, so pairing with ready-to-show is safe.
+  void load.then(reveal);
 }
 
 /** Wire the renderer↔relay IPC. The relay socket lives here in the main process. */
