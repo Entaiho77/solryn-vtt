@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react';
 
 const here = fileURLToPath(new URL('.', import.meta.url)); // apps/desktop/
 const repoRoot = resolve(here, '../..'); // monorepo root
+const webRoot = resolve(here, '../web'); // apps/web — the shared UI, reused verbatim
 const pkg = (name: string) => resolve(repoRoot, `packages/${name}/src`);
 
 // Same @solryn/* source aliases the web app uses — the renderer reuses apps/web verbatim, so the
@@ -40,14 +41,18 @@ export default defineConfig({
     },
   },
   renderer: {
-    root: here,
+    // Root the renderer at apps/web (absolute, so it works from any clone location) — its
+    // index.html references /src/main.tsx, which now resolves inside the root instead of escaping
+    // it (the ../web/... form collapsed to /web/src/main.tsx and 404'd).
+    root: webRoot,
     plugins: [react()],
     resolve: { alias: solrynAlias },
-    // Allow the dev server to serve the reused apps/web sources + shared packages (outside this dir).
+    // Allow the dev server to serve the shared packages that live outside the web root.
     server: { fs: { allow: [repoRoot] } },
     build: {
       outDir: resolve(here, 'out/renderer'),
-      rollupOptions: { input: resolve(here, 'index.html') },
+      emptyOutDir: true,
+      rollupOptions: { input: resolve(webRoot, 'index.html') },
     },
   },
 });

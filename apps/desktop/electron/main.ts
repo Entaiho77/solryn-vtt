@@ -2,6 +2,10 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'node:path';
 import { RelayClient } from './relay-client';
 
+// Force the X11 Ozone backend on Linux to avoid the noisy Wayland/Vulkan incompatibility warnings.
+// No-op on Windows/macOS. Must be set before the app is ready.
+app.commandLine.appendSwitch('ozone-platform', 'x11');
+
 let mainWindow: BrowserWindow | null = null;
 let relay: RelayClient | null = null;
 
