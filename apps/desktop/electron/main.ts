@@ -8,6 +8,7 @@ import { RelayClient } from './relay-client';
 app.commandLine.appendSwitch('ozone-platform', 'x11');
 app.commandLine.appendSwitch('disable-gpu');
 app.commandLine.appendSwitch('no-sandbox');
+app.commandLine.appendSwitch('disable-dev-shm-usage');
 
 let mainWindow: BrowserWindow | null = null;
 let relay: RelayClient | null = null;
@@ -21,7 +22,8 @@ function createWindow(): void {
     show: false, // shown on ready-to-show (and after load) to avoid a white flash
     frame: true,
     autoHideMenuBar: false,
-    backgroundColor: '#1a1d24',
+    paintWhenInitiallyHidden: true,
+    backgroundColor: '#1a1a2e',
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       contextIsolation: true,
@@ -32,6 +34,7 @@ function createWindow(): void {
   const reveal = (): void => {
     mainWindow?.show();
     mainWindow?.focus();
+    mainWindow?.moveTop();
   };
 
   // Preferred trigger: the window content is ready to paint.
